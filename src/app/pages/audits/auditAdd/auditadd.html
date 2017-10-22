@@ -1,0 +1,104 @@
+<div class="widgets">
+    <div class="row">
+        <div class="col-lg-12">
+            <nb-card>
+                <nb-card-header>Agregar Auditoria</nb-card-header>
+                <nb-card-body>
+                    <!-- <div>
+                        <button (click)="loadAudits()">Load audits</button>
+                        {{ result | json }}
+                    </div> -->
+
+                    <!-- <label for="auditor">Auditor</label>
+                    <select id="auditor" class="form-control">
+                        <option>Bruno Veyre</option>
+                        <option>Adriana Onate</option>
+                        <option>Miguel Delgado</option>
+                    </select> -->
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label for="typeOfAudits">Tipo de auditoria</label>
+                            <select id="typeOfAudits" class="form-control">
+                                <option>AUDITORIA SANITARIA</option>
+                                <option>AUDITORIA OPERACIONAL</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="sections">Areas a evaluar</label>
+                            <select id="sections" class="form-control">
+                                <option>INFRAESTRUCTURA</option>
+                                <option>PROCESOS Y PRODUCTOS TERMINADOS</option>
+                                <option>PROCEDIMIENTO DE MANIPULACION</option>
+                                <option>SALUD E HIGIENE DEL PERSONAL</option>
+                                <option>LIMPIEZA Y SANITIZACION</option>
+                                <option>LINEA DE SERVICIO</option>
+                                <option>ALMACENAMIENTO</option>
+                                <option>MATERIAS PRIMAS</option>
+                                <option>CONTROL PLAGA</option>
+                                <option>CAPACITACION</option>
+                                <option>REGISTROS</option>
+                                <option>SERVICIOS HIGIENICOS-VESTUARIO PERSONAL</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>REVISION</th>
+                                    <th>PUNTAJE</th>
+                                    <th>CALIFICACION</th>
+                                    <th>OBSERVACION</th>
+                                    <th>IMAGEN</th>
+                                </tr>
+                                <tr>
+                                    <td>Cielos y estructuras elevadas</td>
+                                    <td><input type="text"></td>
+                                    <td>
+                                        <select class="form-control" id="typeOfAudits">
+                                            <option>CUMPLE</option>
+                                            <option>NO CUMPLE</option>
+                                        </select>
+                                    </td>
+                                    <td><textarea></textarea></td>
+                                    <td>
+                                        <button class="btn btn-primary">Agregar Imagen</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Ventanas y aberturas</td>
+                                    <td><input type="text"></td>
+                                    <td>
+                                        <select class="form-control" id="typeOfAudits">
+                                            <option>CUMPLE</option>
+                                            <option>NO CUMPLE</option>
+                                        </select>
+                                    </td>
+                                    <td><textarea></textarea></td>
+                                    <td>
+                                        <button class="btn btn-primary">Agregar Imagen</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Superficies de trabajo y equipos</td>
+                                    <td><input type="text"></td>
+                                    <td>
+                                        <select class="form-control" id="typeOfAudits">
+                                            <option>CUMPLE</option>
+                                            <option>NO CUMPLE</option>
+                                        </select>
+                                    </td>
+                                    <td><textarea></textarea></td>
+                                    <td>
+                                        <button class="btn btn-primary">Agregar Imagen</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </div>
+    </div>
+</div>
