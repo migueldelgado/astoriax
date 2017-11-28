@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { ServerDataSource } from 'ng2-smart-table';
+import { Component, OnInit } from '@angular/core';
+import {LocalDataSource, ServerDataSource} from 'ng2-smart-table';
 import { Http } from '@angular/http';
 
-import { SmartTableService } from '../../../@core/data/smart-table.service';
+import { ProductsService } from '../products.service';
 
 @Component({
   selector: 'supplies-table',
@@ -13,7 +13,7 @@ import { SmartTableService } from '../../../@core/data/smart-table.service';
     }
   `],
 })
-export class SuppliesTableComponent {
+export class SuppliesTableComponent implements OnInit {
 
   settings = {
     add: {
@@ -55,14 +55,20 @@ export class SuppliesTableComponent {
   };
 
 
-  source: ServerDataSource;
+  source: LocalDataSource = new LocalDataSource();
 
-  constructor(http: Http) {
-    // const data = this.service.getData();
-    this.source = new ServerDataSource(http, { endPoint: 'http://localhost:4200/assets/fake-api/insumos.json', dataKey: 'data' });
 
-    // this.source.load(data);
+  constructor(private productsService: ProductsService) {
   }
+
+  ngOnInit() {
+    this.productsService.getAll()
+      .subscribe((products: any) => {
+        console.log('##', products);
+        this.source.load(products);
+      })
+  }
+
 
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {

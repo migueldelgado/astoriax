@@ -1,29 +1,24 @@
-import { Injectable } from '@angular/core';
-import { AppConfig } from '../../app.config';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import {Injectable} from '@angular/core';
+import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ProductsService {
 
-    constructor(private http: Http) {}
+  constructor(private http: Http) {
+  }
 
-    public getAll() {
-        // return this.http
-        //     .get(`http://laravel.dev/api/audits`, {})
-        //     .map((res:Response) => res.json());
+  public getAll() {
+    return this.http.get('http://localhost:4200/assets/fake-api/insumos.json')
+      .map(response => response.json())
+      .map((supplies: any) => {
+        return supplies.data.map(s => this.parseData(s));
+      });
+  }
 
-        return this.http.get(AppConfig.API_ENDPOINT + 'audits')
-            .map(response => response.json())
-            .map((audits: Object[]) => {
-                return audits.map(audit => this.parseData(audit));
-            });
-    }
-
-    private parseData(data): any {
-        return data;
-    }
+  private parseData(data): any {
+    return data;
+  }
 
 
 }
