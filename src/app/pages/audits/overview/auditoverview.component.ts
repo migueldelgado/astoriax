@@ -4,12 +4,12 @@ import { AuditsService } from '../audits.service';
 @Component({
   selector: 'audits-overview',
   templateUrl: './auditoverview.html',
-  styleUrls: ['./auditoverview.scss']
+  styleUrls: ['./auditoverview.scss'],
 })
 export class AuditOverviewComponent {
 
   constructor(auditsService: AuditsService) {
-      console.log(auditsService.getAll());
+    console.log(auditsService.getAll());
   }
 
 }

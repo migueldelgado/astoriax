@@ -13,7 +13,7 @@ export class AuditsService {
         // return this.http
         //     .get(`http://laravel.dev/api/audits`, {})
         //     .map((res:Response) => res.json());
-        
+
         return this.http.get(AppConfig.API_ENDPOINT + 'audits')
             .map(response => response.json())
             .map((audits: Object[]) => {

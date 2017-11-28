@@ -1,0 +1,918 @@
+{
+  "code": 200,
+  "message": "Se obtuvieron recetas con exito",
+  "data": [
+    {
+      "id_recipe": "183",
+      "name": "0",
+      "classification": "0",
+      "cost": 0
+    },
+    {
+      "id_recipe": "188",
+      "name": "2 X1 VIENESAS ITALIANA",
+      "classification": "PROMOCION",
+      "cost": 1068.64
+    },
+    {
+      "id_recipe": "229",
+      "name": "2X1 PAPA HONG KONG",
+      "classification": "PROMOCIONES",
+      "cost": 957.24
+    },
+    {
+      "id_recipe": "230",
+      "name": "2X1 PAPAS AFRICANAS",
+      "classification": "PROMOCIONES",
+      "cost": 1115.8
+    },
+    {
+      "id_recipe": "228",
+      "name": "2X1 PAPAS CLASICAS",
+      "classification": "PROMOCIONES",
+      "cost": 566.64
+    },
+    {
+      "id_recipe": "189",
+      "name": "2X1 VIENESA COMPLETA",
+      "classification": "PROMOCION",
+      "cost": 850.0799999999999
+    },
+    {
+      "id_recipe": "190",
+      "name": "3X2 LOMO DIPLOMATICO",
+      "classification": "PROMOCION",
+      "cost": 2672.22
+    },
+    {
+      "id_recipe": "225",
+      "name": "3X2 VIENESA CHILENA",
+      "classification": "PROMOCIONES",
+      "cost": 1121.46
+    },
+    {
+      "id_recipe": "224",
+      "name": "3X2 VIENESA COMPLETA",
+      "classification": "PROMOCIONES",
+      "cost": 1275.12
+    },
+    {
+      "id_recipe": "227",
+      "name": "3X2 VIENESA ITALIANA",
+      "classification": "PROMOCIONES",
+      "cost": 1602.96
+    },
+    {
+      "id_recipe": "226",
+      "name": "3X2 VIENESA MEXICANA",
+      "classification": "PROMOCIONES",
+      "cost": 1299.9
+    },
+    {
+      "id_recipe": "261",
+      "name": "AGREGA PAPA+BEBIDA",
+      "classification": "PROMOCIONES",
+      "cost": 413.64
+    },
+    {
+      "id_recipe": "318",
+      "name": "AJI VERDE AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 120
+    },
+    {
+      "id_recipe": "32",
+      "name": "AVE COMPLETA",
+      "classification": "SANDWICHS PITA",
+      "cost": 660.46
+    },
+    {
+      "id_recipe": "30",
+      "name": "AVE ESPECIAL",
+      "classification": "SANDWICHS PITA",
+      "cost": 503.3
+    },
+    {
+      "id_recipe": "36",
+      "name": "AVE ITALIANA",
+      "classification": "SANDWICHS PITA",
+      "cost": 748.5700000000001
+    },
+    {
+      "id_recipe": "34",
+      "name": "AVE QUESO",
+      "classification": "SANDWICHS PITA",
+      "cost": 620.8
+    },
+    {
+      "id_recipe": "31",
+      "name": "AVE SOLA",
+      "classification": "SANDWICHS PITA",
+      "cost": 425.5
+    },
+    {
+      "id_recipe": "77",
+      "name": "BARROS JARPA",
+      "classification": "SANDWICHS",
+      "cost": 654.3
+    },
+    {
+      "id_recipe": "23",
+      "name": "BARROS JARPA PATRON",
+      "classification": "SANDWICHS CHURRASCO",
+      "cost": 1419.42
+    },
+    {
+      "id_recipe": "99",
+      "name": "BARROS LONCO",
+      "classification": "SANDWICHS CHURRASCO",
+      "cost": 1276.24
+    },
+    {
+      "id_recipe": "18",
+      "name": "BARROS LUCO",
+      "classification": "SANDWICHS CHURRASCO",
+      "cost": 902.26
+    },
+    {
+      "id_recipe": "12",
+      "name": "BARROS LUCO PATRON",
+      "classification": "SANDWICHS CHURRASCO",
+      "cost": 1151.92
+    },
+    {
+      "id_recipe": "46",
+      "name": "CAMPESINO",
+      "classification": "SANDWICHS PITA",
+      "cost": 695.26
+    },
+    {
+      "id_recipe": "78",
+      "name": "CEBOLLA FRITA AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 79.28
+    },
+    {
+      "id_recipe": "19",
+      "name": "CHACARERO",
+      "classification": "SANDWICHS CHURRASCO",
+      "cost": 986.1200000000001
+    },
+    {
+      "id_recipe": "62",
+      "name": "CHAMPI\u00d1ONES AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 178
+    },
+    {
+      "id_recipe": "15",
+      "name": "CHEMILICO",
+      "classification": "SANDWICHS CHURRASCO",
+      "cost": 966.96
+    },
+    {
+      "id_recipe": "63",
+      "name": "CHOCLO AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 94.50000000000001
+    },
+    {
+      "id_recipe": "94",
+      "name": "CHUCRUT AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 79.80000000000001
+    },
+    {
+      "id_recipe": "157",
+      "name": "CHURRASCO COLACION",
+      "classification": "AGREGADO COLACION",
+      "cost": 609.96
+    },
+    {
+      "id_recipe": "17",
+      "name": "CHURRASCO COMPLETO",
+      "classification": "SANDWICHS CHURRASCO",
+      "cost": 941.9200000000001
+    },
+    {
+      "id_recipe": "21",
+      "name": "CHURRASCO DIPLOMATICO",
+      "classification": "SANDWICHS CHURRASCO",
+      "cost": 1032.26
+    },
+    {
+      "id_recipe": "16",
+      "name": "CHURRASCO ESPECIAL",
+      "classification": "SANDWICHS CHURRASCO",
+      "cost": 784.76
+    },
+    {
+      "id_recipe": "20",
+      "name": "CHURRASCO ITALIANO",
+      "classification": "SANDWICHS CHURRASCO",
+      "cost": 1022.62
+    },
+    {
+      "id_recipe": "22",
+      "name": "CHURRASCO POBRE",
+      "classification": "SANDWICHS CHURRASCO",
+      "cost": 1111.54
+    },
+    {
+      "id_recipe": "14",
+      "name": "CHURRASCO SOLO",
+      "classification": "SANDWICHS CHURRASCO",
+      "cost": 706.96
+    },
+    {
+      "id_recipe": "87",
+      "name": "COCA LATA",
+      "classification": "LIQUIDOS",
+      "cost": 309
+    },
+    {
+      "id_recipe": "91",
+      "name": "COCA LIGHT LATA",
+      "classification": "LIQUIDOS",
+      "cost": 328
+    },
+    {
+      "id_recipe": "86",
+      "name": "COCA LIGHT VASO",
+      "classification": "LIQUIDOS",
+      "cost": 107.074
+    },
+    {
+      "id_recipe": "82",
+      "name": "COCA VASO",
+      "classification": "LIQUIDOS",
+      "cost": 114.95
+    },
+    {
+      "id_recipe": "90",
+      "name": "COCA ZERO LATA",
+      "classification": "LIQUIDOS",
+      "cost": 328
+    },
+    {
+      "id_recipe": "85",
+      "name": "COCA ZERO VASO",
+      "classification": "LIQUIDOS",
+      "cost": 107.074
+    },
+    {
+      "id_recipe": "47",
+      "name": "ENSALADA DANESA",
+      "classification": "ENSALADAS",
+      "cost": 1011.88
+    },
+    {
+      "id_recipe": "48",
+      "name": "ENSALADA HUNGARA",
+      "classification": "ENSALADAS",
+      "cost": 1370.68
+    },
+    {
+      "id_recipe": "88",
+      "name": "FANTA LATA",
+      "classification": "LIQUIDOS",
+      "cost": 288
+    },
+    {
+      "id_recipe": "83",
+      "name": "FANTA VASO",
+      "classification": "LIQUIDOS",
+      "cost": 130.7
+    },
+    {
+      "id_recipe": "33",
+      "name": "FEUDAL",
+      "classification": "SANDWICHS PITA",
+      "cost": 600.72
+    },
+    {
+      "id_recipe": "56",
+      "name": "GORDA SOLA",
+      "classification": "GORDAS",
+      "cost": 442
+    },
+    {
+      "id_recipe": "35",
+      "name": "GRANJERO",
+      "classification": "SANDWICHS PITA",
+      "cost": 749.6600000000001
+    },
+    {
+      "id_recipe": "242",
+      "name": "HELADO CREMOSO",
+      "classification": "HELADOS",
+      "cost": 1387
+    },
+    {
+      "id_recipe": "241",
+      "name": "HELADO FRUTAL",
+      "classification": "HELADOS",
+      "cost": 1261
+    },
+    {
+      "id_recipe": "243",
+      "name": "HELADO RELLENO",
+      "classification": "HELADOS",
+      "cost": 1513
+    },
+    {
+      "id_recipe": "29",
+      "name": "HIDALGO",
+      "classification": "SANDWICHS AL PLATO",
+      "cost": 1043.37
+    },
+    {
+      "id_recipe": "79",
+      "name": "HUEVO AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 130
+    },
+    {
+      "id_recipe": "64",
+      "name": "JAMON AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 362
+    },
+    {
+      "id_recipe": "100",
+      "name": "JUGO FRUTILLA VASO",
+      "classification": "LIQUIDOS",
+      "cost": 283.05
+    },
+    {
+      "id_recipe": "101",
+      "name": "JUGO PI\u00d1A VASO",
+      "classification": "LIQUIDOS",
+      "cost": 260.85
+    },
+    {
+      "id_recipe": "160",
+      "name": "LECHE PLATANO",
+      "classification": "LIQUIDOS",
+      "cost": 226.803
+    },
+    {
+      "id_recipe": "65",
+      "name": "LECHUGA ESCAROLA",
+      "classification": "AGREGADOS",
+      "cost": 200
+    },
+    {
+      "id_recipe": "158",
+      "name": "LECHUGA HIDROPONICA",
+      "classification": "AGREGADOS",
+      "cost": 212.5
+    },
+    {
+      "id_recipe": "5",
+      "name": "LOMO COMPLETO",
+      "classification": "SANDWICHS LOMO",
+      "cost": 800.4000000000001
+    },
+    {
+      "id_recipe": "231",
+      "name": "LOMO COMPLETO+BB",
+      "classification": "PROMOCIONES",
+      "cost": 930.5600000000001
+    },
+    {
+      "id_recipe": "25",
+      "name": "LOMO DIPLOMATICO",
+      "classification": "SANDWICHS LOMO",
+      "cost": 890.74
+    },
+    {
+      "id_recipe": "233",
+      "name": "LOMO DIPLOMATICO + BEBIDA",
+      "classification": "PROMOCIONES",
+      "cost": 1016.74
+    },
+    {
+      "id_recipe": "24",
+      "name": "LOMO ESPECIAL",
+      "classification": "SANDWICHS LOMO",
+      "cost": 643.24
+    },
+    {
+      "id_recipe": "2",
+      "name": "LOMO ITALIANO",
+      "classification": "SANDWICHS LOMO",
+      "cost": 881.1000000000001
+    },
+    {
+      "id_recipe": "232",
+      "name": "LOMO ITALIANO +BB",
+      "classification": "PROMOCIONES",
+      "cost": 1007.1
+    },
+    {
+      "id_recipe": "26",
+      "name": "LOMO POBRE",
+      "classification": "SANDWICHS LOMO",
+      "cost": 970.02
+    },
+    {
+      "id_recipe": "237",
+      "name": "LOMO POBRE +BEBIDA",
+      "classification": "PROMOCIONES",
+      "cost": 1096.02
+    },
+    {
+      "id_recipe": "3",
+      "name": "LOMO QUESO",
+      "classification": "SANDWICHS LOMO",
+      "cost": 760.74
+    },
+    {
+      "id_recipe": "4",
+      "name": "LOMO SOLO",
+      "classification": "SANDWICHS LOMO",
+      "cost": 565.4400000000001
+    },
+    {
+      "id_recipe": "66",
+      "name": "MAYONESA AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 77.80000000000001
+    },
+    {
+      "id_recipe": "180",
+      "name": "MECHADA INGLESA",
+      "classification": "SANDWICH MECHADA",
+      "cost": 1390.7
+    },
+    {
+      "id_recipe": "181",
+      "name": "MECHADA IRLANDESA",
+      "classification": "SANDWICH MECHADA",
+      "cost": 1577.95
+    },
+    {
+      "id_recipe": "182",
+      "name": "MECHADA ITALIANA",
+      "classification": "SANDWICH MECHADA",
+      "cost": 1655.31
+    },
+    {
+      "id_recipe": "263",
+      "name": "MECHADA POLLO  INGLESA",
+      "classification": "SANDWCH  MECHADA POLLO",
+      "cost": 914.7
+    },
+    {
+      "id_recipe": "264",
+      "name": "MECHADA POLLO IRLANDESA",
+      "classification": "SANDWICH MECHADA POLLO",
+      "cost": 1101.95
+    },
+    {
+      "id_recipe": "265",
+      "name": "MECHADA POLLO ITALIANA",
+      "classification": "SANDWICH MECHADA POLLO",
+      "cost": 1179.31
+    },
+    {
+      "id_recipe": "289",
+      "name": "MECHADA POLLO SOLA",
+      "classification": "MECHADAS",
+      "cost": 641.6
+    },
+    {
+      "id_recipe": "281",
+      "name": "MECHADA SOLA",
+      "classification": "SANDWICH MECHADA",
+      "cost": 1117.6
+    },
+    {
+      "id_recipe": "73",
+      "name": "MEN\u00da JUNAEB",
+      "classification": "MENU",
+      "cost": 618.7
+    },
+    {
+      "id_recipe": "74",
+      "name": "MENU JUNAEB QUESILLO",
+      "classification": "MENU",
+      "cost": 850.7
+    },
+    {
+      "id_recipe": "96",
+      "name": "MINERAL CON GAS",
+      "classification": "LIQUIDOS",
+      "cost": 333
+    },
+    {
+      "id_recipe": "97",
+      "name": "MINERAL SIN GAS",
+      "classification": "LIQUIDOS",
+      "cost": 333
+    },
+    {
+      "id_recipe": "165",
+      "name": "NESCAFE CHICO",
+      "classification": "CAFETER\u00cdA",
+      "cost": 26.35
+    },
+    {
+      "id_recipe": "117",
+      "name": "NESCAFE GRANDE",
+      "classification": "CAFETERIA",
+      "cost": 52.7
+    },
+    {
+      "id_recipe": "151",
+      "name": "PALMITO AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 178
+    },
+    {
+      "id_recipe": "67",
+      "name": "PALTA AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 160.5
+    },
+    {
+      "id_recipe": "154",
+      "name": "PAN COPIHUE AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 97
+    },
+    {
+      "id_recipe": "68",
+      "name": "PAN HAMBURGUESA AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 97
+    },
+    {
+      "id_recipe": "98",
+      "name": "PAN PITA AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 97
+    },
+    {
+      "id_recipe": "51",
+      "name": "PAPAS FRITAS",
+      "classification": "PAPAS",
+      "cost": 283.32
+    },
+    {
+      "id_recipe": "55",
+      "name": "PAPAS FRITAS AFRICANAS",
+      "classification": "PAPAS",
+      "cost": 514.28
+    },
+    {
+      "id_recipe": "54",
+      "name": "PAPAS FRITAS HONG KONG",
+      "classification": "PAPAS",
+      "cost": 435
+    },
+    {
+      "id_recipe": "95",
+      "name": "PEPINILLO AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 95
+    },
+    {
+      "id_recipe": "37",
+      "name": "PHILLICHEESESTEAK",
+      "classification": "SANDWICHS PITA",
+      "cost": 1177.54
+    },
+    {
+      "id_recipe": "28",
+      "name": "POBRE",
+      "classification": "SANDWICHS AL PLATO",
+      "cost": 1482.02
+    },
+    {
+      "id_recipe": "156",
+      "name": "POLLO COLACION",
+      "classification": "AGREGADO COLACION",
+      "cost": 328.5
+    },
+    {
+      "id_recipe": "80",
+      "name": "POROTILLO AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 108.5
+    },
+    {
+      "id_recipe": "268",
+      "name": "PROMO  POLLO MECHADA INGLESA",
+      "classification": "PROMOCIONES",
+      "cost": 1328.34
+    },
+    {
+      "id_recipe": "239",
+      "name": "PROMO  SELLADITO B.JARPA",
+      "classification": "PROMOCIONES",
+      "cost": 646.86
+    },
+    {
+      "id_recipe": "186",
+      "name": "PROMO .ENS.  DANESA +JUGO PI\u00d1A",
+      "classification": "ENSALADAS",
+      "cost": 1143.22
+    },
+    {
+      "id_recipe": "316",
+      "name": "PROMO ENS. DANESA +JUGO FRUTILLA",
+      "classification": "ENSALADAS",
+      "cost": 1198.88
+    },
+    {
+      "id_recipe": "308",
+      "name": "PROMO ENS. DANESA +MINERAL SIN GAS",
+      "classification": "ENSALADAS",
+      "cost": 1344.88
+    },
+    {
+      "id_recipe": "302",
+      "name": "PROMO ENS. DANESA+ MINERAL CON GAS",
+      "classification": "ENSALADAS",
+      "cost": 1344.88
+    },
+    {
+      "id_recipe": "317",
+      "name": "PROMO ENS. HUNGARA +JUGO FRUTILLA",
+      "classification": "ENSALADAS",
+      "cost": 1557.68
+    },
+    {
+      "id_recipe": "309",
+      "name": "PROMO ENS. HUNGARA+MINERAL CON GAS",
+      "classification": "ENSALADAS",
+      "cost": 1703.68
+    },
+    {
+      "id_recipe": "310",
+      "name": "PROMO ENS.HUNGARA+ MINERAL SIN GAS",
+      "classification": "ENSALADAS",
+      "cost": 1703.68
+    },
+    {
+      "id_recipe": "303",
+      "name": "PROMO ENS.HUNGARA+JUGO PI\u00d1A",
+      "classification": "ENSALADAS",
+      "cost": 1502.02
+    },
+    {
+      "id_recipe": "238",
+      "name": "PROMO PAILA HUEVO",
+      "classification": "PROMOCIONES",
+      "cost": 615.9
+    },
+    {
+      "id_recipe": "275",
+      "name": "PROMO POST18 V. ITALIANA",
+      "classification": "PROMOCIONES",
+      "cost": 947.9599999999999
+    },
+    {
+      "id_recipe": "277",
+      "name": "PROMO POST18 V.MEXICANA",
+      "classification": "PROMOCIONES",
+      "cost": 956.1999999999999
+    },
+    {
+      "id_recipe": "42",
+      "name": "PROMOCI\u00d3N ASTORIA",
+      "classification": "PROMOCIONES",
+      "cost": 1543.56
+    },
+    {
+      "id_recipe": "40",
+      "name": "PROMOCI\u00d3N BARROS LUCO",
+      "classification": "PROMOCIONES",
+      "cost": 1315.9
+    },
+    {
+      "id_recipe": "102",
+      "name": "PROMOCI\u00d3N CHACARERO",
+      "classification": "PROMOCIONES",
+      "cost": 1805
+    },
+    {
+      "id_recipe": "103",
+      "name": "PROMOCI\u00d3N CHURRASCO ITALIANO",
+      "classification": "PROMOCIONES",
+      "cost": 1436.26
+    },
+    {
+      "id_recipe": "223",
+      "name": "PROMOCION CHURRASCO POBRE",
+      "classification": "PROMOCIONES",
+      "cost": 1515.27
+    },
+    {
+      "id_recipe": "39",
+      "name": "PROMOCI\u00d3N FEUDAL",
+      "classification": "PROMOCIONES",
+      "cost": 470.72
+    },
+    {
+      "id_recipe": "61",
+      "name": "PROMOCI\u00d3N GORDA COMPLETA",
+      "classification": "PROMOCIONES",
+      "cost": 1090.6
+    },
+    {
+      "id_recipe": "41",
+      "name": "PROMOCI\u00d3N LOMO COMPLETO",
+      "classification": "PROMOCIONES",
+      "cost": 1214.04
+    },
+    {
+      "id_recipe": "166",
+      "name": "PROMOCI\u00d3N LOMO DIPLOMATICO",
+      "classification": "PROMOCIONES",
+      "cost": 1304.38
+    },
+    {
+      "id_recipe": "168",
+      "name": "PROMOCI\u00d3N LOMO ITALIANO",
+      "classification": "PROMOCIONES",
+      "cost": 1294.74
+    },
+    {
+      "id_recipe": "167",
+      "name": "PROMOCI\u00d3N LOMO POBRE",
+      "classification": "PROMOCIONES",
+      "cost": 1383.66
+    },
+    {
+      "id_recipe": "71",
+      "name": "PROMOCION MINI LOMO ITALIANO",
+      "classification": "PROMOCIONES",
+      "cost": 719.8700000000001
+    },
+    {
+      "id_recipe": "72",
+      "name": "PROMOCI\u00d3N MINI VIENESA ITALIANA",
+      "classification": "PROMOCIONES",
+      "cost": 546.48
+    },
+    {
+      "id_recipe": "70",
+      "name": "PROMOCI\u00d3N ROMANA",
+      "classification": "PROMOCIONES",
+      "cost": 1840.6
+    },
+    {
+      "id_recipe": "38",
+      "name": "PROMOCI\u00d3N VIENESA COMPLETA",
+      "classification": "PROMOCIONES",
+      "cost": 816.6799999999999
+    },
+    {
+      "id_recipe": "109",
+      "name": "QUESILLO AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 232
+    },
+    {
+      "id_recipe": "49",
+      "name": "QUESILLO DESAYUNO",
+      "classification": "DESAYUNOS",
+      "cost": 1618.5
+    },
+    {
+      "id_recipe": "69",
+      "name": "QUESO AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 195.3
+    },
+    {
+      "id_recipe": "152",
+      "name": "QUESO FRITO",
+      "classification": "SANDWICHS",
+      "cost": 487.6
+    },
+    {
+      "id_recipe": "112",
+      "name": "SALSA GUACAMOLE",
+      "classification": "AGREGADOS",
+      "cost": 109.26
+    },
+    {
+      "id_recipe": "113",
+      "name": "SALSA VERDE",
+      "classification": "AGREGADOS",
+      "cost": 0
+    },
+    {
+      "id_recipe": "89",
+      "name": "SPRITE LATA",
+      "classification": "LIQUIDOS",
+      "cost": 309
+    },
+    {
+      "id_recipe": "84",
+      "name": "SPRITE VASO",
+      "classification": "LIQUIDOS",
+      "cost": 118.94
+    },
+    {
+      "id_recipe": "119",
+      "name": "TE",
+      "classification": "CAFETERIA",
+      "cost": 109.1
+    },
+    {
+      "id_recipe": "110",
+      "name": "TOCINO AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 360
+    },
+    {
+      "id_recipe": "93",
+      "name": "TOMATE ELABORADO AGREGADO",
+      "classification": "AGREGADOS",
+      "cost": 77.36
+    },
+    {
+      "id_recipe": "9",
+      "name": "VIENESA ARABE",
+      "classification": "VIENESAS",
+      "cost": 738.28
+    },
+    {
+      "id_recipe": "10",
+      "name": "VIENESA CHILENA",
+      "classification": "VIENESAS",
+      "cost": 415.72
+    },
+    {
+      "id_recipe": "172",
+      "name": "VIENESA CHILENA + BB",
+      "classification": "PROMOCION",
+      "cost": 499.82
+    },
+    {
+      "id_recipe": "161",
+      "name": "VIENESA COLACION",
+      "classification": "COLACIONES",
+      "cost": 141
+    },
+    {
+      "id_recipe": "6",
+      "name": "VIENESA COMPLETA",
+      "classification": "VIENESAS",
+      "cost": 425.04
+    },
+    {
+      "id_recipe": "169",
+      "name": "VIENESA COMPLETA + BB",
+      "classification": "PROMOCION",
+      "cost": 551.04
+    },
+    {
+      "id_recipe": "13",
+      "name": "VIENESA ESPECIAL",
+      "classification": "VIENESAS",
+      "cost": 346.92
+    },
+    {
+      "id_recipe": "7",
+      "name": "VIENESA ITALIANA",
+      "classification": "VIENESAS",
+      "cost": 534.3199999999999
+    },
+    {
+      "id_recipe": "170",
+      "name": "VIENESA ITALIANA + BB",
+      "classification": "PROMOCION",
+      "cost": 660.3199999999999
+    },
+    {
+      "id_recipe": "8",
+      "name": "VIENESA MEXICANA",
+      "classification": "VIENESAS",
+      "cost": 552.23
+    },
+    {
+      "id_recipe": "171",
+      "name": "VIENESA MEXICANA + BB",
+      "classification": "PROMOCION",
+      "cost": 678.23
+    },
+    {
+      "id_recipe": "11",
+      "name": "VIENESA QUESO",
+      "classification": "VIENESAS",
+      "cost": 433.3
+    },
+    {
+      "id_recipe": "1",
+      "name": "VIENESA SOLA",
+      "classification": "VIENESAS",
+      "cost": 238
+    }
+  ]
+}

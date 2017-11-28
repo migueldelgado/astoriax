@@ -10,16 +10,16 @@ const routes: Routes = [
     path: '',
     component: AuditComponent,
     children: [
-      { 
-        path: 'auditAdd', 
-        component: AuditAddComponent 
+      {
+        path: 'auditAdd',
+        component: AuditAddComponent,
       },
-      { 
-        path: 'overview', 
-        component: AuditOverviewComponent 
-      }
-    ]
-  }
+      {
+        path: 'overview',
+        component: AuditOverviewComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({

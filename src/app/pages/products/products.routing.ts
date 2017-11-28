@@ -12,10 +12,10 @@ const routes: Routes = [
     children: [
       {
         path: 'supplies',
-        component: SuppliesTableComponent
+        component: SuppliesTableComponent,
       },
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({

@@ -27,14 +27,14 @@ const NB_CORE_PROVIDERS = [
             defaultMessages: ['Te has entrado correctamente'],
           },
           logout: {
-            endpoint: '/api/auth/logout'
+            endpoint: '/api/auth/logout',
           },
           requestPass: {
-            endpoint: '/api/auth/request-pass'
+            endpoint: '/api/auth/request-pass',
           },
           resetPass: {
-            endpoint: '/api/auth/reset-pass'
-          }
+            endpoint: '/api/auth/reset-pass',
+          },
         },
       },
     },
@@ -53,7 +53,7 @@ const NB_CORE_PROVIDERS = [
 })
 export class CoreModule {
 
-  private configuration : NbEmailPassAuthProvider;
+  private configuration: NbEmailPassAuthProvider;
 
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');

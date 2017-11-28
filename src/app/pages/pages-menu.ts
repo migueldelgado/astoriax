@@ -23,8 +23,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Productos',
         link: '/pages/products/recipes',
-      }
-    ]
+      },
+    ],
   },
   {
     title: 'Auditorias',
@@ -38,8 +38,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
         {
             title: 'Resumen',
             link: '/pages/audits/overview',
-        }
-    ]
+        },
+    ],
   },
   {
     title: 'UI Features',

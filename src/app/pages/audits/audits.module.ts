@@ -10,20 +10,20 @@ import { AuditsService } from './audits.service'
 const components = [
   AuditComponent,
   AuditOverviewComponent,
-  AuditAddComponent
+  AuditAddComponent,
 ];
 
 @NgModule({
   imports: [
     ThemeModule,
-    AuditsRoutingModule
+    AuditsRoutingModule,
   ],
   declarations: [
     ...components,
   ],
   providers: [
-    AuditsService
-  ]
+    AuditsService,
+  ],
 })
 
 export class AuditModule {}
