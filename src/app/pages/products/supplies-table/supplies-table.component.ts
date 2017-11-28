@@ -5,7 +5,7 @@ import { Http } from '@angular/http';
 import { ProductsService } from '../products.service';
 
 @Component({
-  selector: 'supplies-table',
+  selector: 'ngx-supplies-table',
   templateUrl: './supplies-table.component.html',
   styles: [`
     nb-card {
@@ -64,7 +64,6 @@ export class SuppliesTableComponent implements OnInit {
   ngOnInit() {
     this.productsService.getAll()
       .subscribe((products: any) => {
-        console.log('##', products);
         this.source.load(products);
       })
   }

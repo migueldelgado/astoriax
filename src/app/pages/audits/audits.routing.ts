@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule }  from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 
-import { AuditComponent } from './audits.component';
-import { AuditOverviewComponent } from './overview/auditoverview.component';
-import { AuditAddComponent } from './auditAdd/auditadd.component';
+import {AuditComponent} from './audits.component';
+import {AuditOverviewComponent} from './overview/auditoverview.component';
+import {AuditAddComponent} from './auditAdd/auditadd.component';
 
 const routes: Routes = [
   {
@@ -26,4 +26,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AuditsRoutingModule {}
+export class AuditsRoutingModule {
+}

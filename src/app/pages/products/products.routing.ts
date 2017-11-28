@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule }  from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 
-import { ProductsComponent } from './products.component';
-import { SuppliesTableComponent } from './supplies-table/supplies-table.component';
+import {ProductsComponent} from './products.component';
+import {SuppliesTableComponent} from './supplies-table/supplies-table.component';
 // import { AuditAddComponent } from './auditAdd/auditadd.component';
 
 const routes: Routes = [
@@ -22,7 +22,8 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ProductsRoutingModule {}
+export class ProductsRoutingModule {
+}
 
 export const routedComponents = [
   SuppliesTableComponent,

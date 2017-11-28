@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AuditsService } from '../audits.service';
 
 @Component({
-  selector: 'audits-add',
+  selector: 'ngx-audits-add',
   templateUrl: './auditadd.html',
   styleUrls: ['./auditadd.scss'],
 })
