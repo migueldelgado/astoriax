@@ -16,7 +16,7 @@ const NB_CORE_PROVIDERS = [
           delay: 3000,
           baseEndpoint: 'http://laravel.dev',
           login: {
-            endpoint: '/login',
+            endpoint: '/api/login',
             method: 'post',
             rememberMe: false,
             // redirect: {
@@ -52,9 +52,9 @@ const NB_CORE_PROVIDERS = [
   declarations: [],
 })
 export class CoreModule {
-  
+
   private configuration : NbEmailPassAuthProvider;
-  
+
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }

@@ -12,6 +12,21 @@ export const MENU_ITEMS: NbMenuItem[] = [
     group: true,
   },
   {
+    title: 'Productos',
+    icon: 'nb-compose',
+    link: '/pages/products',
+    children: [
+      {
+        title: 'Insumos',
+        link: '/pages/products/supplies',
+      },
+      {
+        title: 'Productos',
+        link: '/pages/products/recipes',
+      }
+    ]
+  },
+  {
     title: 'Auditorias',
     icon: 'nb-compose',
     link: '/pages/audits',
