@@ -65,8 +65,8 @@ export class AuditAddComponent implements OnInit {
     }, 0);
 
     section.percentageScore = score / section.revisions.length;
-    this.score = this.sections.reduce((acc, section) => {
-      const sectionScore = section.percentageScore ? section.percentageScore * section.percentage : 0;
+    this.score = this.sections.reduce((acc, s) => {
+      const sectionScore = s.percentageScore ? s.percentageScore * s.percentage : 0;
       return sectionScore + acc;
     }, 0)
   }

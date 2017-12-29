@@ -7,38 +7,6 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AuditsService {
 
-  auditTypes = [{
-    id: 1,
-    description: 'Operacional',
-  }, {
-    id: 2,
-    description: 'Sanitaria',
-  }];
-
-  revisionList = [
-    {
-      description: 'Planificacion de procesos diarios',
-    },
-    {
-      description: 'Inicio de proceso en forma asignada según manual',
-    },
-    {
-      description: 'Tiempos de procesos adecuados al estándar',
-    },
-    {
-      description: 'Peso y cuantificacion de merma (en software)',
-    },
-    {
-      description: 'Calidad de insumos de saldo (rotulados)',
-    },
-    {
-      description: 'Maquinaria para realizar procesos optima',
-    },
-    {
-      description: 'Instalaciones para procesos optima',
-    },
-  ];
-
   constructor(private http: Http) {
   }
 

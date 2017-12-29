@@ -6,17 +6,21 @@ import {AuditComponent} from './audits.component';
 import {AuditOverviewComponent} from './overview/auditoverview.component';
 import {AuditAddComponent} from './auditAdd/auditadd.component';
 import {AuditsService} from './audits.service'
+import {AuditTableComponent} from './audit-table/audit-table.component';
+import {Ng2SmartTableModule} from 'ng2-smart-table';
 
 const components = [
   AuditComponent,
   AuditOverviewComponent,
   AuditAddComponent,
+  AuditTableComponent,
 ];
 
 @NgModule({
   imports: [
     ThemeModule,
     AuditsRoutingModule,
+    Ng2SmartTableModule,
   ],
   declarations: [
     ...components,

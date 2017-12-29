@@ -1,4 +1,4 @@
-import { NbMenuItem } from '@nebular/theme';
+import {NbMenuItem} from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
@@ -31,14 +31,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'nb-compose',
     link: '/pages/audits',
     children: [
-        {
-            title: 'Agregar Auditorias',
-            link: '/pages/audits/auditAdd',
-        },
-        {
-            title: 'Resumen',
-            link: '/pages/audits/overview',
-        },
+      {
+        title: 'Auditorias',
+        link: '/pages/audits/audit-list',
+      },
+      {
+        title: 'Agregar Auditorias',
+        link: '/pages/audits/auditAdd',
+      },
+      {
+        title: 'Resumen',
+        link: '/pages/audits/overview',
+      },
     ],
   },
   {
