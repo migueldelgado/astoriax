@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AppConfig} from '../../app.config';
-import {Http, Response} from '@angular/http';
+import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
@@ -51,8 +51,8 @@ export class AuditsService {
               .map((r) => {
                 return Object.assign({}, r, {
                   score: 2,
-                  classification: '',
-                  observation: '',
+                  classification: 'Cumple',
+                  comment: 'Comment',
                 });
               });
             return Object.assign({}, s, {
@@ -76,6 +76,10 @@ export class AuditsService {
   public getUsers() {
     return this.http.get(`${AppConfig.API_ENDPOINT}users`)
       .map(response => response.json());
+  }
+
+  public saveAudit(audit) {
+    return this.http.post(`${AppConfig.API_ENDPOINT}audits`, audit)
   }
 
 }

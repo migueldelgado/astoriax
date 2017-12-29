@@ -3,11 +3,10 @@ import {AuditsService} from '../audits.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'ngx-audits-add',
-  templateUrl: './auditadd.html',
-  styleUrls: ['./auditadd.scss'],
+  selector: 'ngx-audits-detail',
+  templateUrl: './audit-detail.component.html',
 })
-export class AuditAddComponent implements OnInit {
+export class AuditDetailComponent implements OnInit {
   auditTypes$;
   shiftTypes$;
   revisionList$;
@@ -75,66 +74,5 @@ export class AuditAddComponent implements OnInit {
       const sectionScore = s.percentageScore ? s.percentageScore * s.percentage : 0;
       return sectionScore + acc;
     }, 0)
-  }
-
-  onSave() {
-    if (!this.shiftId) {
-      alert('Debe seleccionar turno');
-      return ;
-    }
-
-    if (!this.storeId) {
-      alert('Debe seleccionar Tienda');
-      return ;
-    }
-
-    if (!this.managerId) {
-      alert('Debe seleccionar Jefe de local');
-      return ;
-    }
-
-
-    // {
-    //   "audit_type_id": "1",
-    //   "auditor_id": "1",
-    //   "manager_id": "1",
-    //   "store_id": "1",
-    //   "shift_id": "1",
-    //   "revisions": [
-    //   {
-    //     "revision_id": "1",
-    //     "score": "2",
-    //     "classification": "Cumple",
-    //     "comment": "comment test"
-    //   }
-    // ]
-    // }
-
-    const data = {
-      audit_type_id: this.auditTypeId,
-      auditor_id: '1',
-      manager_id: this.managerId,
-      store_id: this.storeId,
-      shift_id: this.shiftId,
-      revisions: null,
-    }
-
-    const revisions = this.sections.reduce((acc, s) => {
-      const sectionRevisions = s.revisions.map((r) => ({
-        score: r.score,
-        revision_id: r.id,
-        classification: r.classification,
-        comment: r.comment,
-      }));
-
-      return [...acc, ...sectionRevisions];
-    }, []);
-
-    data.revisions = revisions;
-
-    const result = this.auditService.saveAudit(data);
-    result.subscribe(() => {
-      this.router.navigate(['../audit-list'], { relativeTo: this.route })
-    })
   }
 }

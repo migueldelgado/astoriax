@@ -1,3 +1,4 @@
+///<reference path="../../../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 import { Component, OnInit } from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
 import {AuditsService} from '../audits.service';
@@ -57,7 +58,6 @@ export class AuditTableComponent implements OnInit {
 
 
   constructor(private auditService: AuditsService, private route: ActivatedRoute, private router: Router) {
-    console.log(route, router)
   }
 
   ngOnInit() {
@@ -81,14 +81,10 @@ export class AuditTableComponent implements OnInit {
   }
 
   onEdit(event): void {
-    console.log(event);
+    // console.log(event);
   }
 
   onDelete(event): void {
-    console.log(event);
-  }
-
-  onRowSelect(event): void {
-    console.log(event);
+    // console.log(event);
   }
 }
