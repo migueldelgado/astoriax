@@ -24,7 +24,6 @@ export class AuditDetailComponent implements OnInit {
     this.auditService.getAll()
       .subscribe((audits) => {
         this.audit = audits.find(a => a.id === id);
-        console.log(this.audit)
       })
   }
 
