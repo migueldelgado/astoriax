@@ -77,11 +77,11 @@ export class AuditTableComponent implements OnInit {
   }
 
   onCreate(event): void {
-    this.router.navigate(['../auditAdd'], { relativeTo: this.route })
+    this.router.navigate(['../auditAdd'], { relativeTo: this.route });
   }
 
   onEdit(event): void {
-    // console.log(event);
+    this.router.navigate([`../audit/${event.data.id}`], { relativeTo: this.route });
   }
 
   onDelete(event): void {

@@ -7,11 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
   templateUrl: './audit-detail.component.html',
 })
 export class AuditDetailComponent implements OnInit {
-  auditTypes$;
-  shiftTypes$;
-  revisionList$;
-  stores$;
-  users$;
+  audit: Object = {};
   sections;
   auditTypeId: string = null;
   shiftId: number = null;
@@ -24,11 +20,12 @@ export class AuditDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.auditTypes$ = this.auditService.getAuditTypes();
-    this.revisionList$ = this.auditService.getRevisionList();
-    this.shiftTypes$ = this.auditService.getShifts();
-    this.stores$ = this.auditService.getStores();
-    this.users$ = this.auditService.getUsers();
+    const id = parseInt(this.route.snapshot.params.id, 10);
+    this.auditService.getAll()
+      .subscribe((audits) => {
+        this.audit = audits.find(a => a.id === id);
+        console.log(this.audit)
+      })
   }
 
   loadAudits() {

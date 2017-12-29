@@ -17,7 +17,7 @@ const routes: Routes = [
         component: AuditAddComponent,
       },
       {
-        path: 'audit-detail/:id',
+        path: 'audit/:id',
         component: AuditDetailComponent,
       },
       {
