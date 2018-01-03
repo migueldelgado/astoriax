@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
+import {SupplyService} from '../../../@core/data/supply.service';
 
-import { ProductsService } from '../products.service';
 
 function sortByNumber(direction: number, a: string, b: string) {
   const numberA = parseInt(a, 10);
@@ -24,7 +24,7 @@ function sortByNumber(direction: number, a: string, b: string) {
 export class SupplyFormComponent implements OnInit {
 
 
-  constructor(private productsService: ProductsService) {
+  constructor(private suppliesService: SupplyService) {
   }
 
   ngOnInit() {

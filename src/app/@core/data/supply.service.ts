@@ -4,7 +4,7 @@ import 'rxjs/add/operator/map';
 import {AppConfig} from '../../app.config';
 
 @Injectable()
-export class ProductsService {
+export class SupplyService {
 
   constructor(private http: Http) {
   }
@@ -12,12 +12,8 @@ export class ProductsService {
     return this.http.get(`${AppConfig.API_ENDPOINT_OLD}/supplies?currentStore=1`)
       .map(response => response.json())
       .map((supplies: any) => {
-        return supplies.data.map(this.parseData);
+        return supplies.data;
       });
-  }
-
-  private parseData(data): any {
-    return data;
   }
 
   public deleteSupply(id) {

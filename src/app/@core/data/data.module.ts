@@ -6,6 +6,13 @@ import { ElectricityService } from './electricity.service';
 import { StateService } from './state.service';
 import { SmartTableService } from './smart-table.service';
 import { PlayerService } from './player.service';
+import {StoreService} from './store.service';
+import {SupplyService} from './supply.service';
+import {SupplierService} from './supplier.service';
+import {UnitService} from './unit.service';
+import {SupplyTypeService} from './supply-type.service';
+import {SupplyReportType} from './supply-report-type';
+import {SupplyClassificationService} from './supply-classification.service';
 
 const SERVICES = [
   UserService,
@@ -13,6 +20,14 @@ const SERVICES = [
   StateService,
   SmartTableService,
   PlayerService,
+  // Real services
+  StoreService,
+  SupplierService,
+  SupplyReportType,
+  SupplyClassificationService,
+  SupplyService,
+  SupplyTypeService,
+  UnitService,
 ];
 
 @NgModule({

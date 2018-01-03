@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {LocalDataSource, ServerDataSource} from 'ng2-smart-table';
-import { Http } from '@angular/http';
-
-import { ProductsService } from '../products.service';
+import {LocalDataSource} from 'ng2-smart-table';
+import {SupplyService} from '../../../@core/data/supply.service';
 
 function sortByNumber(direction: number, a: string, b: string) {
   const numberA = parseInt(a, 10);
@@ -74,11 +72,11 @@ export class SuppliesTableComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
 
 
-  constructor(private productsService: ProductsService) {
+  constructor(private suppliesService: SupplyService) {
   }
 
   ngOnInit() {
-    this.productsService.getAll()
+    this.suppliesService.getAll()
       .subscribe((products: any) => {
         this.source.load(products);
       })
@@ -94,7 +92,7 @@ export class SuppliesTableComponent implements OnInit {
   }
 
   onDelete(event): void {
-    this.productsService.deleteSupply(event.data.id_supply)
+    this.suppliesService.deleteSupply(event.data.id_supply)
       .subscribe((result: any) => {
         this.source.remove(event.data);
       }, error => {

@@ -21,7 +21,6 @@ const components = [
     ...routedComponents,
   ],
   providers: [
-    ProductsService,
   ],
 })
 
