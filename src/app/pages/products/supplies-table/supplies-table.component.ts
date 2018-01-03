@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
 import {SupplyService} from '../../../@core/data/supply.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 function sortByNumber(direction: number, a: string, b: string) {
   const numberA = parseInt(a, 10);
@@ -72,7 +73,7 @@ export class SuppliesTableComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
 
 
-  constructor(private suppliesService: SupplyService) {
+  constructor(private suppliesService: SupplyService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
@@ -102,7 +103,6 @@ export class SuppliesTableComponent implements OnInit {
   }
 
   onCreate(el): void {
-    console.log(el)
-
+    this.router.navigate([`../supplies/new`], { relativeTo: this.route });
   }
 }

@@ -11,7 +11,7 @@ import {SupplyService} from './supply.service';
 import {SupplierService} from './supplier.service';
 import {UnitService} from './unit.service';
 import {SupplyTypeService} from './supply-type.service';
-import {SupplyReportType} from './supply-report-type';
+import {SupplyReportTypeService} from './supply-report-type.service';
 import {SupplyClassificationService} from './supply-classification.service';
 
 const SERVICES = [
@@ -23,7 +23,7 @@ const SERVICES = [
   // Real services
   StoreService,
   SupplierService,
-  SupplyReportType,
+  SupplyReportTypeService,
   SupplyClassificationService,
   SupplyService,
   SupplyTypeService,

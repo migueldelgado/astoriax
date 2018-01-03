@@ -4,7 +4,7 @@ import 'rxjs/add/operator/map';
 import {AppConfig} from '../../app.config';
 
 @Injectable()
-export class SupplyReportType {
+export class SupplyReportTypeService {
 
   constructor(private http: Http) {
   }

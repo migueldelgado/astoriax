@@ -3,6 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 
 import {ProductsComponent} from './products.component';
 import {SuppliesTableComponent} from './supplies-table/supplies-table.component';
+import {SupplyFormComponent} from './supply-form/supply-form.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,9 @@ const routes: Routes = [
       {
         path: 'supplies',
         component: SuppliesTableComponent,
+      }, {
+        path: 'supplies/new',
+        component: SupplyFormComponent,
       },
     ],
   },
@@ -26,4 +30,5 @@ export class ProductsRoutingModule {
 
 export const routedComponents = [
   SuppliesTableComponent,
+  SupplyFormComponent,
 ];
