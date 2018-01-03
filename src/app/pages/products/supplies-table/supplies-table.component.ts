@@ -4,6 +4,15 @@ import { Http } from '@angular/http';
 
 import { ProductsService } from '../products.service';
 
+function sortByNumber(direction: number, a: string, b: string) {
+  const numberA = parseInt(a, 10);
+  const numberB = parseInt(b, 10);
+  if (direction > 0) {
+    return numberA - numberB;
+  }
+  return numberB - numberA;
+}
+
 @Component({
   selector: 'ngx-supplies-table',
   templateUrl: './supplies-table.component.html',
@@ -30,6 +39,11 @@ export class SuppliesTableComponent implements OnInit {
       deleteButtonContent: '<i class="nb-trash"></i>',
       confirmDelete: true,
     },
+    actions: {
+      columnTitle: 'Acciones',
+      position: 'right'
+    },
+    mode: 'external',
     columns: {
       name: {
         title: 'Nombre',
@@ -46,10 +60,12 @@ export class SuppliesTableComponent implements OnInit {
       price: {
         title: 'Precio',
         type: 'integer',
+        compareFunction: sortByNumber,
       },
       stock_min: {
         title: 'Stock Minimo',
         type: 'number',
+        compareFunction: sortByNumber,
       },
     },
   };
@@ -75,5 +91,20 @@ export class SuppliesTableComponent implements OnInit {
     } else {
       event.confirm.reject();
     }
+  }
+
+  onDelete(event): void {
+    this.productsService.deleteSupply(event.data.id_supply)
+      .subscribe((result: any) => {
+        this.source.remove(event.data);
+      }, error => {
+        const errorMessage = JSON.parse(error._body);
+        alert(errorMessage.message);
+      })
+  }
+
+  onCreate(el): void {
+    console.log(el)
+
   }
 }
