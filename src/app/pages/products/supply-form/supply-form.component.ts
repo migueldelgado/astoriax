@@ -1,4 +1,5 @@
 ///<reference path="../../../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
+///<reference path="../../../../../node_modules/@types/node/index.d.ts"/>
 import { Component, OnInit } from '@angular/core';
 import {SupplyService} from '../../../@core/data/supply.service';
 import {SupplyTypeService} from '../../../@core/data/supply-type.service';
@@ -8,6 +9,7 @@ import {SupplyClassificationService} from '../../../@core/data/supply-classifica
 import {UnitService} from '../../../@core/data/unit.service';
 import {StoreService} from '../../../@core/data/store.service';
 import {Observable} from 'rxjs/Observable';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'ngx-supply-form',
@@ -25,7 +27,47 @@ export class SupplyFormComponent implements OnInit {
   supplyTypes$: Observable<any>;
   suppliers$: Observable<any>;
   units$: Observable<any>;
+  statusTypes = [
+    {
+      id_status: 1,
+      description: 'Activo',
+    },
+    {
+      id_status: 0,
+      description: 'Inactivo',
+    },
+  ];
 
+  data = {
+    price: 0,
+    name: '',
+    stock_min: 0,
+    wastage_rate: null,
+    stores: [
+      // {
+      //   store: {
+      //     id_store: '1',
+      //     name: 'AMCCP',
+      //     status: '1',
+      //     address: 'BARROS ARANA 1068 CONCEPCION',
+      //     phone: '0412462180',
+      //     city: 'CONCEPCION',
+      //   },
+      //   stock: '30',
+      //   status: {
+      //     id_status: 1,
+      //     description: 'Activo',
+      //   },
+      // },
+    ],
+    processed: false,
+    show_daily_inventory: false,
+    id_supply_classification: null,
+    id_supply_type: null,
+    id_unit: null,
+    id_supplier: null,
+    id_supply_report_type: null,
+  };
 
   constructor(
     private supplyService: SupplyService,
@@ -35,6 +77,8 @@ export class SupplyFormComponent implements OnInit {
     private supplierService: SupplierService,
     private supplyClassificationService: SupplyClassificationService,
     private unitService: UnitService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
   }
 
@@ -45,5 +89,32 @@ export class SupplyFormComponent implements OnInit {
     this.units$ = this.unitService.getAll();
     this.supplyReportTypes$ = this.supplyReportTypeService.getAll();
     this.supplyClassifications$ = this.supplyClassificationService.getAll();
+  }
+
+  addStore() {
+    this.data.stores.push({
+      stock: 0,
+      status: {
+        id_status: null,
+      },
+      store: {
+        id_store: null,
+      },
+    });
+  }
+
+  removeStore(i) {
+    this.data.stores = [...this.data.stores.slice(0, i), ...this.data.stores.slice(i + 1)];
+  }
+
+  save() {
+    this.supplyService.createSupply(this.data)
+      .subscribe((result) => {
+        this.cancel()
+      });
+  }
+
+  cancel() {
+    this.router.navigate(['../supplies'], { relativeTo: this.route })
   }
 }

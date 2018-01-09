@@ -21,4 +21,8 @@ export class SupplyService {
       .map(response => response.json())
   }
 
+  public createSupply(data) {
+    return this.http.post(`${AppConfig.API_ENDPOINT_OLD}/supplies`, data)
+      .map(response => response.json())
+  }
 }
