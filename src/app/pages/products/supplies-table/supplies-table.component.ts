@@ -105,4 +105,9 @@ export class SuppliesTableComponent implements OnInit {
   onCreate(el): void {
     this.router.navigate([`../supplies/new`], { relativeTo: this.route });
   }
+
+  onEdit(el): void {
+    this.router.navigate([`../supplies/edit/${el.data.id_supply}`], { relativeTo: this.route });
+    // this.router.navigate([`../supplies/new`], { relativeTo: this.route });
+  }
 }

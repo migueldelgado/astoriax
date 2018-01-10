@@ -25,4 +25,9 @@ export class SupplyService {
     return this.http.post(`${AppConfig.API_ENDPOINT_OLD}/supplies`, data)
       .map(response => response.json())
   }
+
+  public findSupply(id) {
+    return this.http.get(`${AppConfig.API_ENDPOINT_OLD}/supplies/${id}`)
+      .map(response => response.json())
+  }
 }

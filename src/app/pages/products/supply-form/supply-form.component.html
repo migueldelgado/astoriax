@@ -143,9 +143,9 @@
                 <tr *ngFor="let store of data.stores; let i = index">
                   <td>
                     <select
-                      name="store"
+                      name="store{{i}}"
                       class="form-control"
-                      [(ngModel)]="store.store.id_store"
+                      [(ngModel)]="data.stores[i].store.id_store"
                       required
                     >
                       <option [value]="null">Seleccione tienda</option>
@@ -158,13 +158,13 @@
                     </select>
                   </td>
                   <td>
-                    <input name="stock" required [(ngModel)]="store.stock" type="number" placeholder="Stock" class="form-control"/>
+                    <input name="stock{{i}}" required [(ngModel)]="data.stores[i].stock" type="number" placeholder="Stock" class="form-control"/>
                   </td>
                   <td>
                     <select
-                      name="status"
+                      name="status{{i}}"
                       class="form-control"
-                      [(ngModel)]="store.status.id_status"
+                      [(ngModel)]="data.stores[i].status.id_status"
                       required
                     >
                       <option [value]="null">Seleccione estado</option>

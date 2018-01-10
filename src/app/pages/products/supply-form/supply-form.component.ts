@@ -21,6 +21,7 @@ import {ActivatedRoute, Router} from '@angular/router';
   `],
 })
 export class SupplyFormComponent implements OnInit {
+  id: number;
   supplyClassifications$: Observable<any>;
   supplyReportTypes$: Observable<any>;
   stores$: Observable<any>;
@@ -73,6 +74,16 @@ export class SupplyFormComponent implements OnInit {
     this.units$ = this.unitService.getAll();
     this.supplyReportTypes$ = this.supplyReportTypeService.getAll();
     this.supplyClassifications$ = this.supplyClassificationService.getAll();
+    this.route.params.subscribe(params => {
+      this.id = +params['id']; // (+) converts string 'id' to a number
+      this.supplyService.findSupply(this.id)
+        .subscribe((result) => {
+          console.log(result);
+          this.data = Object.assign({}, result.data[0]);
+          console.log(this.data);
+        })
+      // In a real app: dispatch action to load the details here.
+    });
   }
 
   addStore(e) {

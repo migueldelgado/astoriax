@@ -16,6 +16,9 @@ const routes: Routes = [
       }, {
         path: 'supplies/new',
         component: SupplyFormComponent,
+      }, {
+        path: 'supplies/edit/:id',
+        component: SupplyFormComponent,
       },
     ],
   },
