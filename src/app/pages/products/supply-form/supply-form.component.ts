@@ -43,25 +43,9 @@ export class SupplyFormComponent implements OnInit {
     name: '',
     stock_min: 0,
     wastage_rate: null,
-    stores: [
-      // {
-      //   store: {
-      //     id_store: '1',
-      //     name: 'AMCCP',
-      //     status: '1',
-      //     address: 'BARROS ARANA 1068 CONCEPCION',
-      //     phone: '0412462180',
-      //     city: 'CONCEPCION',
-      //   },
-      //   stock: '30',
-      //   status: {
-      //     id_status: 1,
-      //     description: 'Activo',
-      //   },
-      // },
-    ],
-    processed: false,
-    show_daily_inventory: false,
+    stores: [],
+    processed: 0,
+    show_daily_inventory: 0,
     id_supply_classification: null,
     id_supply_type: null,
     id_unit: null,
@@ -91,7 +75,9 @@ export class SupplyFormComponent implements OnInit {
     this.supplyClassifications$ = this.supplyClassificationService.getAll();
   }
 
-  addStore() {
+  addStore(e) {
+    // console.log('##', $event);
+    e.preventDefault();
     this.data.stores.push({
       stock: 0,
       status: {
@@ -111,10 +97,13 @@ export class SupplyFormComponent implements OnInit {
     this.supplyService.createSupply(this.data)
       .subscribe((result) => {
         this.cancel()
+      }, (error) => {
+        const err = JSON.parse(error._body);
+        alert(err.message);
       });
   }
 
   cancel() {
-    this.router.navigate(['../supplies'], { relativeTo: this.route })
+    this.router.navigate(['..'], { relativeTo: this.route })
   }
 }

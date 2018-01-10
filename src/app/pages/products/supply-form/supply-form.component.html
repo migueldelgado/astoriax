@@ -9,13 +9,13 @@
           <div class="form-group row align-items-center">
             <label class="col-md-2 col-sm-3">Nombre</label>
             <div class="input-group col-md-10 col-sm-9">
-              <input type="text" [(ngModel)]="data.name" name="name" placeholder="Nombre" class="form-control"/>
+              <input type="text" [(ngModel)]="data.name" name="name" placeholder="Nombre" class="form-control" required />
             </div>
           </div>
           <div class="form-group row align-items-center">
             <label class="col-md-2 col-sm-3">Clasificación</label>
             <div class="col-md-10 col-sm-9">
-              <select name="classification" class="form-control" [(ngModel)]="data.id_supply_classification">
+              <select name="classification" class="form-control" [(ngModel)]="data.id_supply_classification" required>
                 <option [value]="null">Seleccione clasificación</option>
                 <option
                   *ngFor="let classification of supplyClassifications$ | async"
@@ -33,6 +33,7 @@
                 name="supplytype"
                 class="form-control"
                 [(ngModel)]="data.id_supply_type"
+                required
               >
                 <option [value]="null">Seleccione tipo</option>
                 <option
@@ -51,6 +52,7 @@
                 name="reportType"
                 class="form-control"
                 [(ngModel)]="data.id_supply_report_type"
+                required
               >
                 <option [value]="null">Seleccione tipo Reporte</option>
                 <option
@@ -69,6 +71,7 @@
                 name="unitType"
                 class="form-control"
                 [(ngModel)]="data.id_unit"
+                required
               >
                 <option [value]="null">Seleccione unidad</option>
                 <option
@@ -87,6 +90,7 @@
                 name="supplier"
                 class="form-control"
                 [(ngModel)]="data.id_supplier"
+                required
               >
                 <option [value]="null">Seleccione proveedor</option>
                 <option
@@ -101,19 +105,19 @@
           <div class="form-group row align-items-center">
             <label class="col-md-2 col-sm-3">Precio Neto</label>
             <div class="input-group col-md-10 col-sm-9">
-              <input [(ngModel)]="data.price" name="price" type="number" placeholder="Precio Neto" class="form-control"/>
+              <input [(ngModel)]="data.price" required name="price" type="number" placeholder="Precio Neto" class="form-control"/>
             </div>
           </div>
           <div class="form-group row align-items-center">
             <label class="col-md-2 col-sm-3">Stock Minimo</label>
             <div class="input-group col-md-10 col-sm-9">
-              <input [(ngModel)]="data.stock_min" name="minStock" type="number" placeholder="Stock Minimo" class="form-control"/>
+              <input [(ngModel)]="data.stock_min" required name="minStock" type="number" placeholder="Stock Minimo" class="form-control"/>
             </div>
           </div>
           <div class="form-group row align-items-center">
             <label class="col-md-2 col-sm-3">Porcentaje de merma</label>
             <div class="input-group col-md-10 col-sm-9">
-              <input [(ngModel)]="data.wastage_rate" name="wastage" type="number" placeholder="Porcentaje de merma"
+              <input [(ngModel)]="data.wastage_rate" required name="wastage" type="number" placeholder="Porcentaje de merma"
                      class="form-control"/>
             </div>
           </div>
@@ -122,7 +126,7 @@
               <h4 class="col-md-6 col-sm-6">Locales</h4>
               <div class="col-md-6 col-sm-6 row justify-content-end">
 
-                <button class="btn btn-primary" type="button" (click)="addStore()">Agregar</button>
+                <button class="btn btn-primary" type="button" (click)="addStore($event)">Agregar</button>
               </div>
             </div>
             <div class="row">
@@ -142,6 +146,7 @@
                       name="store"
                       class="form-control"
                       [(ngModel)]="store.store.id_store"
+                      required
                     >
                       <option [value]="null">Seleccione tienda</option>
                       <option
@@ -153,13 +158,14 @@
                     </select>
                   </td>
                   <td>
-                    <input name="stock" [(ngModel)]="store.stock" type="number" placeholder="Stock" class="form-control"/>
+                    <input name="stock" required [(ngModel)]="store.stock" type="number" placeholder="Stock" class="form-control"/>
                   </td>
                   <td>
                     <select
                       name="status"
                       class="form-control"
                       [(ngModel)]="store.status.id_status"
+                      required
                     >
                       <option [value]="null">Seleccione estado</option>
                       <option
