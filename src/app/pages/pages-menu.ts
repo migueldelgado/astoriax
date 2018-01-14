@@ -21,7 +21,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/products/supplies',
       },
       {
-        title: 'Productos',
+        title: 'Recetas',
         link: '/pages/products/recipes',
       },
     ],

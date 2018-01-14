@@ -9,7 +9,7 @@ export class SupplyService {
   constructor(private http: Http) {
   }
   public getAll() {
-    return this.http.get(`${AppConfig.API_ENDPOINT_OLD}/supplies?currentStore=1`)
+    return this.http.get(`${AppConfig.API_ENDPOINT_OLD}/supplies?currentStore=${AppConfig.APP_CURRENT_STORE}`)
       .map(response => response.json())
       .map((supplies: any) => {
         return supplies.data;

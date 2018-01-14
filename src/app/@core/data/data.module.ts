@@ -13,6 +13,7 @@ import {UnitService} from './unit.service';
 import {SupplyTypeService} from './supply-type.service';
 import {SupplyReportTypeService} from './supply-report-type.service';
 import {SupplyClassificationService} from './supply-classification.service';
+import {RecipeService} from './recipe.service';
 
 const SERVICES = [
   UserService,
@@ -21,6 +22,7 @@ const SERVICES = [
   SmartTableService,
   PlayerService,
   // Real services
+  RecipeService,
   StoreService,
   SupplierService,
   SupplyReportTypeService,
