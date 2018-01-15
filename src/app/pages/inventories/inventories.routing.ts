@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
-import {ProductsComponent} from './products.component';
+import {ProductsComponent} from './inventories.component';
 import {SuppliesTableComponent} from './supplies-table/supplies-table.component';
 import {SupplyFormComponent} from './supply-form/supply-form.component';
 import {RecipesTableComponent} from './recipes-table/recipes-table.component';

@@ -1,0 +1,229 @@
+<form (submit)="onSubmit()">
+  <nb-card>
+    <nb-card-header>
+      Nuevo Insumo
+    </nb-card-header>
+    <nb-card-body>
+      <nb-card>
+        <nb-card-body>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Nombre</label>
+            <div class="input-group col-md-10 col-sm-9">
+              <input type="text" [(ngModel)]="data.name" name="name" placeholder="Nombre" class="form-control" required />
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Clasificación</label>
+            <div class="col-md-10 col-sm-9">
+              <select name="classification" class="form-control" [(ngModel)]="data.id_supply_classification" required>
+                <option [value]="null">Seleccione clasificación</option>
+                <option
+                  *ngFor="let classification of supplyClassifications$ | async"
+                  [value]="classification.id_supply_classification"
+                >
+                  {{classification.description}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Tipo</label>
+            <div class="col-md-10 col-sm-9">
+              <select
+                name="supplytype"
+                class="form-control"
+                [(ngModel)]="data.id_supply_type"
+                required
+              >
+                <option [value]="null">Seleccione tipo</option>
+                <option
+                  *ngFor="let type of supplyTypes$ | async"
+                  [value]="type.id_supply_type"
+                >
+                  {{type.description}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Tipo Reporte</label>
+            <div class="col-md-10 col-sm-9">
+              <select
+                name="reportType"
+                class="form-control"
+                [(ngModel)]="data.id_supply_report_type"
+                required
+              >
+                <option [value]="null">Seleccione tipo Reporte</option>
+                <option
+                  *ngFor="let type of supplyReportTypes$ | async"
+                  [value]="type.id_supply_report_type"
+                >
+                  {{type.description}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Unidad</label>
+            <div class="col-md-10 col-sm-9">
+              <select
+                name="unitType"
+                class="form-control"
+                [(ngModel)]="data.id_unit"
+                required
+              >
+                <option [value]="null">Seleccione unidad</option>
+                <option
+                  *ngFor="let unit of units$ | async"
+                  [value]="unit.id_unit"
+                >
+                  {{unit.description}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Proveedor</label>
+            <div class="col-md-10 col-sm-9">
+              <select
+                name="supplier"
+                class="form-control"
+                [(ngModel)]="data.id_supplier"
+                required
+              >
+                <option [value]="null">Seleccione proveedor</option>
+                <option
+                  *ngFor="let supplier of suppliers$ | async"
+                  [value]="supplier.id_supplier"
+                >
+                  {{supplier.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Precio Neto</label>
+            <div class="input-group col-md-10 col-sm-9">
+              <input [(ngModel)]="data.price" required name="price" type="number" placeholder="Precio Neto" class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Stock Minimo</label>
+            <div class="input-group col-md-10 col-sm-9">
+              <input [(ngModel)]="data.stock_min" required name="minStock" type="number" placeholder="Stock Minimo" class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Porcentaje de merma</label>
+            <div class="input-group col-md-10 col-sm-9">
+              <input [(ngModel)]="data.wastage_rate" required name="wastage" type="number" placeholder="Porcentaje de merma"
+                     class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row justify-content-between">
+              <h4 class="col-md-6 col-sm-6">Locales</h4>
+              <div class="col-md-6 col-sm-6 row justify-content-end">
+
+                <button class="btn btn-primary" type="button" (click)="addStore($event)">Agregar</button>
+              </div>
+            </div>
+            <div class="row">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>Local</th>
+                  <th>Stock</th>
+                  <th>Estado</th>
+                  <th>Borrar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let store of data.stores; let i = index">
+                  <td>
+                    <select
+                      name="store{{i}}"
+                      class="form-control"
+                      [(ngModel)]="data.stores[i].store.id_store"
+                      required
+                    >
+                      <option [value]="null">Seleccione tienda</option>
+                      <option
+                        *ngFor="let s of stores$ | async"
+                        [value]="s.id_store"
+                      >
+                        {{s.name}}
+                      </option>
+                    </select>
+                  </td>
+                  <td>
+                    <input name="stock{{i}}" required [(ngModel)]="data.stores[i].stock" type="number" placeholder="Stock" class="form-control"/>
+                  </td>
+                  <td>
+                    <select
+                      name="status{{i}}"
+                      class="form-control"
+                      [(ngModel)]="data.stores[i].status.id_status"
+                      required
+                    >
+                      <option [value]="null">Seleccione estado</option>
+                      <option
+                        *ngFor="let st of statusTypes"
+                        [value]="st.id_status"
+                      >
+                        {{st.description}}
+                      </option>
+                    </select>
+                  </td>
+                  <td>
+                    <button class="btn btn-secondary" (click)="removeStore(i)">Borrar</button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Inventario diario</label>
+            <div class="input-group col-md-10 col-sm-9">
+              <label class="custom-control custom-radio">
+                <input [(ngModel)]="data.show_daily_inventory" value="0" type="radio" class="custom-control-input"
+                       name="dailyInventory" checked>
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">No</span>
+              </label>
+              <label class="custom-control custom-radio">
+                <input [(ngModel)]="data.show_daily_inventory" value="1" type="radio" class="custom-control-input"
+                       name="dailyInventory">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Si</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Proceso</label>
+            <div class="input-group col-md-10 col-sm-9">
+              <label class="custom-control custom-radio">
+                <input [(ngModel)]="data.processed" value="0" type="radio" class="custom-control-input"
+                       name="processed" checked>
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">No</span>
+              </label>
+              <label class="custom-control custom-radio">
+                <input [(ngModel)]="data.processed" value="1" type="radio" class="custom-control-input"
+                       name="processed">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Si</span>
+              </label>
+            </div>
+          </div>
+        </nb-card-body>
+        <nb-card-footer>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+        </nb-card-footer>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
+</form>

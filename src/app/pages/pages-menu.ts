@@ -13,7 +13,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Productos',
-    icon: 'nb-compose',
+    icon: 'nb-tables',
     link: '/pages/products',
     children: [
       {
@@ -23,6 +23,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Recetas',
         link: '/pages/products/recipes',
+      },
+    ],
+  },
+  {
+    title: 'Inventarios',
+    icon: 'nb-tables',
+    link: '/pages/inventories',
+    children: [
+      {
+        title: 'Inventarios Diarios',
+        link: '/pages/inventories',
       },
     ],
   },
