@@ -14,6 +14,7 @@ import {SupplyTypeService} from './supply-type.service';
 import {SupplyReportTypeService} from './supply-report-type.service';
 import {SupplyClassificationService} from './supply-classification.service';
 import {RecipeService} from './recipe.service';
+import {DailyInventoryService} from './daily-inventory.service';
 
 const SERVICES = [
   UserService,
@@ -22,6 +23,7 @@ const SERVICES = [
   SmartTableService,
   PlayerService,
   // Real services
+  DailyInventoryService,
   RecipeService,
   StoreService,
   SupplierService,

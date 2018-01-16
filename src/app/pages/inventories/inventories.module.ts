@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 
 import { ThemeModule } from '../../@theme/theme.module';
-import { ProductsRoutingModule, routedComponents } from './inventories.routing';
-import { ProductsComponent } from './inventories.component';
+import { InventoriesRoutingModule, routedComponents } from './inventories.routing';
+import { InventoriesComponent } from './inventories.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { MyDatePickerModule } from 'angular4-datepicker/src/my-date-picker/my-date-picker.module';
 
 const components = [
-  ProductsComponent,
+  InventoriesComponent,
 ];
 
 @NgModule({
   imports: [
     ThemeModule,
-    ProductsRoutingModule,
+    InventoriesRoutingModule,
     Ng2SmartTableModule,
+    MyDatePickerModule,
   ],
   declarations: [
     ...components,
@@ -22,5 +24,4 @@ const components = [
   providers: [
   ],
 })
-
-export class ProductsModule {}
+export class InventoriesModule {}

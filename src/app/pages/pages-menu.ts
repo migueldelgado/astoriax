@@ -33,7 +33,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Inventarios Diarios',
-        link: '/pages/inventories',
+        link: '/pages/inventories/daily/new',
       },
     ],
   },

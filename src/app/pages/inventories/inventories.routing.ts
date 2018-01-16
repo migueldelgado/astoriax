@@ -1,36 +1,21 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
-import {ProductsComponent} from './inventories.component';
-import {SuppliesTableComponent} from './supplies-table/supplies-table.component';
-import {SupplyFormComponent} from './supply-form/supply-form.component';
-import {RecipesTableComponent} from './recipes-table/recipes-table.component';
-import {RecipeFormComponent} from './recipe-form/recipe-form.component';
+import {InventoriesComponent} from './inventories.component';
+import {DailyInventoryFormComponent} from './daily-inventory-form/daily-inventory-form.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ProductsComponent,
+    component: InventoriesComponent,
     children: [
       {
-        path: 'supplies',
-        component: SuppliesTableComponent,
+        path: 'daily/new',
+        component: DailyInventoryFormComponent,
       }, {
-        path: 'supplies/new',
-        component: SupplyFormComponent,
-      }, {
-        path: 'supplies/edit/:id',
-        component: SupplyFormComponent,
-      }, {
-        path: 'recipes',
-        component: RecipesTableComponent,
-      }, {
-        path: 'recipes/new',
-        component: RecipeFormComponent,
-      },  {
-        path: 'recipes/edit/:id',
-        component: RecipeFormComponent,
-      }
+        path: 'daily/edit/:id',
+        component: DailyInventoryFormComponent,
+      },
     ],
   },
 ];
@@ -39,12 +24,9 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ProductsRoutingModule {
+export class InventoriesRoutingModule {
 }
 
 export const routedComponents = [
-  SuppliesTableComponent,
-  SupplyFormComponent,
-  RecipesTableComponent,
-  RecipeFormComponent
+  DailyInventoryFormComponent,
 ];
