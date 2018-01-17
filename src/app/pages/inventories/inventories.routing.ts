@@ -3,12 +3,17 @@ import {Routes, RouterModule} from '@angular/router';
 
 import {InventoriesComponent} from './inventories.component';
 import {DailyInventoryFormComponent} from './daily-inventory-form/daily-inventory-form.component';
+import {DailyInventoryTableComponent} from './daily-inventories-table/daily-inventory-table.component';
 
 const routes: Routes = [
   {
     path: '',
     component: InventoriesComponent,
     children: [
+      {
+        path: 'daily',
+        component: DailyInventoryTableComponent,
+      },
       {
         path: 'daily/new',
         component: DailyInventoryFormComponent,
@@ -29,4 +34,5 @@ export class InventoriesRoutingModule {
 
 export const routedComponents = [
   DailyInventoryFormComponent,
+  DailyInventoryTableComponent,
 ];

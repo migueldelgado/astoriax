@@ -3,7 +3,6 @@ import {SupplyService} from '../../../@core/data/supply.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppConfig} from '../../../app.config';
 import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker/interfaces/my-options.interface';
-import {IMyDateModel} from 'angular4-datepicker/src/my-date-picker/interfaces/my-date-model.interface';
 import {DailyInventoryService} from '../../../@core/data/daily-inventory.service';
 
 
@@ -30,7 +29,7 @@ export class DailyInventoryFormComponent implements OnInit {
   constructor(private supplyService: SupplyService,
               private dailyInventoryService: DailyInventoryService,
               private route: ActivatedRoute,
-              private router: Router,) {
+              private router: Router) {
     this.idStore = AppConfig.APP_CURRENT_STORE;
   }
 
@@ -92,11 +91,11 @@ export class DailyInventoryFormComponent implements OnInit {
       this.dailyInventoryService.createInventory(data);
     observable
       .subscribe((result) => {
-        console.log(this.supplies, result);
+        this.cancel();
       });
   }
 
   cancel() {
-
+    this.router.navigate(['/pages/inventories/daily'])
   }
 }
