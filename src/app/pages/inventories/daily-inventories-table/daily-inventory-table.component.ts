@@ -13,6 +13,9 @@ import {AppConfig} from '../../../app.config';
     nb-card {
       transform: translate3d(0, 0, 0);
     }
+    nb-card-body {
+      min-height: 400px;
+    }
   `],
 })
 export class DailyInventoryTableComponent implements OnInit {
