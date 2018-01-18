@@ -1,4 +1,4 @@
-<form (submit)="save()">
+<form (submit)="onSubmit()">
   <nb-card>
     <nb-card-header>
       Nuevo Insumo
@@ -188,13 +188,13 @@
             <label class="col-md-2 col-sm-3">Inventario diario</label>
             <div class="input-group col-md-10 col-sm-9">
               <label class="custom-control custom-radio">
-                <input [(ngModel)]="data.show_daily_inventory" [value]="0" type="radio" class="custom-control-input"
+                <input [(ngModel)]="data.show_daily_inventory" value="0" type="radio" class="custom-control-input"
                        name="dailyInventory" checked>
                 <span class="custom-control-indicator"></span>
                 <span class="custom-control-description">No</span>
               </label>
               <label class="custom-control custom-radio">
-                <input [(ngModel)]="data.show_daily_inventory" [value]="1" type="radio" class="custom-control-input"
+                <input [(ngModel)]="data.show_daily_inventory" value="1" type="radio" class="custom-control-input"
                        name="dailyInventory">
                 <span class="custom-control-indicator"></span>
                 <span class="custom-control-description">Si</span>
@@ -205,13 +205,13 @@
             <label class="col-md-2 col-sm-3">Proceso</label>
             <div class="input-group col-md-10 col-sm-9">
               <label class="custom-control custom-radio">
-                <input [(ngModel)]="data.processed" [value]="0" type="radio" class="custom-control-input"
+                <input [(ngModel)]="data.processed" value="0" type="radio" class="custom-control-input"
                        name="processed" checked>
                 <span class="custom-control-indicator"></span>
                 <span class="custom-control-description">No</span>
               </label>
               <label class="custom-control custom-radio">
-                <input [(ngModel)]="data.processed" [value]="1" type="radio" class="custom-control-input"
+                <input [(ngModel)]="data.processed" value="1" type="radio" class="custom-control-input"
                        name="processed">
                 <span class="custom-control-indicator"></span>
                 <span class="custom-control-description">Si</span>

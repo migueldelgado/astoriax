@@ -1,0 +1,102 @@
+<form (submit)="onSubmit()">
+  <nb-card>
+    <nb-card-header>
+      Nuevo Insumo
+    </nb-card-header>
+    <nb-card-body>
+      <nb-card>
+        <nb-card-body>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Nombre</label>
+            <div class="input-group col-md-10 col-sm-9">
+              <input type="text" [(ngModel)]="data.name" name="name" placeholder="Nombre" class="form-control" required />
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Clasificación</label>
+            <div class="input-group col-md-10 col-sm-9">
+              <input type="text" [(ngModel)]="data.classification" name="classification" placeholder="Clasificación" class="form-control" required />
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label>Locales</label>
+            <div class="input-group row">
+              <div class="col-sm-12 col-md-12 col-lg-4" *ngFor="let store of stores; let i = index">
+                <nb-checkbox
+                  name="selectedStore{{i}}"
+                  [(ngModel)]="stores[i].selected"
+                  [value]="false">
+                  {{store.name}}
+                </nb-checkbox>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row justify-content-between">
+              <h4 class="col-md-6 col-sm-6">Insumos</h4>
+              <div class="col-md-6 col-sm-6 row justify-content-end">
+                <button class="btn btn-primary" type="button" (click)="addSupply($event)">Agregar</button>
+              </div>
+            </div>
+            <div class="row">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>Insumo</th>
+                  <th>Cantidad</th>
+                  <th>Costo ($)</th>
+                  <th>Borrar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let _ of data.supplies; let i = index">
+                  <td>
+                    <select
+                      name="supply{{i}}"
+                      class="form-control"
+                      [(ngModel)]="data.supplies[i].supply.id_supply"
+                      (ngModelChange)="onChangeSupply($event, i)"
+                      required
+                    >
+                      <option [value]="null">Seleccione Insumo</option>
+                      <option
+                        *ngFor="let s of supplies"
+                        [value]="s.id_supply"
+                      >
+                        {{s.name}}
+                      </option>
+                    </select>
+                  </td>
+                  <td>
+                    <input name="quantity{{i}}" (change)="recalculateCost(i)" required [(ngModel)]="data.supplies[i].quantity" type="number" placeholder="Cantidad" class="form-control"/>
+                  </td>
+                  <td>
+                    <input name="cost{{i}}" disabled [value]="data.supplies[i].cost" type="number" placeholder="Cantidad" class="form-control"/>
+                  </td>
+                  <td>
+                    <button class="btn btn-secondary" (click)="removeSupply(i)">Borrar</button>
+                  </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td>
+                      Total
+                    </td>
+                    <td>
+                      {{totalCost}}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </nb-card-body>
+        <nb-card-footer>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+        </nb-card-footer>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
+</form>

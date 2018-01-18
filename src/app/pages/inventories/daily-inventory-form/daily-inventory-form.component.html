@@ -1,0 +1,43 @@
+<form (submit)="onSubmit()">
+  <nb-card>
+    <nb-card-header>
+      Inventario Diario
+    </nb-card-header>
+    <nb-card-body>
+      <my-date-picker name="mydate" [(ngModel)]="date" [options]="options" required></my-date-picker>
+      <div class="form-group">
+        <div class="row justify-content-between">
+          <h4 class="col-md-6 col-sm-6">Insumos</h4>
+        </div>
+        <div class="row">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Insumo</th>
+              <th>Cantidad Inicial</th>
+              <th>Cantidad Final</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let _ of supplies; let i = index">
+              <td>
+                {{supplies[i].name}}
+              </td>
+              <td>
+                <input name="quantity{{i}}" required [(ngModel)]="supplies[i].initial_quantity" type="number" placeholder="Cantidad" class="form-control"/>
+              </td>
+              <td>
+                <input name="final_quantity{{i}}" required [(ngModel)]="supplies[i].final_quantity" type="number" placeholder="Cantidad" class="form-control"/>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <button class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+    </nb-card-footer>
+  </nb-card>
+</form>

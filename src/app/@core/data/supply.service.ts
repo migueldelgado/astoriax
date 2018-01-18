@@ -8,8 +8,12 @@ export class SupplyService {
 
   constructor(private http: Http) {
   }
-  public getAll() {
-    return this.http.get(`${AppConfig.API_ENDPOINT_OLD}/supplies?currentStore=1`)
+  public getAll(config?: Object) {
+    const params = config || {
+      currentStore: AppConfig.APP_CURRENT_STORE,
+    };
+    console.log(params);
+    return this.http.get(`${AppConfig.API_ENDPOINT_OLD}/supplies`, { params })
       .map(response => response.json())
       .map((supplies: any) => {
         return supplies.data;
@@ -23,6 +27,11 @@ export class SupplyService {
 
   public createSupply(data) {
     return this.http.post(`${AppConfig.API_ENDPOINT_OLD}/supplies`, data)
+      .map(response => response.json())
+  }
+
+  public updateSupply(id, data) {
+    return this.http.put(`${AppConfig.API_ENDPOINT_OLD}/supplies/${id}`, data)
       .map(response => response.json())
   }
 
