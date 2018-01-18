@@ -28,7 +28,7 @@ export class AuditDetailComponent implements OnInit {
       });
     this.auditService.getAuditReport(id)
       .subscribe((result) => {
-        this.downloadPath = result.data.downloadPath;
+        this.downloadPath = result.downloadPath;
       }, () => {
         this.downloadPath = null;
       })
