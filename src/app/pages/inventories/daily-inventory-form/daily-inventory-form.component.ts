@@ -92,6 +92,8 @@ export class DailyInventoryFormComponent implements OnInit {
     observable
       .subscribe((result) => {
         this.cancel();
+      }, () => {
+        alert('Error al guardar inventario');
       });
   }
 

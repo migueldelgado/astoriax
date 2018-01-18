@@ -135,6 +135,9 @@ export class AuditAddComponent implements OnInit {
     const result = this.auditService.saveAudit(data);
     result.subscribe(() => {
       this.router.navigate(['../audit-list'], { relativeTo: this.route })
+    }, (error) => {
+      console.log(error)
+      alert('Error al guardar auditoria')
     })
   }
 }
