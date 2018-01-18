@@ -4,8 +4,12 @@
       <nb-card>
         <nb-card-header>Auditoria</nb-card-header>
         <nb-card-body>
+          <div class="row justify-content-end" *ngIf="downloadPath">
+            <a [href]="downloadPath">
+              <div><i class="ion-archive"></i></div>
+            </a>
+          </div>
           <div class="row">
-
             <div class="col">
               <label>Tipo de auditoria</label>
               <div>

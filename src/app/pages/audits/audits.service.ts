@@ -82,4 +82,9 @@ export class AuditsService {
     return this.http.post(`${AppConfig.API_ENDPOINT}audits`, audit)
   }
 
+  public getAuditReport(id) {
+    return this.http.get(`${AppConfig.API_ENDPOINT}audit_report/${id}`)
+      .map(response => response.json())
+  }
+
 }

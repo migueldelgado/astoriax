@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
   templateUrl: './audit-detail.component.html',
 })
 export class AuditDetailComponent implements OnInit {
+  downloadPath = null;
   audit: Object = {};
   sections;
   auditTypeId: string = null;
@@ -24,11 +25,13 @@ export class AuditDetailComponent implements OnInit {
     this.auditService.getAll()
       .subscribe((audits) => {
         this.audit = audits.find(a => a.id === id);
+      });
+    this.auditService.getAuditReport(id)
+      .subscribe((result) => {
+        this.downloadPath = result.data.downloadPath;
+      }, () => {
+        this.downloadPath = null;
       })
-  }
-
-  loadAudits() {
-    this.auditService.getAll().subscribe(p => this.result = p);
   }
 
   onAuditTypeChange() {

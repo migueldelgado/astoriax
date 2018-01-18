@@ -117,7 +117,7 @@ export class AuditAddComponent implements OnInit {
       store_id: this.storeId,
       shift_id: this.shiftId,
       revisions: null,
-    }
+    };
 
     const revisions = this.sections.reduce((acc, s) => {
       const sectionRevisions = s.revisions.map((r) => ({

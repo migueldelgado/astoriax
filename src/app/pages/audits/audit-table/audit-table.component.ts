@@ -26,12 +26,10 @@ export class AuditTableComponent implements OnInit {
       editButtonContent: '<i class="nb-search"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
     },
-    // delete: {
-    //   deleteButtonContent: '<i class="nb-trash"></i>',
-    //   confirmDelete: true,
-    // },
     actions: {
       delete: false,
+      columnTitle: 'Acciones',
+      position: 'right',
     },
     columns: {
       audit_type: {
