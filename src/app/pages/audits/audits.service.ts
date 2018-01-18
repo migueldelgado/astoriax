@@ -52,7 +52,7 @@ export class AuditsService {
                 return Object.assign({}, r, {
                   score: 2,
                   classification: 'Cumple',
-                  comment: 'Comment',
+                  comment: '',
                 });
               });
             return Object.assign({}, s, {
