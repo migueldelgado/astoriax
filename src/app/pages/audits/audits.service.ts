@@ -18,6 +18,11 @@ export class AuditsService {
       });
   }
 
+  public find(id) {
+    return this.http.get(`${AppConfig.API_ENDPOINT}audits/${id}` )
+      .map(response => response.json());
+  }
+
   private parseData(data): any {
     return data;
   }

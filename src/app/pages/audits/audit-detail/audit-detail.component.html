@@ -41,9 +41,10 @@
               </div>
             </div>
           </div>
-          <div class="row" *ngIf="false">
+          <div class="row">
             <div class="col-lg-12">
-              <table class="table table-bordered" *ngFor="let section of sections">
+              <div></div>
+              <table class="table table-bordered" *ngFor="let section of audit.auditType.sections">
                 <thead>
                 <tr>
                   <th colspan="5">{{section.name}}</th>
@@ -59,12 +60,7 @@
                   <tr *ngFor="let revision of section.revisions">
                     <td>{{revision.name}}</td>
                     <td>
-                      <select class="form-control" [(ngModel)]="revision.score" (ngModelChange)="onScoreChange(revision, section)">
-                        <option [value]="null">Puntaje</option>
-                        <option [value]="1">1</option>
-                        <option [value]="2">2</option>
-                        <option [value]="3">3</option>
-                      </select>
+                      {{revision.score}}
                     </td>
                     <td>
                       <span *ngIf="revision.score == 1">
@@ -77,30 +73,20 @@
                         No Aplica
                       </span>
                     </td>
-                    <td><textarea [(ngModel)]="revision.comment"></textarea></td>
+                    <td>{{revision.comment}}</td>
                   </tr>
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <td>
-                      SUB-NOTA
-                    </td>
-                    <td colspan="3">
-                      {{section.percentageScore | percent}}
-                    </td>
-                  </tr>
-                </tfoot>
+                <!--<tfoot>-->
+                  <!--<tr>-->
+                    <!--<td>-->
+                      <!--SUB-NOTA-->
+                    <!--</td>-->
+                    <!--<td colspan="3">-->
+                      <!--{{section.percentageScore | percent}}-->
+                    <!--</td>-->
+                  <!--</tr>-->
+                <!--</tfoot>-->
               </table>
-              <div class="container">
-                <div class="row justify-content-between align-items-center" *ngIf="score != null">
-                  <div class="col-sm-3">
-                    <nb-card-header >Total: {{ score | percent }}</nb-card-header>
-                  </div>
-                  <div class="col-sm-3">
-                    <button class="btn btn-primary" (click)="onSave()">Guardar</button>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </nb-card-body>

@@ -22,9 +22,9 @@ export class AuditDetailComponent implements OnInit {
 
   ngOnInit() {
     const id = parseInt(this.route.snapshot.params.id, 10);
-    this.auditService.getAll()
-      .subscribe((audits) => {
-        this.audit = audits.find(a => a.id === id);
+    this.auditService.find(id)
+      .subscribe((audit) => {
+        this.audit = audit;
       });
     this.auditService.getAuditReport(id)
       .subscribe((result) => {
