@@ -4,14 +4,14 @@
   </nb-card-header>
 
   <nb-card-body>
-    <div class="form-group row align-items-center">
+    <div class="form-group row align-items-center inventories-table">
       <label class="col-md-2 col-sm-3">Desde: </label>
       <div class="input-group col-md-4 col-sm-3">
-        <my-date-picker name="dateFrom" (dateChanged)="onChangeFrom($event)" [(ngModel)]="dateFrom" [options]="options" required></my-date-picker>
+        <my-date-picker name="dateFrom" (change)="onChangeTo($event)" (dateChanged)="onChangeFrom($event)" [(ngModel)]="dateFrom" [options]="options" required></my-date-picker>
       </div>
       <label class="col-md-2 col-sm-3">Hasta: </label>
       <div class="input-group col-md-4 col-sm-3">
-        <my-date-picker name="dateTo" (dateChanged)="onChangeTo($event)" [(ngModel)]="dateTo" [options]="options" required></my-date-picker>
+        <my-date-picker name="dateTo" (change)="onChangeTo($event)" (dateChanged)="onChangeTo($event)" [(ngModel)]="dateTo" [options]="options" required></my-date-picker>
       </div>
     </div>
     <ng2-smart-table

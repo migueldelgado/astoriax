@@ -75,6 +75,7 @@ export class DailyInventoryTableComponent implements OnInit {
   }
 
   onChangeTo(date) {
+    console.log(this.firstLoad);
     if (!this.firstLoad) {
       return;
     }
@@ -89,6 +90,9 @@ export class DailyInventoryTableComponent implements OnInit {
     this.dailyInventoryService.getAll({ currentStore: AppConfig.APP_CURRENT_STORE, dateFrom: from, dateTo: to })
       .subscribe((dailyInventories: any) => {
         this.source.load(dailyInventories);
+        this.firstLoad = true;
+      }, () => {
+        this.source.load([])
         this.firstLoad = true;
       })
   }
