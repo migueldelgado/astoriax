@@ -75,14 +75,14 @@ export class SupplyFormComponent implements OnInit {
     this.supplyReportTypes$ = this.supplyReportTypeService.getAll();
     this.supplyClassifications$ = this.supplyClassificationService.getAll();
     this.route.params.subscribe(params => {
-      this.id = +params['id']; // (+) converts string 'id' to a number
+      if (!params.id) {
+        return ;
+      }
+      this.id = params.id;
       this.supplyService.findSupply(this.id)
         .subscribe((result) => {
-          console.log(result);
           this.data = Object.assign({}, result.data[0]);
-          console.log(this.data);
         })
-      // In a real app: dispatch action to load the details here.
     });
   }
 
@@ -104,6 +104,14 @@ export class SupplyFormComponent implements OnInit {
     this.data.stores = [...this.data.stores.slice(0, i), ...this.data.stores.slice(i + 1)];
   }
 
+  onSubmit() {
+    if (this.id) {
+      this.update();
+    } else {
+      this.save();
+    }
+  }
+
   save() {
     this.supplyService.createSupply(this.data)
       .subscribe((result) => {
@@ -114,7 +122,17 @@ export class SupplyFormComponent implements OnInit {
       });
   }
 
+  update() {
+    this.supplyService.updateSupply(this.id, this.data)
+      .subscribe((result) => {
+        this.cancel()
+      }, (error) => {
+        const err = JSON.parse(error._body);
+        alert(err.message);
+      });
+  }
+
   cancel() {
-    this.router.navigate(['..'], { relativeTo: this.route })
+    this.router.navigate(['/pages/products/recipes'])
   }
 }

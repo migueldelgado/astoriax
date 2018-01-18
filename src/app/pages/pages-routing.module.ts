@@ -21,6 +21,10 @@ const routes: Routes = [{
         loadChildren: './products/products.module#ProductsModule',
       },
       {
+        path: 'inventories',
+        loadChildren: './inventories/inventories.module#InventoriesModule',
+      },
+      {
         path: 'ui-features',
         loadChildren: './ui-features/ui-features.module#UiFeaturesModule',
       },

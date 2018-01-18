@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
-import {SupplyService} from '../../../@core/data/supply.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {RecipeService} from '../../../@core/data/recipe.service';
 
 function sortByNumber(direction: number, a: string, b: string) {
   const numberA = parseInt(a, 10);
@@ -14,14 +14,14 @@ function sortByNumber(direction: number, a: string, b: string) {
 
 @Component({
   selector: 'ngx-supplies-table',
-  templateUrl: './supplies-table.component.html',
+  templateUrl: './recipes-table.component.html',
   styles: [`
     nb-card {
       transform: translate3d(0, 0, 0);
     }
   `],
 })
-export class SuppliesTableComponent implements OnInit {
+export class RecipesTableComponent implements OnInit {
 
   settings = {
     add: {
@@ -52,18 +52,9 @@ export class SuppliesTableComponent implements OnInit {
         title: 'Clasificación',
         type: 'string',
       },
-      type: {
-        title: 'Tipo',
-        type: 'string',
-      },
-      price: {
-        title: 'Precio',
+      cost: {
+        title: 'Costo Producto',
         type: 'integer',
-        compareFunction: sortByNumber,
-      },
-      stock_min: {
-        title: 'Stock Minimo',
-        type: 'number',
         compareFunction: sortByNumber,
       },
     },
@@ -73,19 +64,19 @@ export class SuppliesTableComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
 
 
-  constructor(private suppliesService: SupplyService, private route: ActivatedRoute, private router: Router) {
+  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
-    this.suppliesService.getAll()
-      .subscribe((products: any) => {
-        this.source.load(products);
+    this.recipeService.getAll()
+      .subscribe((recipes: any) => {
+        this.source.load(recipes);
       })
   }
 
 
   onDeleteConfirm(event): void {
-    if (window.confirm('Are you sure you want to delete?')) {
+    if (window.confirm('Desea continuar?')) {
       event.confirm.resolve();
     } else {
       event.confirm.reject();
@@ -93,7 +84,7 @@ export class SuppliesTableComponent implements OnInit {
   }
 
   onDelete(event): void {
-    this.suppliesService.deleteSupply(event.data.id_supply)
+    this.recipeService.deleteRecipe(event.data.id_supply)
       .subscribe((result: any) => {
         this.source.remove(event.data);
       }, error => {
@@ -103,10 +94,10 @@ export class SuppliesTableComponent implements OnInit {
   }
 
   onCreate(el): void {
-    this.router.navigate([`../supplies/new`], { relativeTo: this.route });
+    this.router.navigate([`../recipes/new`], { relativeTo: this.route });
   }
 
   onEdit(el): void {
-    this.router.navigate([`../supplies/edit/${el.data.id_supply}`], { relativeTo: this.route });
+    this.router.navigate([`./edit/${el.data.id_recipe}`], { relativeTo: this.route });
   }
 }
