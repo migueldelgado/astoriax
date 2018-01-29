@@ -12,7 +12,6 @@ export class DailyInventoryService {
     const params = config || {
       currentStore: AppConfig.APP_CURRENT_STORE,
     };
-    console.log(config);
     return this.http.get(`${AppConfig.API_ENDPOINT_OLD}/daily_inventory`, { params })
       .map(response => response.json())
       .map((inventories: any) => {

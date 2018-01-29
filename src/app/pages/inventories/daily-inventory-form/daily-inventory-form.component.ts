@@ -51,7 +51,6 @@ export class DailyInventoryFormComponent implements OnInit {
         const [day, month, year] = data.date.split('/');
 
         this.date.jsdate = new Date(year, parseInt(month, 10) - 1, day);
-        console.log(this.date.jsdate);
         this.supplies = data.supplies.map(s => ({
           id_supply: s.supply.id_supply,
           name: s.supply.name,
