@@ -6,6 +6,7 @@ import {DailyInventoryFormComponent} from './daily-inventory-form/daily-inventor
 import {DailyInventoryTableComponent} from './daily-inventories-table/daily-inventory-table.component';
 import {LoanFormComponent} from './loans/loan-form.component';
 import {LoanTableComponent} from './loans/loan-table.component';
+import {PurchaseTableComponent} from './purchases/purchase-table.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
         path: 'loan/edit/:id',
         component: LoanFormComponent,
       },
+      {
+        path: 'purchases',
+        component: PurchaseTableComponent,
+      },
     ],
   },
 ];
@@ -51,4 +56,5 @@ export const routedComponents = [
   DailyInventoryTableComponent,
   LoanFormComponent,
   LoanTableComponent,
+  PurchaseTableComponent,
 ];

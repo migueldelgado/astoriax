@@ -16,6 +16,7 @@ import {SupplyClassificationService} from './supply-classification.service';
 import {RecipeService} from './recipe.service';
 import {DailyInventoryService} from './daily-inventory.service';
 import {LoanService} from './loan.service';
+import {PurchaseService} from './purchase.service';
 
 const SERVICES = [
   UserService,
@@ -26,6 +27,7 @@ const SERVICES = [
   // Real services
   DailyInventoryService,
   LoanService,
+  PurchaseService,
   RecipeService,
   StoreService,
   SupplierService,
