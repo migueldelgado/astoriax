@@ -1,0 +1,109 @@
+<form (submit)="onSubmit()">
+  <nb-card>
+    <nb-card-header>
+      Prestamos
+    </nb-card-header>
+    <nb-card-body>
+      <nb-card>
+        <nb-card-body>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Fecha</label>
+            <div class="input-group col-md-10 col-sm-9">
+              <my-date-picker name="mydate" [(ngModel)]="date" [options]="options" required></my-date-picker>
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Factura o N de guia</label>
+            <div class="col-md-10 col-sm-9">
+              <input name="invoice" required [(ngModel)]="data.invoice_number" type="text" placeholder="Numero Factura" class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Proveedor</label>
+            <div class="col-md-10 col-sm-9">
+              <select
+                name="supplier"
+                class="form-control"
+                [(ngModel)]="data.id_supplier"
+                required
+              >
+                <option [value]="null">Seleccione Tienda</option>
+                <option
+                  *ngFor="let s of suppliers"
+                  [value]="s.id_supplier"
+                >
+                  {{s.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Turno</label>
+            <div class="col-md-10 col-sm-9">
+              <select
+                name="loanType"
+                class="form-control"
+                [(ngModel)]="data.id_shift"
+                required
+              >
+                <option [value]="null">Seleccione Tipo</option>
+                <option [value]="1">M</option>
+                <option [value]="2">T</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row justify-content-between">
+              <h4 class="col-md-6 col-sm-6">Insumos</h4>
+              <div class="col-md-6 col-sm-6 row justify-content-end">
+                <button class="btn btn-primary" type="button" (click)="addSupply($event)">Agregar</button>
+              </div>
+            </div>
+            <div class="row">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>Insumo</th>
+                  <th>Cantidad</th>
+                  <th>Borrar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let _ of data.supplies; let i = index">
+                  <td>
+                    <select
+                      name="supply{{i}}"
+                      class="form-control"
+                      [(ngModel)]="data.supplies[i].id_supply"
+                      required
+                    >
+                      <option [value]="null">Seleccione Insumo</option>
+                      <option
+                        *ngFor="let s of supplies"
+                        [value]="s.id_supply"
+                      >
+                        {{s.name}}
+                      </option>
+                    </select>
+                  </td>
+                  <td>
+                    <input name="quantity{{i}}" required [(ngModel)]="data.supplies[i].quantity" type="number" placeholder="Cantidad" class="form-control"/>
+                  </td>
+                  <td>
+                    <button class="btn btn-secondary" (click)="removeSupply(i)">Borrar</button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </nb-card-body>
+        <nb-card-footer>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+        </nb-card-footer>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
+</form>
