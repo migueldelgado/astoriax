@@ -1,0 +1,212 @@
+<nb-auth-block>
+  <h2 class="title">Sign Up</h2>
+  <form (ngSubmit)="register()" #form="ngForm">
+
+    <div *ngIf="showMessages.error && errors && errors.length > 0 && !submitted"
+         class="alert alert-danger" role="alert">
+      <div><strong>Error</strong></div>
+      <div *ngFor="let error of errors">{{ error }}</div>
+    </div>
+    <div *ngIf="showMessages.success && messages && messages.length > 0 && !submitted"
+         class="alert alert-success" role="alert">
+      <div><strong>Exito!</strong></div>
+      <div *ngFor="let message of messages">{{ message }}</div>
+    </div>
+
+    <div class="form-group">
+      <label for="input-name" class="sr-only">Nombre</label>
+      <input name="firstName" [(ngModel)]="user.first_name" id="input-name" #firstName="ngModel"
+             class="form-control" placeholder="Nombre"
+             [class.form-control-danger]="firstName.invalid && firstName.touched"
+             [required]="getConfigValue('forms.validation.firstName.required')"
+             [minlength]="getConfigValue('forms.validation.firstName.minLength')"
+             [maxlength]="getConfigValue('forms.validation.firstName.maxLength')"
+             autofocus>
+      <small class="form-text error" *ngIf="firstName.invalid && firstName.touched && firstName.errors?.required">
+        Nombre es requerido
+      </small>
+      <small
+        class="form-text error"
+        *ngIf="firstName.invalid && firstName.touched && (firstName.errors?.minlength || firstName.errors?.maxlength)">
+        Nombre deberia tener
+        desde {{getConfigValue('forms.validation.firstName.minLength')}}
+        hasta {{getConfigValue('forms.validation.firstName.maxLength')}}
+        caracteres
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="input-name" class="sr-only">Apellido</label>
+      <input name="lastName" [(ngModel)]="user.last_name" id="input-lastname" #lastName="ngModel"
+             class="form-control" placeholder="Apellido"
+             [class.form-control-danger]="lastName.invalid && lastName.touched"
+             [required]="getConfigValue('forms.validation.lastName.required')"
+             [minlength]="getConfigValue('forms.validation.lastName.minLength')"
+             [maxlength]="getConfigValue('forms.validation.lastName.maxLength')"
+             autofocus>
+      <small class="form-text error" *ngIf="lastName.invalid && lastName.touched && lastName.errors?.required">
+        Apellido es requerido
+      </small>
+      <small
+        class="form-text error"
+        *ngIf="lastName.invalid && lastName.touched && (lastName.errors?.minlength || lastName.errors?.maxlength)">
+        Nombre deberia tener
+        desde {{getConfigValue('forms.validation.lastName.minLength')}}
+        hasta {{getConfigValue('forms.validation.lastName.maxLength')}}
+        caracteres
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="input-name" class="sr-only">Rut</label>
+      <input name="rut" [(ngModel)]="user.rut" id="input-rut" #rut="ngModel"
+             class="form-control" placeholder="Rut"
+             [class.form-control-danger]="rut.invalid && rut.touched"
+             [required]="getConfigValue('forms.validation.rut.required')"
+             [minlength]="getConfigValue('forms.validation.rut.minLength')"
+             [maxlength]="getConfigValue('forms.validation.rut.maxLength')"
+             autofocus>
+      <small class="form-text error" *ngIf="rut.invalid && rut.touched && rut.errors?.required">
+        Rut es requerido
+      </small>
+      <small
+        class="form-text error"
+        *ngIf="rut.invalid && rut.touched && (rut.errors?.minlength || rut.errors?.maxlength)">
+        Rut debe tener
+        desde {{getConfigValue('forms.validation.rut.minLength')}}
+        hasta {{getConfigValue('forms.validation.rut.maxLength')}}
+        caracteres
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="input-name" class="sr-only">Direccion</label>
+      <input name="address" [(ngModel)]="user.address" id="input-address" #address="ngModel"
+             class="form-control" placeholder="Dirección"
+             [class.form-control-danger]="address.invalid && address.touched"
+             [required]="getConfigValue('forms.validation.address.required')"
+             [minlength]="getConfigValue('forms.validation.address.minLength')"
+             [maxlength]="getConfigValue('forms.validation.address.maxLength')"
+             autofocus>
+      <small class="form-text error" *ngIf="address.invalid && address.touched && address.errors?.required">
+        Dirección es requerida
+      </small>
+      <small
+        class="form-text error"
+        *ngIf="address.invalid && address.touched && (address.errors?.minlength || address.errors?.maxlength)">
+        Dirección debe tener
+        desde {{getConfigValue('forms.validation.address.minLength')}}
+        hasta {{getConfigValue('forms.validation.address.maxLength')}}
+        caracteres
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="input-name" class="sr-only">Ciudad</label>
+      <input name="city" [(ngModel)]="user.city" id="input-city" #city="ngModel"
+             class="form-control" placeholder="Ciudad"
+             [class.form-control-danger]="city.invalid && city.touched"
+             [required]="getConfigValue('forms.validation.city.required')"
+             [minlength]="getConfigValue('forms.validation.city.minLength')"
+             [maxlength]="getConfigValue('forms.validation.city.maxLength')"
+             autofocus>
+      <small class="form-text error" *ngIf="city.invalid && city.touched && city.errors?.required">
+        Ciudad es requerida
+      </small>
+      <small
+        class="form-text error"
+        *ngIf="city.invalid && city.touched && (city.errors?.minlength || city.errors?.maxlength)">
+        Dirección debe tener
+        desde {{getConfigValue('forms.validation.city.minLength')}}
+        hasta {{getConfigValue('forms.validation.city.maxLength')}}
+        caracteres
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="input-name" class="sr-only">Teléfono</label>
+      <input name="phone" [(ngModel)]="user.phone" id="input-phone" #phone="ngModel"
+             class="form-control" placeholder="Teléfono"
+             type="tel"
+             [class.form-control-danger]="phone.invalid && phone.touched"
+             [required]="getConfigValue('forms.validation.phone.required')"
+             [minlength]="getConfigValue('forms.validation.phone.minLength')"
+             [maxlength]="getConfigValue('forms.validation.phone.maxLength')"
+             autofocus>
+      <small class="form-text error" *ngIf="phone.invalid && phone.touched && phone.errors?.required">
+        Ciudad es requerida
+      </small>
+      <small
+        class="form-text error"
+        *ngIf="phone.invalid && phone.touched && (phone.errors?.minlength || phone.errors?.maxlength)">
+        Teléfono debe tener
+        desde {{getConfigValue('forms.validation.phone.minLength')}}
+        hasta {{getConfigValue('forms.validation.phone.maxLength')}}
+        caracteres
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="input-email" class="sr-only">Email</label>
+      <input name="email" [(ngModel)]="user.email" id="input-email" #email="ngModel"
+             class="form-control" placeholder="Email address" pattern=".+@.+..+"
+             [class.form-control-danger]="email.invalid && email.touched"
+             [required]="getConfigValue('forms.validation.email.required')">
+      <small class="form-text error" *ngIf="email.invalid && email.touched && email.errors?.required">
+        Email es requerido
+      </small>
+      <small class="form-text error"
+             *ngIf="email.invalid && email.touched && email.errors?.pattern">
+        Email debe ser valido
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="input-password" class="sr-only">Password</label>
+      <input name="password" [(ngModel)]="user.password" type="password" id="input-password"
+             class="form-control" placeholder="Password" #password="ngModel"
+             [class.form-control-danger]="password.invalid && password.touched"
+             [required]="getConfigValue('forms.validation.password.required')"
+             [minlength]="getConfigValue('forms.validation.password.minLength')"
+             [maxlength]="getConfigValue('forms.validation.password.maxLength')">
+      <small class="form-text error" *ngIf="password.invalid && password.touched && password.errors?.required">
+        Password is required!
+      </small>
+      <small
+        class="form-text error"
+        *ngIf="password.invalid && password.touched && (password.errors?.minlength || password.errors?.maxlength)">
+        Password should contains
+        from {{ getConfigValue('forms.validation.password.minLength') }}
+        to {{ getConfigValue('forms.validation.password.maxLength') }}
+        characters
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="input-re-password" class="sr-only">Repeat password</label>
+      <input
+        name="rePass" [(ngModel)]="user.password_confirmation" type="password" id="input-re-password"
+        class="form-control" placeholder="Confirm Password" #rePass="ngModel"
+        [class.form-control-danger]="(rePass.invalid || password.value != rePass.value) && rePass.touched"
+        [required]="getConfigValue('forms.validation.password.required')">
+      <small class="form-text error"
+             *ngIf="rePass.invalid && rePass.touched && rePass.errors?.required">
+        Password confirmation is required!
+      </small>
+      <small
+        class="form-text error"
+        *ngIf="rePass.touched && password.value != rePass.value && !rePass.errors?.required">
+        Password does not match the confirm password.
+      </small>
+    </div>
+
+    <button [disabled]="submitted || !form.valid" class="btn btn-block btn-hero-success"
+            [class.btn-pulse]="submitted">
+      Register
+    </button>
+  </form>
+
+  <div class="links">
+    <small class="form-text">
+      Already have an account? <a routerLink="../login"><strong>Sign in</strong></a>
+    </small>
+  </div>
+</nb-auth-block>

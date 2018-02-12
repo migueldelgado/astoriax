@@ -58,10 +58,35 @@ export const defaultSettings: any = {
       email: {
         required: true,
       },
-      fullName: {
-        required: false,
-        minLength: 4,
+      firstName: {
+        required: true,
+        minLength: 3,
         maxLength: 50,
+      },
+      lastName: {
+        required: true,
+        minLength: 3,
+        maxLength: 50,
+      },
+      rut: {
+        required: true,
+        minLength: 7,
+        maxLength: 8,
+      },
+      address: {
+        required: true,
+        minLength: 5,
+        maxLength: 100,
+      },
+      city: {
+        required: true,
+        minLength: 3,
+        maxLength: 50,
+      },
+      phone: {
+        required: true,
+        minLength: 7,
+        maxLength: 20,
       },
     },
   },

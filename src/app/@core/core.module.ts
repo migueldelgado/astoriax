@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAuthModule, NbDummyAuthProvider, NbEmailPassAuthProvider } from '@nebular/auth';
+import { NbAuthModule, NbDummyAuthProvider, NbEmailPassAuthProvider } from '../auth';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { DataModule } from './data/data.module';
@@ -14,7 +14,7 @@ const NB_CORE_PROVIDERS = [
         service: NbEmailPassAuthProvider,
         config: {
           delay: 3000,
-          baseEndpoint: 'http://laravel.dev',
+          baseEndpoint: 'http://homestead.test',
           login: {
             endpoint: '/api/login',
             method: 'post',
@@ -35,6 +35,10 @@ const NB_CORE_PROVIDERS = [
           resetPass: {
             endpoint: '/api/auth/reset-pass',
           },
+          register: {
+            endpoint: '/api/register',
+            method: 'POST'
+          }
         },
       },
     },
