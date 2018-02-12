@@ -68,10 +68,8 @@ export class LoanFormComponent implements OnInit {
         .subscribe((result) => {
           const data = result.data;
           const [day, month, year] = data.date.split('/');
-          console.log(data);
           this.date.jsdate = new Date(year, parseInt(month, 10) - 1, day);
           this.data.loanType = data.loan_type.id_loan_type;
-          console.log(data, this.data);
           this.data.targetStoreId = data.loan_type.id_loan_type === '1' ?
             data.store_to.id_store : data.store_from.id_store;
           this.data.supplies = data.supply_list.map((s) => ({
@@ -105,7 +103,7 @@ export class LoanFormComponent implements OnInit {
       id_store_to: this.data.loanType !== '2' ? this.data.targetStoreId : AppConfig.APP_CURRENT_STORE,
       supplies: this.data.supplies,
       date: this.date.formatted,
-      id_loan: this.id
+      id_loan: this.id,
     };
     if (this.id) {
       this.update(data)

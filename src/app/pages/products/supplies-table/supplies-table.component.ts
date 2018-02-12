@@ -40,7 +40,7 @@ export class SuppliesTableComponent implements OnInit {
     },
     actions: {
       columnTitle: 'Acciones',
-      position: 'right'
+      position: 'right',
     },
     mode: 'external',
     columns: {

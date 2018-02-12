@@ -73,16 +73,13 @@ export class DailyInventoryTableComponent implements OnInit {
     if (!this.firstLoad) {
       return;
     }
-    console.log(date)
     this.fetch(date.jsdate, this.dateTo.jsdate);
   }
 
   onChangeTo(date) {
-    console.log(this.firstLoad);
     if (!this.firstLoad) {
       return;
     }
-    console.log(date)
     this.fetch(this.dateFrom.jsdate, date.jsdate);
   }
 

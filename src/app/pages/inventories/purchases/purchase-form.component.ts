@@ -75,7 +75,6 @@ export class PurchaseFormComponent implements OnInit {
       this.id = params.id;
       this.purchaseService.find(this.id)
         .subscribe(({data}) => {
-          console.log(JSON.stringify(data));
           const [day, month, year] = data.date.split('/');
           this.data.id_shift = data.shift.id_shift;
           this.data.id_store = data.store.id_store;

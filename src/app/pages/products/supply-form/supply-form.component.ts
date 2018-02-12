@@ -63,7 +63,7 @@ export class SupplyFormComponent implements OnInit {
     private supplyClassificationService: SupplyClassificationService,
     private unitService: UnitService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {
   }
 

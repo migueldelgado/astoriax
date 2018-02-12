@@ -85,7 +85,7 @@ export class DailyInventoryFormComponent implements OnInit {
     const observable = this.id ?
       this.dailyInventoryService.updateInventory(this.id, {
         ...data,
-        id_daily_inventory: this.id
+        id_daily_inventory: this.id,
       }) :
       this.dailyInventoryService.createInventory(data);
     observable

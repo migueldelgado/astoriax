@@ -30,7 +30,7 @@ const routes: Routes = [
       },  {
         path: 'recipes/edit/:id',
         component: RecipeFormComponent,
-      }
+      },
     ],
   },
 ];
@@ -46,5 +46,5 @@ export const routedComponents = [
   SuppliesTableComponent,
   SupplyFormComponent,
   RecipesTableComponent,
-  RecipeFormComponent
+  RecipeFormComponent,
 ];

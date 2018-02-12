@@ -356,7 +356,7 @@ export class NbEmailPassAuthProvider extends NbAbstractAuthProvider {
         });
         return this.http.request(method, url, {
           observe: 'response',
-          headers
+          headers,
         });
       })
       .map((res) => {

@@ -35,8 +35,8 @@ import {NbAuthSimpleInterceptor} from './auth/services';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: NbAuthSimpleInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
 })
 export class AppModule {

@@ -28,7 +28,7 @@ const NB_CORE_PROVIDERS = [
           },
           logout: {
             endpoint: '/api/logout',
-            method: 'post'
+            method: 'post',
           },
           requestPass: {
             endpoint: '/api/auth/request-pass',
@@ -38,8 +38,8 @@ const NB_CORE_PROVIDERS = [
           },
           register: {
             endpoint: '/api/register',
-            method: 'POST'
-          }
+            method: 'POST',
+          },
         },
       },
     },

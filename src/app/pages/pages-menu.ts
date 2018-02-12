@@ -195,7 +195,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Register',
         link: '/auth/register',
-      }
+      },
     ],
   },
 ];

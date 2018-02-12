@@ -41,7 +41,6 @@ export class AuditDetailComponent implements OnInit {
     }
     this.auditService.getAuditData(this.auditTypeId)
       .subscribe(data => {
-        console.log(data);
         this.sections = data;
         this.score = 1;
       })
