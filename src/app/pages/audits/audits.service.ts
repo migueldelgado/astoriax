@@ -1,18 +1,17 @@
 import {Injectable} from '@angular/core';
 import {AppConfig} from '../../app.config';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AuditsService {
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
   }
 
   public getAll() {
     return this.http.get(AppConfig.API_ENDPOINT + 'audits')
-      .map(response => response.json())
       .map((audits: Object[]) => {
         return audits.map(this.parseData);
       });
@@ -20,7 +19,6 @@ export class AuditsService {
 
   public find(id) {
     return this.http.get(`${AppConfig.API_ENDPOINT}audits/${id}` )
-      .map(response => response.json());
   }
 
   private parseData(data): any {
@@ -29,22 +27,19 @@ export class AuditsService {
 
   public getAuditTypes() {
     return this.http.get(`${AppConfig.API_ENDPOINT}audit_type`)
-      .map(response => response.json());
   }
 
   public getSectionList() {
     return this.http.get(`${AppConfig.API_ENDPOINT}sections`)
-      .map(response => response.json())
   }
 
   public getRevisionList(): Observable<Object[]> {
     return this.http.get(`${AppConfig.API_ENDPOINT}revisions`)
-      .map(response => response.json())
   }
 
   public getAuditData(auditType: string) {
     const auditTypeId = parseInt(auditType, 10);
-    const obs = Observable.forkJoin(this.getSectionList(), this.getRevisionList());
+    const obs = Observable.forkJoin<any>(this.getSectionList(), this.getRevisionList());
     return obs
       .map(([sections, revisions]) => {
         return sections.filter((s) => s.audit_type_id === auditTypeId)
@@ -70,17 +65,14 @@ export class AuditsService {
 
   public getShifts() {
     return this.http.get(`${AppConfig.API_ENDPOINT}shifts`)
-      .map(response => response.json());
   }
 
   public getStores() {
     return this.http.get(`${AppConfig.API_ENDPOINT}stores`)
-      .map(response => response.json());
   }
 
   public getUsers() {
     return this.http.get(`${AppConfig.API_ENDPOINT}users`)
-      .map(response => response.json());
   }
 
   public saveAudit(audit) {
@@ -88,8 +80,7 @@ export class AuditsService {
   }
 
   public getAuditReport(id) {
-    return this.http.get(`${AppConfig.API_ENDPOINT}audit_report/${id}`)
-      .map(response => response.json())
+    return this.http.get<any>(`${AppConfig.API_ENDPOINT}audit_report/${id}`)
   }
 
 }

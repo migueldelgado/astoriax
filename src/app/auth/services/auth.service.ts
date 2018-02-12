@@ -17,6 +17,7 @@ import { NB_AUTH_PROVIDERS_TOKEN } from '../auth.options';
 export class NbAuthResult {
 
   protected token: any;
+  protected body: any;
   protected errors: string[] = [];
   protected messages: string[] = [];
 
@@ -46,7 +47,7 @@ export class NbAuthResult {
   }
 
   getTokenValue(): any {
-    return this.token;
+    return this.response.body.data.api_token;
   }
 
   replaceToken(token: NbAuthSimpleToken): any {
@@ -76,12 +77,25 @@ export class NbAuthResult {
 
 @Injectable()
 export class NbAuthService {
-
+  private user: any;
   constructor(protected tokenService: NbTokenService,
               protected injector: Injector,
               @Optional() @Inject(NB_AUTH_PROVIDERS_TOKEN) protected providers = {}) {
+    this.setCurrentUser(JSON.parse(localStorage.getItem('user_data')))
   }
 
+  setCurrentUser(user) {
+    localStorage.setItem('user_data', JSON.stringify(user));
+    this.user = user;
+  }
+
+  getCurrentUser() {
+    return Observable.of(this.user);
+  }
+
+  clear() {
+    localStorage.removeItem('user_data');
+  }
   /**
    * Retrieves current authenticated token stored
    * @returns {Observable<any>}
@@ -131,6 +145,7 @@ export class NbAuthService {
     return this.getProvider(provider).authenticate(data)
       .switchMap((result: NbAuthResult) => {
         if (result.isSuccess() && result.getTokenValue()) {
+          this.setCurrentUser(result.getResponse().body.data);
           return this.tokenService.set(result.getTokenValue())
             .switchMap(_ => this.tokenService.get())
             .map(token => {
@@ -158,6 +173,7 @@ export class NbAuthService {
     return this.getProvider(provider).register(data)
       .switchMap((result: NbAuthResult) => {
         if (result.isSuccess() && result.getTokenValue()) {
+          this.setCurrentUser(result.getResponse().body.data);
           return this.tokenService.set(result.getTokenValue())
             .switchMap(_ => this.tokenService.get())
             .map(token => {
@@ -185,6 +201,7 @@ export class NbAuthService {
       .do((result: NbAuthResult) => {
         if (result.isSuccess()) {
           this.tokenService.clear().subscribe(() => { });
+          this.clear();
         }
       });
   }

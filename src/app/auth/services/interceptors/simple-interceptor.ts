@@ -15,13 +15,12 @@ export class NbAuthSimpleInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
     return this.authService.getToken()
       .switchMap((token: NbAuthJWTToken) => {
         if (token && token.getValue()) {
           req = req.clone({
             setHeaders: {
-              [this.headerName]: token.getValue(),
+              [this.headerName]: `Bearer ${token.getValue()}`,
             },
           });
         }

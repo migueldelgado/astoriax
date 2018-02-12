@@ -4,7 +4,7 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import {HttpClient, HttpResponse, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -14,6 +14,7 @@ import { NgEmailPassAuthProviderConfig } from './email-pass-auth.options';
 import { NbAuthResult } from '../services/auth.service';
 import { NbAbstractAuthProvider } from './abstract-auth.provider';
 import { getDeepFromObject } from '../helpers';
+import {NbTokenService} from '../services';
 
 /**
  * The most common authentication provider.
@@ -183,7 +184,7 @@ export class NbEmailPassAuthProvider extends NbAbstractAuthProvider {
     },
   };
 
-  constructor(protected http: HttpClient, private route: ActivatedRoute) {
+  constructor(protected http: HttpClient, private route: ActivatedRoute, private tokenService: NbTokenService) {
     super();
   }
 
@@ -345,12 +346,18 @@ export class NbEmailPassAuthProvider extends NbAbstractAuthProvider {
     const method = this.getConfigValue('logout.method');
     const url = this.getActionEndpoint('logout');
 
-    return Observable.of({})
+    return this.tokenService.get()
       .switchMap((res: any) => {
         if (!url) {
           return Observable.of(res);
         }
-        return this.http.request(method, url, { observe: 'response' });
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${res.token}`,
+        });
+        return this.http.request(method, url, {
+          observe: 'response',
+          headers
+        });
       })
       .map((res) => {
         if (this.getConfigValue('logout.alwaysFail')) {

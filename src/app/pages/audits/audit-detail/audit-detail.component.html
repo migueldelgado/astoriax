@@ -41,7 +41,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row" *ngIf="audit && audit.auditType">
             <div class="col-lg-12">
               <div></div>
               <table class="table table-bordered" *ngFor="let section of audit.auditType.sections">

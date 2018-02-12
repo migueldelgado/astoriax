@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAuthModule, NbDummyAuthProvider, NbEmailPassAuthProvider } from '../auth';
+import { NbAuthModule, NbEmailPassAuthProvider } from '../auth';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { DataModule } from './data/data.module';
@@ -22,12 +22,13 @@ const NB_CORE_PROVIDERS = [
             // redirect: {
             //   success: '/auth/register',
             //   failure: '/pages/audits/auditAdd'
-            // },
+              // },
             defaultErrors: ['Email/Password combinacion incorrecta, porfavor intenta denuevo'],
             defaultMessages: ['Te has entrado correctamente'],
           },
           logout: {
-            endpoint: '/api/auth/logout',
+            endpoint: '/api/logout',
+            method: 'post'
           },
           requestPass: {
             endpoint: '/api/auth/request-pass',

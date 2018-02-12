@@ -8,7 +8,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class AuditDetailComponent implements OnInit {
   downloadPath = null;
-  audit: Object = {};
+  audit: any = {};
   sections;
   auditTypeId: string = null;
   shiftId: number = null;
@@ -41,6 +41,7 @@ export class AuditDetailComponent implements OnInit {
     }
     this.auditService.getAuditData(this.auditTypeId)
       .subscribe(data => {
+        console.log(data);
         this.sections = data;
         this.score = 1;
       })
