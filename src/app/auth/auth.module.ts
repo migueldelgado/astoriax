@@ -96,7 +96,6 @@ export class NbAuthModule {
           deps: [NB_AUTH_OPTIONS_TOKEN, NbTokenService, Injector],
         },
         NbTokenService,
-        NbDummyAuthProvider,
         NbEmailPassAuthProvider,
         AuthGuardService,
       ],
