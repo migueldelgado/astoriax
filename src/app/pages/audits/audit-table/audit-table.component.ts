@@ -11,6 +11,9 @@ import {ActivatedRoute, Router} from '@angular/router';
     nb-card {
       transform: translate3d(0, 0, 0);
     }
+    nb-card-body {
+      min-height: 300px;
+    }
   `],
 })
 export class AuditTableComponent implements OnInit {
@@ -53,7 +56,7 @@ export class AuditTableComponent implements OnInit {
 
 
   source: LocalDataSource = new LocalDataSource();
-
+  loading = true;
 
   constructor(private auditService: AuditsService, private route: ActivatedRoute, private router: Router) {
   }
@@ -62,6 +65,7 @@ export class AuditTableComponent implements OnInit {
     this.auditService.getAll()
       .subscribe((audits: any) => {
         this.source.load(audits);
+        this.loading = false;
       })
   }
 

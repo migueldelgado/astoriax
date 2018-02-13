@@ -5,6 +5,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 @Component({
   selector: 'ngx-audits-detail',
   templateUrl: './audit-detail.component.html',
+  styles: [`
+    nb-card-body {
+      min-height: 160px;
+    }
+  `],
 })
 export class AuditDetailComponent implements OnInit {
   downloadPath = null;

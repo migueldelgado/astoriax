@@ -1,15 +1,20 @@
 <nb-card>
   <nb-card-header>
-    Smart Table
+    Auditorias
   </nb-card-header>
 
-  <nb-card-body>
+  <nb-card-body >
     <ng2-smart-table
-      [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
+      *ngIf="!loading"
+      [settings]="settings"
+      [source]="source"
+      (deleteConfirm)="onDeleteConfirm($event)"
       (create)="onCreate($event)"
       (edit)="onEdit($event)"
       (delete)="onDelete($event)"
     >
     </ng2-smart-table>
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+
   </nb-card-body>
 </nb-card>

@@ -3,7 +3,10 @@
     <div class="col-lg-12">
       <nb-card>
         <nb-card-header>Auditoria</nb-card-header>
-        <nb-card-body>
+        <nb-card-body *ngIf="!audit.audit_type">
+          <ngx-loading [show]="true" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+        </nb-card-body>
+        <nb-card-body *ngIf="audit.audit_type">
           <div class="row justify-content-end" *ngIf="downloadPath">
             <a [href]="downloadPath" class="btn btn-outline-primary btn-icon" target="_blank">
               <div><i class="ion-archive"></i></div>

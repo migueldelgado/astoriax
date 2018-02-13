@@ -9,6 +9,8 @@ import {AuditDetailComponent} from './audit-detail/audit-detail.component';
 import {AuditsService} from './audits.service'
 import {AuditTableComponent} from './audit-table/audit-table.component';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
+import { LoadingModule } from 'ngx-loading';
+
 
 const components = [
   AuditComponent,
@@ -23,6 +25,7 @@ const components = [
     ThemeModule,
     AuditsRoutingModule,
     Ng2SmartTableModule,
+    LoadingModule,
   ],
   declarations: [
     ...components,
