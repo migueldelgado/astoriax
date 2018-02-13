@@ -52,7 +52,7 @@ export const defaultSettings: any = {
     validation: {
       password: {
         required: true,
-        minLength: 4,
+        minLength: 1,
         maxLength: 50,
       },
       email: {

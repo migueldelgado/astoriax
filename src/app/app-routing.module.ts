@@ -8,6 +8,7 @@ import {
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
 } from './auth';
+import {AuthGuardService} from './auth/services/auth-guard.service';
 
 const routes: Routes = [
   { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
@@ -41,8 +42,8 @@ const routes: Routes = [
       },
     ],
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
+  { path: '', canActivate: [AuthGuardService], redirectTo: 'auth/login', pathMatch: 'full' },
+  { path: '**', canActivate: [AuthGuardService], redirectTo: 'auth/login' },
 ];
 
 const config: ExtraOptions = {

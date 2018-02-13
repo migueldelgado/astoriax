@@ -3,7 +3,7 @@
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
-import { Component, Inject } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { NB_AUTH_OPTIONS_TOKEN } from '../../auth.options';
 import { getDeepFromObject } from '../../helpers';
@@ -14,7 +14,7 @@ import { NbAuthResult, NbAuthService } from '../../services/auth.service';
   selector: 'nb-login',
   templateUrl: './login.component.html',
 })
-export class NbLoginComponent {
+export class NbLoginComponent implements OnInit {
 
   redirectDelay: number = 0;
   showMessages: any = {};
@@ -34,6 +34,15 @@ export class NbLoginComponent {
     this.provider = this.getConfigValue('forms.login.provider');
   }
 
+  ngOnInit() {
+    this.service.isAuthenticated()
+      .subscribe(result => {
+        if (result) {
+          this.router.navigate(['/pages'])
+        }
+      })
+  }
+
   login(): void {
     this.errors = this.messages = [];
     this.submitted = true;
@@ -50,7 +59,7 @@ export class NbLoginComponent {
       const redirect = result.getRedirect();
       if (redirect) {
         setTimeout(() => {
-          return this.router.navigateByUrl(redirect);
+          this.router.navigate(['/pages'])
         }, this.redirectDelay);
       }
     });
