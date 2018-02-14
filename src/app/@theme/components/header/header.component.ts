@@ -55,6 +55,7 @@ export class HeaderComponent implements OnInit {
 
   onChangeStore() {
     this.authService.setCurrentStore(this.currentStore)
+    window.location.reload();
   }
 
   onClick(event) {

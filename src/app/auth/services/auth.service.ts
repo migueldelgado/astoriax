@@ -103,7 +103,7 @@ export class NbAuthService {
   }
 
   getCurrentStore() {
-    return this.currentStore;
+    return this.currentStore || '';
   }
 
   clear() {
