@@ -18,7 +18,26 @@ export class AuditsService {
   }
 
   public find(id) {
-    return this.http.get(`${AppConfig.API_ENDPOINT}audits/${id}` )
+    return this.http.get<any>(`${AppConfig.API_ENDPOINT}audits/${id}` )
+      .map(audit => {
+        const sections = audit.audit_type.sections;
+        sections.forEach(section => {
+          const score = section.revisions.reduce((acc, r) => {
+            let value = 0;
+            const classification = r.classification ? r.classification.toLowerCase() : '';
+            if (classification === 'no aplica' || classification === 'cumple') {
+              value = 1;
+            }
+            return acc + value;
+          }, 0);
+          section.percentageScore = score / section.revisions.length;
+        });
+        audit.score = sections.reduce((acc, s) => {
+          const sectionScore = s.percentageScore ? s.percentageScore * s.percentage : 0;
+          return sectionScore + acc;
+        }, 0);
+        return audit;
+      })
   }
 
   private parseData(data): any {
@@ -50,7 +69,6 @@ export class AuditsService {
               })
               .map((r) => {
                 return Object.assign({}, r, {
-                  score: 2,
                   classification: 'Cumple',
                   comment: '',
                 });

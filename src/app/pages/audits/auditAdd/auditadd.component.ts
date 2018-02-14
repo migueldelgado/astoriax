@@ -49,22 +49,10 @@ export class AuditAddComponent implements OnInit {
   }
 
   onScoreChange(revision, section) {
-    let classification = '';
-    if (revision.score === 1) {
-      classification = 'NO CUMPLE';
-    }
-    if (revision.score === 2) {
-      classification = 'CUMPLE';
-    }
-    if (revision.score === 3) {
-      classification = 'NO APLICA';
-    }
-    revision.classification = classification;
-
     const score = section.revisions.reduce((acc, r) => {
       let value = 0;
-      const revisionScore = parseInt(r.score, 10);
-      if (revisionScore === 2 || revisionScore === 3) {
+      const classification = r.classification ? r.classification.toLowerCase() : '';
+      if (classification === 'no aplica' || classification === 'cumple') {
         value = 1;
       }
       return acc + value;

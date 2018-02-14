@@ -50,33 +50,4 @@ export class AuditDetailComponent implements OnInit {
         this.score = 1;
       })
   }
-
-  onScoreChange(revision, section) {
-    let classification = '';
-    if (revision.score === 1) {
-      classification = 'NO CUMPLE';
-    }
-    if (revision.score === 2) {
-      classification = 'CUMPLE';
-    }
-    if (revision.score === 3) {
-      classification = 'NO APLICA';
-    }
-    revision.classification = classification;
-
-    const score = section.revisions.reduce((acc, r) => {
-      let value = 0;
-      const revisionScore = parseInt(r.score, 10);
-      if (revisionScore === 2 || revisionScore === 3) {
-        value = 1;
-      }
-      return acc + value;
-    }, 0);
-
-    section.percentageScore = score / section.revisions.length;
-    this.score = this.sections.reduce((acc, s) => {
-      const sectionScore = s.percentageScore ? s.percentageScore * s.percentage : 0;
-      return sectionScore + acc;
-    }, 0)
-  }
 }

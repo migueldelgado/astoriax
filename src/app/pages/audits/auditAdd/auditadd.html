@@ -51,7 +51,6 @@
           </tr>
           <tr>
             <th>REVISION</th>
-            <th>PUNTAJE</th>
             <th>CALIFICACION</th>
             <th>OBSERVACION</th>
           </tr>
@@ -60,24 +59,13 @@
           <tr *ngFor="let revision of section.revisions">
             <td>{{revision.name}}</td>
             <td>
-              <select class="form-control" [(ngModel)]="revision.score"
+              <select class="form-control" [(ngModel)]="revision.classification"
                       (ngModelChange)="onScoreChange(revision, section)">
                 <option [value]="null">Puntaje</option>
-                <option [value]="1">1</option>
-                <option [value]="2">2</option>
-                <option [value]="3">3</option>
+                <option value="No cumple">No cumple</option>
+                <option value="Cumple">Cumple</option>
+                <option value="No Aplica">No Aplica</option>
               </select>
-            </td>
-            <td>
-                  <span *ngIf="revision.score == 1">
-                    No cumple
-                  </span>
-              <span *ngIf="revision.score == 2">
-                    Cumple
-                  </span>
-              <span *ngIf="revision.score == 3">
-                    No Aplica
-                  </span>
             </td>
             <td><textarea [(ngModel)]="revision.comment"></textarea></td>
           </tr>
