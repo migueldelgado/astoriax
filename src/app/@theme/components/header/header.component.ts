@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   @Input() position: string = 'normal';
 
   user: any;
+  currentStore: any;
 
   userMenu = [{ type: 'logout', title: 'Log out' }];
 
@@ -31,6 +32,10 @@ export class HeaderComponent implements OnInit {
       .subscribe(user => {
         this.user = user;
       });
+    this.authService.getCurrentStore()
+      .subscribe(currentStore => {
+        this.currentStore = currentStore;
+      })
   }
 
   toggleSidebar(): boolean {
@@ -49,6 +54,10 @@ export class HeaderComponent implements OnInit {
 
   startSearch() {
     this.analyticsService.trackEvent('startSearch');
+  }
+
+  onChangeStore() {
+    this.authService.setCurrentStore(this.currentStore)
   }
 
   onClick(event) {

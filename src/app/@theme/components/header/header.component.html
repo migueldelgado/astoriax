@@ -19,9 +19,21 @@
   <nb-action>
     <nb-user [menu]="userMenu" [name]="user?.first_name" (menuClick)="onClick($event)" ></nb-user>
   </nb-action>
-  <nb-action class="control-item" disabled icon="nb-notifications"></nb-action>
-  <nb-action class="control-item" icon="nb-email"></nb-action>
-  <nb-action class="control-item">
-    <nb-search type="rotate-layout" (click)="startSearch()"></nb-search>
+  <nb-action>
+    <select
+      name="store"
+      class="form-control"
+      [(ngModel)]="currentStore"
+      (ngModelChange)="onChangeStore()"
+      required
+    >
+      <option [value]="null">Tienda</option>
+      <option
+        *ngFor="let s of user?.stores"
+        [value]="s.id"
+      >
+        {{s.name}}
+      </option>
+    </select>
   </nb-action>
 </nb-actions>

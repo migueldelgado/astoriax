@@ -78,10 +78,14 @@ export class NbAuthResult {
 @Injectable()
 export class NbAuthService {
   private user: any;
+  private currentStore: any;
+
   constructor(protected tokenService: NbTokenService,
               protected injector: Injector,
               @Optional() @Inject(NB_AUTH_PROVIDERS_TOKEN) protected providers = {}) {
-    this.setCurrentUser(JSON.parse(localStorage.getItem('user_data')))
+    this.setCurrentUser(JSON.parse(localStorage.getItem('user_data')));
+    const store = localStorage.getItem('current_store');
+    this.setCurrentStore(store);
   }
 
   setCurrentUser(user) {
@@ -91,6 +95,15 @@ export class NbAuthService {
 
   getCurrentUser() {
     return Observable.of(this.user);
+  }
+
+  setCurrentStore(store) {
+    localStorage.setItem('current_store', store);
+    this.currentStore = store;
+  }
+
+  getCurrentStore() {
+    return Observable.of(this.currentStore);
   }
 
   clear() {
