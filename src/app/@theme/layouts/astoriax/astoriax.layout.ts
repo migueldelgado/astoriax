@@ -33,6 +33,9 @@ import 'rxjs/add/operator/delay';
 
       <nb-layout-column class="main-content">
         <ng-content select="router-outlet"></ng-content>
+        <div class="loading" *ngIf="loading">
+          <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+        </div>
       </nb-layout-column>
 
       <nb-layout-column left class="small" *ngIf="layout.id === 'two-column' || layout.id === 'three-column'">
@@ -102,8 +105,10 @@ export class AstoriaxLayoutComponent  implements OnDestroy {
   ];
   layout: any = {};
   sidebar: any = {};
+  loading: boolean = false;
 
   protected layoutState$: Subscription;
+  protected loadingState$: Subscription;
   protected sidebarState$: Subscription;
   protected menuClick$: Subscription;
 
@@ -119,7 +124,10 @@ export class AstoriaxLayoutComponent  implements OnDestroy {
       .subscribe((sidebar: string) => {
         this.sidebar = sidebar
       });
-
+    this.loadingState$ = this.stateService.onLoadingState()
+      .subscribe((nextValue: boolean) => {
+        this.loading = nextValue;
+      })
     const isBp = this.bpService.getByName('is');
     this.menuClick$ = this.menuService.onItemSelect()
       .withLatestFrom(this.themeService.onMediaQueryChange())

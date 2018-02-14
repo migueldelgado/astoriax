@@ -39,9 +39,9 @@ export class StateService {
       id: 'right',
     },
   ];
-
   protected layoutState$ = new BehaviorSubject(this.layouts[0]);
   protected sidebarState$ = new BehaviorSubject(this.sidebars[0]);
+  protected loadingState$ = new BehaviorSubject(false);
 
   setLayoutState(state: any): any {
     this.layoutState$.next(state);
@@ -65,5 +65,13 @@ export class StateService {
 
   onSidebarState(): Observable<any> {
     return this.sidebarState$.asObservable();
+  }
+
+  onLoadingState(): Observable<any> {
+    return this.loadingState$.asObservable();
+  }
+
+  setLoadingState(state: boolean) {
+    this.loadingState$.next(state);
   }
 }

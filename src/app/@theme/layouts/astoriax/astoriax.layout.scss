@@ -128,3 +128,12 @@
     }
   }
 }
+
+.loading {
+  position: absolute;
+  z-index: 100;
+  width: 300px;
+  height: 140px;
+  top: 40%;
+  left: calc(50% - 150px);
+}
