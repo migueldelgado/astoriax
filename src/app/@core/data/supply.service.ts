@@ -2,15 +2,16 @@ import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
 import {AppConfig} from '../../app.config';
 import {HttpClient, HttpParams} from '@angular/common/http';
+import {NbAuthService} from '../../auth/services';
 
 @Injectable()
 export class SupplyService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private authService: NbAuthService) {
   }
   public getAll(config?: Object) {
     const params = config || {
-      currentStore: AppConfig.APP_CURRENT_STORE,
+      currentStore: this.authService.getCurrentStore(),
     };
 
     let httpParams = new HttpParams();

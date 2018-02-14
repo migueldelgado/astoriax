@@ -32,10 +32,7 @@ export class HeaderComponent implements OnInit {
       .subscribe(user => {
         this.user = user;
       });
-    this.authService.getCurrentStore()
-      .subscribe(currentStore => {
-        this.currentStore = currentStore;
-      })
+    this.currentStore = this.authService.getCurrentStore()
   }
 
   toggleSidebar(): boolean {

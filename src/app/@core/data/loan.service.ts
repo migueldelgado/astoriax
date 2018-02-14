@@ -2,15 +2,16 @@ import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
 import {AppConfig} from '../../app.config';
 import {HttpClient, HttpParams} from '@angular/common/http';
+import {NbAuthService} from '../../auth/services';
 
 @Injectable()
 export class LoanService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private authService: NbAuthService) {
   }
   public getAll(config?: Object) {
     const params = config || {
-      currentStore: AppConfig.APP_CURRENT_STORE,
+      currentStore: this.authService.getCurrentStore(),
     };
     let httpParams = new HttpParams();
     Object.keys(params).forEach(function (key) {
@@ -24,7 +25,9 @@ export class LoanService {
 
 
   public find(id) {
-    return this.http.get<any>(`${AppConfig.API_ENDPOINT_OLD}/loans/${id}?currentStore=${AppConfig.APP_CURRENT_STORE}`)
+    return this.http.get<any>(
+      `${AppConfig.API_ENDPOINT_OLD}/loans/${id}?currentStore=${this.authService.getCurrentStore()}`,
+    )
   }
 
   public delete(id) {

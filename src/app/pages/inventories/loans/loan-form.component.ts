@@ -10,6 +10,7 @@ import 'rxjs/add/operator/map';
 import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker/interfaces/my-options.interface';
 import {AppConfig} from '../../../app.config';
 import {LoanService} from '../../../@core/data/loan.service';
+import {NbAuthService} from '../../../auth/services';
 
 @Component({
   selector: 'ngx-supply-form',
@@ -43,6 +44,7 @@ export class LoanFormComponent implements OnInit {
   constructor(private loanService: LoanService,
               private supplyService: SupplyService,
               private storeService: StoreService,
+              private authService: NbAuthService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -99,8 +101,8 @@ export class LoanFormComponent implements OnInit {
   onSubmit() {
     const data = {
       id_loan_type: this.data.loanType,
-      id_store_from: this.data.loanType === '1' ? AppConfig.APP_CURRENT_STORE : this.data.targetStoreId,
-      id_store_to: this.data.loanType !== '2' ? this.data.targetStoreId : AppConfig.APP_CURRENT_STORE,
+      id_store_from: this.data.loanType === '1' ? this.authService.getCurrentStore() : this.data.targetStoreId,
+      id_store_to: this.data.loanType !== '2' ? this.data.targetStoreId : this.authService.getCurrentStore(),
       supplies: this.data.supplies,
       date: this.date.formatted,
       id_loan: this.id,

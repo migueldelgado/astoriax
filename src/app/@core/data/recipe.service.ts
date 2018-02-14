@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import {AppConfig} from '../../app.config';
 import {HttpClient} from '@angular/common/http';
+import {NbAuthService} from '../../auth/services';
 
 @Injectable()
 export class RecipeService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private authService: NbAuthService) {
   }
   public getAll() {
-    return this.http.get(`${AppConfig.API_ENDPOINT_OLD}/recipes?currentStore=${AppConfig.APP_CURRENT_STORE}`)
+    return this.http.get(`${AppConfig.API_ENDPOINT_OLD}/recipes?currentStore=${this.authService.getCurrentStore()}`)
       .map((supplies: any) => {
         return supplies.data;
       });

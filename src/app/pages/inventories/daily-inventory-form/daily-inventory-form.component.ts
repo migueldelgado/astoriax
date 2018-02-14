@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AppConfig} from '../../../app.config';
 import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker/interfaces/my-options.interface';
 import {DailyInventoryService} from '../../../@core/data/daily-inventory.service';
+import {NbAuthService} from '../../../auth/services';
 
 
 @Component({
@@ -28,9 +29,10 @@ export class DailyInventoryFormComponent implements OnInit {
 
   constructor(private supplyService: SupplyService,
               private dailyInventoryService: DailyInventoryService,
+              private authService: NbAuthService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.idStore = AppConfig.APP_CURRENT_STORE;
+    this.idStore = this.authService.getCurrentStore();
   }
 
   ngOnInit() {
@@ -45,7 +47,7 @@ export class DailyInventoryFormComponent implements OnInit {
 
   loadDailyInventory(id) {
     this.id = id;
-    this.dailyInventoryService.findInventory(id, AppConfig.APP_CURRENT_STORE)
+    this.dailyInventoryService.findInventory(id, this.authService.getCurrentStore())
       .subscribe(result => {
         const { data } = result;
         const [day, month, year] = data.date.split('/');
@@ -61,7 +63,7 @@ export class DailyInventoryFormComponent implements OnInit {
   }
 
   loadSupplies() {
-    this.supplyService.getAll({id_store: AppConfig.APP_CURRENT_STORE, show_daily_inventory: true})
+    this.supplyService.getAll({id_store: this.authService.getCurrentStore(), show_daily_inventory: true})
       .subscribe((result) => {
         this.supplies = result.map((s) => ({
           id_supply: s.id_supply,

@@ -2,15 +2,17 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {AppConfig} from '../../app.config';
+import {NbAuthService} from '../../auth/services';
 
 @Injectable()
 export class DailyInventoryService {
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private authService: NbAuthService) {
+
   }
   public getAll(config?: Object) {
     const params = config || {
-      currentStore: AppConfig.APP_CURRENT_STORE,
+      currentStore: this.authService.getCurrentStore(),
     };
     return this.http.get(`${AppConfig.API_ENDPOINT_OLD}/daily_inventory`, { params })
       .map(response => response.json())

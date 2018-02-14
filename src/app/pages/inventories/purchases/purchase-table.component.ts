@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker/interfaces/my-options.interface';
 import {AppConfig} from '../../../app.config';
 import {PurchaseService} from '../../../@core/data/purchase.service';
+import {NbAuthService} from '../../../auth/services';
 
 @Component({
   selector: 'ngx-supplies-table',
@@ -74,7 +75,8 @@ export class PurchaseTableComponent implements OnInit {
   constructor(
     private purchaseService: PurchaseService,
     private route: ActivatedRoute,
-    private router: Router) {}
+    private router: Router,
+    private authService: NbAuthService) {}
 
   ngOnInit() {
     this.fetch(new Date(), new Date());
@@ -98,7 +100,7 @@ export class PurchaseTableComponent implements OnInit {
     const from = dateFrom.toJSON();
     const to = dateTo.toJSON();
 
-    this.purchaseService.getAll({ currentStore: AppConfig.APP_CURRENT_STORE, dateFrom: from, dateTo: to })
+    this.purchaseService.getAll({ currentStore: this.authService.getCurrentStore(), dateFrom: from, dateTo: to })
       .subscribe((loans: any) => {
         this.source.load(loans);
         this.firstLoad = true;

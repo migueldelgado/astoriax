@@ -12,6 +12,7 @@ import {AppConfig} from '../../../app.config';
 import {LoanService} from '../../../@core/data/loan.service';
 import {SupplierService} from '../../../@core/data/supplier.service';
 import {PurchaseService} from '../../../@core/data/purchase.service';
+import {NbAuthService} from '../../../auth/services';
 
 @Component({
   selector: 'ngx-supply-form',
@@ -51,6 +52,7 @@ export class PurchaseFormComponent implements OnInit {
               private supplyService: SupplyService,
               private supplierService: SupplierService,
               private storeService: StoreService,
+              private authService: NbAuthService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -107,7 +109,7 @@ export class PurchaseFormComponent implements OnInit {
 
   onSubmit() {
     const data = Object.assign({}, this.data, {
-      id_store: AppConfig.APP_CURRENT_STORE,
+      id_store: this.authService.getCurrentStore(),
       date: this.date.jsdate,
       id_purchase: this.id,
     });

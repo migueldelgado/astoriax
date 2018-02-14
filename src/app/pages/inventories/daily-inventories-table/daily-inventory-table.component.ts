@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DailyInventoryService} from '../../../@core/data/daily-inventory.service';
 import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker/interfaces/my-options.interface';
 import {AppConfig} from '../../../app.config';
+import {NbAuthService} from '../../../auth/services';
 
 @Component({
   selector: 'ngx-supplies-table',
@@ -62,6 +63,7 @@ export class DailyInventoryTableComponent implements OnInit {
 
   constructor(
     private dailyInventoryService: DailyInventoryService,
+    private authService: NbAuthService,
     private route: ActivatedRoute,
     private router: Router) {}
 
@@ -87,7 +89,7 @@ export class DailyInventoryTableComponent implements OnInit {
     const from = dateFrom.toJSON();
     const to = dateTo.toJSON();
 
-    this.dailyInventoryService.getAll({ currentStore: AppConfig.APP_CURRENT_STORE, dateFrom: from, dateTo: to })
+    this.dailyInventoryService.getAll({ currentStore: this.authService.getCurrentStore(), dateFrom: from, dateTo: to })
       .subscribe((dailyInventories: any) => {
         this.source.load(dailyInventories);
         this.firstLoad = true;

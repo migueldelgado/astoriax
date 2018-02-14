@@ -6,6 +6,7 @@ import {DailyInventoryService} from '../../../@core/data/daily-inventory.service
 import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker/interfaces/my-options.interface';
 import {AppConfig} from '../../../app.config';
 import {LoanService} from '../../../@core/data/loan.service';
+import {NbAuthService} from '../../../auth/services';
 
 @Component({
   selector: 'ngx-supplies-table',
@@ -64,14 +65,17 @@ export class LoanTableComponent implements OnInit {
   };
   source: LocalDataSource = new LocalDataSource();
   firstLoad = false;
+  store: any;
 
   constructor(
     private loanService: LoanService,
+    private authService: NbAuthService,
     private route: ActivatedRoute,
     private router: Router) {}
 
   ngOnInit() {
     this.fetch(new Date(), new Date());
+    this.store = this.authService.getCurrentStore();
   }
 
   onChangeFrom(date) {
@@ -92,7 +96,7 @@ export class LoanTableComponent implements OnInit {
     const from = dateFrom.toJSON();
     const to = dateTo.toJSON();
 
-    this.loanService.getAll({ currentStore: AppConfig.APP_CURRENT_STORE, dateFrom: from, dateTo: to })
+    this.loanService.getAll({ currentStore: this.store, dateFrom: from, dateTo: to })
       .subscribe((loans: any) => {
         this.source.load(loans);
         this.firstLoad = true;

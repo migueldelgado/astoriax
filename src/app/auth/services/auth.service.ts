@@ -103,7 +103,7 @@ export class NbAuthService {
   }
 
   getCurrentStore() {
-    return Observable.of(this.currentStore);
+    return this.currentStore;
   }
 
   clear() {
