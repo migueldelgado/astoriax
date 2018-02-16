@@ -12,34 +12,41 @@ export const MENU_ITEMS: NbMenuItem[] = [
     group: true,
   },
   {
-    title: 'Productos',
-    icon: 'nb-tables',
-    link: '/pages/products',
+    title: 'Bodega',
+    icon: 'nb-home',
+    link: '/pages/store',
     children: [
       {
-        title: 'Insumos',
-        link: '/pages/products/supplies',
+        title: 'Productos',
+        icon: 'nb-tables',
+        link: '/pages/store/products',
+        children: [
+          {
+            title: 'Insumos',
+            link: '/pages/store/products/supplies',
+          },
+          {
+            title: 'Recetas',
+            link: '/pages/store/products/recipes',
+          },
+        ]
       },
       {
-        title: 'Recetas',
-        link: '/pages/products/recipes',
-      },
-    ],
-  },
-  {
-    title: 'Inventarios',
-    icon: 'nb-tables',
-    link: '/pages/inventories',
-    children: [
-      {
-        title: 'Inventarios Diarios',
-        link: '/pages/inventories/daily',
-      }, {
-        title: 'Prestamos',
-        link: '/pages/inventories/loan',
-      }, {
-        title: 'Compras',
-        link: '/pages/inventories/purchases',
+        title: 'Inventarios',
+        icon: 'nb-tables',
+        link: '/pages/store/inventories',
+        children: [
+          {
+            title: 'Inventarios Diarios',
+            link: '/pages/store/inventories/daily',
+          }, {
+            title: 'Prestamos',
+            link: '/pages/store/inventories/loan',
+          }, {
+            title: 'Compras',
+            link: '/pages/store/inventories/purchases',
+          },
+        ]
       },
     ],
   },
@@ -51,10 +58,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Auditorias',
         link: '/pages/audits/audit-list',
-      },
-      {
-        title: 'Agregar Auditorias',
-        link: '/pages/audits/auditAdd',
       },
       {
         title: 'Resumen',

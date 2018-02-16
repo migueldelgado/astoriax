@@ -50,9 +50,11 @@
             <th colspan="5">{{section.name}}</th>
           </tr>
           <tr>
-            <th>REVISION</th>
-            <th>CALIFICACION</th>
-            <th>OBSERVACION</th>
+            <th style="width: 35%">REVISION</th>
+            <th style="width: 15%">CALIFICACION</th>
+            <th style="width: 30%">OBSERVACION</th>
+            <th style="width: 20%">IMAGENES</th>
+
           </tr>
           </thead>
           <tbody>
@@ -61,13 +63,13 @@
             <td>
               <select class="form-control" [(ngModel)]="revision.classification"
                       (ngModelChange)="onScoreChange(revision, section)">
-                <option [value]="null">Puntaje</option>
                 <option value="No cumple">No cumple</option>
                 <option value="Cumple">Cumple</option>
                 <option value="No Aplica">No Aplica</option>
               </select>
             </td>
             <td><textarea [(ngModel)]="revision.comment"></textarea></td>
+            <td><input class="form-control" multiple id="file" type="file" accept="image/*"></td>
           </tr>
           </tbody>
           <tfoot>

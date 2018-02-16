@@ -19,11 +19,11 @@ const routes: Routes = [{
         loadChildren: './audits/audits.module#AuditModule',
       },
       {
-        path: 'products',
+        path: 'store/products',
         loadChildren: './products/products.module#ProductsModule',
       },
       {
-        path: 'inventories',
+        path: 'store/inventories',
         loadChildren: './inventories/inventories.module#InventoriesModule',
       },
       {
