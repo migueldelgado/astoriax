@@ -4,10 +4,10 @@
       <nb-card>
         <nb-card-header>Auditoria</nb-card-header>
         <nb-card-body *ngIf="audit.audit_type">
-          <div class="row justify-content-end" *ngIf="downloadPath">
-            <a [href]="downloadPath" class="btn btn-outline-primary btn-icon" target="_blank">
+          <div class="row justify-content-end" >
+            <button (click)="onClickDownload()" class="btn btn-outline-primary btn-icon" >
               <div><i class="ion-archive"></i></div>
-            </a>
+            </button>
           </div>
           <div class="row">
             <div class="col">

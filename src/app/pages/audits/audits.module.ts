@@ -10,6 +10,7 @@ import {AuditsService} from './audits.service'
 import {AuditTableComponent} from './audit-table/audit-table.component';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import { LoadingModule } from 'ngx-loading';
+import {ChartModule} from 'angular2-chartjs';
 
 
 const components = [
@@ -26,6 +27,7 @@ const components = [
     AuditsRoutingModule,
     Ng2SmartTableModule,
     LoadingModule,
+    ChartModule,
   ],
   declarations: [
     ...components,

@@ -14,11 +14,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class AuditDetailComponent implements OnInit {
   downloadPath = null;
   audit: any = {};
+  id: any;
   sections;
   auditTypeId: string = null;
-  shiftId: number = null;
-  storeId = null;
-  managerId = null;
   score: number = null;
   result = {};
 
@@ -27,27 +25,20 @@ export class AuditDetailComponent implements OnInit {
 
   ngOnInit() {
     const id = parseInt(this.route.snapshot.params.id, 10);
+    this.id = id;
     this.auditService.find(id)
       .subscribe((audit) => {
         this.audit = audit;
       });
-    this.auditService.getAuditReport(id)
-      .subscribe((result) => {
-        this.downloadPath = result.downloadPath;
-      }, () => {
-        this.downloadPath = null;
-      })
   }
 
-  onAuditTypeChange() {
-    if (!this.auditTypeId) {
-      this.score = null;
-      return;
-    }
-    this.auditService.getAuditData(this.auditTypeId)
-      .subscribe(data => {
-        this.sections = data;
-        this.score = 1;
+  onClickDownload() {
+    this.auditService.getAuditReport(this.id)
+      .subscribe((result) => {
+        this.downloadPath = result.downloadPath;
+        window.open(result.downloadPath, '_blank');
+      }, () => {
+        alert('Error generating report')
       })
   }
 }
