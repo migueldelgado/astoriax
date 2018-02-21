@@ -19,6 +19,7 @@ export class AuditOverviewComponent implements OnInit {
   years: any = [];
   year: any = new Date().getFullYear();
   store: any;
+  graphData: any = {};
 
   constructor(private auditsService: AuditsService, private theme: NbThemeService, private authService: NbAuthService) {
 
@@ -102,6 +103,7 @@ export class AuditOverviewComponent implements OnInit {
             borderColor: this.colors.infoLight,
           }],
         };
+        this.graphData = r;
       })
   }
 }

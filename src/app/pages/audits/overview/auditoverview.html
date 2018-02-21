@@ -17,10 +17,20 @@
     </div>
   </div>
   <div class="row">
-      <nb-card style="flex:1; min-height: 400px" cardclass="with-scroll table-panel" title="Resumen Auditoria">
+    <div class="col-xl-10 col-lg-9 col-md-8, col-sm-12">
+      <nb-card style="flex:1; min-height: 50vh" cardclass="with-scroll table-panel" title="Resumen Auditoria">
         <nb-card-body>
           <chart type="line" [data]="data" [options]="options"></chart>
         </nb-card-body>
       </nb-card>
+    </div>
+    <div class="2 col-lg-3 col-md-4, col-sm-12">
+      <div>
+        <label><strong>Promedio</strong></label>
+        <h4>
+          {{graphData.average | percent}}
+        </h4>
+      </div>
+    </div>
   </div>
 </div>

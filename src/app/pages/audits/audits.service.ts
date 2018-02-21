@@ -84,7 +84,7 @@ export class AuditsService {
               })
               .map((r) => {
                 return Object.assign({}, r, {
-                  classification: 'Cumple',
+                  classification: 'No Aplica',
                   comment: '',
                 });
               });
@@ -152,6 +152,8 @@ export class AuditsService {
         const graphData = {
           labels: [],
           scores: [],
+          valid: [],
+          average: '',
         };
         MONTHS.forEach((month, index) => {
           const audits = data.filter(d => d.month === index);
@@ -161,7 +163,48 @@ export class AuditsService {
           const total = audits.reduce((acc, a) => acc + a.score, 0) / audits.length;
           graphData.labels.push(month);
           graphData.scores.push(total.toFixed(2));
+          graphData.valid.push(true);
         });
+
+        if (graphData.labels.length === 2) {
+          const month = graphData.labels[0];
+          const index = MONTHS.indexOf(month);
+          if (index === 0) {
+            graphData.labels.unshift(MONTHS[11]);
+          } else {
+            graphData.labels.unshift(MONTHS[index - 1]);
+          }
+          graphData.scores.unshift(0);
+          graphData.valid.unshift(false);
+        } else if (graphData.labels.length === 1) {
+          const month = graphData.labels[0];
+          const index = MONTHS.indexOf(month);
+          if (index === 0) {
+            graphData.labels.unshift(MONTHS[11]);
+          } else {
+            graphData.labels.unshift(MONTHS[index - 1]);
+          }
+          graphData.scores.unshift(0);
+          graphData.valid.unshift(false);
+          if (index === 11) {
+            graphData.labels.push(MONTHS[0]);
+          } else {
+            graphData.labels.push(MONTHS[index + 1]);
+          }
+          graphData.scores.push(0);
+          graphData.valid.push(false);
+        }
+        let count = 0;
+        let sum = 0;
+        graphData.scores.forEach((s, index) => {
+          if (!graphData.valid[index]) {
+            return;
+          }
+          count++;
+          sum += parseFloat(s);
+        });
+
+        graphData.average = ((sum / count) / 100).toFixed(2);
         return graphData;
       });
   }
