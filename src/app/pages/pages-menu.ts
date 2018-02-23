@@ -29,7 +29,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
             title: 'Recetas',
             link: '/pages/store/products/recipes',
           },
-        ]
+        ],
       },
       {
         title: 'Inventarios',
@@ -46,7 +46,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
             title: 'Compras',
             link: '/pages/store/inventories/purchases',
           },
-        ]
+        ],
       },
     ],
   },
