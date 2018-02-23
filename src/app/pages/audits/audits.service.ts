@@ -40,6 +40,7 @@ export class AuditsService {
           const score = section.revisions.reduce((acc, r) => {
             r.classification = r.pivot.classification;
             r.comment = r.pivot.comment;
+            r.modified = false;
             let value = 0;
             const classification = r.classification ? r.classification.toLowerCase() : '';
             if (classification === 'no aplica' || classification === 'cumple') {
@@ -88,6 +89,7 @@ export class AuditsService {
                 return Object.assign({}, r, {
                   classification: 'No Aplica',
                   comment: '',
+                  modified: true,
                 });
               });
             return Object.assign({}, s, {

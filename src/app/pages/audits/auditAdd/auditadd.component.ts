@@ -73,6 +73,7 @@ export class AuditAddComponent implements OnInit {
   }
 
   onScoreChange(revision, section) {
+    revision.modified = true;
     const score = section.revisions.reduce((acc, r) => {
       let value = 0;
       const classification = r.classification ? r.classification.toLowerCase() : '';
@@ -142,7 +143,7 @@ export class AuditAddComponent implements OnInit {
     }
 
     const revisions = this.sections.reduce((acc, s) => {
-      const sectionRevisions = s.revisions.map((r) => ({
+      const sectionRevisions = s.revisions.filter(r => r.modified).map((r) => ({
         score: r.score,
         revision_id: r.id,
         classification: r.classification,
