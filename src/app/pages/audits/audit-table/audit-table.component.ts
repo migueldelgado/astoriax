@@ -29,8 +29,11 @@ export class AuditTableComponent implements OnInit {
       editButtonContent: '<i class="nb-search"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
     },
+    delete: {
+      deleteButtonContent: '<i class="nb-edit"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+    },
     actions: {
-      delete: false,
       columnTitle: 'Acciones',
       position: 'right',
     },
@@ -47,7 +50,7 @@ export class AuditTableComponent implements OnInit {
         title: 'Jefe de local',
         type: 'string',
       },
-      created_at: {
+      date: {
         title: 'Fecha',
         type: 'date',
       },
@@ -82,11 +85,11 @@ export class AuditTableComponent implements OnInit {
     this.router.navigate(['../auditAdd'], { relativeTo: this.route });
   }
 
-  onEdit(event): void {
+  onView(event): void {
     this.router.navigate([`../audit/${event.data.id}`], { relativeTo: this.route });
   }
 
-  onDelete(event): void {
-    // console.log(event);
+  onEdit(event): void {
+    this.router.navigate([`../audit/${event.data.id}/edit`], { relativeTo: this.route });
   }
 }

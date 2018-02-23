@@ -17,6 +17,10 @@ const routes: Routes = [
         component: AuditAddComponent,
       },
       {
+        path: 'audit/:id/edit',
+        component: AuditAddComponent,
+      },
+      {
         path: 'audit/:id',
         component: AuditDetailComponent,
       },

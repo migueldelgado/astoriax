@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuditsService} from '../audits.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker/interfaces/my-options.interface';
 
 @Component({
   selector: 'ngx-audits-add',
@@ -20,6 +21,11 @@ export class AuditAddComponent implements OnInit {
   managerId = null;
   score: number = null;
   result = {};
+  date = { jsdate: new Date() };
+  options: IMyDpOptions = {
+    dateFormat: 'dd/mm/yyyy',
+  };
+  id: any;
 
   constructor(private auditService: AuditsService, private route: ActivatedRoute, private router: Router) {
   }
@@ -30,6 +36,24 @@ export class AuditAddComponent implements OnInit {
     this.shiftTypes$ = this.auditService.getShifts();
     this.stores$ = this.auditService.getStores();
     this.users$ = this.auditService.getUsers();
+    this.route.params.subscribe(params => {
+      if (!params.id) {
+        return;
+      }
+      this.id = params.id;
+      this.auditService.find(this.id)
+        .subscribe((data) => {
+          const date = new Date(data.date);
+          const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+          this.date = { jsdate: new Date(date.getTime() + userTimezoneOffset) };
+          this.auditTypeId = data.audit_type_id;
+          this.sections = data.audit_type.sections;
+          this.shiftId = data.shift_id;
+          this.storeId = data.store_id;
+          this.managerId = data.manager_id;
+          this.calculateScore();
+        })
+    });
   }
 
   loadAudits() {
@@ -59,6 +83,10 @@ export class AuditAddComponent implements OnInit {
     }, 0);
 
     section.percentageScore = score / section.revisions.length;
+    this.calculateScore();
+  }
+
+  calculateScore() {
     this.score = this.sections.reduce((acc, s) => {
       const sectionScore = s.percentageScore ? s.percentageScore * s.percentage : 0;
       return sectionScore + acc;
@@ -97,7 +125,9 @@ export class AuditAddComponent implements OnInit {
     //   }
     // ]
     // }
-
+    const month = this.date.jsdate.getMonth() + 1;
+    const year = this.date.jsdate.getFullYear();
+    const day = this.date.jsdate.getDate();
     const data = {
       audit_type_id: this.auditTypeId,
       auditor_id: '1',
@@ -105,6 +135,7 @@ export class AuditAddComponent implements OnInit {
       store_id: this.storeId,
       shift_id: this.shiftId,
       revisions: null,
+      date: `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`,
     };
 
     const revisions = this.sections.reduce((acc, s) => {
@@ -120,9 +151,9 @@ export class AuditAddComponent implements OnInit {
 
     data.revisions = revisions;
 
-    const result = this.auditService.saveAudit(data);
+    const result = this.id ? this.auditService.updateAudit(this.id, data) : this.auditService.saveAudit(data);
     result.subscribe(() => {
-      this.router.navigate(['../audit-list'], { relativeTo: this.route })
+      this.router.navigate(['/pages/audits/audit-list'], { relativeTo: this.route })
     }, (error) => {
       alert('Error al guardar auditoria')
     })

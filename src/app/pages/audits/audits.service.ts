@@ -38,6 +38,8 @@ export class AuditsService {
         const sections = audit.audit_type.sections;
         sections.forEach(section => {
           const score = section.revisions.reduce((acc, r) => {
+            r.classification = r.pivot.classification;
+            r.comment = r.pivot.comment;
             let value = 0;
             const classification = r.classification ? r.classification.toLowerCase() : '';
             if (classification === 'no aplica' || classification === 'cumple') {
@@ -112,6 +114,10 @@ export class AuditsService {
     return this.http.post(`${AppConfig.API_ENDPOINT}audits`, audit)
   }
 
+  public updateAudit(id, audit) {
+    return this.http.put(`${AppConfig.API_ENDPOINT}audits/${id}`, audit);
+  }
+
   public getAuditReport(id) {
     return this.http.get<any>(`${AppConfig.API_ENDPOINT}audit_report/${id}`)
   }
@@ -123,9 +129,11 @@ export class AuditsService {
     )
       .map(result => {
         const data = result.map((a) => {
+          const date = new Date(a.date);
+          const userTimezoneOffset = date.getTimezoneOffset() * 60000;
           const audit: any = {
             id: a.id,
-            month: new Date(a.created_at).getMonth(),
+            month: new Date(date.getTime() + userTimezoneOffset).getMonth(),
             score: 100,
           };
           const sections = a.revisions.reduce((acc, rev) => {
