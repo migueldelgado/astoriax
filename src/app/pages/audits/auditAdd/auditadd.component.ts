@@ -128,7 +128,7 @@ export class AuditAddComponent implements OnInit {
     const month = this.date.jsdate.getMonth() + 1;
     const year = this.date.jsdate.getFullYear();
     const day = this.date.jsdate.getDate();
-    const data = {
+    const data: any = {
       audit_type_id: this.auditTypeId,
       auditor_id: '1',
       manager_id: this.managerId,
@@ -137,6 +137,9 @@ export class AuditAddComponent implements OnInit {
       revisions: null,
       date: `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`,
     };
+    if (this.id) {
+      data.id = this.id;
+    }
 
     const revisions = this.sections.reduce((acc, s) => {
       const sectionRevisions = s.revisions.map((r) => ({
