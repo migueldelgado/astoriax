@@ -120,6 +120,10 @@ export class AuditsService {
     return this.http.put(`${AppConfig.API_ENDPOINT}audits/${id}`, audit);
   }
 
+  public deleteAudit(id) {
+    return this.http.delete(`${AppConfig.API_ENDPOINT}audits/${id}`);
+  }
+
   public getAuditReport(id) {
     return this.http.get<any>(`${AppConfig.API_ENDPOINT}audit_report/${id}`)
   }

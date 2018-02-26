@@ -5,6 +5,9 @@
         <nb-card-header>Auditoria</nb-card-header>
         <nb-card-body *ngIf="audit.audit_type">
           <div class="row justify-content-end" >
+            <button (click)="onDelete()" class="btn btn-outline-warning btn-icon" style="margin-right: 3rem;">
+              <div><i class="nb-trash"></i></div>
+            </button>
             <button (click)="onClickDownload()" class="btn btn-outline-primary btn-icon" >
               <div><i class="fa fa-file-pdf-o"></i></div>
             </button>

@@ -41,4 +41,16 @@ export class AuditDetailComponent implements OnInit {
         alert('Error generating report')
       })
   }
+
+  onDelete() {
+    const result = confirm('Desea borrar esta auditoria?');
+    if (!result) {
+      return;
+    }
+
+    this.auditService.deleteAudit(this.id)
+      .subscribe(result => {
+        this.router.navigate(['/pages/audits/audit-list']);
+      });
+  }
 }
