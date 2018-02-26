@@ -18,13 +18,6 @@
         </select>
       </div>
       <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
-        <label for="stores">Tienda</label>
-        <select id="stores" class="form-control" [(ngModel)]="storeId">
-          <option [value]="null">Tienda</option>
-          <option *ngFor="let store of stores$ | async" [value]="store.id">{{store.name}}</option>
-        </select>
-      </div>
-      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
         <label for="manager">Jefe de turno</label>
         <select id="manager" class="form-control" [(ngModel)]="managerId">
           <option [value]="null">Jefe de</option>

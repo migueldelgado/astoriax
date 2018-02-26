@@ -17,14 +17,14 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xl-10 col-lg-9 col-md-8, col-sm-12">
+    <div class="col-lg-9 col-md-8, col-sm-12">
       <nb-card style="flex:1; min-height: 50vh" cardclass="with-scroll table-panel" title="Resumen Auditoria">
         <nb-card-body>
           <chart type="line" [data]="data" [options]="options"></chart>
         </nb-card-body>
       </nb-card>
     </div>
-    <div class="2 col-lg-3 col-md-4, col-sm-12">
+    <div class="col-lg-3 col-md-4, col-sm-12">
       <div>
         <label><strong>Promedio</strong></label>
         <h4>
@@ -39,15 +39,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr style="background-color: greenyellow;">
+            <tr style="background-color: rgba(173, 255, 47, 0.7);">
               <td scope="col">Cumple</td>
               <td scope="col">90% -- 100%</td>
             </tr>
-            <tr style="background-color: yellow;">
+            <tr style="background-color: rgba(255, 255, 0, 0.7);">
               <td scope="col">En Alerta</td>
               <td scope="col">75% -- 89%</td>
             </tr>
-            <tr style="background-color: red;">
+            <tr style="background-color: rgba(255, 0, 0, 0.7);">
               <td scope="col">Critico</td>
               <td scope="col">0% -- 74%</td>
             </tr>

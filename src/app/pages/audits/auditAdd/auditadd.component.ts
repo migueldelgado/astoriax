@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuditsService} from '../audits.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker/interfaces/my-options.interface';
+import {NbAuthService} from '../../../auth/services';
 
 @Component({
   selector: 'ngx-audits-add',
@@ -27,7 +28,11 @@ export class AuditAddComponent implements OnInit {
   };
   id: any;
 
-  constructor(private auditService: AuditsService, private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private auditService: AuditsService,
+    private authService: NbAuthService,
+    private route: ActivatedRoute,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -100,11 +105,6 @@ export class AuditAddComponent implements OnInit {
       return ;
     }
 
-    if (!this.storeId) {
-      alert('Debe seleccionar Tienda');
-      return ;
-    }
-
     if (!this.managerId) {
       alert('Debe seleccionar Jefe de local');
       return ;
@@ -133,7 +133,7 @@ export class AuditAddComponent implements OnInit {
       audit_type_id: this.auditTypeId,
       auditor_id: '1',
       manager_id: this.managerId,
-      store_id: this.storeId,
+      store_id: this.authService.getCurrentStore(),
       shift_id: this.shiftId,
       revisions: null,
       date: `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`,

@@ -130,6 +130,14 @@ export class AuditsService {
       `${AppConfig.API_ENDPOINT}getAuditOverview/${storeId}/${typeId}/${year}`,
     )
       .map(result => {
+        if (!result || result.length === 0) {
+          return {
+            labels: [],
+            scores: [],
+            valid: [],
+            average: '0',
+          };
+        }
         const data = result.map((a) => {
           const date = new Date(a.date);
           const userTimezoneOffset = date.getTimezoneOffset() * 60000;

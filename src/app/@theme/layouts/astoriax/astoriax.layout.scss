@@ -138,6 +138,6 @@
   left: calc(50% - 150px);
 }
 
-/deep/ nb-menu .menu-items.expanded, /deep/ .menu-item>.menu-items.expanded {
+/deep/ nb-menu .menu-items.expanded, /deep/ .menu-item > .menu-items.expanded {
   max-height: 700px !important;
 }
