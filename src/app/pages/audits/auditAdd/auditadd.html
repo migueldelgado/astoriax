@@ -65,8 +65,18 @@
                 <option value="No Aplica">No Aplica</option>
               </select>
             </td>
-            <td><textarea [(ngModel)]="revision.comment"></textarea></td>
-            <td><input class="form-control" multiple id="file" type="file" accept="image/*"></td>
+            <td><textarea (change)="onCommentChange(revision)" [(ngModel)]="revision.comment"></textarea></td>
+            <td>
+              <div>
+                <input class="form-control" (change)="onInputChange($event, revision)" id="file" type="file" accept="image/*">
+              </div>
+              <div>
+                <a *ngIf="revision.image" href="{{revision.image}}" target="_blank">Imagen</a>
+              </div>
+              <div>
+                <button class="btn btn-danger btn-tn" *ngIf="revision.image" (click)="deleteImage(revision)">Borrar imagen</button>
+              </div>
+            </td>
           </tr>
           </tbody>
           <tfoot>

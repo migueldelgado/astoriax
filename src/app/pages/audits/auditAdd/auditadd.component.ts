@@ -3,6 +3,7 @@ import {AuditsService} from '../audits.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker/interfaces/my-options.interface';
 import {NbAuthService} from '../../../auth/services';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'ngx-audits-add',
@@ -99,6 +100,26 @@ export class AuditAddComponent implements OnInit {
     }, 0)
   }
 
+  onInputChange($event, revision) {
+    const file = $event.target.files[0];
+    if (file.size > 1572864) {
+      alert('Error, Peso Maximo 1.5mb');
+      return;
+    }
+    revision.modified = true;
+    revision.file = file;
+  }
+
+  deleteImage(revision) {
+    revision.image = null;
+    revision.path = null;
+    revision.modified = true;
+  }
+
+  onCommentChange(revision) {
+    revision.modified = true;
+  }
+
   onSave() {
     if (!this.shiftId) {
       alert('Debe seleccionar turno');
@@ -142,24 +163,45 @@ export class AuditAddComponent implements OnInit {
       data.id = this.id;
     }
 
-    const revisions = this.sections.reduce((acc, s) => {
-      const sectionRevisions = s.revisions.filter(r => r.modified).map((r) => ({
-        score: r.score,
-        revision_id: r.id,
-        classification: r.classification,
-        comment: r.comment,
-      }));
+    let uploadObservables = [Observable.of({})];
+    this.sections.forEach((s) => {
+      const filteredRevisions = s.revisions.filter(r => r.modified);
+      const uploads = filteredRevisions.filter((r) => !!r.file)
+        .map(r => {
+          return this.auditService.uploadFile(r.file)
+            .map((result: any) => {
+              r.path = result.path;
+              return r;
+            });
+        });
+      uploadObservables = [...uploadObservables, ...uploads];
+    });
 
-      return [...acc, ...sectionRevisions];
-    }, []);
 
-    data.revisions = revisions;
+    Observable.forkJoin(...uploadObservables)
+      .subscribe((res) => {
+        data.revisions = this.sections.reduce((acc, s) => {
+          // console.log(res, s.revisions);
+          const sectionRevisions = s.revisions.filter(r => r.modified).map((r) => ({
+            score: r.score,
+            revision_id: r.id,
+            classification: r.classification,
+            comment: r.comment,
+            image: r.path ? r.path : null,
+          }));
 
-    const result = this.id ? this.auditService.updateAudit(this.id, data) : this.auditService.saveAudit(data);
-    result.subscribe(() => {
-      this.router.navigate(['/pages/audits/audit-list'], { relativeTo: this.route })
-    }, (error) => {
-      alert('Error al guardar auditoria')
-    })
+          console.log(sectionRevisions);
+          return [...acc, ...sectionRevisions];
+        }, []);
+
+        console.log(data.revisions);
+        const result = this.id ? this.auditService.updateAudit(this.id, data) : this.auditService.saveAudit(data);
+        result.subscribe(() => {
+          this.router.navigate(['/pages/audits/audit-list'], { relativeTo: this.route })
+        }, (error) => {
+          alert('Error al guardar auditoria')
+        })
+      });
+
   }
 }

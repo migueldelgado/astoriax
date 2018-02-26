@@ -41,6 +41,8 @@ export class AuditsService {
             r.classification = r.pivot.classification;
             r.comment = r.pivot.comment;
             r.modified = false;
+            r.image = r.pivot.image ? `${AppConfig.IMAGE_PREFIX}/${r.pivot.image}` : null;
+            r.path = r.pivot.image;
             let value = 0;
             const classification = r.classification ? r.classification.toLowerCase() : '';
             if (classification === 'no aplica' || classification === 'cumple') {
@@ -117,6 +119,7 @@ export class AuditsService {
   }
 
   public updateAudit(id, audit) {
+    console.log(audit);
     return this.http.put(`${AppConfig.API_ENDPOINT}audits/${id}`, audit);
   }
 
@@ -229,5 +232,11 @@ export class AuditsService {
         graphData.average = ((sum / count) / 100).toFixed(2);
         return graphData;
       });
+  }
+
+  public uploadFile(file) {
+    const form = new FormData();
+    form.append('rev', file);
+    return this.http.post(`${AppConfig.API_ENDPOINT}audits/upload_image`, form);
   }
 }

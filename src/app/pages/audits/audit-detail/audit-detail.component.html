@@ -62,9 +62,10 @@
                   <th colspan="5">{{section.name}}</th>
                 </tr>
                 <tr>
-                  <th style="width: 40%">REVISION</th>
+                  <th style="width: 30%">REVISION</th>
                   <th style="width: 20%">CALIFICACION</th>
-                  <th style="width: 40%">OBSERVACION</th>
+                  <th style="width: 30%">OBSERVACION</th>
+                  <th style="width: 20%">IMAGEN</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -74,6 +75,7 @@
                       {{revision.classification}}
                     </td>
                     <td>{{revision.comment}}</td>
+                    <td><a *ngIf="revision.image" href="{{revision.image}}" target="_blank">Imagen</a></td>
                   </tr>
                 </tbody>
                 <tfoot>
