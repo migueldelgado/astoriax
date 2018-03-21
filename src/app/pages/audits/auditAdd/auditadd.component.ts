@@ -190,11 +190,11 @@ export class AuditAddComponent implements OnInit {
             image: r.path ? r.path : null,
           }));
 
-          console.log(sectionRevisions);
+          // console.log(sectionRevisions);
           return [...acc, ...sectionRevisions];
         }, []);
 
-        console.log(data.revisions);
+        // console.log(data.revisions);
         const result = this.id ? this.auditService.updateAudit(this.id, data) : this.auditService.saveAudit(data);
         result.subscribe(() => {
           this.router.navigate(['/pages/audits/audit-list'], { relativeTo: this.route })
