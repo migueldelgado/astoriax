@@ -90,7 +90,7 @@ export class AuditOverviewComponent implements OnInit {
       })
   }
 
-  onChange(evnt:any) {
+  onChange(evnt: any) {
     this.auditsService.getAuditOverView(this.auditTypeId, this.year)
       .subscribe((r) => {
         // this.data = r;

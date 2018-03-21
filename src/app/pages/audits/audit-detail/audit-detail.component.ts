@@ -49,7 +49,7 @@ export class AuditDetailComponent implements OnInit {
     }
 
     this.auditService.deleteAudit(this.id)
-      .subscribe(result => {
+      .subscribe(result1 => {
         this.router.navigate(['/pages/audits/audit-list']);
       });
   }

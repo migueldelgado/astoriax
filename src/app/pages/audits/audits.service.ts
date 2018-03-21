@@ -72,7 +72,7 @@ export class AuditsService {
     return this.http.get(`${AppConfig.API_ENDPOINT}sections`)
   }
 
-  public getRevisionList(): Observable<Object[]> {
+  public getRevisionList(): Observable<Object> {
     return this.http.get(`${AppConfig.API_ENDPOINT}revisions`)
   }
 
@@ -119,7 +119,7 @@ export class AuditsService {
   }
 
   public updateAudit(id, audit) {
-    console.log(audit);
+    // console.log(audit);
     return this.http.put(`${AppConfig.API_ENDPOINT}audits/${id}`, audit);
   }
 

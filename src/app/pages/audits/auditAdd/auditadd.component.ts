@@ -66,7 +66,7 @@ export class AuditAddComponent implements OnInit {
     this.auditService.getAll().subscribe(p => this.result = p);
   }
 
-  onAuditTypeChange(evnt:any) {
+  onAuditTypeChange(evnt: any) {
     if (!this.auditTypeId) {
       this.score = null;
       return;
