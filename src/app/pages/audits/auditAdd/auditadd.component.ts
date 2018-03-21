@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuditsService} from '../audits.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker/interfaces/my-options.interface';
+import {INgxMyDpOptions} from 'ngx-mydatepicker';
 import {NbAuthService} from '../../../auth/services';
 import {Observable} from 'rxjs/Observable';
 
@@ -24,7 +24,7 @@ export class AuditAddComponent implements OnInit {
   score: number = null;
   result = {};
   date = { jsdate: new Date() };
-  options: IMyDpOptions = {
+  options: INgxMyDpOptions = {
     dateFormat: 'dd/mm/yyyy',
   };
   id: any;
@@ -66,7 +66,7 @@ export class AuditAddComponent implements OnInit {
     this.auditService.getAll().subscribe(p => this.result = p);
   }
 
-  onAuditTypeChange() {
+  onAuditTypeChange(evnt:any) {
     if (!this.auditTypeId) {
       this.score = null;
       return;

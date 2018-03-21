@@ -4,7 +4,17 @@
       Inventario Diario
     </nb-card-header>
     <nb-card-body>
-      <my-date-picker name="mydate" [(ngModel)]="date" [options]="options" required></my-date-picker>
+      <div class="input-group">
+        <input ngx-mydatepicker class="form-control" style="float:none" placeholder="Select a date" name="mydate" [(ngModel)]="date" [options]="options" #dp="ngx-mydatepicker" required />
+        <span class="input-group-append">
+          <button type="button" class="btn btn-primary" (click)="dp.clearDate()">
+            <i class="fa fa-times"></i>
+          </button>
+          <button type="button" class="btn btn-primary" (click)="dp.toggleCalendar()">
+              <i class="fa fa-calendar"></i>
+          </button>
+        </span>
+      </div>
       <div class="form-group">
         <div class="row justify-content-between">
           <h4 class="col-md-6 col-sm-6">Insumos</h4>

@@ -2,16 +2,14 @@
   <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3" style="margin-bottom: 2rem">
       <label for="typeOfAudits">Tipo de auditoria</label>
-      <select id="typeOfAudits" class="form-control" [(ngModel)]="auditTypeId"
-              (ngModelChange)="onChange($event)">
-        <option [value]="null">Tipo</option>
+      <select id="typeOfAudits" class="form-control" [(ngModel)]="auditTypeId" (ngModelChange)="onChange($event)">
+        <option [value]="">Tipo</option>
         <option *ngFor="let type of auditTypes" [value]="type.id">{{type.name}}</option>
       </select>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
       <label for="typeOfAudits">Año</label>
-      <select id="year" class="form-control" [(ngModel)]="year"
-              (ngModelChange)="onChange($event)">
+      <select id="year" class="form-control" [(ngModel)]="year" (ngModelChange)="onChange($event)">
         <option *ngFor="let y of years" [value]="y">{{y}}</option>
       </select>
     </div>

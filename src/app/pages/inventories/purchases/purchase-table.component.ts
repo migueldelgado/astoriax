@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker/interfaces/my-options.interface';
+import {INgxMyDpOptions} from 'ngx-mydatepicker';
 import {AppConfig} from '../../../app.config';
 import {PurchaseService} from '../../../@core/data/purchase.service';
 import {NbAuthService} from '../../../auth/services';
@@ -66,7 +66,7 @@ export class PurchaseTableComponent implements OnInit {
 
   dateFrom = { jsdate: new Date() };
   dateTo = { jsdate: new Date() };
-  options: IMyDpOptions = {
+  options: INgxMyDpOptions = {
     dateFormat: 'dd-mm-yyyy',
   };
   source: LocalDataSource = new LocalDataSource();

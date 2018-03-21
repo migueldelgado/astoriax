@@ -3,7 +3,7 @@ import {LocalDataSource} from 'ng2-smart-table';
 import {SupplyService} from '../../../@core/data/supply.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DailyInventoryService} from '../../../@core/data/daily-inventory.service';
-import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker/interfaces/my-options.interface';
+import {INgxMyDpOptions} from 'ngx-mydatepicker';
 import {AppConfig} from '../../../app.config';
 import {LoanService} from '../../../@core/data/loan.service';
 import {NbAuthService} from '../../../auth/services';
@@ -60,7 +60,7 @@ export class LoanTableComponent implements OnInit {
 
   dateFrom = { jsdate: new Date() };
   dateTo = { jsdate: new Date() };
-  options: IMyDpOptions = {
+  options: INgxMyDpOptions = {
     dateFormat: 'dd-mm-yyyy',
   };
   source: LocalDataSource = new LocalDataSource();

@@ -4,8 +4,7 @@
     <div class="row">
       <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
         <label for="typeOfAudits">Tipo de auditoria</label>
-        <select id="typeOfAudits" class="form-control" [(ngModel)]="auditTypeId"
-                (ngModelChange)="onAuditTypeChange($event)">
+        <select id="typeOfAudits" class="form-control" [(ngModel)]="auditTypeId" (ngModelChange)="onAuditTypeChange($event)">
           <option [value]="null">Tipo</option>
           <option *ngFor="let type of auditTypes$ | async" [value]="type.id">{{type.name}}</option>
         </select>
@@ -26,7 +25,17 @@
       </div>
       <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
         <label for="date">Fecha</label>
-        <my-date-picker id="date" class="form-control" name="date" [(ngModel)]="date" [options]="options" required></my-date-picker>
+        <div class="input-group">
+          <input ngx-mydatepicker id="date" class="form-control" style="float:none" placeholder="Select a date" name="mydate" [(ngModel)]="date" [options]="options" #dp="ngx-mydatepicker" required />
+          <span class="input-group-append">
+            <button type="button" class="btn btn-primary" (click)="dp.clearDate()">
+              <i class="fa fa-times"></i>
+            </button>
+            <button type="button" class="btn btn-primary" (click)="dp.toggleCalendar()">
+                <i class="fa fa-calendar"></i>
+            </button>
+          </span>
+        </div>
       </div>
     </div>
     <div class="container">

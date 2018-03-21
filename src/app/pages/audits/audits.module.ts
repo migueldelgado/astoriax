@@ -11,7 +11,7 @@ import {AuditTableComponent} from './audit-table/audit-table.component';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import { LoadingModule } from 'ngx-loading';
 import {ChartModule} from 'angular2-chartjs';
-import {MyDatePickerModule} from 'angular4-datepicker/src/my-date-picker/my-date-picker.module';
+import {NgxMyDatePickerModule} from 'ngx-mydatepicker';
 
 
 const components = [
@@ -29,7 +29,7 @@ const components = [
     Ng2SmartTableModule,
     LoadingModule,
     ChartModule,
-    MyDatePickerModule,
+    NgxMyDatePickerModule.forRoot(),
   ],
   declarations: [
     ...components,

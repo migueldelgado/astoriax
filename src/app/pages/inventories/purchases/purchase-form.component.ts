@@ -7,7 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {RecipeService} from '../../../@core/data/recipe.service';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker/interfaces/my-options.interface';
+import {INgxMyDpOptions} from 'ngx-mydatepicker';
 import {AppConfig} from '../../../app.config';
 import {LoanService} from '../../../@core/data/loan.service';
 import {SupplierService} from '../../../@core/data/supplier.service';
@@ -39,7 +39,7 @@ export class PurchaseFormComponent implements OnInit {
   // {"date":"2018-02-09T23:52:47.910Z","invoice_number":"123","id_store":"1","id_shift":"1","id_supplier":"4",
   // "supplies":[{"id_supply":"49","quantity":"1"}]}
 
-  options: IMyDpOptions = {
+  options: INgxMyDpOptions = {
     dateFormat: 'dd/mm/yyyy',
   };
   date = {

@@ -86,11 +86,11 @@ export class AuditOverviewComponent implements OnInit {
         this.auditTypeId = types[0].id;
         const store = user.stores.find(s => s.id === parseInt(this.authService.getCurrentStore(), 10));
         this.store = store ? store.name : 'Tienda';
-        this.onChange();
+        this.onChange(null);
       })
   }
 
-  onChange() {
+  onChange(evnt:any) {
     this.auditsService.getAuditOverView(this.auditTypeId, this.year)
       .subscribe((r) => {
         // this.data = r;

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SupplyService} from '../../../@core/data/supply.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppConfig} from '../../../app.config';
-import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker/interfaces/my-options.interface';
+import {INgxMyDpOptions} from 'ngx-mydatepicker';
 import {DailyInventoryService} from '../../../@core/data/daily-inventory.service';
 import {NbAuthService} from '../../../auth/services';
 
@@ -20,7 +20,7 @@ export class DailyInventoryFormComponent implements OnInit {
   id: number;
   idStore;
   supplies: Array<any> = [];
-  options: IMyDpOptions = {
+  options: INgxMyDpOptions = {
     dateFormat: 'dd-mm-yyyy',
   };
   date = {

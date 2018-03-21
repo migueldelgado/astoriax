@@ -7,7 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {RecipeService} from '../../../@core/data/recipe.service';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import {IMyDpOptions} from 'angular4-datepicker/src/my-date-picker/interfaces/my-options.interface';
+import {INgxMyDpOptions} from 'ngx-mydatepicker';
 import {AppConfig} from '../../../app.config';
 import {LoanService} from '../../../@core/data/loan.service';
 import {NbAuthService} from '../../../auth/services';
@@ -32,7 +32,7 @@ export class LoanFormComponent implements OnInit {
     supplies: [],
   };
 
-  options: IMyDpOptions = {
+  options: INgxMyDpOptions = {
     dateFormat: 'dd/mm/yyyy',
   };
   date = {

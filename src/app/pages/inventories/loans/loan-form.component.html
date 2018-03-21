@@ -9,7 +9,15 @@
           <div class="form-group row align-items-center">
             <label class="col-md-2 col-sm-3">Fecha</label>
             <div class="input-group col-md-10 col-sm-9">
-              <my-date-picker name="mydate" [(ngModel)]="date" [options]="options" required></my-date-picker>
+              <input ngx-mydatepicker class="form-control" style="float:none" placeholder="Select a date" name="mydate" [(ngModel)]="date" [options]="options" #dp="ngx-mydatepicker" required />
+              <span class="input-group-append">
+                <button type="button" class="btn btn-primary" (click)="dp.clearDate()">
+                  <i class="fa fa-times"></i>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="dp.toggleCalendar()">
+                    <i class="fa fa-calendar"></i>
+                </button>
+              </span>
             </div>
           </div>
 
