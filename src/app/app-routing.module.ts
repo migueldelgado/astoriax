@@ -11,9 +11,9 @@ import {
 import {AuthGuardService} from './auth/services/auth-guard.service';
 
 const routes: Routes = [
-  { 
-    path: 'pages', 
-    loadChildren: 'app/pages/pages.module#PagesModule' 
+  {
+    path: 'pages',
+    loadChildren: 'app/pages/pages.module#PagesModule',
   },
   {
     path: 'auth',
