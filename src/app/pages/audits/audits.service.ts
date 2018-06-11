@@ -32,6 +32,14 @@ export class AuditsService {
       });
   }
 
+  public getAuditsByCurrentStore() {
+    let storeId = localStorage.getItem('current_store');
+    return this.http.get(AppConfig.API_ENDPOINT + 'stores/' + storeId + '/audits')
+      .map((audits: Object[]) => {
+        return audits['data'].map(this.parseData);
+      });
+  }
+
   public find(id) {
     return this.http.get<any>(`${AppConfig.API_ENDPOINT}audits/${id}` )
       .map(audit => {

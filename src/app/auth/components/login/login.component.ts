@@ -25,10 +25,7 @@ export class NbLoginComponent implements OnInit {
   user: any = {};
   submitted: boolean = false;
 
-  constructor(protected service: NbAuthService,
-              @Inject(NB_AUTH_OPTIONS_TOKEN) protected config = {},
-              protected router: Router) {
-
+  constructor(protected service: NbAuthService, @Inject(NB_AUTH_OPTIONS_TOKEN) protected config = {}, protected router: Router) {
     this.redirectDelay = this.getConfigValue('forms.login.redirectDelay');
     this.showMessages = this.getConfigValue('forms.login.showMessages');
     this.provider = this.getConfigValue('forms.login.provider');

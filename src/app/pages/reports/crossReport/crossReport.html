@@ -1,0 +1,47 @@
+<nb-card>
+  <nb-card-header>Reporte Cruzado</nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <label for="typeOfAudits">Tipo de auditoria</label>
+          <select id="typeOfAudits" class="form-control" [(ngModel)]="typeOfReportSelected">
+              <option value="1" selected>Insumo de Venta</option>
+          </select>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <label>Desde:</label>
+        <div class="row">
+          <input ngx-mydatepicker id="date" class="form-control col-sm-5 col-md-3 col-lg-5 col-xl-5" placeholder="Seleccione una fecha" name="dateFrom" [(ngModel)]="dateFrom" [options]="options" #from="ngx-mydatepicker" required />
+          <span class="input-group-append col-sm-7 col-md-9 col-lg-7 col-xl-7">
+            <button type="button" class="btn btn-primary" (click)="from.clearDate()">
+              <i class="fa fa-times"></i>
+            </button>
+            <button type="button" class="btn btn-primary" (click)="from.toggleCalendar()">
+              <i class="fa fa-calendar"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <label>Hasta:</label>
+        <div class="row">
+          <input ngx-mydatepicker id="date" class="form-control col-sm-5 col-md-3 col-lg-5 col-xl-5" placeholder="Seleccione una fecha" name="dateTo" [(ngModel)]="dateTo" [options]="options" #to="ngx-mydatepicker" required />
+          <span class="input-group-append col-sm-7 col-md-9 col-lg-7 col-xl-7">
+            <button type="button" class="btn btn-primary" (click)="to.clearDate()">
+              <i class="fa fa-times"></i>
+            </button>
+            <button type="button" class="btn btn-primary" (click)="to.toggleCalendar()">
+              <i class="fa fa-calendar"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button (click)="getReport(dateTo, dateFrom, 1)" class="btn btn-success">Generar reporte</button>
+        </div>						  		
+    </div>
+    
+  </nb-card-body>
+</nb-card>

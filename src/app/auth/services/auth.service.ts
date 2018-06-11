@@ -108,6 +108,7 @@ export class NbAuthService {
 
   clear() {
     localStorage.removeItem('user_data');
+    localStorage.removeItem('current_store');
   }
   /**
    * Retrieves current authenticated token stored
@@ -159,6 +160,7 @@ export class NbAuthService {
       .switchMap((result: NbAuthResult) => {
         if (result.isSuccess() && result.getTokenValue()) {
           this.setCurrentUser(result.getResponse().body.data);
+          this.setCurrentStore(result.getResponse().body.data.stores[0].id)
           return this.tokenService.set(result.getTokenValue())
             .switchMap(_ => this.tokenService.get())
             .map(token => {

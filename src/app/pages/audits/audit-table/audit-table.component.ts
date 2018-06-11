@@ -65,13 +65,12 @@ export class AuditTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.auditService.getAll()
+    this.auditService.getAuditsByCurrentStore()
       .subscribe((audits: any) => {
         this.source.load(audits);
         this.loading = false;
       })
   }
-
 
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {

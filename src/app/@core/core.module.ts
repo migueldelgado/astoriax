@@ -5,6 +5,7 @@ import { NbAuthModule, NbEmailPassAuthProvider } from '../auth';
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { DataModule } from './data/data.module';
 import { AnalyticsService } from './utils/analytics.service';
+import { AppConfig } from '../app.config';
 
 const NB_CORE_PROVIDERS = [
   ...DataModule.forRoot().providers,
@@ -14,9 +15,9 @@ const NB_CORE_PROVIDERS = [
         service: NbEmailPassAuthProvider,
         config: {
           delay: 3000,
-          baseEndpoint: 'http://homestead.test',
+          baseEndpoint: AppConfig.API_ENDPOINT,
           login: {
-            endpoint: '/api/login',
+            endpoint: 'login',
             method: 'post',
             rememberMe: false,
             // redirect: {
@@ -27,17 +28,17 @@ const NB_CORE_PROVIDERS = [
             defaultMessages: ['Te has entrado correctamente'],
           },
           logout: {
-            endpoint: '/api/logout',
+            endpoint: 'logout',
             method: 'post',
           },
           requestPass: {
-            endpoint: '/api/auth/request-pass',
+            endpoint: 'auth/request-pass',
           },
           resetPass: {
-            endpoint: '/api/auth/reset-pass',
+            endpoint: 'auth/reset-pass',
           },
           register: {
-            endpoint: '/api/register',
+            endpoint: 'register',
             method: 'POST',
           },
         },

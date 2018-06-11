@@ -10,14 +10,12 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { CoreModule } from './@core/core.module';
 import { LoadingModule } from 'ngx-loading';
-
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {NbAuthSimpleInterceptor} from './auth/services';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NbAuthSimpleInterceptor } from './auth/services';
 
 
 @NgModule({

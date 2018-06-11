@@ -2,23 +2,23 @@ import {NbMenuItem} from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
-    title: 'Dashboard',
+    title: 'Home',
     icon: 'nb-home',
     link: '/pages/dashboard',
     home: true,
   },
-  {
-    title: 'FEATURES',
-    group: true,
-  },
+  // {
+  //   title: 'FEATURES',
+  //   group: true,
+  // },
   {
     title: 'Bodega',
-    icon: 'nb-home',
+    icon: 'nb-layout-centre',
     link: '/pages/store',
     children: [
       {
         title: 'Productos',
-        icon: 'nb-tables',
+
         link: '/pages/store/products',
         children: [
           {
@@ -33,7 +33,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Inventarios',
-        icon: 'nb-tables',
+
         link: '/pages/store/inventories',
         children: [
           {
@@ -52,7 +52,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Auditorias',
-    icon: 'nb-compose',
+    icon: 'nb-list',
     link: '/pages/audits',
     children: [
       {
@@ -66,138 +66,93 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'UI Features',
-    icon: 'nb-keypad',
-    link: '/pages/ui-features',
+    title: 'Costos/Gastos',
+    icon: 'ion-calculator',
+    link: '/11ertert',
     children: [
       {
-        title: 'Buttons',
-        link: '/pages/ui-features/buttons',
+        title: 'Costos Variables',
+        link: '/temp1',
       },
       {
-        title: 'Grid',
-        link: '/pages/ui-features/grid',
+        title: 'Costos Fijos',
+        link: '/temp2',
       },
       {
-        title: 'Icons',
-        link: '/pages/ui-features/icons',
-      },
-      {
-        title: 'Modals',
-        link: '/pages/ui-features/modals',
-      },
-      {
-        title: 'Typography',
-        link: '/pages/ui-features/typography',
-      },
-      {
-        title: 'Animated Searches',
-        link: '/pages/ui-features/search-fields',
-      },
-      {
-        title: 'Tabs',
-        link: '/pages/ui-features/tabs',
+        title: 'Gastos Generales',
+        link: '/temp3',
       },
     ],
   },
   {
-    title: 'Forms',
-    icon: 'nb-compose',
-    children: [
-      {
-        title: 'Form Inputs',
-        link: '/pages/forms/inputs',
-      },
-      {
-        title: 'Form Layouts',
-        link: '/pages/forms/layouts',
-      },
-    ],
-  },
-  {
-    title: 'Components',
-    icon: 'nb-gear',
-    children: [
-      {
-        title: 'Tree',
-        link: '/pages/components/tree',
-      }, {
-        title: 'Notifications',
-        link: '/pages/components/notifications',
-      },
-    ],
-  },
-  {
-    title: 'Maps',
-    icon: 'nb-location',
-    children: [
-      {
-        title: 'Google Maps',
-        link: '/pages/maps/gmaps',
-      },
-      {
-        title: 'Leaflet Maps',
-        link: '/pages/maps/leaflet',
-      },
-      {
-        title: 'Bubble Maps',
-        link: '/pages/maps/bubble',
-      },
-    ],
-  },
-  {
-    title: 'Charts',
+    title: 'Contabilidad y finanzas',
     icon: 'nb-bar-chart',
+    link: '/swe88',
     children: [
       {
-        title: 'Echarts',
-        link: '/pages/charts/echarts',
+        title: 'Proveedor',
+        link: '/temp4',
       },
       {
-        title: 'Charts.js',
-        link: '/pages/charts/chartjs',
-      },
-      {
-        title: 'D3',
-        link: '/pages/charts/d3',
+        title: 'Tesoreria',
+        link: '/temp5',
       },
     ],
   },
   {
-    title: 'Editors',
-    icon: 'nb-title',
+    title: 'Administracion RRHH',
+    icon: 'nb-person',
+    link: '/kskjsjh',
     children: [
       {
-        title: 'TinyMCE',
-        link: '/pages/editors/tinymce',
+        title: 'Proveedores',
+        link: '/temp6',
       },
       {
-        title: 'CKEditor',
-        link: '/pages/editors/ckeditor',
+        title: 'Locales',
+        link: '/temp7',
+      },
+      {
+        title: 'Empleados',
+        link: '/temp8',
       },
     ],
   },
   {
-    title: 'Tables',
-    icon: 'nb-tables',
+    title: 'Ventas',
+    icon: 'fa fa-book',
+    link: '/55k34j',
     children: [
       {
-        title: 'Smart Table',
-        link: '/pages/tables/smart-table',
+        title: 'Cheque Restaurant',
+        link: '/temp9',
+      },
+      {
+        title: 'Valores de Cheques',
+        link: '/temp10',
+      },
+      {
+        title: 'Ingreso Venta Diaria',
+        link: '/temp11',
       },
     ],
   },
   {
-    title: 'Auth',
-    icon: 'nb-locked',
+    title: 'Reportes',
+    icon: 'nb-compose',
+    link: '/pages/reports',
     children: [
+      // {
+      //   title: 'Proyecciones',
+      //   link: '/temp12',
+      // },
+      // {
+      //   title: 'Estado de resultado',
+      //   link: '/temp13',
+      // },
       {
-        title: 'Login',
-        link: '/auth/login',
-      },
-      {
-        title: 'Register',
-        link: '/auth/register',
+        title: 'Reporte Cruzado',
+        link: '/pages/reports/reporte-cruzado',
       },
     ],
   },
