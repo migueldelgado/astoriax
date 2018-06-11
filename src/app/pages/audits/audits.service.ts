@@ -33,7 +33,7 @@ export class AuditsService {
   }
 
   public getAuditsByCurrentStore() {
-    let storeId = localStorage.getItem('current_store');
+    const storeId = localStorage.getItem('current_store');
     return this.http.get(AppConfig.API_ENDPOINT + 'stores/' + storeId + '/audits')
       .map((audits: Object[]) => {
         return audits['data'].map(this.parseData);

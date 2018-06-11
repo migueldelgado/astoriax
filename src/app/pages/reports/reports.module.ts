@@ -9,8 +9,8 @@ import {CrossReportComponent} from './crossReport/cross-report.component';
 import { ReportsService } from './reports.service';
 
 const components = [
-  ReportsComponent, 
-  CrossReportComponent
+  ReportsComponent,
+  CrossReportComponent,
 ];
 
 @NgModule({
@@ -24,7 +24,7 @@ const components = [
     ...components,
   ],
   providers: [
-    ReportsService
+    ReportsService,
   ],
 })
 

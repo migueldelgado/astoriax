@@ -18,8 +18,8 @@ export class CrossReportComponent {
   typeOfReports = [
     {
       id: 1,
-      name: 'Insumo de Venta'
-    }
+      name: 'Insumo de Venta',
+    },
   ]
 
   constructor(private reportsService: ReportsService) {}
@@ -27,7 +27,6 @@ export class CrossReportComponent {
   getReport(dateFrom, dateTo, typeOfReport) {
     const from = dateFrom.jsdate.toJSON();
     const to = dateTo.jsdate.toJSON();
-    
     this.reportsService.getCrossReport(from, to, typeOfReport)
       .subscribe((data: any) => {
         window.location.href = data.data.path;

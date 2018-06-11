@@ -11,8 +11,9 @@ export class ReportsService {
   constructor(private http: HttpClient, private authService: NbAuthService) {}
 
   public getCrossReport(dateFrom, dateTo, supplyReportType){
-    let currentStore = localStorage.getItem('current_store');
-    return this.http.get(AppConfig.API_ENDPOINT_OLD + '/reports?crossreport=true&dateFrom=' + dateFrom + '&dateTo=' + dateTo + '&id_store=' + currentStore + '&id_supply_report_type=' + supplyReportType)
+    const currentStore = localStorage.getItem('current_store');
+    return this.http.get(AppConfig.API_ENDPOINT_OLD + '/reports?crossreport=true&dateFrom=' +
+                dateFrom + '&dateTo=' + dateTo + '&id_store=' + currentStore + '&id_supply_report_type=' + supplyReportType)
       .map((data: Object[]) => {
         return data.map(this.parseData);
       });
@@ -21,5 +22,4 @@ export class ReportsService {
   private parseData(data): any {
     return data;
   }
-  
 }
