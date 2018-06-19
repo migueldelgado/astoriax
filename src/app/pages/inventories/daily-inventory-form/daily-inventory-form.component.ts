@@ -54,7 +54,6 @@ export class DailyInventoryFormComponent implements OnInit {
         // const { data } = result;
         // const [day, month, year] = data.date.split('/');
         this.supplies = result.data;
-        console.log('');
         // this.date.jsdate = new Date(this.supplies.date);
         // this.supplies = data.supplies.map(s => ({
         //   id_supply: s.supply.id_supply,
@@ -74,17 +73,17 @@ export class DailyInventoryFormComponent implements OnInit {
 
   onSubmit() {
     const supplies: Array<Object> = [];
-    for (let supply of this.supplies){
+    for (const supply of this.supplies){
       supplies.push({
         supply_id: supply.id,
         initial_quantity: supply.initial_quantity,
-        final_quantity: supply.final_quantity
+        final_quantity: supply.final_quantity,
       })
     }
     const data = {
       date: this.datePipe.transform(this.date.jsdate, 'yyyy-MM-dd'),
       store_id: this.storeId,
-      supplies: supplies
+      supplies: supplies,
     };
     const observable = this.id ?
       this.dailyInventoryService.updateInventory(this.id, {
