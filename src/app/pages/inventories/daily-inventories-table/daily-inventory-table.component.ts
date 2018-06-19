@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DailyInventoryService} from '../../../@core/data/daily-inventory.service';
 import {INgxMyDpOptions} from 'ngx-mydatepicker';
 import {AppConfig} from '../../../app.config';
-import {NbAuthService} from '../../../auth/services';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'ngx-supplies-table',
@@ -63,9 +63,9 @@ export class DailyInventoryTableComponent implements OnInit {
 
   constructor(
     private dailyInventoryService: DailyInventoryService,
-    private authService: NbAuthService,
     private route: ActivatedRoute,
-    private router: Router) {}
+    private router: Router,
+    private datePipe: DatePipe) {}
 
   ngOnInit() {
     this.fetch(new Date(), new Date());
@@ -86,14 +86,14 @@ export class DailyInventoryTableComponent implements OnInit {
   }
 
   fetch(dateFrom, dateTo) {
-    const from = dateFrom.toJSON();
-    const to = dateTo.toJSON();
+    const from: string = this.datePipe.transform(dateFrom, 'yyyy-MM-dd');
+    const to: string = this.datePipe.transform(dateTo, 'yyyy-MM-dd');
 
-    this.dailyInventoryService.getAll({ currentStore: this.authService.getCurrentStore(), dateFrom: from, dateTo: to })
+    this.dailyInventoryService.getAll(from, to)
       .subscribe((dailyInventories: any) => {
-        this.source.load(dailyInventories);
+        this.source.load(dailyInventories.data);
         this.firstLoad = true;
-      }, () => {
+      }, (error) => {
         this.source.load([])
         this.firstLoad = true;
       })
@@ -122,7 +122,7 @@ export class DailyInventoryTableComponent implements OnInit {
     this.router.navigate([`../daily/new`], { relativeTo: this.route });
   }
 
-  onEdit(el): void {
-    this.router.navigate([`../daily/edit/${el.data.id_daily_inventory}`], { relativeTo: this.route });
+  onEdit(evt): void {
+    this.router.navigate([`../daily/edit/${evt.data.id}`], { relativeTo: this.route });
   }
 }

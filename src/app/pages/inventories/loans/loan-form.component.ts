@@ -52,7 +52,7 @@ export class LoanFormComponent implements OnInit {
   ngOnInit() {
 
     Observable.forkJoin(this.storeService.getAll(), this.supplyService.getAll())
-      .subscribe(result => {
+      .subscribe((result: any) => {
         this.stores = result[0];
         this.supplies = result[1];
         this.loadLoanData();

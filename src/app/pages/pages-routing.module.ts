@@ -23,7 +23,7 @@ const routes: Routes = [{
         loadChildren: './products/products.module#ProductsModule',
       },
       {
-        path: 'store/inventories',
+        path: 'inventories',
         loadChildren: './inventories/inventories.module#InventoriesModule',
       },
       {

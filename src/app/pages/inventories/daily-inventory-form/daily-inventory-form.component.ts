@@ -5,6 +5,7 @@ import {AppConfig} from '../../../app.config';
 import {INgxMyDpOptions} from 'ngx-mydatepicker';
 import {DailyInventoryService} from '../../../@core/data/daily-inventory.service';
 import {NbAuthService} from '../../../auth/services';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -18,7 +19,7 @@ import {NbAuthService} from '../../../auth/services';
 })
 export class DailyInventoryFormComponent implements OnInit {
   id: number;
-  idStore;
+  storeId;
   supplies: Array<any> = [];
   options: INgxMyDpOptions = {
     dateFormat: 'dd-mm-yyyy',
@@ -31,8 +32,9 @@ export class DailyInventoryFormComponent implements OnInit {
               private dailyInventoryService: DailyInventoryService,
               private authService: NbAuthService,
               private route: ActivatedRoute,
-              private router: Router) {
-    this.idStore = this.authService.getCurrentStore();
+              private router: Router,
+              private datePipe: DatePipe) {
+    this.storeId = this.authService.getCurrentStore();
   }
 
   ngOnInit() {
@@ -47,42 +49,42 @@ export class DailyInventoryFormComponent implements OnInit {
 
   loadDailyInventory(id) {
     this.id = id;
-    this.dailyInventoryService.findInventory(id, this.authService.getCurrentStore())
-      .subscribe(result => {
-        const { data } = result;
-        const [day, month, year] = data.date.split('/');
-
-        this.date.jsdate = new Date(year, parseInt(month, 10) - 1, day);
-        this.supplies = data.supplies.map(s => ({
-          id_supply: s.supply.id_supply,
-          name: s.supply.name,
-          initial_quantity: s.initial_quantity,
-          final_quantity: s.final_quantity,
-        }));
+    this.dailyInventoryService.findInventory(id)
+      .subscribe((result: any) => {
+        // const { data } = result;
+        // const [day, month, year] = data.date.split('/');
+        this.supplies = result.data;
+        console.log('');
+        // this.date.jsdate = new Date(this.supplies.date);
+        // this.supplies = data.supplies.map(s => ({
+        //   id_supply: s.supply.id_supply,
+        //   name: s.supply.name,
+        //   initial_quantity: s.initial_quantity,
+        //   final_quantity: s.final_quantity,
+        // }));
       })
   }
 
   loadSupplies() {
-    this.supplyService.getAll({id_store: this.authService.getCurrentStore(), show_daily_inventory: true})
-      .subscribe((result) => {
-        this.supplies = result.map((s) => ({
-          id_supply: s.id_supply,
-          name: s.name,
-          initial_quantity: 0,
-          final_quantity: 0,
-        }));
+    this.supplyService.getAll()
+      .subscribe((result: any) => {
+        this.supplies = result.data;
       });
   }
 
   onSubmit() {
+    const supplies: Array<Object> = [];
+    for (let supply of this.supplies){
+      supplies.push({
+        supply_id: supply.id,
+        initial_quantity: supply.initial_quantity,
+        final_quantity: supply.final_quantity
+      })
+    }
     const data = {
-      date: this.date.jsdate,
-      id_store: this.idStore,
-      supplies: this.supplies.map((s) => ({
-        id_supply: s.id_supply,
-        initial_quantity: s.initial_quantity,
-        final_quantity: s.final_quantity,
-      })),
+      date: this.datePipe.transform(this.date.jsdate, 'yyyy-MM-dd'),
+      store_id: this.storeId,
+      supplies: supplies
     };
     const observable = this.id ?
       this.dailyInventoryService.updateInventory(this.id, {

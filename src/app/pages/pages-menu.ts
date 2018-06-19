@@ -34,17 +34,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Inventarios',
 
-        link: '/pages/store/inventories',
+        link: '/pages/inventories',
         children: [
           {
             title: 'Inventarios Diarios',
-            link: '/pages/store/inventories/daily',
+            link: '/pages/inventories/daily',
           }, {
             title: 'Prestamos',
-            link: '/pages/store/inventories/loan',
+            link: '/pages/inventories/loan',
           }, {
             title: 'Compras',
-            link: '/pages/store/inventories/purchases',
+            link: '/pages/inventories/purchases',
           },
         ],
       },

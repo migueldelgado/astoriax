@@ -9,20 +9,9 @@ export class SupplyService {
 
   constructor(private http: HttpClient, private authService: NbAuthService) {
   }
-  public getAll(config?: Object) {
-    const params = config || {
-      currentStore: this.authService.getCurrentStore(),
-    };
-
-    let httpParams = new HttpParams();
-    Object.keys(params).forEach(function (key) {
-      httpParams = httpParams.append(key, params[key]);
-    });
-
-    return this.http.get(`${AppConfig.API_ENDPOINT_OLD}/supplies`, { params: httpParams })
-      .map((supplies: any) => {
-        return supplies.data;
-      });
+  public getAll() {
+    const currentStore = this.authService.getCurrentStore();
+    return this.http.get(`${AppConfig.STORES + currentStore}/supplies`);
   }
 
   public deleteSupply(id) {

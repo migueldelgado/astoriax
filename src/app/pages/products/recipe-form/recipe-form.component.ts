@@ -45,7 +45,7 @@ export class RecipeFormComponent implements OnInit {
     Observable.forkJoin(this.storeService.getAll(), this.supplyService.getAll())
       .subscribe(result => {
         this.stores = result[0];
-        this.supplies = result[1];
+        //this.supplies = result[1];
         this.loadRecipeData();
       })
 

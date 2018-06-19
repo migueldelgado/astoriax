@@ -5,6 +5,7 @@ import { InventoriesRoutingModule, routedComponents } from './inventories.routin
 import { InventoriesComponent } from './inventories.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import {NgxMyDatePickerModule} from 'ngx-mydatepicker';
+import { DatePipe } from '@angular/common';
 
 const components = [
   InventoriesComponent,
@@ -22,6 +23,7 @@ const components = [
     ...routedComponents,
   ],
   providers: [
+    DatePipe,
   ],
 })
 export class InventoriesModule {}
