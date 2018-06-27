@@ -1,0 +1,81 @@
+<nb-card>
+  <nb-card-header>
+    Reporte de costos variables
+  </nb-card-header>
+
+  <nb-card-body>
+    <div class="form-group row align-items-center inventories-table">
+      <div class="col-md-6 col-sm-12">
+        <div class="col-sm-12"><label class="">Columna 2: </label></div>
+        <div class="input-group col-sm-12">
+          <label class="col-md-2 col-sm-3">Año</label>
+          <select class="custom-select form-control" id="inputGroupSelect01">
+            <option value="2018">2018</option>
+            <option value="2017" selected>2017</option>
+            <option value="2016">2016</option>
+            <option value="2015">2015</option>
+            <option value="2014">2014</option>
+            <option value="2013">2013</option>
+            <option value="2012">2012</option>
+          </select>
+        </div>
+        <div class="input-group col-sm-12">
+          <label class="col-md-2 col-sm-3">Mes</label>
+          <select class="custom-select form-control" id="inputGroupSelect02">
+            <option value="Enero">Enero</option>
+            <option value="Febrero">Febrero</option>
+            <option value="Marzo">Marzo</option>
+            <option value="Abril">Abril</option>
+            <option value="Mayo">Mayo</option>
+            <option value="Junio" selected>Junio</option>
+            <option value="Julio">Julio</option>
+            <option value="Agosto">Agosto</option>
+            <option value="Septiembre">Septiembre</option>
+            <option value="Octubre">Octubre</option>
+            <option value="Noviembre">Noviembre</option>
+            <option value="Diciembre">Diciembre</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12">
+        <div class="col-sm-12"><label class="">Columna 3: </label></div>
+        <div class="input-group col-sm-12">
+          <label class="col-md-2 col-sm-3">Año</label>
+          <select class="custom-select form-control" id="inputGroupSelect03">
+            <option value="2018" selected>2018</option>
+            <option value="2017">2017</option>
+            <option value="2016">2016</option>
+            <option value="2015">2015</option>
+            <option value="2014">2014</option>
+            <option value="2013">2013</option>
+            <option value="2012">2012</option>
+          </select>
+        </div>
+        <div class="input-group col-sm-12">
+          <label class="col-md-2 col-sm-3">Mes</label>
+          <select class="custom-select form-control" id="inputGroupSelect04">
+            <option value="Enero">Enero</option>
+            <option value="Febrero">Febrero</option>
+            <option value="Marzo">Marzo</option>
+            <option value="Abril">Abril</option>
+            <option value="Mayo" selected>Mayo</option>
+            <option value="Junio" >Junio</option>
+            <option value="Julio">Julio</option>
+            <option value="Agosto">Agosto</option>
+            <option value="Septiembre">Septiembre</option>
+            <option value="Octubre">Octubre</option>
+            <option value="Noviembre">Noviembre</option>
+            <option value="Diciembre">Diciembre</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+    <ng2-smart-table
+      [settings]="settings"
+      [source]="source"
+    >
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

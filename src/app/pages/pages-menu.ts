@@ -68,11 +68,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Costos/Gastos',
     icon: 'ion-calculator',
-    link: '/11ertert',
+    link: '/pages/costs',
     children: [
       {
         title: 'Costos Variables',
-        link: '/temp1',
+        link: '/pages/costs/variable-costs',
       },
       {
         title: 'Costos Fijos',
