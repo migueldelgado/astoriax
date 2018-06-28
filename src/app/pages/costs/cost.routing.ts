@@ -3,6 +3,8 @@ import {Routes, RouterModule} from '@angular/router';
 
 import {CostComponent} from './cost.component';
 import {VariableCostsComponent} from './variable-costs/variable-costs.component';
+import {GeneralExpensesComponent} from './general-expenses/general-expenses.component';
+import {FixedCostsComponent} from './fixed-costs/fixed-costs.component';
 
 const routes: Routes = [
   {
@@ -12,6 +14,14 @@ const routes: Routes = [
       {
         path: 'variable-costs',
         component: VariableCostsComponent,
+      },
+      {
+        path: 'general-expenses',
+        component: GeneralExpensesComponent,
+      },
+      {
+        path: 'fixed-costs',
+        component: FixedCostsComponent,
       },
 
     ],
@@ -27,4 +37,6 @@ export class InventoriesRoutingModule {
 
 export const routedComponents = [
   VariableCostsComponent,
+  GeneralExpensesComponent,
+  FixedCostsComponent,
 ];

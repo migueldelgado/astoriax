@@ -76,11 +76,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Costos Fijos',
-        link: '/temp2',
+        link: '/pages/costs/fixed-costs',
       },
       {
         title: 'Gastos Generales',
-        link: '/temp3',
+        link: '/pages/costs/general-expenses',
       },
     ],
   },

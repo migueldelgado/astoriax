@@ -4,8 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {INgxMyDpOptions} from 'ngx-mydatepicker';
 
 @Component({
-  selector: 'ngx-variable-costs-table',
-  templateUrl: './variable-costs.component.html',
+  selector: 'ngx-general-expenses-table',
+  templateUrl: './general-expenses.component.html',
   styles: [`
     nb-card {
       transform: translate3d(0, 0, 0);
@@ -13,27 +13,9 @@ import {INgxMyDpOptions} from 'ngx-mydatepicker';
     nb-card-body {
       min-height: 400px;
     }
-    table {
-        line-height: 1.5em;
-      border-collapse: collapse;
-      border-spacing: 0;
-      display: table;
-      width: 100%;
-      max-width: 100%;
-      overflow: auto;
-      word-break: normal;
-      word-break: keep-all;
-    }
-    table tr td {
-      width: 25%;
-        position: relative;
-      padding: 0.875rem 1.25rem;
-      border: 1px solid #342e73;
-      vertical-align: middle;
-    }
   `],
 })
-export class VariableCostsComponent implements OnInit {
+export class GeneralExpensesComponent implements OnInit {
 
   settings = {
     actions: false,
@@ -73,33 +55,43 @@ export class VariableCostsComponent implements OnInit {
   ngOnInit() {
 
     this.source.load([{
-      name: 'Proveedor',
-      secondColumn: -6599005,
+      name: 'Arriendo',
+      secondColumn: 0,
       thirdColumn: 0,
       fourthColumn: 0,
     }, {
-      name: 'Finiquito',
-      secondColumn: -333845,
+      name: 'Seguro Local',
+      secondColumn: 0,
       thirdColumn: 0,
       fourthColumn: 0,
     }, {
-      name: 'Comisión Transbank D',
-      secondColumn: -206442,
+      name: 'Marketing y publicidad',
+      secondColumn: 0,
       thirdColumn: 0,
       fourthColumn: 0,
     }, {
-      name: 'Comisión Transbank C',
-      secondColumn: -34733,
+      name: 'Gastos varios',
+      secondColumn: -12084251,
       thirdColumn: 0,
       fourthColumn: 0,
     }, {
-      name: 'Comisión Sodexho',
-      secondColumn: -51238,
+      name: 'Caja chica',
+      secondColumn: 0,
       thirdColumn: 0,
       fourthColumn: 0,
     }, {
-      name: 'Comisión Edenred',
-      secondColumn: -5290,
+      name: 'Viatico',
+      secondColumn: 0,
+      thirdColumn: 0,
+      fourthColumn: 0,
+    },  {
+      name: 'Asignaciones de representación',
+      secondColumn: 0,
+      thirdColumn: 0,
+      fourthColumn: 0,
+    },  {
+      name: 'Reinversión de maquinaria',
+      secondColumn: 0,
       thirdColumn: 0,
       fourthColumn: 0,
     }]);
