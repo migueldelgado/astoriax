@@ -160,7 +160,8 @@ export class NbAuthService {
       .switchMap((result: NbAuthResult) => {
         if (result.isSuccess() && result.getTokenValue()) {
           this.setCurrentUser(result.getResponse().body.data);
-          this.setCurrentStore(result.getResponse().body.data.stores[0].id)
+          this.setCurrentStore(1) // TODO change this
+          // this.setCurrentStore(result.getResponse().body.data.stores[0].id)
           return this.tokenService.set(result.getTokenValue())
             .switchMap(_ => this.tokenService.get())
             .map(token => {
