@@ -31,6 +31,26 @@ import {INgxMyDpOptions} from 'ngx-mydatepicker';
       border: 1px solid #342e73;
       vertical-align: middle;
     }
+    table th {
+      position: relative;
+      width: 25%;
+      padding: 0.875rem 1.25rem;
+      border: 1px solid #342e73;
+      vertical-align: middle;
+      padding: 0.875rem 1.25rem;
+      padding-right: 1.75rem;
+      font-family: Exo;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.25;
+      color: #ffffff;
+    }
+    table.total-table td, tfoot td {
+      background-color: #342e73;
+    }
+    table.total-table td:first-child, tfoot td:first-child {
+      background-color: #231f4e;
+    }
   `],
 })
 export class FixedCostsComponent implements OnInit {

@@ -13,6 +13,24 @@ import {INgxMyDpOptions} from 'ngx-mydatepicker';
     nb-card-body {
       min-height: 400px;
     }
+    table {
+        line-height: 1.5em;
+      border-collapse: collapse;
+      border-spacing: 0;
+      display: table;
+      width: 100%;
+      max-width: 100%;
+      overflow: auto;
+      word-break: normal;
+      word-break: keep-all;
+    }
+    table tr td {
+      width: 25%;
+        position: relative;
+      padding: 0.875rem 1.25rem;
+      border: 1px solid #342e73;
+      vertical-align: middle;
+    }
   `],
 })
 export class GeneralExpensesComponent implements OnInit {
@@ -24,18 +42,22 @@ export class GeneralExpensesComponent implements OnInit {
       name: {
         title: 'Costo',
         type: 'string',
+        width: '25%',
       },
       secondColumn: {
         title: 'Junio 2017',
         type: 'number',
+        width: '25%',
       },
       thirdColumn: {
         title: 'Mayo 2018',
         type: 'number',
+        width: '25%',
       },
       fourthColumn: {
         title: 'Junio al dia',
         type: 'number',
+        width: '25%',
       },
     },
   };
