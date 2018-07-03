@@ -87,15 +87,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Contabilidad y finanzas',
     icon: 'nb-bar-chart',
-    link: '/swe88',
+    link: '/pages/finances',
     children: [
       {
         title: 'Proveedor',
-        link: '/temp4',
+        link: '/pages/finances/providers',
       },
       {
         title: 'Tesoreria',
-        link: '/temp5',
+        link: '/pages/finances/treasury',
       },
     ],
   },

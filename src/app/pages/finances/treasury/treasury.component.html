@@ -1,0 +1,162 @@
+<nb-card>
+  <nb-card-header>
+    Reporte de Tesoreria
+  </nb-card-header>
+
+  <nb-card-body>
+    <nb-actions size="medium">
+      <nb-action icon="nb-plus"></nb-action>
+      <nb-action icon="nb-close-circled"></nb-action>
+      <nb-action icon="nb-shuffle"></nb-action>
+    </nb-actions>
+    <div class="form-group row">
+      <div class="col-md-4 col-sm-12">
+        <div class="form-group">
+          <label class="">Tipo de movimiento</label>
+          <select class="form-control" id="inputGroupSelect01">
+            <option value="all" selected>TODOS</option>
+            <option value="outcome">EGRESOS</option>
+            <option value="income">INGRESOS</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group col-md-4 col-sm-12">
+
+        <div><label for="dateFrom">Desde</label></div>
+        <div class="input-group">
+          <input ngx-mydatepicker id="dateFrom" class="form-control" style="float:none" placeholder="Select a to date" name="dateFrom" [(ngModel)]="dateFrom" [options]="options" #from="ngx-mydatepicker" (dateChanged)="onChangeFrom($event)" required />
+          <span class="input-group-append">
+            <button type="button" class="btn btn-primary" (click)="from.clearDate()">
+              <i class="fa fa-times"></i>
+            </button>
+            <button type="button" class="btn btn-primary" (click)="from.toggleCalendar()">
+              <i class="fa fa-calendar"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+      <div class="form-group col-md-4 col-sm-12">
+
+        <div><label for="dateFrom">Hasta</label></div>
+        <div class="input-group">
+          <input ngx-mydatepicker id="dateTo" class="form-control" style="float:none" placeholder="Select a to date" name="dateTo" [(ngModel)]="dateTo" [options]="options" #to="ngx-mydatepicker" (dateChanged)="onChangeTo($event)" required />
+          <span class="input-group-append">
+            <button type="button" class="btn btn-primary" (click)="to.clearDate()">
+              <i class="fa fa-times"></i>
+            </button>
+            <button type="button" class="btn btn-primary" (click)="to.toggleCalendar()">
+              <i class="fa fa-calendar"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <table>
+      <thead>
+      <tr>
+        <th>
+          Fecha
+        </th>
+        <th>
+          Estado
+        </th>
+        <th>
+          Tipo de Movimiento
+        </th>
+        <th>
+          Forma de pago
+        </th>
+        <th>
+          Clasificación
+        </th>
+        <th>
+          Motivo
+        </th>
+        <th>
+          Cheque
+        </th>
+        <th>
+          Monto
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>2018-01-04</td>
+        <td>Inactivo</td>
+        <td>Egreso</td>
+        <td>Cargo cuenta corriente</td>
+        <td>Costo variable proveedor</td>
+        <td>Carne</td>
+        <td></td>
+        <td>-2.123.577</td>
+      </tr>
+      <tr>
+        <td>2018-01-04</td>
+        <td>Inactivo</td>
+        <td>Egreso</td>
+        <td>Cargo cuenta corriente</td>
+        <td>Costo variable proveedor</td>
+        <td>Carne</td>
+        <td></td>
+        <td>-2.123.577</td>
+      </tr>
+      <tr>
+        <td>2018-01-04</td>
+        <td>Inactivo</td>
+        <td>Egreso</td>
+        <td>Cargo cuenta corriente</td>
+        <td>Costo variable proveedor</td>
+        <td>Carne</td>
+        <td></td>
+        <td>-2.123.577</td>
+      </tr>
+      <tr>
+        <td>2018-01-04</td>
+        <td>Inactivo</td>
+        <td>Egreso</td>
+        <td>Cargo cuenta corriente</td>
+        <td>Costo variable proveedor</td>
+        <td>Carne</td>
+        <td></td>
+        <td>-2.123.577</td>
+      </tr>
+      <tr>
+        <td>2018-01-04</td>
+        <td>Inactivo</td>
+        <td>Egreso</td>
+        <td>Cargo cuenta corriente</td>
+        <td>Costo variable proveedor</td>
+        <td>Carne</td>
+        <td></td>
+        <td>-2.123.577</td>
+      </tr>
+      <tr>
+        <td>2018-01-04</td>
+        <td>Inactivo</td>
+        <td>Egreso</td>
+        <td>Cargo cuenta corriente</td>
+        <td>Costo variable proveedor</td>
+        <td>Carne</td>
+        <td></td>
+        <td>-2.123.577</td>
+      </tr>
+
+      </tbody>
+      <tfoot class="total-table">
+      <tr>
+        <td colspan="7"><strong>Caja real</strong></td>
+        <td>2.928.514</td>
+      </tr>
+      <tr>
+        <td colspan="7"><strong>Caja proyectada</strong></td>
+        <td>2.928.514</td>
+      </tr>
+      <tr>
+        <td colspan="7"><strong>Pasivo circulante</strong></td>
+        <td>2.928.514</td>
+      </tr>
+      </tfoot>
+    </table>
+  </nb-card-body>
+</nb-card>

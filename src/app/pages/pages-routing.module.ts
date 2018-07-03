@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {AuthGuardService} from '../auth/services/auth-guard.service';
+import {AccountFinanceModule} from './finances/account-finance.module';
 
 const routes: Routes = [{
   path: '',
@@ -61,6 +62,10 @@ const routes: Routes = [{
       {
         path: 'costs',
         loadChildren: './costs/cost.module#CostModule',
+      },
+      {
+        path: 'finances',
+        loadChildren: './finances/account-finance.module#AccountFinanceModule',
       },
       {
         path: '',
