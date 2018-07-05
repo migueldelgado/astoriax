@@ -5,6 +5,7 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {AuthGuardService} from '../auth/services/auth-guard.service';
 import {AccountFinanceModule} from './finances/account-finance.module';
+import {HrModule} from './hr/hr.module';
 
 const routes: Routes = [{
   path: '',
@@ -66,6 +67,10 @@ const routes: Routes = [{
       {
         path: 'finances',
         loadChildren: './finances/account-finance.module#AccountFinanceModule',
+      },
+      {
+        path: 'hr',
+        loadChildren: './hr/hr.module#HrModule',
       },
       {
         path: '',

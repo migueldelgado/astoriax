@@ -102,19 +102,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Administracion RRHH',
     icon: 'nb-person',
-    link: '/kskjsjh',
+    link: '/pages/hr',
     children: [
       {
         title: 'Proveedores',
-        link: '/temp6',
+        link: '/pages/hr/providers',
       },
       {
         title: 'Locales',
-        link: '/temp7',
+        link: '/pages/hr/stores',
       },
       {
         title: 'Empleados',
-        link: '/temp8',
+        link: '/pages/hr/employees',
       },
     ],
   },

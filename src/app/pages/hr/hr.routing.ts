@@ -1,28 +1,27 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-
-import {AccountingFinanceComponent} from './accounting-finance.component';
+import {HrComponent} from './hr.component';
 import {ProvidersComponent} from './providers/providers.component';
-import {TreasuryComponent} from './treasury/treasury.component';
+import {StoresComponent} from './stores/stores.component';
+import {EmployeesComponent} from './employees/employees.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AccountingFinanceComponent,
+    component: HrComponent,
     children: [
       {
         path: 'providers',
         component: ProvidersComponent,
       },
       {
-        path: 'treasury',
-        component: TreasuryComponent,
+        path: 'stores',
+        component: StoresComponent,
       },
-      // {
-      //   path: 'fixed-costs',
-      //   component: FixedCostsComponent,
-      // },
-
+      {
+        path: 'employees',
+        component: EmployeesComponent,
+      },
     ],
   },
 ];
@@ -31,10 +30,11 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AccountFinanceRoutingModule {
+export class HrRoutingModule {
 }
 
 export const routedComponents = [
   ProvidersComponent,
-  TreasuryComponent,
+  StoresComponent,
+  EmployeesComponent,
 ];
