@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
 import {ActivatedRoute, Router} from '@angular/router';
 import {INgxMyDpOptions} from 'ngx-mydatepicker';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { AddInvoiceProviderComponent } from '../modal/add-invoice-provider.component';
+
 
 @Component({
   selector: 'ngx-providers-table',
@@ -77,14 +80,29 @@ export class ProvidersComponent implements OnInit {
   };
   source: LocalDataSource = new LocalDataSource();
   store: any;
-
   constructor(
     private route: ActivatedRoute,
-    private router: Router) {}
+    private router: Router,
+    private modalService: NgbModal,
+  ) {}
 
   ngOnInit() {
 
   }
 
+  onChangeTo() {
+
+  }
+
+  onClickPlus() {
+    const activeModal = this.modalService.open(AddInvoiceProviderComponent, { size: 'lg', container: 'nb-layout' });
+  }
+
+  onClickView() {
+    const activeModal = this.modalService.open(AddInvoiceProviderComponent, { size: 'lg', container: 'nb-layout' });
+
+    activeModal.componentInstance.modalHeader = 'Detalle del proveedor';
+
+  }
 
 }

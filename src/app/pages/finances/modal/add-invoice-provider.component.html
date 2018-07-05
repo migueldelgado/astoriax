@@ -1,0 +1,48 @@
+<div class="modal-header">
+  <span>Ingresar Factura</span>
+  <button class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form class="form-group">
+    <div class="input-group">
+      <div class="col-sm-3" style="line-height: 2.5">
+        <label>Proveedor: </label>
+      </div>
+      <input type="text" placeholder="Proveedor" class="form-control"/>
+    </div>
+    <div class="input-group">
+      <div class="col-sm-3" style="line-height: 2.5">
+        <label>Factura: </label>
+      </div>
+      <input type="text" placeholder="Factura" class="form-control"/>
+    </div>
+    <div class="input-group">
+      <div class="col-sm-3" style="line-height: 2.5">
+        <label>Fecha: </label>
+      </div>
+      <input ngx-mydatepicker id="date" class="form-control" style="float:none"
+             placeholder="Select a to date" name="dateTo" [(ngModel)]="dateTo" [options]="options"
+             #to="ngx-mydatepicker" (dateChanged)="onChangeTo($event)" required />
+      <span class="input-group-append">
+                <button type="button" class="btn btn-primary" (click)="to.clearDate()">
+                  <i class="fa fa-times"></i>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="to.toggleCalendar()">
+                  <i class="fa fa-calendar"></i>
+                </button>
+              </span>
+    </div>
+    <div class="input-group">
+      <div class="col-sm-3" style="line-height: 2.5">
+        <label>Total: </label>
+      </div>
+      <input type="number" placeholder="Factura" class="form-control"/>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-md btn-primary" (click)="closeModal()">Guardar</button>
+  <button class="btn btn-md btn-secondary" (click)="closeModal()">Cancelar</button>
+</div>

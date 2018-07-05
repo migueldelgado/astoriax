@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {LocalDataSource} from 'ng2-smart-table';
 import {ActivatedRoute, Router} from '@angular/router';
 import {INgxMyDpOptions} from 'ngx-mydatepicker';
+import {AddTreasuryRegistryComponent} from '../modal/add-treasury-registry.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ConfirmationModalComponent} from '../modal/confirmation-modal.component';
 
 @Component({
   selector: 'ngx-treasury-table',
@@ -51,6 +53,9 @@ import {INgxMyDpOptions} from 'ngx-mydatepicker';
     tfoot td:first-child {
       background-color: #231f4e;
     }
+    table tbody tr td:first-child {
+      padding: 0.1rem;
+    }
   `],
 })
 export class TreasuryComponent implements OnInit {
@@ -64,7 +69,9 @@ export class TreasuryComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router) {}
+    private router: Router,
+    private modalService: NgbModal,
+  ) {}
 
   ngOnInit() {
 
@@ -80,5 +87,19 @@ export class TreasuryComponent implements OnInit {
     console.log(date);
   }
 
+  onClickPlus() {
+    const activeModal = this.modalService.open(AddTreasuryRegistryComponent, { size: 'lg', container: 'nb-layout' });
+  }
 
+  onClickRemove() {
+    const activeModal = this.modalService.open(ConfirmationModalComponent, { size: 'sm', container: 'nb-layout' });
+    activeModal.componentInstance.modalHeader = 'Información';
+    activeModal.componentInstance.modalContent = `¿Desea eliminar registro?`;
+  }
+
+  onClickToggle() {
+    const activeModal = this.modalService.open(ConfirmationModalComponent, { size: 'sm', container: 'nb-layout' });
+    activeModal.componentInstance.modalHeader = 'Información';
+    activeModal.componentInstance.modalContent = `¿Desea Cambiar el estado?`;
+  }
 }

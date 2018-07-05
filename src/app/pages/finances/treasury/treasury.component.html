@@ -4,11 +4,6 @@
   </nb-card-header>
 
   <nb-card-body>
-    <nb-actions size="medium">
-      <nb-action icon="nb-plus"></nb-action>
-      <nb-action icon="nb-close-circled"></nb-action>
-      <nb-action icon="nb-shuffle"></nb-action>
-    </nb-actions>
     <div class="form-group row">
       <div class="col-md-4 col-sm-12">
         <div class="form-group">
@@ -55,6 +50,9 @@
       <thead>
       <tr>
         <th>
+          Acciones
+        </th>
+        <th>
           Fecha
         </th>
         <th>
@@ -82,6 +80,13 @@
       </thead>
       <tbody>
       <tr>
+        <td>
+          <div class="btn-group">
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-plus-circled"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickRemove(event)"><i class="nb-close-circled"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickToggle(event)"><i class="nb-shuffle"></i></button>
+          </div>
+        </td>
         <td>2018-01-04</td>
         <td>Inactivo</td>
         <td>Egreso</td>
@@ -92,6 +97,13 @@
         <td>-2.123.577</td>
       </tr>
       <tr>
+        <td>
+          <div class="btn-group">
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-plus-circled"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickRemove(event)"><i class="nb-close-circled"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickToggle(event)"><i class="nb-shuffle"></i></button>
+          </div>
+        </td>
         <td>2018-01-04</td>
         <td>Inactivo</td>
         <td>Egreso</td>
@@ -102,6 +114,13 @@
         <td>-2.123.577</td>
       </tr>
       <tr>
+        <td>
+          <div class="btn-group">
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-plus-circled"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickRemove(event)"><i class="nb-close-circled"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickToggle(event)"><i class="nb-shuffle"></i></button>
+          </div>
+        </td>
         <td>2018-01-04</td>
         <td>Inactivo</td>
         <td>Egreso</td>
@@ -112,6 +131,13 @@
         <td>-2.123.577</td>
       </tr>
       <tr>
+        <td>
+          <div class="btn-group">
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-plus-circled"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickRemove(event)"><i class="nb-close-circled"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickToggle(event)"><i class="nb-shuffle"></i></button>
+          </div>
+        </td>
         <td>2018-01-04</td>
         <td>Inactivo</td>
         <td>Egreso</td>
@@ -122,6 +148,13 @@
         <td>-2.123.577</td>
       </tr>
       <tr>
+        <td>
+          <div class="btn-group">
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-plus-circled"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickRemove(event)"><i class="nb-close-circled"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickToggle(event)"><i class="nb-shuffle"></i></button>
+          </div>
+        </td>
         <td>2018-01-04</td>
         <td>Inactivo</td>
         <td>Egreso</td>
@@ -132,6 +165,13 @@
         <td>-2.123.577</td>
       </tr>
       <tr>
+        <td>
+          <div class="btn-group">
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-plus-circled"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickRemove(event)"><i class="nb-close-circled"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickToggle(event)"><i class="nb-shuffle"></i></button>
+          </div>
+        </td>
         <td>2018-01-04</td>
         <td>Inactivo</td>
         <td>Egreso</td>
@@ -145,15 +185,15 @@
       </tbody>
       <tfoot class="total-table">
       <tr>
-        <td colspan="7"><strong>Caja real</strong></td>
+        <td colspan="8"><strong>Caja real</strong></td>
         <td>2.928.514</td>
       </tr>
       <tr>
-        <td colspan="7"><strong>Caja proyectada</strong></td>
+        <td colspan="8"><strong>Caja proyectada</strong></td>
         <td>2.928.514</td>
       </tr>
       <tr>
-        <td colspan="7"><strong>Pasivo circulante</strong></td>
+        <td colspan="8"><strong>Pasivo circulante</strong></td>
         <td>2.928.514</td>
       </tr>
       </tfoot>
