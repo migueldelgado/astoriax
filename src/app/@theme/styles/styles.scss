@@ -12,3 +12,7 @@
   @include nb-theme-global();
   @include nb-auth-global();
 };
+
+.modal-xxl .modal-lg {
+  max-width: 90%;
+}

@@ -9,3 +9,8 @@
 @mixin nb-auth-global() {
   @include nb-auth-components();
 }
+
+
+.modal-xxl .modal-lg {
+  max-width: 90%;
+}

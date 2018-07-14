@@ -1,24 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {LocalDataSource} from 'ng2-smart-table';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {INgxMyDpOptions} from 'ngx-mydatepicker';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {AddInvoiceProviderComponent} from '../modal/add-invoice-provider.component';
-import {ProviderDetailComponent} from '../modal/provider-detail.component';
-
 
 @Component({
-  selector: 'ngx-providers-table',
-  templateUrl: './providers.component.html',
+  selector: 'ngx-provider-detail-modal',
+  templateUrl: './provider-detail.component.html',
   styles: [`
-    nb-card {
-      transform: translate3d(0, 0, 0);
-    }
-    nb-card-body {
-      min-height: 400px;
-    }
     table {
-        line-height: 1.5em;
+      line-height: 1.5em;
       border-collapse: collapse;
       border-spacing: 0;
       display: table;
@@ -72,41 +61,22 @@ import {ProviderDetailComponent} from '../modal/provider-detail.component';
     }
   `],
 })
-export class ProvidersComponent implements OnInit {
+export class ProviderDetailComponent {
 
-  dateFrom = {jsdate: new Date()};
-  dateTo = {jsdate: new Date()};
+  dateTo = { jsdate: new Date() };
   options: INgxMyDpOptions = {
     dateFormat: 'dd-mm-yyyy',
+    monthSelector: true,
+    yearSelector: true,
   };
-  source: LocalDataSource = new LocalDataSource();
-  store: any;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private modalService: NgbModal,
-  ) {
-  }
+  constructor(private activeModal: NgbActiveModal) { }
 
-  ngOnInit() {
-
+  closeModal() {
+    this.activeModal.close();
   }
 
   onChangeTo() {
 
   }
-
-  onClickPlus() {
-    const activeModal = this.modalService.open(AddInvoiceProviderComponent, {size: 'lg', container: 'nb-layout'});
-  }
-
-  onClickView() {
-    const activeModal = this.modalService.open(ProviderDetailComponent, {
-      size: 'lg',
-      container: 'nb-layout',
-      windowClass: 'modal-xxl',
-    });
-  }
-
 }

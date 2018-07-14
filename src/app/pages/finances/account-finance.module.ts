@@ -9,12 +9,14 @@ import { DatePipe } from '@angular/common';
 import { AddInvoiceProviderComponent } from './modal/add-invoice-provider.component';
 import { AddTreasuryRegistryComponent } from './modal/add-treasury-registry.component';
 import {ConfirmationModalComponent} from './modal/confirmation-modal.component';
+import {ProviderDetailComponent} from './modal/provider-detail.component';
 
 const components = [
   AccountingFinanceComponent,
   AddInvoiceProviderComponent,
   AddTreasuryRegistryComponent,
   ConfirmationModalComponent,
+  ProviderDetailComponent,
 ];
 
 @NgModule({
@@ -35,6 +37,7 @@ const components = [
     AddInvoiceProviderComponent,
     AddTreasuryRegistryComponent,
     ConfirmationModalComponent,
+    ProviderDetailComponent,
   ],
 })
 export class AccountFinanceModule {}
