@@ -121,11 +121,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Ventas',
     icon: 'fa fa-book',
-    link: '/55k34j',
+    link: '/pages/sales',
     children: [
       {
         title: 'Cheque Restaurant',
-        link: '/temp9',
+        link: '/pages/sales/cheques',
       },
       {
         title: 'Valores de Cheques',
