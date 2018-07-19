@@ -6,8 +6,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
-  selector: 'ngx-cheques-table',
-  templateUrl: './cheques.component.html',
+  selector: 'ngx-daily-sales-table',
+  templateUrl: './daily-sales.component.html',
   styles: [`
     nb-card {
       transform: translate3d(0, 0, 0);
@@ -54,9 +54,13 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
     table .btn-icon {
       padding: 0.25rem 0.5rem !important;
     }
+    .week-days {
+      max-height: 700px;
+      overflow-y: scroll;
+    }
   `],
 })
-export class ChequesComponent implements OnInit {
+export class DailySalesComponent implements OnInit {
 
   dateFrom = { jsdate: new Date() };
   dateTo = { jsdate: new Date() };

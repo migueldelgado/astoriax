@@ -6,8 +6,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
-  selector: 'ngx-cheques-table',
-  templateUrl: './cheques.component.html',
+  selector: 'ngx-cheques-add-table',
+  templateUrl: './add-cheques.component.html',
   styles: [`
     nb-card {
       transform: translate3d(0, 0, 0);
@@ -56,7 +56,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
     }
   `],
 })
-export class ChequesComponent implements OnInit {
+export class AddChequesComponent implements OnInit {
 
   dateFrom = { jsdate: new Date() };
   dateTo = { jsdate: new Date() };

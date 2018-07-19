@@ -129,11 +129,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Valores de Cheques',
-        link: '/temp10',
+        link: '/pages/sales/add-cheques',
       },
       {
         title: 'Ingreso Venta Diaria',
-        link: '/temp11',
+        link: '/pages/sales/daily-sales',
       },
     ],
   },
