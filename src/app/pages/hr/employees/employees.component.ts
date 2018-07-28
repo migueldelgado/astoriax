@@ -3,6 +3,9 @@ import {LocalDataSource} from 'ng2-smart-table';
 import {ActivatedRoute, Router} from '@angular/router';
 import {INgxMyDpOptions} from 'ngx-mydatepicker';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {UserModalComponent} from '../modal/user-modal.component';
+import {UserPasswordModalComponent} from '../modal/user-password-modal.component';
+
 
 
 @Component({
@@ -81,15 +84,12 @@ export class EmployeesComponent implements OnInit {
 
   }
 
-  // onClickPlus() {
-  //   const activeModal = this.modalService.open(AddInvoiceProviderComponent, { size: 'lg', container: 'nb-layout' });
-  // }
-  //
-  // onClickView() {
-  //   const activeModal = this.modalService.open(AddInvoiceProviderComponent, { size: 'lg', container: 'nb-layout' });
-  //
-  //   activeModal.componentInstance.modalHeader = 'Detalle del proveedor';
-  //
-  // }
+  onClickPlus() {
+    const activeModal = this.modalService.open(UserModalComponent, { size: 'lg', container: 'nb-layout' });
+  }
+
+  onClickPassword() {
+    const activeModal = this.modalService.open(UserPasswordModalComponent, { size: 'lg', container: 'nb-layout' });
+  }
 
 }

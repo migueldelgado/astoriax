@@ -1,0 +1,70 @@
+<div class="modal-header">
+  <span>Detalle del empleado</span>
+  <button class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="form-group row align-items-center">
+    <label class="col-md-2 col-sm-3">Rut</label>
+    <div class="input-group col-md-10 col-sm-9">
+      <input type="text" [(ngModel)]="data.rut" name="rut" placeholder="Rut" class="form-control" required />
+    </div>
+  </div>
+  <div class="form-group row align-items-center">
+    <label class="col-md-2 col-sm-3">Nombre</label>
+    <div class="input-group col-md-10 col-sm-9">
+      <input type="text" [(ngModel)]="data.name" name="name" placeholder="Nombre" class="form-control" required />
+    </div>
+  </div>
+  <div class="form-group row align-items-center">
+    <label class="col-md-2 col-sm-3">Apellido</label>
+    <div class="input-group col-md-10 col-sm-9">
+      <input type="text" [(ngModel)]="data.lastname" name="lastname" placeholder="Apellido" class="form-control" required />
+    </div>
+  </div>
+  <div class="form-group row align-items-center">
+    <label class="col-md-2 col-sm-3">Dirección</label>
+    <div class="input-group col-md-10 col-sm-9">
+      <input type="text" [(ngModel)]="data.address" name="address" placeholder="Dirección" class="form-control" required />
+    </div>
+  </div>
+  <div class="form-group row align-items-center">
+    <label class="col-md-2 col-sm-3">Teléfono</label>
+    <div class="input-group col-md-10 col-sm-9">
+      <input type="text" [(ngModel)]="data.phone" name="phone" placeholder="Teléfono" class="form-control" required />
+    </div>
+  </div>
+  <div class="form-group row align-items-center">
+    <label class="col-md-2 col-sm-3">Perfiles</label>
+    <div class="input-group ">
+      <ng-multiselect-dropdown
+        [placeholder]="'Perfiles'"
+        [data]="roles"
+        [(ngModel)]="data.roles"
+        [settings]="dropdownSettings"
+        (onSelect)="onItemSelect($event)"
+        (onSelectAll)="onSelectAll($event)"
+      >
+      </ng-multiselect-dropdown>
+    </div>
+  </div>
+  <div class="form-group row align-items-center">
+    <label class="col-md-2 col-sm-3">Tiendas</label>
+    <div class="input-group ">
+      <ng-multiselect-dropdown
+        [placeholder]="'Tiendas'"
+        [data]="stores"
+        [(ngModel)]="data.stores"
+        [settings]="dropdownSettings"
+        (onSelect)="onItemSelect($event)"
+        (onSelectAll)="onSelectAll($event)"
+      >
+      </ng-multiselect-dropdown>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-md btn-primary" (click)="closeModal()">Guardar</button>
+  <button class="btn btn-md btn-secondary" (click)="closeModal()">Cancelar</button>
+</div>

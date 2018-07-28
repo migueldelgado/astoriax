@@ -16,6 +16,8 @@ import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NbAuthSimpleInterceptor } from './auth/services';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
 
 
 @NgModule({
@@ -29,6 +31,7 @@ import { NbAuthSimpleInterceptor } from './auth/services';
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   bootstrap: [AppComponent],
   providers: [

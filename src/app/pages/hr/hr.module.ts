@@ -5,9 +5,14 @@ import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {NgxMyDatePickerModule} from 'ngx-mydatepicker';
 import { HrRoutingModule, routedComponents } from './hr.routing'
 import { HrComponent } from './hr.component';
+import { UserModalComponent } from './modal/user-modal.component'
+import { UserPasswordModalComponent } from './modal/user-password-modal.component'
+import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 
 const components = [
   HrComponent,
+  UserModalComponent,
+  UserPasswordModalComponent,
 ];
 
 @NgModule({
@@ -16,6 +21,7 @@ const components = [
     HrRoutingModule,
     Ng2SmartTableModule,
     NgxMyDatePickerModule.forRoot(),
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   declarations: [
     ...components,
@@ -25,6 +31,8 @@ const components = [
     DatePipe,
   ],
   entryComponents: [
+    UserModalComponent,
+    UserPasswordModalComponent,
   ],
 })
 export class HrModule { }
