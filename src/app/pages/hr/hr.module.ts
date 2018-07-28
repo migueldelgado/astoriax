@@ -7,12 +7,14 @@ import { HrRoutingModule, routedComponents } from './hr.routing'
 import { HrComponent } from './hr.component';
 import { UserModalComponent } from './modal/user-modal.component'
 import { UserPasswordModalComponent } from './modal/user-password-modal.component'
+import { ProvidersModalComponent } from './modal/providers-modal.component'
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 
 const components = [
   HrComponent,
   UserModalComponent,
   UserPasswordModalComponent,
+  ProvidersModalComponent,
 ];
 
 @NgModule({
@@ -33,6 +35,7 @@ const components = [
   entryComponents: [
     UserModalComponent,
     UserPasswordModalComponent,
+    ProvidersModalComponent,
   ],
 })
 export class HrModule { }
