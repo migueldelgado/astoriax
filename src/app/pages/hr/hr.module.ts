@@ -8,6 +8,7 @@ import { HrComponent } from './hr.component';
 import { UserModalComponent } from './modal/user-modal.component'
 import { UserPasswordModalComponent } from './modal/user-password-modal.component'
 import { ProvidersModalComponent } from './modal/providers-modal.component'
+import { StoresModalComponent } from './modal/stores-modal.component'
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 
 const components = [
@@ -15,6 +16,7 @@ const components = [
   UserModalComponent,
   UserPasswordModalComponent,
   ProvidersModalComponent,
+  StoresModalComponent,
 ];
 
 @NgModule({
@@ -36,6 +38,7 @@ const components = [
     UserModalComponent,
     UserPasswordModalComponent,
     ProvidersModalComponent,
+    StoresModalComponent,
   ],
 })
 export class HrModule { }

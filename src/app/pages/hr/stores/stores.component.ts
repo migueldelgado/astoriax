@@ -3,6 +3,7 @@ import {LocalDataSource} from 'ng2-smart-table';
 import {ActivatedRoute, Router} from '@angular/router';
 import {INgxMyDpOptions} from 'ngx-mydatepicker';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {StoresModalComponent} from '../modal/stores-modal.component';
 
 
 @Component({
@@ -81,9 +82,9 @@ export class StoresComponent implements OnInit {
 
   }
 
-  // onClickPlus() {
-  //   const activeModal = this.modalService.open(AddInvoiceProviderComponent, { size: 'lg', container: 'nb-layout' });
-  // }
+  onClickPlus() {
+    const activeModal = this.modalService.open(StoresModalComponent, { size: 'lg', container: 'nb-layout' });
+  }
   //
   // onClickView() {
   //   const activeModal = this.modalService.open(AddInvoiceProviderComponent, { size: 'lg', container: 'nb-layout' });
