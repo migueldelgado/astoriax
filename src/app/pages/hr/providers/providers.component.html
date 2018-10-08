@@ -30,91 +30,17 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>Adelco Mr</td>
-        <td>84348700-9</td>
-        <td>6006006363</td>
-        <td>josesepulveda@adelco.cl</td>
+      <tr *ngFor="let supplier of suppliers">
+        <td>{{supplier.name}}</td>
+        <td>{{supplier.rut}}</td>
+        <td>{{supplier.phone}}</td>
+        <td>{{supplier.email}}</td>
         <td>Activo</td>
         <td>
           <div class="btn-group">
             <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
           </div>
         </td>
-      </tr>
-      <tr>
-        <td>Adelco Mr</td>
-        <td>84348700-9</td>
-        <td>6006006363</td>
-        <td>josesepulveda@adelco.cl</td>
-        <td>Activo</td>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Adelco Mr</td>
-        <td>84348700-9</td>
-        <td>6006006363</td>
-        <td>josesepulveda@adelco.cl</td>
-        <td>Activo</td>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Adelco Mr</td>
-        <td>84348700-9</td>
-        <td>6006006363</td>
-        <td>josesepulveda@adelco.cl</td>
-        <td>Activo</td>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Adelco Mr</td>
-        <td>84348700-9</td>
-        <td>6006006363</td>
-        <td>josesepulveda@adelco.cl</td>
-        <td>Activo</td>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Adelco Mr</td>
-        <td>84348700-9</td>
-        <td>6006006363</td>
-        <td>josesepulveda@adelco.cl</td>
-        <td>Activo</td>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Adelco Mr</td>
-        <td>84348700-9</td>
-        <td>6006006363</td>
-        <td>josesepulveda@adelco.cl</td>
-        <td>Activo</td>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
-          </div>
-        </td>
-      </tr>
-      <tr>
       </tr>
       </tbody>
 

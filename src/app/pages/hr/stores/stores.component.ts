@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {INgxMyDpOptions} from 'ngx-mydatepicker';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {StoresModalComponent} from '../modal/stores-modal.component';
+import {StoreService} from '../../../@core/data/store.service';
 
 
 @Component({
@@ -61,21 +62,19 @@ import {StoresModalComponent} from '../modal/stores-modal.component';
 })
 export class StoresComponent implements OnInit {
 
-  dateFrom = { jsdate: new Date() };
-  dateTo = { jsdate: new Date() };
-  options: INgxMyDpOptions = {
-    dateFormat: 'dd-mm-yyyy',
-  };
-  source: LocalDataSource = new LocalDataSource();
-  store: any;
+  stores: Array<any>;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
+    private storeService: StoreService,
   ) {}
 
   ngOnInit() {
-
+    this.storeService.getAll(true)
+      .subscribe(stores => {
+        this.stores = stores;
+      })
   }
 
   onChangeTo() {

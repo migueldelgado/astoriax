@@ -5,6 +5,7 @@ import {INgxMyDpOptions} from 'ngx-mydatepicker';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UserModalComponent} from '../modal/user-modal.component';
 import {UserPasswordModalComponent} from '../modal/user-password-modal.component';
+import {UserService} from '../../../@core/data/user.service';
 
 
 
@@ -62,30 +63,30 @@ import {UserPasswordModalComponent} from '../modal/user-password-modal.component
   `],
 })
 export class EmployeesComponent implements OnInit {
+  users: Array<any>;
 
-  dateFrom = { jsdate: new Date() };
-  dateTo = { jsdate: new Date() };
-  options: INgxMyDpOptions = {
-    dateFormat: 'dd-mm-yyyy',
-  };
-  source: LocalDataSource = new LocalDataSource();
-  store: any;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
+    private userService: UserService,
   ) {}
 
   ngOnInit() {
-
+    this.userService.getAll()
+      .subscribe((users: any) => {
+        this.users = users;
+      })
   }
 
   onChangeTo() {
 
   }
 
-  onClickPlus() {
+  onClickPlus(id) {
+    const u = this.users.find(user => user.id === id);
     const activeModal = this.modalService.open(UserModalComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.setUser(u);
   }
 
   onClickPassword() {

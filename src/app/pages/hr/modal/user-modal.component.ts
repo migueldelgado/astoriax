@@ -28,9 +28,10 @@ export class UserModalComponent {
 
   data = {
     rut: '',
-    name: '',
-    lastname: '',
+    first_name: '',
+    last_name: '',
     address: '',
+    city: '',
     phone: '',
     roles: [],
     stores: [],
@@ -108,5 +109,11 @@ export class UserModalComponent {
 
   onChangeTo() {
 
+  }
+
+  setUser(user) {
+    this.data = {
+      ...user,
+    }
   }
 }

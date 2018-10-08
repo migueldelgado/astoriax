@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbThemeService, NbMediaBreakpoint, NbMediaBreakpointsService } from '@nebular/theme';
 
-import { UserService } from '../../../@core/data/users.service';
+import { UsersService } from '../../../@core/data/users.service';
 
 @Component({
   selector: 'ngx-contacts',
@@ -16,7 +16,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
   breakpoints: any;
   themeSubscription: any;
 
-  constructor(private userService: UserService,
+  constructor(private userService: UsersService,
               private themeService: NbThemeService,
               private breakpointService: NbMediaBreakpointsService) {
 

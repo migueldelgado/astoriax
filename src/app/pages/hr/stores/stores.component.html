@@ -1,6 +1,6 @@
 <nb-card>
   <nb-card-header>
-    Listado de Proveedores
+    Listado de Locales
   </nb-card-header>
 
   <nb-card-body>
@@ -30,103 +30,18 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>Astoria CCP</td>
-        <td>Rengo 524</td>
+      <tr *ngFor="let store of stores">
+        <td>{{store.name}}</td>
+        <td>{{store.address}}</td>
+        <td>{{store.phone}}</td>
         <td></td>
-        <td>761453580</td>
-        <td>Activo</td>
+        <td></td>
         <td>
           <div class="btn-group">
             <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
           </div>
         </td>
       </tr>
-      <tr>
-        <td>Astoria CCP</td>
-        <td>Rengo 524</td>
-        <td></td>
-        <td>761453580</td>
-        <td>Activo</td>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Astoria CCP</td>
-        <td>Rengo 524</td>
-        <td></td>
-        <td>761453580</td>
-        <td>Activo</td>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Astoria CCP</td>
-        <td>Rengo 524</td>
-        <td></td>
-        <td>761453580</td>
-        <td>Activo</td>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Astoria CCP</td>
-        <td>Rengo 524</td>
-        <td></td>
-        <td>761453580</td>
-        <td>Activo</td>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Astoria CCP</td>
-        <td>Rengo 524</td>
-        <td></td>
-        <td>761453580</td>
-        <td>Activo</td>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Astoria CCP</td>
-        <td>Rengo 524</td>
-        <td></td>
-        <td>761453580</td>
-        <td>Activo</td>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Astoria CCP</td>
-        <td>Rengo 524</td>
-        <td></td>
-        <td>761453580</td>
-        <td>Activo</td>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
-          </div>
-        </td>
-      </tr>
-
       </tbody>
 
     </table>

@@ -1,7 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { UserService } from './users.service';
+import { UsersService } from './users.service';
 import { ElectricityService } from './electricity.service';
 import { StateService } from './state.service';
 import { SmartTableService } from './smart-table.service';
@@ -17,9 +17,10 @@ import {RecipeService} from './recipe.service';
 import {DailyInventoryService} from './daily-inventory.service';
 import {LoanService} from './loan.service';
 import {PurchaseService} from './purchase.service';
+import {UserService} from './user.service';
 
 const SERVICES = [
-  UserService,
+  UsersService,
   ElectricityService,
   StateService,
   SmartTableService,
@@ -36,6 +37,7 @@ const SERVICES = [
   SupplyService,
   SupplyTypeService,
   UnitService,
+  UserService,
 ];
 
 @NgModule({
