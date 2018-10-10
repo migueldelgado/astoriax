@@ -15,4 +15,11 @@ export class SupplierService {
       });
   }
 
+  public update(data) {
+    return this.http.put(`${AppConfig.API_ENDPOINT}suppliers/${data.id}`, data)
+  }
+
+  public create(data) {
+    return this.http.post(`${AppConfig.API_ENDPOINT}suppliers`, data)
+  }
 }

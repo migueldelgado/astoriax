@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {INgxMyDpOptions} from 'ngx-mydatepicker';
+import {StoreService} from '../../../@core/data/store.service';
 
 @Component({
   selector: 'ngx-providers-modal',
@@ -9,9 +10,11 @@ import {INgxMyDpOptions} from 'ngx-mydatepicker';
     ng-multiselect-dropdown {
       width: 100%;
     }
+
     .multiselect-dropdown {
       width: 100%;
     }
+
     .multiselect-dropdown span.selected-item {
       margin-bottom: 5px;
     }
@@ -19,20 +22,16 @@ import {INgxMyDpOptions} from 'ngx-mydatepicker';
 })
 export class StoresModalComponent {
 
-  dateTo = {jsdate: new Date()};
-  options: INgxMyDpOptions = {
-    dateFormat: 'dd-mm-yyyy',
-    monthSelector: true,
-    yearSelector: true,
-  };
-
+  id: null;
   data = {
     name: '',
     address: '',
     phone: '',
-    state: true,
+    city: '',
     rut: [],
   };
+
+  private creating = false;
 
   ruts = [
     {
@@ -59,9 +58,10 @@ export class StoresModalComponent {
     itemsShowLimit: 6,
     allowSearchFilter: true,
     closeDropDownOnSelection: true,
+    limitSelection: 1,
   };
 
-  constructor(private activeModal: NgbActiveModal) {
+  constructor(private activeModal: NgbActiveModal, private storeService: StoreService) {
   }
 
   closeModal() {
@@ -72,12 +72,43 @@ export class StoresModalComponent {
     // tslint:disable-next-line
     console.log(item);
   }
-  onSelectAll (items: any) {
+
+  onSelectAll(items: any) {
     // tslint:disable-next-line
     console.log(items);
   }
 
   onChangeTo() {
 
+  }
+
+  setStore(store) {
+    this.data = {
+      name: store.name,
+      address: store.address,
+      phone: store.phone,
+      city: store.city,
+      rut: null,
+    };
+    this.id = store.id;
+  }
+
+  save(form) {
+    if (form.invalid) {
+      alert('Todos los campos son requeridos');
+      return;
+    }
+    const action = this.id ? this.storeService.update({
+      ...this.data,
+      id: this.id,
+    }) : this.storeService.create(this.data);
+    action.subscribe((result: any) => {
+      this.activeModal.close({
+        creating: !this.id,
+        data: result.data,
+      });
+    }, (error) => {
+      alert('Error guardando ');
+    });
   }
 }

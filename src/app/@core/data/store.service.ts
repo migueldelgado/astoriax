@@ -15,4 +15,12 @@ export class StoreService {
         return stores.data;
       });
   }
+
+  public update(data) {
+    return this.http.put(`${AppConfig.API_ENDPOINT}stores/${data.id}`, data)
+  }
+
+  public create(data) {
+    return this.http.post(`${AppConfig.API_ENDPOINT}stores`, data)
+  }
 }

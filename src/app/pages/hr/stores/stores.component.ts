@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
 import {ActivatedRoute, Router} from '@angular/router';
 import {INgxMyDpOptions} from 'ngx-mydatepicker';
@@ -14,11 +14,13 @@ import {StoreService} from '../../../@core/data/store.service';
     nb-card {
       transform: translate3d(0, 0, 0);
     }
+
     nb-card-body {
       min-height: 400px;
     }
+
     table {
-        line-height: 1.5em;
+      line-height: 1.5em;
       border-collapse: collapse;
       border-spacing: 0;
       display: table;
@@ -28,9 +30,11 @@ import {StoreService} from '../../../@core/data/store.service';
       word-break: normal;
       word-break: keep-all;
     }
+
     table tr td:first-child {
       width: 25%;
     }
+
     table tr td {
       width: 15%;
       position: relative;
@@ -38,6 +42,7 @@ import {StoreService} from '../../../@core/data/store.service';
       border: 1px solid #342e73;
       vertical-align: middle;
     }
+
     table th {
       position: relative;
       width: 15%;
@@ -52,9 +57,11 @@ import {StoreService} from '../../../@core/data/store.service';
       line-height: 1.25;
       color: #ffffff;
     }
+
     table th:first-child {
       width: 25%;
     }
+
     table .btn-icon {
       padding: 0.25rem 0.5rem !important;
     }
@@ -63,12 +70,14 @@ import {StoreService} from '../../../@core/data/store.service';
 export class StoresComponent implements OnInit {
 
   stores: Array<any>;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
     private storeService: StoreService,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.storeService.getAll(true)
@@ -81,9 +90,24 @@ export class StoresComponent implements OnInit {
 
   }
 
-  onClickPlus() {
-    const activeModal = this.modalService.open(StoresModalComponent, { size: 'lg', container: 'nb-layout' });
+  onClickPlus(id) {
+    const i = this.stores.findIndex(s => s.id === id);
+    const s = this.stores[i];
+    const activeModal = this.modalService.open(StoresModalComponent, {size: 'lg', container: 'nb-layout'});
+    activeModal.componentInstance.setStore(s);
+    activeModal.result.then((result) => {
+      this.stores[i] = {...result.data}
+    })
   }
+
+  onClickCreate() {
+    const activeModal = this.modalService.open(StoresModalComponent, {size: 'lg', container: 'nb-layout'});
+    activeModal.componentInstance.setStore({});
+    activeModal.result.then((result) => {
+      this.stores.push(result.data);
+    })
+  }
+
   //
   // onClickView() {
   //   const activeModal = this.modalService.open(AddInvoiceProviderComponent, { size: 'lg', container: 'nb-layout' });

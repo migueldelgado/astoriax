@@ -11,20 +11,20 @@
           Nombre
         </th>
         <th>
+          Telefono
+        </th>
+        <th>
           Dirección
         </th>
         <th>
-          Telefono
+          Ciudad
         </th>
         <th>
           Rut
         </th>
         <th>
-          Estado
-        </th>
-        <th>
           <div class="btn-group" style="display: flex; justify-content: center;">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-plus-circled"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickCreate()"><i class="nb-plus-circled"></i></button>
           </div>
         </th>
       </tr>
@@ -32,13 +32,13 @@
       <tbody>
       <tr *ngFor="let store of stores">
         <td>{{store.name}}</td>
-        <td>{{store.address}}</td>
         <td>{{store.phone}}</td>
-        <td></td>
+        <td>{{store.address}}</td>
+        <td>{{store.city}}</td>
         <td></td>
         <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
+          <div class="btn-group" style="display: flex; justify-content: center;">
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(store.id)"><i class="nb-edit"></i></button>
           </div>
         </td>
       </tr>

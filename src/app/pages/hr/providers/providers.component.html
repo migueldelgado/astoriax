@@ -20,11 +20,8 @@
           Email
         </th>
         <th>
-          Estado
-        </th>
-        <th>
           <div class="btn-group" style="display: flex; justify-content: center;">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-plus-circled"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickAdd()"><i class="nb-plus-circled"></i></button>
           </div>
         </th>
       </tr>
@@ -35,10 +32,9 @@
         <td>{{supplier.rut}}</td>
         <td>{{supplier.phone}}</td>
         <td>{{supplier.email}}</td>
-        <td>Activo</td>
         <td>
           <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-edit"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickEdit(supplier)"><i class="nb-edit"></i></button>
           </div>
         </td>
       </tr>
