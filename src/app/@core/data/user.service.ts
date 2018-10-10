@@ -18,4 +18,12 @@ export class UserService {
   public findUser(id) {
     return this.http.get<any>(`${AppConfig.API_ENDPOINT}users/${id}`)
   }
+
+  public update(data) {
+    return this.http.put(`${AppConfig.API_ENDPOINT}users/${data.id}`, data)
+  }
+
+  public create(data) {
+    return this.http.post(`${AppConfig.API_ENDPOINT}users`, data)
+  }
 }

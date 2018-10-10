@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {INgxMyDpOptions} from 'ngx-mydatepicker';
+import {NgForm} from '@angular/forms';
+import {UserService} from '../../../@core/data/user.service';
 
 @Component({
   selector: 'ngx-user-modal',
@@ -9,9 +11,11 @@ import {INgxMyDpOptions} from 'ngx-mydatepicker';
     ng-multiselect-dropdown {
       width: 100%;
     }
+
     .multiselect-dropdown {
       width: 100%;
     }
+
     .multiselect-dropdown span.selected-item {
       margin-bottom: 5px;
     }
@@ -19,13 +23,9 @@ import {INgxMyDpOptions} from 'ngx-mydatepicker';
 })
 export class UserModalComponent {
 
-  dateTo = {jsdate: new Date()};
-  options: INgxMyDpOptions = {
-    dateFormat: 'dd-mm-yyyy',
-    monthSelector: true,
-    yearSelector: true,
-  };
+  id = null;
 
+  password = '';
   data = {
     rut: '',
     first_name: '',
@@ -33,6 +33,7 @@ export class UserModalComponent {
     address: '',
     city: '',
     phone: '',
+    email: '',
     roles: [],
     stores: [],
   };
@@ -91,7 +92,7 @@ export class UserModalComponent {
     allowSearchFilter: true,
   };
 
-  constructor(private activeModal: NgbActiveModal) {
+  constructor(private activeModal: NgbActiveModal, private userService: UserService) {
   }
 
   closeModal() {
@@ -102,7 +103,8 @@ export class UserModalComponent {
     // tslint:disable-next-line
     console.log(item);
   }
-  onSelectAll (items: any) {
+
+  onSelectAll(items: any) {
     // tslint:disable-next-line
     console.log(items);
   }
@@ -114,6 +116,36 @@ export class UserModalComponent {
   setUser(user) {
     this.data = {
       ...user,
+    };
+
+    this.id = user.id;
+  }
+
+  onClickGeneratePassword() {
+    let text = '';
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for (let i = 0; i < 5; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
+    this.password = text;
+  }
+
+  save(form: NgForm) {
+    if (form.invalid) {
+      alert('Todos los campos son requeridos');
+      return;
+    }
+    const action = this.id ? this.userService.update({
+      ...this.data,
+      id: this.id,
+    }) : this.userService.create({...this.data, password: this.password});
+    action.subscribe((result: any) => {
+      this.activeModal.close({
+        data: result,
+      });
+    }, (error) => {
+      alert('Error guardando ');
+    });
   }
 }

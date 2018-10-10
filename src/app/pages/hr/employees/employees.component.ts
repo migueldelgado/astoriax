@@ -83,14 +83,26 @@ export class EmployeesComponent implements OnInit {
 
   }
 
-  onClickPlus(id) {
-    const u = this.users.find(user => user.id === id);
+  onClickEdit(id) {
+    const i = this.users.findIndex(user => user.id === id);
+    const u = this.users[i];
     const activeModal = this.modalService.open(UserModalComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.setUser(u);
+    activeModal.result.then((result) => {
+      this.users[i] = result.data;
+    })
   }
 
-  onClickPassword() {
+  onClickAdd() {
+    const activeModal = this.modalService.open(UserModalComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.setUser({});
+    activeModal.result.then((result) => {
+      this.users.push(result.data);
+    })
+  }
+
+  onClickPassword(id) {
     const activeModal = this.modalService.open(UserPasswordModalComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.setUser(id);
   }
-
 }

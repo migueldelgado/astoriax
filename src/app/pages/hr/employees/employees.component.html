@@ -21,7 +21,7 @@
         </th>
         <th>
           <div class="btn-group" style="display: flex; justify-content: center;">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(event)"><i class="nb-plus-circled"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickAdd()"><i class="nb-plus-circled"></i></button>
           </div>
         </th>
       </tr>
@@ -34,7 +34,7 @@
         <td>{{user.address}} {{user.city}}</td>
         <td>
           <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(user.id)"><i class="nb-edit"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickEdit(user.id)"><i class="nb-edit"></i></button>
             <button class="btn btn-outline-primary btn-icon" (click)="onClickPassword(user.id)"><i class="ion-lock-combination"></i></button>
           </div>
         </td>
