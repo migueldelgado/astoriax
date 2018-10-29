@@ -53,7 +53,7 @@ export class DailyInventoryFormComponent implements OnInit {
       .subscribe((result: any) => {
         // const { data } = result;
         // const [day, month, year] = data.date.split('/');
-        this.supplies = result.data;
+        this.supplies = result;
         // this.date.jsdate = new Date(this.supplies.date);
         // this.supplies = data.supplies.map(s => ({
         //   id_supply: s.supply.id_supply,

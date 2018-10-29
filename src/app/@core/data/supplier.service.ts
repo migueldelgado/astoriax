@@ -11,7 +11,7 @@ export class SupplierService {
     const API = isNewApi ? AppConfig.API_ENDPOINT : `${AppConfig.API_ENDPOINT_OLD}/`;
     return this.http.get(`${API}suppliers`)
       .map((suppliers: any) => {
-        return isNewApi ? suppliers : suppliers.data;
+        return suppliers.data;
       });
   }
 

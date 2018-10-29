@@ -18,7 +18,7 @@ export class DailyInventoryService {
   }
 
   public deleteInventory(id) {
-    return this.http.delete(`${AppConfig.API_ENDPOINT}/inventories/${id}`)
+    return this.http.delete(`${AppConfig.API_ENDPOINT}inventories/${id}`)
   };
 
   public createInventory(data) {
@@ -26,11 +26,20 @@ export class DailyInventoryService {
   }
 
   public updateInventory(id, data) {
-    return this.http.put(`${AppConfig.API_ENDPOINT}/inventories/${id}`, data)
+    return this.http.put(`${AppConfig.API_ENDPOINT}inventories/${id}`, data)
   }
 
   public findInventory(id) {
     return this.http.get(`${AppConfig.STORES + this.currentStore}/inventories/${id}`)
+      .map(({data}: any) => {
+        return data.map((i) => {
+          return {
+            ...i,
+            initial_quantity: i.pivot.initial_quantity,
+            final_quantity: i.pivot.final_quantity,
+          }
+        })
+      })
   }
 
   private parseData(data): any {

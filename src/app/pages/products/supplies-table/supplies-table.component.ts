@@ -78,8 +78,8 @@ export class SuppliesTableComponent implements OnInit {
 
   ngOnInit() {
     this.suppliesService.getAll()
-      .subscribe((products: any) => {
-        this.source.load(products);
+      .subscribe(({data}: any) => {
+        this.source.load(data);
       })
   }
 
@@ -107,6 +107,6 @@ export class SuppliesTableComponent implements OnInit {
   }
 
   onEdit(el): void {
-    this.router.navigate([`../supplies/edit/${el.data.id_supply}`], { relativeTo: this.route });
+    this.router.navigate([`../supplies/edit/${el.data.id}`], { relativeTo: this.route });
   }
 }

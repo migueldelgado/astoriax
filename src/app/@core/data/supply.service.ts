@@ -19,14 +19,14 @@ export class SupplyService {
   }
 
   public createSupply(data) {
-    return this.http.post(`${AppConfig.API_ENDPOINT_OLD}/supplies`, data)
+    return this.http.post(`${AppConfig.API_ENDPOINT}supplies`, data)
   }
 
   public updateSupply(id, data) {
-    return this.http.put(`${AppConfig.API_ENDPOINT_OLD}/supplies/${id}`, data)
+    return this.http.put(`${AppConfig.API_ENDPOINT}supplies/${id}`, data)
   }
 
   public findSupply(id) {
-    return this.http.get<any>(`${AppConfig.API_ENDPOINT_OLD}/supplies/${id}`)
+    return this.http.get<any>(`${AppConfig.API_ENDPOINT}supplies/${id}`)
   }
 }

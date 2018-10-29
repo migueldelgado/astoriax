@@ -1,6 +1,6 @@
 ///<reference path="../../../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 ///<reference path="../../../../../node_modules/@types/node/index.d.ts"/>
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SupplyService} from '../../../@core/data/supply.service';
 import {SupplyTypeService} from '../../../@core/data/supply-type.service';
 import {SupplyReportTypeService} from '../../../@core/data/supply-report-type.service';
@@ -39,20 +39,53 @@ export class SupplyFormComponent implements OnInit {
     },
   ];
 
+  reportTypes = [
+    {
+      name: 'Insumo de ventas',
+      value: 'IV',
+    },
+    {
+      name: 'Insumo de procesos',
+      value: 'IP',
+    },
+    {
+      name: 'Insumo Operacional',
+      value: 'IO',
+    },
+  ];
+
+  units = [
+    'Kilogramos', 'Unidades', 'Litros',
+  ];
+
+  types = [
+    'Directo', 'Indirecto',
+  ];
+
+  classifications = [
+    'Crítico', 'No Crítico',
+  ];
+  // {"code":200,"data":
+  // {"id":11,"supplier_id":1,"name":"completenge7","classification":"Completos",
+  // "type":"this is a type","unit":"KG","report_type":"OV","stock_min":"20",
+  // "show_in_daily_inventory":"1","show_in_process":"1","wastage_rate":"0.1","price":"500",
+  // "deleted_at":null,"created_at":"2018-10-28 20:43:01","updated_at":"2018-10-28 20:43:01"}}
   data = {
     price: 0,
     name: '',
     stock_min: 0,
     wastage_rate: null,
     stores: [],
-    processed: 0,
-    show_daily_inventory: 0,
-    id_supply_classification: null,
-    id_supply_type: null,
-    id_unit: null,
-    id_supplier: null,
-    id_supply_report_type: null,
+    show_in_process: 0,
+    show_in_daily_inventory: 0,
+    supplier_id: null,
+    report_type: null,
+    classification: null,
+    type: null,
+    unit: null,
   };
+
+  stores = [];
 
   constructor(
     private supplyService: SupplyService,
@@ -70,20 +103,29 @@ export class SupplyFormComponent implements OnInit {
   ngOnInit() {
     this.stores$ = this.storeService.getAll();
     this.supplyTypes$ = this.supplyTypeService.getAll();
-    this.suppliers$ = this.supplierService.getAll();
+    this.suppliers$ = this.supplierService.getAll(true);
     this.units$ = this.unitService.getAll();
     this.supplyReportTypes$ = this.supplyReportTypeService.getAll();
     this.supplyClassifications$ = this.supplyClassificationService.getAll();
     this.route.params.subscribe(params => {
       if (!params.id) {
-        return ;
+        return;
       }
       this.id = params.id;
       this.supplyService.findSupply(this.id)
         .subscribe((result) => {
-          this.data = Object.assign({}, result.data[0]);
+          const stores = result.data.stores.map((s) => ({
+            store_id: s.id,
+            stock: s.pivot.stock,
+          }));
+          this.data = Object.assign(this.data, result.data, { stores });
         })
     });
+
+    this.storeService.getAll(true)
+      .subscribe((result) => {
+        this.stores = result;
+      })
   }
 
   addStore(e) {
@@ -91,12 +133,7 @@ export class SupplyFormComponent implements OnInit {
     e.preventDefault();
     this.data.stores.push({
       stock: 0,
-      status: {
-        id_status: null,
-      },
-      store: {
-        id_store: null,
-      },
+      store_id: null,
     });
   }
 
@@ -133,6 +170,6 @@ export class SupplyFormComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/pages/products/recipes'])
+    this.router.navigate(['/pages/store/products/supplies'])
   }
 }
