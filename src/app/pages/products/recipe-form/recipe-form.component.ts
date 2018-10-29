@@ -1,10 +1,11 @@
 ///<reference path="../../../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 ///<reference path="../../../../../node_modules/@types/node/index.d.ts"/>
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SupplyService} from '../../../@core/data/supply.service';
 import {StoreService} from '../../../@core/data/store.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RecipeService} from '../../../@core/data/recipe.service';
+import {parseErrroMessage} from '../../../@core/utils/error';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
@@ -23,10 +24,8 @@ export class RecipeFormComponent implements OnInit {
   stores: Array<any> = [];
   totalCost: number = 0;
   data = {
-    stores: [
-    ],
-    supplies: [
-    ],
+    stores: [],
+    supplies: [],
     name: '',
     classification: '',
   };
@@ -42,10 +41,10 @@ export class RecipeFormComponent implements OnInit {
 
   ngOnInit() {
 
-    Observable.forkJoin(this.storeService.getAll(), this.supplyService.getAll())
-      .subscribe(result => {
+    Observable.forkJoin(this.storeService.getAll(true), this.supplyService.getAll())
+      .subscribe((result: any) => {
         this.stores = result[0];
-        // this.supplies = result[1];
+        this.supplies = result[1].data;
         this.loadRecipeData();
       })
 
@@ -59,12 +58,15 @@ export class RecipeFormComponent implements OnInit {
       this.id = params.id;
       this.recipeService.findRecipe(this.id)
         .subscribe((result) => {
-          const [data] = result.data;
+          const data = result.data;
+          data.stores = data.stores || [];
           this.data = Object.assign({}, data);
-          this.data.supplies.forEach((s, index) => {
-            s.supply = this.supplies.find(supply => supply.id_supply === s.id_supply);
-            this.recalculateCost(index);
-          });
+          this.data.supplies = data.supplies.map((s) => {
+            return {
+              supply_id: s.id,
+              quantity: s.pivot.quantity,
+            };
+          })
           this.stores.forEach((s) => {
             s.selected = !!data.stores.find(store => store.id_store === s.id_store);
           })
@@ -75,32 +77,32 @@ export class RecipeFormComponent implements OnInit {
   addSupply(e) {
     e.preventDefault();
     this.data.supplies.push({
-      cost: 0,
       quantity: '1',
-      supply: {},
+      supply_id: null,
     });
   }
 
   onChangeSupply(idSupply, index) {
     // const idSupply = this.data.supplies[index].id_supply;
     // console.log(e, this.data.supplies, idSupply);
-    const supply = this.supplies.find((s) => s.id_supply === idSupply);
-    this.data.supplies[index].supply = Object.assign({}, supply);
+    // const supply = this.supplies.find((s) => s.id_supply === idSupply);
+    // this.data.supplies[index].supply = Object.assign({}, supply);
+    this.data.supplies[index].supply_id = idSupply
     this.recalculateCost(index);
   }
 
   recalculateCost(i: number) {
-    const supply = this.data.supplies[i];
-    if (!supply.quantity || supply.quantity <= 0) {
-      supply.cost = 0;
-      return;
-    }
-    if (!supply.supply.price) {
-      supply.cost = 0;
-      return ;
-    }
-    supply.cost = supply.quantity * supply.supply.price;
-    this.totalCost = this.data.supplies.reduce((acc, s) => acc + s.cost, 0);
+    // const supply = this.data.supplies[i];
+    // if (!supply.quantity || supply.quantity <= 0) {
+    //   supply.cost = 0;
+    //   return;
+    // }
+    // if (!supply.supply.price) {
+    //   supply.cost = 0;
+    //   return ;
+    // }
+    // supply.cost = supply.quantity * supply.supply.price;
+    // this.totalCost = this.data.supplies.reduce((acc, s) => acc + s.cost, 0);
   }
 
   removeSupply(i) {
@@ -108,11 +110,16 @@ export class RecipeFormComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/pages/products/supplies']);
+    this.router.navigate(['/pages/store/products/recipes']);
   }
 
   onSubmit() {
-    this.data.stores = this.stores.filter((s) => s.selected);
+    this.data.stores = this.stores.filter((s) => s.selected).map(s => {
+      return {
+        store_id: s.id,
+      }
+    });
+
     if (this.id) {
       this.update()
     } else {
@@ -125,8 +132,7 @@ export class RecipeFormComponent implements OnInit {
       .subscribe((result) => {
         this.cancel()
       }, (error) => {
-        const err = JSON.parse(error._body);
-        alert(err.message);
+        alert(parseErrroMessage(error));
       });
   }
 
@@ -135,8 +141,7 @@ export class RecipeFormComponent implements OnInit {
       .subscribe((result) => {
         this.cancel()
       }, (error) => {
-        const err = JSON.parse(error._body);
-        alert(err.message);
+        alert(parseErrroMessage(error));
       });
   }
 }

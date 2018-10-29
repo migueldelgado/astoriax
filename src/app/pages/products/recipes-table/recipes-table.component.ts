@@ -52,11 +52,11 @@ export class RecipesTableComponent implements OnInit {
         title: 'Clasificación',
         type: 'string',
       },
-      cost: {
-        title: 'Costo Producto',
-        type: 'integer',
-        compareFunction: sortByNumber,
-      },
+      // cost: {
+      //   title: 'Costo Producto',
+      //   type: 'integer',
+      //   compareFunction: sortByNumber,
+      // },
     },
   };
 
@@ -84,7 +84,7 @@ export class RecipesTableComponent implements OnInit {
   }
 
   onDelete(event): void {
-    this.recipeService.deleteRecipe(event.data.id_supply)
+    this.recipeService.deleteRecipe(event.data.id)
       .subscribe((result: any) => {
         this.source.remove(event.data);
       }, error => {
@@ -98,6 +98,6 @@ export class RecipesTableComponent implements OnInit {
   }
 
   onEdit(el): void {
-    this.router.navigate([`./edit/${el.data.id_recipe}`], { relativeTo: this.route });
+    this.router.navigate([`./edit/${el.data.id}`], { relativeTo: this.route });
   }
 }
