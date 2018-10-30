@@ -79,4 +79,7 @@ export class ChequesComponent implements OnInit {
 
   }
 
+  onChangeFrom($event) {
+    // do nothing
+  }
 }

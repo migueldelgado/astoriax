@@ -9,7 +9,7 @@ import { UserModalComponent } from './modal/user-modal.component'
 import { UserPasswordModalComponent } from './modal/user-password-modal.component'
 import { ProvidersModalComponent } from './modal/providers-modal.component'
 import { StoresModalComponent } from './modal/stores-modal.component'
-import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import {NgMultiSelectDropDownModule} from '../../../libs/ng-multiselect-dropdown';
 
 const components = [
   HrComponent,

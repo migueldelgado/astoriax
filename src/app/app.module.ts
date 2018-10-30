@@ -16,7 +16,7 @@ import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NbAuthSimpleInterceptor } from './auth/services';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import {NgMultiSelectDropDownModule} from '../libs/ng-multiselect-dropdown';
 
 
 
