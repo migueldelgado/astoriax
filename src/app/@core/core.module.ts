@@ -20,10 +20,6 @@ const NB_CORE_PROVIDERS = [
             endpoint: 'login',
             method: 'post',
             rememberMe: false,
-            // redirect: {
-            //   success: '/auth/register',
-            //   failure: '/pages/audits/auditAdd'
-              // },
             defaultErrors: ['Email/Password combinacion incorrecta, porfavor intenta denuevo'],
             defaultMessages: ['Te has entrado correctamente'],
           },

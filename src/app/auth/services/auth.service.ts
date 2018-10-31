@@ -5,7 +5,7 @@
  */
 import { Injectable, Optional, Inject, Injector } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
@@ -13,6 +13,7 @@ import 'rxjs/add/operator/do';
 import { NbAbstractAuthProvider } from '../providers/abstract-auth.provider';
 import { NbAuthSimpleToken, NbTokenService } from './token.service';
 import { NB_AUTH_PROVIDERS_TOKEN } from '../auth.options';
+import {UserService} from '../../@core/data/user.service';
 
 export class NbAuthResult {
 
@@ -81,6 +82,7 @@ export class NbAuthService {
   private currentStore: any;
 
   constructor(protected tokenService: NbTokenService,
+              protected userService: UserService,
               protected injector: Injector,
               @Optional() @Inject(NB_AUTH_PROVIDERS_TOKEN) protected providers = {}) {
     this.setCurrentUser(JSON.parse(localStorage.getItem('user_data')));
@@ -124,7 +126,12 @@ export class NbAuthService {
    * @returns {Observable<any>}
    */
   isAuthenticated(): Observable<any> {
-    return this.getToken().map(token => !!(token && token.getValue()));
+    const user = this.user;
+    return Observable.forkJoin(this.userService.findUser(user.id), this.getToken())
+      .catch(() => Observable.of(false))
+      .map((result) => {
+        return !!result
+      })
   }
 
   /**
