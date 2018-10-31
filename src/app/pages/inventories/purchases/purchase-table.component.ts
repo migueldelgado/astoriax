@@ -49,7 +49,7 @@ export class PurchaseTableComponent implements OnInit {
         title: 'Fecha',
         type: 'string',
       },
-      supplier: {
+      name_provider: {
         title: 'Proveedor',
         type: 'string',
       },
