@@ -6,40 +6,32 @@ import {NbAuthService} from '../../auth/services';
 
 @Injectable()
 export class PurchaseService {
-
+  currentStore: number;
   constructor(private http: HttpClient, private authService: NbAuthService) {
+    this.currentStore = this.authService.getCurrentStore();
   }
-  public getAll(config?: Object) {
-    const params = config || {
-      currentStore: this.authService.getCurrentStore(),
-    };
-
-    let httpParams = new HttpParams();
-    Object.keys(params).forEach(function (key) {
-      httpParams = httpParams.append(key, params[key]);
-    });
-    return this.http.get(`${AppConfig.API_ENDPOINT_OLD}/purchases`, { params: httpParams })
-      .map((stores: any) => {
-        return stores.data;
-      });
+  public getAll(config: any) {
+    return this.http.get(
+      `${AppConfig.STORES}${this.currentStore}/purchases?from=${config.dateFrom}&to=${config.dateTo}`,
+    ).map((r: any) => r.data)
   }
 
 
   public find(id) {
     return this.http.get<any>(
-      `${AppConfig.API_ENDPOINT_OLD}/purchases/${id}?currentStore=${this.authService.getCurrentStore()}`,
+      `${AppConfig.API_ENDPOINT}purchases/${id}`,
     )
   }
 
   public delete(id) {
-    return this.http.delete(`${AppConfig.API_ENDPOINT_OLD}/purchases/${id}`)
+    return this.http.delete(`${AppConfig.API_ENDPOINT}purchases/${id}`)
   }
 
   public create(data) {
-    return this.http.post(`${AppConfig.API_ENDPOINT_OLD}/purchases`, data)
+    return this.http.post(`${AppConfig.API_ENDPOINT}purchases`, data)
   }
 
   public update(id, data) {
-    return this.http.put(`${AppConfig.API_ENDPOINT_OLD}/purchases/${id}`, data)
+    return this.http.put(`${AppConfig.API_ENDPOINT}purchases/${id}`, data)
   }
 }

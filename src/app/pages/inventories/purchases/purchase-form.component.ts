@@ -13,6 +13,7 @@ import {LoanService} from '../../../@core/data/loan.service';
 import {SupplierService} from '../../../@core/data/supplier.service';
 import {PurchaseService} from '../../../@core/data/purchase.service';
 import {NbAuthService} from '../../../auth/services';
+import {parseErrroMessage} from '../../../@core/utils/error';
 
 @Component({
   selector: 'ngx-supply-form',
@@ -29,12 +30,29 @@ export class PurchaseFormComponent implements OnInit {
   stores: Array<any> = [];
   suppliers: Array<any> = [];
   data = {
-    id_store: null,
-    id_shift: 1,
-    id_supplier: null,
-    invoice_number: null,
+    store_id: null,
+    supplier_id: null,
+    document_number: null,
+    date: new Date(),
     supplies: [],
   };
+
+// {
+//   "store_id": 1,
+//   "supplier_id": 1,
+//   "document_number": 1645899,
+//   "date": "2018-05-05",
+//   "supplies":[
+//     {
+//       "supply_id": 1,
+//       "quantity": 10
+//     },
+//     {
+//       "supply_id": 2,
+//       "quantity": 10
+//     }
+//     ]
+// }
 
   // {"date":"2018-02-09T23:52:47.910Z","invoice_number":"123","id_store":"1","id_shift":"1","id_supplier":"4",
   // "supplies":[{"id_supply":"49","quantity":"1"}]}
@@ -55,15 +73,16 @@ export class PurchaseFormComponent implements OnInit {
               private authService: NbAuthService,
               private route: ActivatedRoute,
               private router: Router) {
+    this.data.store_id = this.authService.getCurrentStore();
   }
 
   ngOnInit() {
 
-    Observable.forkJoin(this.storeService.getAll(), this.supplierService.getAll(), this.supplyService.getAll())
+    Observable.forkJoin(this.storeService.getAll(true), this.supplierService.getAll(true), this.supplyService.getAll())
       .subscribe((result: any) => {
         this.stores = result[0];
         this.suppliers = result[1];
-        this.supplies = result[2];
+        this.supplies = result[2].data;
         this.loadPurchaseData();
       })
 
@@ -77,15 +96,16 @@ export class PurchaseFormComponent implements OnInit {
       this.id = params.id;
       this.purchaseService.find(this.id)
         .subscribe(({data}) => {
-          const [day, month, year] = data.date.split('/');
-          this.data.id_shift = data.shift.id_shift;
-          this.data.id_store = data.store.id_store;
-          this.data.invoice_number = data.invoice_number;
-          this.date.jsdate = new Date(year, parseInt(month, 10) - 1, day);
-          this.data.id_supplier = data.supplier.id_supplier;
-          this.data.supplies = data.supplies.map((s) => ({
+          this.data.store_id = data.store_id;
+          this.data.document_number = data.document_number;
+          const d = new Date(data.date);
+          const userTimezoneOffset = d.getTimezoneOffset() * 60000;
+          this.date = { jsdate: new Date(d.getTime() + userTimezoneOffset), formatted: null };
+          this.data.supplier_id = data.supplier_id;
+          const supplies = data.supplies || [];
+          this.data.supplies = supplies.map((s) => ({
             quantity: s.quantity,
-            id_supply: s.supply.id_supply,
+            supply_id: s.supply_id,
           }));
         })
     });
@@ -94,7 +114,7 @@ export class PurchaseFormComponent implements OnInit {
   addSupply(e) {
     e.preventDefault();
     this.data.supplies.push({
-      id_supply: null,
+      supply_id: null,
       quantity: '1',
     });
   }
@@ -108,10 +128,14 @@ export class PurchaseFormComponent implements OnInit {
   }
 
   onSubmit() {
+    const d = this.date.jsdate;
+    const month = d.getMonth();
+    const day = d.getDate();
+    const year = d.getFullYear();
     const data = Object.assign({}, this.data, {
-      id_store: this.authService.getCurrentStore(),
-      date: this.date.jsdate,
-      id_purchase: this.id,
+      store_id: this.authService.getCurrentStore(),
+      date: `${year}-${month + 1}-${day}`,
+      id: this.id,
     });
 
     if (this.id) {
@@ -126,8 +150,7 @@ export class PurchaseFormComponent implements OnInit {
       .subscribe((result) => {
         this.cancel()
       }, (error) => {
-        const err = JSON.parse(error._body);
-        alert(err.message);
+        alert(parseErrroMessage(error));
       });
   }
 
@@ -136,8 +159,7 @@ export class PurchaseFormComponent implements OnInit {
       .subscribe((result) => {
         this.cancel()
       }, (error) => {
-        const err = JSON.parse(error._body);
-        alert(err.message);
+        alert(parseErrroMessage(error));
       });
   }
 }

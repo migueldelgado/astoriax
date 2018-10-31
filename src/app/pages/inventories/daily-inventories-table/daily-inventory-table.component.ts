@@ -53,7 +53,7 @@ export class DailyInventoryTableComponent implements OnInit {
     },
   };
 
-  dateFrom = { jsdate: new Date() };
+  dateFrom = { jsdate: new Date(Date.now() - 604800000) };
   dateTo = { jsdate: new Date() };
   options: INgxMyDpOptions = {
     dateFormat: 'dd-mm-yyyy',

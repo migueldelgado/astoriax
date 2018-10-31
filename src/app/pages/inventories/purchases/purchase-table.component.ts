@@ -41,7 +41,7 @@ export class PurchaseTableComponent implements OnInit {
     },
     mode: 'external',
     columns: {
-      invoice_number: {
+      document_number: {
         title: 'Numero Factura',
         type: 'string',
       },
@@ -53,18 +53,10 @@ export class PurchaseTableComponent implements OnInit {
         title: 'Proveedor',
         type: 'string',
       },
-      shift: {
-        title: 'Turno',
-        type: 'string',
-      },
-      store: {
-        title: 'Local',
-        type: 'string',
-      },
     },
   };
 
-  dateFrom = { jsdate: new Date() };
+  dateFrom = { jsdate: new Date(Date.now() - 604800000) };
   dateTo = { jsdate: new Date() };
   options: INgxMyDpOptions = {
     dateFormat: 'dd-mm-yyyy',
@@ -100,9 +92,9 @@ export class PurchaseTableComponent implements OnInit {
     const from = dateFrom.toJSON();
     const to = dateTo.toJSON();
 
-    this.purchaseService.getAll({ currentStore: this.authService.getCurrentStore(), dateFrom: from, dateTo: to })
-      .subscribe((loans: any) => {
-        this.source.load(loans);
+    this.purchaseService.getAll({ dateFrom: from, dateTo: to })
+      .subscribe((purchases: any) => {
+        this.source.load(purchases);
         this.firstLoad = true;
       }, () => {
         this.source.load([])
@@ -134,6 +126,6 @@ export class PurchaseTableComponent implements OnInit {
   }
 
   onEdit(el): void {
-    this.router.navigate([`../purchase/edit/${el.data.id_purchase}`], { relativeTo: this.route });
+    this.router.navigate([`../purchase/edit/${el.data.id}`], { relativeTo: this.route });
   }
 }
