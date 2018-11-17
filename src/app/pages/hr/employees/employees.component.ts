@@ -90,7 +90,7 @@ export class EmployeesComponent implements OnInit {
     activeModal.componentInstance.setUser(u);
     activeModal.result.then((result) => {
       this.users[i] = result.data;
-    })
+    }, () => {})
   }
 
   onClickAdd() {
@@ -98,7 +98,7 @@ export class EmployeesComponent implements OnInit {
     activeModal.componentInstance.setUser({});
     activeModal.result.then((result) => {
       this.users.push(result.data);
-    })
+    }, () => {})
   }
 
   onClickPassword(id) {

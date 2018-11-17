@@ -126,7 +126,7 @@ export class NbAuthService {
    * @returns {Observable<any>}
    */
   isAuthenticated(): Observable<any> {
-    const user = this.user;
+    const user = this.user || {};
     return Observable.forkJoin(this.userService.findUser(user.id), this.getToken())
       .catch(() => Observable.of(false))
       .map((result) => {

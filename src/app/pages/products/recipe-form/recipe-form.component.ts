@@ -68,7 +68,7 @@ export class RecipeFormComponent implements OnInit {
             };
           })
           this.stores.forEach((s) => {
-            s.selected = !!data.stores.find(store => store.id_store === s.id_store);
+            s.selected = !!data.stores.find(store => store.id === s.id);
           })
         })
     });

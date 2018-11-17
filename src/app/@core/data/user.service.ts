@@ -11,7 +11,7 @@ export class UserService {
   public getAll() {
     return this.http.get(`${AppConfig.API_ENDPOINT}users`)
       .map((users: any) => {
-        return users;
+        return users.data;
       });
   }
 
