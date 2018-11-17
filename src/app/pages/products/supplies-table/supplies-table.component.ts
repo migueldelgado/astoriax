@@ -83,16 +83,10 @@ export class SuppliesTableComponent implements OnInit {
       })
   }
 
-
-  onDeleteConfirm(event): void {
-    if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
-  }
-
   onDelete(event): void {
+    if (!window.confirm('Desea eliminar insumo?')) {
+      return ;
+    }
     this.suppliesService.deleteSupply(event.data.id_supply)
       .subscribe((result: any) => {
         this.source.remove(event.data);

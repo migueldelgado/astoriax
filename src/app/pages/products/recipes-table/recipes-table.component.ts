@@ -52,11 +52,6 @@ export class RecipesTableComponent implements OnInit {
         title: 'Clasificación',
         type: 'string',
       },
-      // cost: {
-      //   title: 'Costo Producto',
-      //   type: 'integer',
-      //   compareFunction: sortByNumber,
-      // },
     },
   };
 
@@ -74,16 +69,10 @@ export class RecipesTableComponent implements OnInit {
       })
   }
 
-
-  onDeleteConfirm(event): void {
-    if (window.confirm('Desea continuar?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
-  }
-
   onDelete(event): void {
+    if (!window.confirm('Desea eliminar receta?')) {
+      return ;
+    }
     this.recipeService.deleteRecipe(event.data.id)
       .subscribe((result: any) => {
         this.source.remove(event.data);

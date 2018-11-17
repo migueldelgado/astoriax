@@ -19,6 +19,10 @@ export class SupplierService {
     return this.http.put(`${AppConfig.API_ENDPOINT}suppliers/${data.id}`, data)
   }
 
+  public delete(id) {
+    return this.http.delete(`${AppConfig.API_ENDPOINT}suppliers/${id}`)
+  }
+
   public create(data) {
     return this.http.post(`${AppConfig.API_ENDPOINT}suppliers`, data)
   }

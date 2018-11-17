@@ -80,26 +80,35 @@ export class ProvidersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadProviders();
+  }
+
+  loadProviders() {
     this.supplierService.getAll(true)
       .subscribe((suppliers) => {
         this.suppliers = suppliers;
       })
   }
 
-  onChangeTo() {
-
-  }
-
   onClickEdit(supplier) {
-    const i = this.suppliers.findIndex(s => s.id === supplier.id);
     const activeModal = this.modalService.open(ProvidersModalComponent, {size: 'lg', container: 'nb-layout'});
     activeModal.componentInstance.setSupplier(supplier);
     activeModal.result.then((result) => {
       if (!result) {
         return;
       }
-      this.suppliers[i] = {...result.data}
+      this.loadProviders();
     })
+  }
+
+  onClickDelete(supplier) {
+    if (!window.confirm('Desea eliminar proveedor?')) {
+      return ;
+    }
+    this.supplierService.delete(supplier.id)
+      .subscribe(() => {
+        this.suppliers = this.suppliers.filter(s => s.id !== supplier.id)
+      })
   }
 
   onClickAdd() {
@@ -109,7 +118,7 @@ export class ProvidersComponent implements OnInit {
       if (!result) {
         return;
       }
-      this.suppliers.push(result.data);
+      this.loadProviders();
     })
   }
 
