@@ -133,7 +133,6 @@ export class PurchaseFormComponent implements OnInit {
     const day = d.getDate();
     const year = d.getFullYear();
     const data = Object.assign({}, this.data, {
-      store_id: this.authService.getCurrentStore(),
       date: `${year}-${month + 1}-${day}`,
       id: this.id,
     });

@@ -11,7 +11,15 @@ export class SupplyService {
   }
   public getAll() {
     const currentStore = this.authService.getCurrentStore();
-    return this.http.get(`${AppConfig.STORES + currentStore}/supplies`);
+    let url = `${AppConfig.STORES + currentStore}/supplies`;
+    if (!currentStore) {
+      url = `${AppConfig.API_ENDPOINT}supplies`
+    }
+    return this.http.get(url);
+  }
+
+  public getByStoreId(id) {
+    return this.http.get(`${AppConfig.STORES + id}/supplies`);
   }
 
   public deleteSupply(id) {

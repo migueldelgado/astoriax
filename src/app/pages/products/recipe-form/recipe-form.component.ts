@@ -109,7 +109,10 @@ export class RecipeFormComponent implements OnInit {
     this.data.supplies = [...this.data.supplies.slice(0, i), ...this.data.supplies.slice(i + 1)];
   }
 
-  cancel() {
+  cancel(e?) {
+    if (e) {
+      e.preventDefault();
+    }
     this.router.navigate(['/pages/store/products/recipes']);
   }
 

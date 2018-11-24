@@ -80,6 +80,10 @@ export class AuditOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.authService.getCurrentStore()) {
+      alert('Debe seleccionar tienda en el menu superior');
+      return;
+    }
     Observable.forkJoin(this.auditsService.getAuditTypes(), this.authService.getCurrentUser())
       .subscribe(([types, user]) => {
         this.auditTypes = types;

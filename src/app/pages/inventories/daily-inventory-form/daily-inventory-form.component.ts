@@ -6,6 +6,7 @@ import {INgxMyDpOptions} from 'ngx-mydatepicker';
 import {DailyInventoryService} from '../../../@core/data/daily-inventory.service';
 import {NbAuthService} from '../../../auth/services';
 import { DatePipe } from '@angular/common';
+import {StoreService} from '../../../@core/data/store.service';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { DatePipe } from '@angular/common';
 export class DailyInventoryFormComponent implements OnInit {
   id: number;
   storeId;
+  stores: Array<any> = [];
   supplies: Array<any> = [];
   options: INgxMyDpOptions = {
     dateFormat: 'dd-mm-yyyy',
@@ -30,6 +32,7 @@ export class DailyInventoryFormComponent implements OnInit {
 
   constructor(private supplyService: SupplyService,
               private dailyInventoryService: DailyInventoryService,
+              private storeService: StoreService,
               private authService: NbAuthService,
               private route: ActivatedRoute,
               private router: Router,
@@ -38,6 +41,10 @@ export class DailyInventoryFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.storeService.getAll(true).subscribe((result) => {
+      this.stores = result;
+    })
+
     this.route.params.subscribe(params => {
       if (!params.id) {
         this.loadSupplies();
@@ -64,8 +71,15 @@ export class DailyInventoryFormComponent implements OnInit {
       })
   }
 
+  onChangeStore() {
+    this.loadSupplies();
+  }
+
   loadSupplies() {
-    this.supplyService.getAll()
+    if (!this.storeId) {
+      return
+    }
+    this.supplyService.getByStoreId(this.storeId)
       .subscribe((result: any) => {
         this.supplies = result.data;
       });

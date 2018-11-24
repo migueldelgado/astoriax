@@ -37,6 +37,9 @@ export class AuditAddComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.authService.getCurrentStore()) {
+      alert('Debe seleccionar tienda en el menu superior');
+    }
     this.auditTypes$ = this.auditService.getAuditTypes();
     this.revisionList$ = this.auditService.getRevisionList();
     this.shiftTypes$ = this.auditService.getShifts();

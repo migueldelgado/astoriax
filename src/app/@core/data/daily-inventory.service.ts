@@ -14,7 +14,13 @@ export class DailyInventoryService {
     this.currentStore = this.authService.getCurrentStore();
   }
   public getAll(from, to) {
-    return this.http.get(`${AppConfig.STORES + this.currentStore}/inventories?from=${from}&to=${to}`)
+    const currentStore = this.authService.getCurrentStore();
+    let url = `${AppConfig.STORES + currentStore}/inventories?from=${from}&to=${to}`;
+    if (!currentStore) {
+      url = `${AppConfig.API_ENDPOINT}inventories?from=${from}&to=${to}`
+    }
+
+    return this.http.get(url)
   }
 
   public deleteInventory(id) {

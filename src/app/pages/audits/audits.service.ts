@@ -141,6 +141,10 @@ export class AuditsService {
 
   public getAuditOverView(typeId, year) {
     const storeId = this.authService.getCurrentStore();
+    if (!storeId) {
+      alert('Debe seleccionar tienda en el menu superior');
+      return;
+    }
     return this.http.get<any>(
       `${AppConfig.API_ENDPOINT}getAuditOverview/${storeId}/${typeId}/${year}`,
     )

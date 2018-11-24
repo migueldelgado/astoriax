@@ -9,7 +9,12 @@ export class RecipeService {
   constructor(private http: HttpClient, private authService: NbAuthService) {
   }
   public getAll() {
-    return this.http.get(`${AppConfig.API_ENDPOINT}stores/${this.authService.getCurrentStore()}/recipes`)
+    const currentStore = this.authService.getCurrentStore();
+    let url = `${AppConfig.STORES + currentStore}/recipes`;
+    if (!currentStore) {
+      url = `${AppConfig.API_ENDPOINT}recipes`
+    }
+    return this.http.get(url)
       .map((supplies: any) => {
         return supplies.data;
       });
