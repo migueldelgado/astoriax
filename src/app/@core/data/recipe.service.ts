@@ -20,6 +20,11 @@ export class RecipeService {
       });
   }
 
+  public getTotalList() {
+    return this.http.get(`${AppConfig.API_ENDPOINT}recipes`);
+  }
+
+
   public deleteRecipe(id) {
     return this.http.delete(`${AppConfig.API_ENDPOINT}recipes/${id}`)
   }

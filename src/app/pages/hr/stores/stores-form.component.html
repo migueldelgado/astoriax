@@ -1,0 +1,110 @@
+<form (submit)="onSubmit()">
+  <nb-card>
+    <nb-card-header>
+      Mantenedor de Locales
+    </nb-card-header>
+    <nb-card-body>
+      <div class="form-group row align-items-center">
+        <label class="col-md-2 col-sm-3">Nombre</label>
+        <div class="input-group col-md-10 col-sm-9">
+          <input type="text" [(ngModel)]="data.name" name="name" placeholder="Nombre" class="form-control"
+                 required/>
+        </div>
+      </div>
+      <div class="form-group row align-items-center">
+        <label class="col-md-2 col-sm-3">Teléfono</label>
+        <div class="input-group col-md-10 col-sm-9">
+          <input type="text" [(ngModel)]="data.phone" name="phone" placeholder="Teléfono" class="form-control"
+                 required/>
+        </div>
+      </div>
+      <div class="form-group row align-items-center">
+        <label class="col-md-2 col-sm-3">Dirección</label>
+        <div class="input-group col-md-10 col-sm-9">
+          <input type="text" [(ngModel)]="data.address" name="address" placeholder="Dirección" class="form-control"
+                 required/>
+        </div>
+      </div>
+      <div class="form-group row align-items-center">
+        <label class="col-md-2 col-sm-3">Ciudad</label>
+        <div class="input-group col-md-10 col-sm-9">
+          <input type="text" placeholder="Ciudad" [(ngModel)]="data.city" name="city" class="form-control"
+                 required/>
+        </div>
+      </div>
+    </nb-card-body>
+    <nb-card-body>
+      <nb-tabset>
+        <nb-tab tabTitle="Insumos">
+          <table>
+            <thead>
+            <tr>
+              <th>Seleccionado</th>
+              <th>Insumo</th>
+              <th>Stock</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let supply of data.supplies; let i = index">
+                <td>
+                  <input name="supplyChecked{{i}}" type="checkbox" [(ngModel)]="data.supplies[i].selected">
+                </td>
+                <td>
+                  {{data.supplies[i].name}}
+                </td>
+                <td>
+                  <input name="stock{{i}}" required [(ngModel)]="data.supplies[i].stock" type="number"
+                         placeholder="Stock" class="form-control"/>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </nb-tab>
+        <nb-tab tabTitle="Recetas">
+          <table>
+            <thead>
+              <tr>
+                <th>Seleccionado</th>
+                <th>Receta</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let supply of data.recipes; let i = index">
+              <td>
+                <input name="recipeChecked{{i}}" type="checkbox" [(ngModel)]="data.recipes[i].selected">
+              </td>
+              <td>
+                {{data.recipes[i].name}}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-tab>
+        <nb-tab tabTitle="Proveedores">
+          <table>
+            <thead>
+            <tr>
+              <th>Seleccionado</th>
+              <th>Proveedor</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let _ of data.suppliers; let i = index">
+              <td>
+                <input name="supplierChecked{{i}}" type="checkbox" [(ngModel)]="data.suppliers[i].selected">
+              </td>
+              <td>
+                {{data.suppliers[i].name}}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-tab>
+      </nb-tabset>
+    </nb-card-body>
+    <nb-card-footer>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <button type="reset" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+    </nb-card-footer>
+  </nb-card>
+</form>

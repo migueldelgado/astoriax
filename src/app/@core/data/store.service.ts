@@ -23,4 +23,8 @@ export class StoreService {
   public create(data) {
     return this.http.post(`${AppConfig.API_ENDPOINT}stores`, data)
   }
+
+  public find(id) {
+    return this.http.get(`${AppConfig.API_ENDPOINT}stores/${id}`)
+  }
 }

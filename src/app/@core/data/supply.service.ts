@@ -9,6 +9,7 @@ export class SupplyService {
 
   constructor(private http: HttpClient, private authService: NbAuthService) {
   }
+
   public getAll() {
     const currentStore = this.authService.getCurrentStore();
     let url = `${AppConfig.STORES + currentStore}/supplies`;
@@ -16,6 +17,10 @@ export class SupplyService {
       url = `${AppConfig.API_ENDPOINT}supplies`
     }
     return this.http.get(url);
+  }
+
+  public getTotalList() {
+    return this.http.get(`${AppConfig.API_ENDPOINT}supplies`);
   }
 
   public getByStoreId(id) {

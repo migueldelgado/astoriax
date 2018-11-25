@@ -91,21 +91,11 @@ export class StoresComponent implements OnInit {
   }
 
   onClickPlus(id) {
-    const i = this.stores.findIndex(s => s.id === id);
-    const s = this.stores[i];
-    const activeModal = this.modalService.open(StoresModalComponent, {size: 'lg', container: 'nb-layout'});
-    activeModal.componentInstance.setStore(s);
-    activeModal.result.then((result) => {
-      this.stores[i] = {...result.data}
-    })
+    this.router.navigate([`/pages/hr/stores/${id}`]);
   }
 
   onClickCreate() {
-    const activeModal = this.modalService.open(StoresModalComponent, {size: 'lg', container: 'nb-layout'});
-    activeModal.componentInstance.setStore({});
-    activeModal.result.then((result) => {
-      this.stores.push(result.data);
-    })
+    this.router.navigate([`/pages/hr/stores/new`]);
   }
 
   //

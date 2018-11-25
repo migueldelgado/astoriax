@@ -3,6 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {HrComponent} from './hr.component';
 import {ProvidersComponent} from './providers/providers.component';
 import {StoresComponent} from './stores/stores.component';
+import {StoresFormComponent} from './stores/stores-form.component';
 import {EmployeesComponent} from './employees/employees.component';
 
 const routes: Routes = [
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path: 'stores',
         component: StoresComponent,
+      },
+      {
+        path: 'stores/:id',
+        component: StoresFormComponent,
       },
       {
         path: 'employees',
@@ -37,4 +42,5 @@ export const routedComponents = [
   ProvidersComponent,
   StoresComponent,
   EmployeesComponent,
+  StoresFormComponent,
 ];
