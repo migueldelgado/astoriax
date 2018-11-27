@@ -1,0 +1,2355 @@
+{
+	"info": {
+		"_postman_id": "198ada7a-0f9d-4ad6-b446-00db1a7a7cb1",
+		"name": "Astoria API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Audits",
+			"item": [
+				{
+					"name": "Get All Audits",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/audits",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"audits"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Audits By Store ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stores/1/audits",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stores",
+								"1",
+								"audits"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Audit By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/audits/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"audits",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Audit Report",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/audit_report/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"audit_report",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Audit By ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"audit_type_id\":2,\n\t\"auditor_id\":\"1\",\n\t\"manager_id\":2,\n\t\"store_id\":1,\n\t\"shift_id\":1,\n\t\"date\":\"1970-01-01\",\n\t\"revisions\": [\n\t\t{\n\t\t\t\"revision_id\":1,\n\t\t\t\"classification\":\"No cumple\",\n\t\t\t\"comment\":\"test comment\",\n\t\t\t\"image\":\"images/test1\"\n\t\t},\n\t\t{\n\t\t\t\"revision_id\":2,\n\t\t\t\"classification\":\"No cumple\",\n\t\t\t\"comment\":\"comentario test\",\n\t\t\t\"image\":\"images/test2\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/audits/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"audits",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Audit",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"audit_type_id\":2,\n\t\"auditor_id\":\"1\",\n\t\"manager_id\":2,\n\t\"store_id\":1,\n\t\"shift_id\":1,\n\t\"date\":\"1970-01-01\",\n\t\"revisions\": [\n\t\t{\n\t\t\t\"revision_id\":1,\n\t\t\t\"classification\":\"No cumple\",\n\t\t\t\"comment\":\"test comment1\",\n\t\t\t\"image\":\"imagen/test1\"\n\t\t},\n\t\t{\n\t\t\t\"revision_id\":2,\n\t\t\t\"classification\":\"No cumple\",\n\t\t\t\"comment\":\"comentario test2\",\n\t\t\t\"image\":\"test/image2\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/audits",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"audits"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Image To Revision",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "rev",
+									"type": "file",
+									"src": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/audits/upload_image",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"audits",
+								"upload_image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Audit",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/audits/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"audits",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Supplies",
+			"item": [
+				{
+					"name": "Get Supplies By Store ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stores/1/supplies",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stores",
+								"1",
+								"supplies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Supply By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/supplies/11",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplies",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Supply By ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"supplier_id\": 1,\n    \"name\": \"Allie Senger\",\n    \"classification\": \"esta es una nueva clasfication\",\n    \"type\": \"this is a type\",\n    \"unit\": \"KG\",\n    \"report_type\": \"OV\",\n    \"stock_min\": 20,\n    \"show_in_daily_inventory\": 1,\n    \"show_in_process\": 1,\n    \"wastage_rate\": \"0.1\",\n    \"price\": \"500\",\n    \"date\": \"2018-06-13\",\n    \"stores\": [\n    \t{\n    \t\t\"store_id\": 1,\n    \t\t\"stock\": 10\n    \t},\n    \t{\n    \t\t\"store_id\": 2,\n    \t\t\"stock\": 20\n    \t}\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/supplies/11",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplies",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Supply",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"supplier_id\": 1,\n    \"name\": \"insumo de prueba\",\n    \"classification\": \"Completos\",\n    \"type\": \"this is a type\",\n    \"unit\": \"KG\",\n    \"report_type\": \"OV\",\n    \"stock_min\": 20,\n    \"show_in_daily_inventory\": 1,\n    \"show_in_process\": 1,\n    \"wastage_rate\": \"0.1\",\n    \"price\": \"500\",\n    \"date\": \"2018-06-13\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/supplies",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplies"
+							]
+						},
+						"description": "Add supplies"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Supply",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/supplies/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplies",
+								"2"
+							]
+						},
+						"description": "Delete supplies"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Supplies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/supplies",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplies"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Audit Type",
+			"item": [
+				{
+					"name": "Get All Audit Types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/audit_type",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"audit_type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Audit Type By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/audit_type/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"audit_type",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Audit Type By ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Medico\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/audit_type/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"audit_type",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Audit Type",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Posh\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/audit_type",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"audit_type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Audit Type By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/audit_type/7",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"audit_type",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Recipes",
+			"item": [
+				{
+					"name": "Get All Recipes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/recipes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Recipes By Store ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stores/1/recipes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stores",
+								"1",
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Recipe By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/recipes/14",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"recipes",
+								"14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Recipe",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Gorda Caliente\",\n\t\"classification\": \"Sandwish\",\n\t\"supplies\": [\n\t\t{\n\t\t\t\"supply_id\": 1,\n\t\t\t\"quantity\": 10.5\n\t\t},\n\t\t{\n\t\t\t\"supply_id\": 2,\n\t\t\t\"quantity\": 3.4\n\t\t}\n\t],\n\t\"stores\": [\n\t\t{\n\t\t\t\"store_id\": 1\n\t\t},\n\t\t{\n\t\t\t\"store_id\": 2\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/recipes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Recipe By ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Gorda Caliente\",\n\t\"classification\": \"Sandwish\",\n\t\"supplies\": [\n\t\t{\n\t\t\t\"supply_id\": 1,\n\t\t\t\"quantity\": 10.5\n\t\t},\n\t\t{\n\t\t\t\"supply_id\": 2,\n\t\t\t\"quantity\": 3.4\n\t\t}\n\t],\n\t\"stores\": [\n\t\t{\n\t\t\t\"store_id\": 1\n\t\t},\n\t\t{\n\t\t\t\"store_id\": 3\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/recipes/14",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"recipes",
+								"14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Recipe",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/recipes/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"recipes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "All endpoints for recipes",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			}
+		},
+		{
+			"name": "Purchases",
+			"item": [
+				{
+					"name": "Get All Purchases",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/purchases",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"purchases"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Purchases By Store ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stores/6/purchases",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stores",
+								"6",
+								"purchases"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Purchases By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/purchases/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"purchases",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Purchase",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"store_id\": 1,\n\t\"supplier_id\": 1,\n\t\"document_number\": 1645899,\n\t\"date\": \"2018-05-05\",\n\t\"supplies\":[\n\t\t{\n\t\t\t\"supply_id\": 1,\n\t\t\t\"quantity\": 10\n\t\t},\n\t\t{\n\t\t\t\"supply_id\": 2,\n\t\t\t\"quantity\": 10\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/purchases",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"purchases"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Purchase",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"store_id\": 1,\n\t\"supplier_id\": 1,\n\t\"document_number\": 123456,\n\t\"date\": \"2018-05-05\",\n\t\"supplies\":[\n\t\t{\n\t\t\t\"supply_id\": 1,\n\t\t\t\"quantity\": 10\n\t\t},\n\t\t{\n\t\t\t\"supply_id\": 2,\n\t\t\t\"quantity\": 10\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/purchases/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"purchases",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Purchase By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/purchases/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"purchases",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5c65398f-ce2a-426f-b7b7-3dd845a7cf20",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "5b833720-f31c-463e-94a9-f6c13c40670d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Stores",
+			"item": [
+				{
+					"name": "Get All Stores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stores",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Store By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stores/8",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stores",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Store",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Local Plaza del Trebol\",\n\t\"address\": \"Chimbarongo\",\n\t\"phone\": \"12345678\",\n\t\"city\": \"Concepcion\",\n\t\"supplies\": [\n\t\t{\n\t\t\t\"supply_id\": 1,\n\t\t\t\"stock\": 10\n\t\t},\n\t\t{\n\t\t\t\"supply_id\": 2,\n\t\t\t\"stock\": 15\n\t\t}\n\t],\n\t\"recipes\": [\n\t\t{\n\t\t\t\"recipe_id\": 1\n\t\t},\n\t\t{\n\t\t\t\"recipe_id\": 2\n\t\t}\n\t],\n\t\"suppliers\": [\n\t\t{\n\t\t\t\"supplier_id\": 1\n\t\t},\n\t\t{\n\t\t\t\"supplier_id\": 2\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/stores",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Store",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Local Plaza del Trebol2\",\n\t\"address\": \"Chimbarongo chimbarongo\",\n\t\"phone\": \"12345678\",\n\t\"city\": \"Concepcion\",\n\t\"supplies\": [\n\t\t{\n\t\t\t\"supply_id\": 3,\n\t\t\t\"stock\": 10\n\t\t},\n\t\t{\n\t\t\t\"supply_id\": 4,\n\t\t\t\"stock\": 15\n\t\t}\n\t],\n\t\"recipes\": [\n\t\t{\n\t\t\t\"recipe_id\": 3\n\t\t},\n\t\t{\n\t\t\t\"recipe_id\": 4\n\t\t}\n\t],\n\t\"suppliers\": [\n\t\t{\n\t\t\t\"supplier_id\": 3\n\t\t},\n\t\t{\n\t\t\t\"supplier_id\": 4\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/stores/8",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stores",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Store",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/stores/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stores",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Revisions",
+			"item": [
+				{
+					"name": "Get All Revisions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/revisions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"revisions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Revision By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/revisions/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"revisions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Revision",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"section_id\": 21,\n\t\"name\": \"Dejar el pan calentito en la manana3\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/revisions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"revisions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Revision By ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"section_id\": 22,\n\t\"name\": \"Dejar el pan calentito\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/revisions/197",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"revisions",
+								"197"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Revision By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/revisions/199",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"revisions",
+								"199"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "Get All Roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/roles",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Role By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/roles/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"roles",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"AINV\",\n\t\"description\": \"Agregar Inventario\",\n\t\"permissions\": [\n\t\t{ \"permission_id\": 1 },\n\t\t{ \"permission_id\": 2 },\n\t\t{ \"permission_id\": 3 }\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/roles",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Supersdfsdf\",\n\t\"description\": \"puede\",\n\t\"permissions\": [\n\t\t{ \"permission_id\": 2 },\n\t\t{ \"permission_id\": 3 }\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/roles/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"roles",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Role By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/roles/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"roles",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sections",
+			"item": [
+				{
+					"name": "Get All Sections",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/sections",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Section By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/sections/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sections",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Section",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"audit_type_id\": 1,\n\t\"name\": \"section panes y hamburguesas\",\n\t\"percentage\": 0.8\n}"
+						},
+						"url": {
+							"raw": "{{url}}/sections",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Section By ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"audit_type_id\": 2,\n\t\"name\": \"section completex\",\n\t\"percentage\": 0.1\n}"
+						},
+						"url": {
+							"raw": "{{url}}/sections/23",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sections",
+								"23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Section By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/sections/23",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sections",
+								"23"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shifts",
+			"item": [
+				{
+					"name": "Get All Shifts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/shifts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"shifts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Shift By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/shifts/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"shifts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Shift",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Este es un nuevo shift\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/shifts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"shifts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Shift",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Cambio de nombre\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/shifts/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"shifts",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Shift By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/shifts/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"shifts",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/users/11",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users By Store ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stores/3/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stores",
+								"3",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"first_name\": \"Valentina\",\n\t\"last_name\": \"Alquiris\",\n\t\"rut\": \"1517659978\",\n\t\"email\": \"peter3@gmail.com\",\n\t\"password\": \"peterveneno\",\n\t\"phone\": \"64646464\",\n\t\"address\": \"this is a new address\",\n\t\"city\": \"concepcion\",\n\t\"stores\":[\n\t\t{\n\t\t\t\"store_id\": 1\n\t\t},\n\t\t{\n\t\t\t\"store_id\": 2\n\t\t}\n\t],\n\t\"roles\":[\n\t\t{\n\t\t\t\"role_id\": 1\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User By ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"Rosa\",\n    \"last_name\": \"Araya\",\n    \"rut\": \"27581050\",\n    \"email\": \"raraya@mundoastoria.cl\",\n    \"phone\": \"+1-469-243-0535\",\n    \"address\": \"495 Hamill Bridge\",\n    \"city\": \"Feestland\",\n    \"stores\": [\n        {\n            \"store_id\": 2\n        },\n        {\n            \"store_id\": 3\n        }\n    ],\n    \"roles\": [\n        {\n        \t\"role_id\": 2\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/users/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/users/15",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": false
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"miguelangeldelgado@gmail.com\",\n\t\"password\": \"1\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login"
+							]
+						},
+						"description": "Login a user"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Suppliers",
+			"item": [
+				{
+					"name": "Get All Suppliers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/suppliers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Supplier By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/suppliers/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"suppliers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Suppliers By Store ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stores/1/suppliers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stores",
+								"1",
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Supplier",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"nuevo supplier\",\n\t\"rut\": \"55555555\",\n\t\"phone\": \"64777777\",\n\t\"address\": \"nueva direccion\",\n\t\"email\": \"nuevo email\",\n\t\"account\": \"7877878\",\n\t\"bank\": \"Banco Santander\",\n\t\"city\": \"Santiago\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/suppliers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Supplier By ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Connie2\",\n\t\"rut\": \"987987979\",\n\t\"phone\": \"65465465\",\n\t\"address\": \"new address\",\n\t\"email\": \"peter@providers.ca\",\n\t\"account\": \"7877878\",\n\t\"bank\": \"Banco Santander\",\n\t\"city\": \"Santiago\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/suppliers/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"suppliers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Supplier By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/suppliers/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"suppliers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Outputs",
+			"item": [
+				{
+					"name": "Get All Outputs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/outputs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"outputs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Outputs By Store ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stores/3/outputs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stores",
+								"3",
+								"outputs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Output By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/outputs/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"outputs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Output",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"store_id\": 2,\n\t\"date\": \"1990-09-09\",\n\t\"type\": \"Salida por la puerta\",\n\t\"supplies\": [\n\t\t{\n\t\t\t\"supply_id\": 1,\n\t\t\t\"quantity\": 10,\n\t\t\t\"reason\": \"Se devolvio porque el producto estaba malo\"\n\t\t},\n\t\t{\n\t\t\t\"supply_id\": 2,\n\t\t\t\"quantity\": 3,\n\t\t\t\"reason\": \"Insumo vencidos\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/outputs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"outputs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Output By ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"store_id\": 2,\n\t\"date\": \"1990-09-09\",\n\t\"type\": \"Salida por la puerta\",\n\t\"supplies\": [\n\t\t{\n\t\t\t\"supply_id\": 1,\n\t\t\t\"quantity\": 10,\n\t\t\t\"reason\": \"Se devolvio porque el producto estaba malo\"\n\t\t},\n\t\t{\n\t\t\t\"supply_id\": 2,\n\t\t\t\"quantity\": 3,\n\t\t\t\"reason\": \"Insumo vencidos\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/outputs/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"outputs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Output By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/outputs/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"outputs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Process",
+			"item": [
+				{
+					"name": "Get All Processes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/processes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"processes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Processes By Store ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stores/2/processes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stores",
+								"2",
+								"processes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Process By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/processes/12",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"processes",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Process",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"store_id\": 5,\n\t\"supply_id\": 2,\n\t\"final_quantity\": 7,\n\t\"date\": \"1990-09-09\",\n\t\"supplies\":[\n\t\t{\n\t\t\t\"supply_id\": 3,\n\t\t\t\"quantity\": 7\n\t\t}\t\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/processes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"processes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Process By ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"store_id\": 4,\n\t\"supply_id\": 3,\n\t\"final_quantity\": 1000,\n\t\"date\": \"1990-09-09\",\n\t\"supplies\":[\n\t\t{\n\t\t\t\"supply_id\": 3,\n\t\t\t\"quantity\": 7\n\t\t},\n\t\t{\n\t\t\t\"supply_id\": 4,\n\t\t\t\"quantity\": 147\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/processes/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"processes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Process By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/processes/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"processes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Inventories",
+			"item": [
+				{
+					"name": "Get All Inventories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/inventories?from=1900-01-01&to=2018-12-31",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"inventories"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "1900-01-01"
+								},
+								{
+									"key": "to",
+									"value": "2018-12-31"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Inventories By Store ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stores/2/inventories?from=1900-01-01&to=2018-12-31",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stores",
+								"2",
+								"inventories"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "1900-01-01"
+								},
+								{
+									"key": "to",
+									"value": "2018-12-31"
+								}
+							]
+						},
+						"description": "Get all inventories"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Inventory By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/inventories/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"inventories",
+								"2"
+							]
+						},
+						"description": "Get Inventory by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Inventory By ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"store_id\": 2,\n    \"date\": \"2018-06-13\",\n    \"supplies\": [\n    \t{\n    \t\t\"supply_id\": \"1\",\n    \t\t\"initial_quantity\": \"10\",\n    \t\t\"final_quantity\": \"5\"\n    \t},\n    \t{\n    \t\t\"supply_id\": \"2\",\n    \t\t\"initial_quantity\": \"8\",\n    \t\t\"final_quantity\": \"3\"\n    \t}\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/inventories/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"inventories",
+								"2"
+							]
+						},
+						"description": "Update inventory by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Inventory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"store_id\": 2,\n    \"date\": \"2010-06-20\",\n    \"supplies\": [\n    \t{\n    \t\t\"supply_id\": \"1\",\n    \t\t\"initial_quantity\": \"10\",\n    \t\t\"final_quantity\": \"5\"\n    \t},\n    \t{\n    \t\t\"supply_id\": \"2\",\n    \t\t\"initial_quantity\": \"10\",\n    \t\t\"final_quantity\": \"5\"\n    \t}\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/inventories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"inventories"
+							]
+						},
+						"description": "Create new inventory"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Inventory",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/inventories/11",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"inventories",
+								"11"
+							]
+						},
+						"description": "Delete Inventory by ID"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Checkvalue",
+			"item": [
+				{
+					"name": "Get all Checkvalues",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/checkvalues/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"checkvalues",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Permissions",
+			"item": [
+				{
+					"name": "Get All Permissions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/permissions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Permission By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/permissions/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"permissions",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Permission By ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"code\": \"AUSER\",\n\t\"description\": \"Agregar Usuarios 3\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/permissions/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"permissions",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Permission",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"code\": \"EUSER\",\n\t\"description\": \"Eliminar Ususario\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/permissions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Permission",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/permissions/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"permissions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a282a981-e5f5-4cec-8e9c-18f46b60b2c8",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "359c653e-63a4-44ea-8d1a-f54aaa6c34fa",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
