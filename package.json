@@ -89,6 +89,7 @@
     "karma-jasmine": "1.1.0",
     "karma-jasmine-html-reporter": "0.2.2",
     "npm-run-all": "4.0.2",
+    "prettier": "^1.15.2",
     "protractor": "5.1.2",
     "rimraf": "^2.6.1",
     "stylelint": "7.13.0",

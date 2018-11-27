@@ -10,6 +10,7 @@ import {UnitService} from '../../../@core/data/unit.service';
 import {StoreService} from '../../../@core/data/store.service';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router} from '@angular/router';
+import {parseErrroMessage} from '../../../@core/utils/error';
 
 @Component({
   selector: 'ngx-supply-form',
@@ -75,7 +76,6 @@ export class SupplyFormComponent implements OnInit {
     name: '',
     stock_min: 0,
     wastage_rate: null,
-    stores: [],
     show_in_process: 0,
     show_in_daily_inventory: 0,
     supplier_id: null,
@@ -85,11 +85,9 @@ export class SupplyFormComponent implements OnInit {
     unit: null,
   };
 
-  stores = [];
 
   constructor(
     private supplyService: SupplyService,
-    private storeService: StoreService,
     private supplyTypeService: SupplyTypeService,
     private supplyReportTypeService: SupplyReportTypeService,
     private supplierService: SupplierService,
@@ -101,7 +99,6 @@ export class SupplyFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.stores$ = this.storeService.getAll();
     this.supplyTypes$ = this.supplyTypeService.getAll();
     this.suppliers$ = this.supplierService.getAll(true);
     this.units$ = this.unitService.getAll();
@@ -122,23 +119,6 @@ export class SupplyFormComponent implements OnInit {
         })
     });
 
-    this.storeService.getAll(true)
-      .subscribe((result) => {
-        this.stores = result;
-      })
-  }
-
-  addStore(e) {
-    // console.log('##', $event);
-    e.preventDefault();
-    this.data.stores.push({
-      stock: 0,
-      store_id: null,
-    });
-  }
-
-  removeStore(i) {
-    this.data.stores = [...this.data.stores.slice(0, i), ...this.data.stores.slice(i + 1)];
   }
 
   onSubmit() {
@@ -154,8 +134,16 @@ export class SupplyFormComponent implements OnInit {
       .subscribe((result) => {
         this.cancel()
       }, (error) => {
-        const err = JSON.parse(error._body);
-        alert(err.message);
+        let errorMessage = { message: 'Error al crear insumo' };
+        try {
+          if (error && error.error) {
+            errorMessage = { message: parseErrroMessage(error) }
+          } else {
+            errorMessage = JSON.parse(error._body);
+          }
+        } catch (e) {}
+
+        alert(errorMessage.message);
       });
   }
 
@@ -164,8 +152,16 @@ export class SupplyFormComponent implements OnInit {
       .subscribe((result) => {
         this.cancel()
       }, (error) => {
-        const err = JSON.parse(error._body);
-        alert(err.message);
+        let errorMessage = { message: 'Error al modificar insumo' };
+        try {
+          if (error && error.error) {
+            errorMessage = { message: parseErrroMessage(error) }
+          } else {
+            errorMessage = JSON.parse(error._body);
+          }
+        } catch (e) {}
+
+        alert(errorMessage.message);
       });
   }
 

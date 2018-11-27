@@ -87,11 +87,21 @@ export class SuppliesTableComponent implements OnInit {
     if (!window.confirm('Desea eliminar insumo?')) {
       return ;
     }
-    this.suppliesService.deleteSupply(event.data.id_supply)
+
+
+    this.suppliesService.deleteSupply(event.data.id)
       .subscribe((result: any) => {
         this.source.remove(event.data);
       }, error => {
-        const errorMessage = JSON.parse(error._body);
+        let errorMessage = { message: 'Error al eliminar' };
+        try {
+          if (error && error.error) {
+            errorMessage = error.error
+          } else {
+            errorMessage = JSON.parse(error._body);
+          }
+        } catch (e) {}
+
         alert(errorMessage.message);
       })
   }

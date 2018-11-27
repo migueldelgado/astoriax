@@ -125,53 +125,6 @@
                      class="form-control"/>
             </div>
           </div>
-          <div class="form-group">
-            <div class="row justify-content-between">
-              <h4 class="col-md-6 col-sm-6">Locales</h4>
-              <div class="col-md-6 col-sm-6 row justify-content-end">
-
-                <button class="btn btn-primary" type="button" (click)="addStore($event)">Agregar</button>
-              </div>
-            </div>
-            <div class="row">
-              <table class="table">
-                <thead>
-                <tr>
-                  <th>Local</th>
-                  <th>Stock</th>
-                  <th>Borrar</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let store of data.stores; let i = index">
-                  <td>
-                    <select
-                      name="store{{i}}"
-                      class="form-control"
-                      [(ngModel)]="data.stores[i].store_id"
-                      required
-                    >
-                      <option [value]="null">Seleccione tienda</option>
-                      <option
-                        *ngFor="let s of stores"
-                        [value]="s.id"
-                      >
-                        {{s.name}}
-                      </option>
-                    </select>
-                  </td>
-                  <td>
-                    <input name="stock{{i}}" required [(ngModel)]="data.stores[i].stock" type="number"
-                           placeholder="Stock" class="form-control"/>
-                  </td>
-                  <td>
-                    <button class="btn btn-secondary" (click)="removeStore(i)">Borrar</button>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
           <div class="form-group row align-items-center">
             <label class="col-md-2 col-sm-3">Inventario diario</label>
             <div class="input-group col-md-10 col-sm-9">
@@ -185,7 +138,7 @@
                 <input [(ngModel)]="data.show_in_daily_inventory" value="1" type="radio" class="custom-control-input"
                        name="dailyInventory">
                 <span class="custom-control-indicator"></span>
-                <span class="custom-control-description">Si</span>
+                <span   class="custom-control-description">Si</span>
               </label>
             </div>
           </div>
