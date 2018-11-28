@@ -28,7 +28,7 @@ export class SupplyService {
   }
 
   public deleteSupply(id) {
-    return this.http.delete(`${AppConfig.API_ENDPOINT_OLD}/supplies/${id}`)
+    return this.http.delete(`${AppConfig.API_ENDPOINT}supplies/${id}`)
   }
 
   public createSupply(data) {
