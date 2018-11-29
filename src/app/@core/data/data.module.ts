@@ -15,7 +15,6 @@ import {SupplyReportTypeService} from './supply-report-type.service';
 import {SupplyClassificationService} from './supply-classification.service';
 import {RecipeService} from './recipe.service';
 import {DailyInventoryService} from './daily-inventory.service';
-import {LoanService} from './loan.service';
 import {PurchaseService} from './purchase.service';
 import {UserService} from './user.service';
 
@@ -27,7 +26,6 @@ const SERVICES = [
   PlayerService,
   // Real services
   DailyInventoryService,
-  LoanService,
   PurchaseService,
   RecipeService,
   StoreService,

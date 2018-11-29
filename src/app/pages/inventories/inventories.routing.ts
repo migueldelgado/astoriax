@@ -4,8 +4,6 @@ import {Routes, RouterModule} from '@angular/router';
 import {InventoriesComponent} from './inventories.component';
 import {DailyInventoryFormComponent} from './daily-inventory-form/daily-inventory-form.component';
 import {DailyInventoryTableComponent} from './daily-inventories-table/daily-inventory-table.component';
-import {LoanFormComponent} from './loans/loan-form.component';
-import {LoanTableComponent} from './loans/loan-table.component';
 import {PurchaseTableComponent} from './purchases/purchase-table.component';
 import {PurchaseFormComponent} from './purchases/purchase-form.component';
 
@@ -24,18 +22,6 @@ const routes: Routes = [
       }, {
         path: 'daily/edit/:id',
         component: DailyInventoryFormComponent,
-      },
-      {
-        path: 'loan',
-        component: LoanTableComponent,
-      },
-      {
-        path: 'loan/new',
-        component: LoanFormComponent,
-      },
-      {
-        path: 'loan/edit/:id',
-        component: LoanFormComponent,
       },
       {
         path: 'purchases',
@@ -63,8 +49,6 @@ export class InventoriesRoutingModule {
 export const routedComponents = [
   DailyInventoryFormComponent,
   DailyInventoryTableComponent,
-  LoanFormComponent,
-  LoanTableComponent,
   PurchaseTableComponent,
   PurchaseFormComponent,
 ];
