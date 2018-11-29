@@ -4,12 +4,9 @@ import { Component, OnInit } from '@angular/core';
 import {SupplyService} from '../../../@core/data/supply.service';
 import {StoreService} from '../../../@core/data/store.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {RecipeService} from '../../../@core/data/recipe.service';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import {INgxMyDpOptions} from 'ngx-mydatepicker';
-import {AppConfig} from '../../../app.config';
-import {LoanService} from '../../../@core/data/loan.service';
 import {SupplierService} from '../../../@core/data/supplier.service';
 import {PurchaseService} from '../../../@core/data/purchase.service';
 import {NbAuthService} from '../../../auth/services';
@@ -36,27 +33,6 @@ export class PurchaseFormComponent implements OnInit {
     date: new Date(),
     supplies: [],
   };
-
-// {
-//   "store_id": 1,
-//   "supplier_id": 1,
-//   "document_number": 1645899,
-//   "date": "2018-05-05",
-//   "supplies":[
-//     {
-//       "supply_id": 1,
-//       "quantity": 10
-//     },
-//     {
-//       "supply_id": 2,
-//       "quantity": 10
-//     }
-//     ]
-// }
-
-  // {"date":"2018-02-09T23:52:47.910Z","invoice_number":"123","id_store":"1","id_shift":"1","id_supplier":"4",
-  // "supplies":[{"id_supply":"49","quantity":"1"}]}
-
   options: INgxMyDpOptions = {
     dateFormat: 'dd/mm/yyyy',
   };
