@@ -1,28 +1,29 @@
-import {Component} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {INgxMyDpOptions} from 'ngx-mydatepicker';
-import {NgForm} from '@angular/forms';
-import {UserService} from '../../../@core/data/user.service';
+import { Component } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { INgxMyDpOptions } from 'ngx-mydatepicker';
+import { NgForm } from '@angular/forms';
+import { UserService } from '../../../@core/data/user.service';
 
 @Component({
   selector: 'ngx-user-modal',
   templateUrl: './user-modal.component.html',
-  styles: [`
-    ng-multiselect-dropdown {
-      width: 100%;
-    }
+  styles: [
+    `
+      ng-multiselect-dropdown {
+        width: 100%;
+      }
 
-    .multiselect-dropdown {
-      width: 100%;
-    }
+      .multiselect-dropdown {
+        width: 100%;
+      }
 
-    .multiselect-dropdown span.selected-item {
-      margin-bottom: 5px;
-    }
-  `],
+      .multiselect-dropdown span.selected-item {
+        margin-bottom: 5px;
+      }
+    `,
+  ],
 })
 export class UserModalComponent {
-
   id = null;
 
   password = '';
@@ -38,49 +39,9 @@ export class UserModalComponent {
     stores: [],
   };
 
-  stores = [
-    {
-      item_id: 1,
-      item_text: 'Astoria CCP',
-    }, {
-      item_id: 2,
-      item_text: 'Astoria MPLA',
-    }, {
-      item_id: 3,
-      item_text: 'Astoria MPTR',
-    }, {
-      item_id: 4,
-      item_text: 'Astoria OESTE',
-    }, {
-      item_id: 5,
-      item_text: 'Astoria MPBB',
-    }, {
-      item_id: 6,
-      item_text: 'Astoria MCCP',
-    },
-  ];
+  stores = [];
 
-  roles = [
-    {
-      item_id: 1,
-      item_text: 'Nivel Gerencial',
-    }, {
-      item_id: 2,
-      item_text: 'Nivel Sub-gerencial',
-    }, {
-      item_id: 3,
-      item_text: 'Nivel operacional',
-    }, {
-      item_id: 4,
-      item_text: 'Nivel Jefatura',
-    }, {
-      item_id: 5,
-      item_text: 'Nivel Maestro',
-    }, {
-      item_id: 6,
-      item_text: 'Nivel Funcionario',
-    },
-  ];
+  roles = [];
 
   dropdownSettings = {
     singleSelection: false,
@@ -92,38 +53,56 @@ export class UserModalComponent {
     allowSearchFilter: true,
   };
 
-  constructor(private activeModal: NgbActiveModal, private userService: UserService) {
-  }
+  constructor(
+    private activeModal: NgbActiveModal,
+    private userService: UserService,
+  ) {}
 
   closeModal() {
     this.activeModal.close();
   }
 
-  onItemSelect(item: any) {
-    // tslint:disable-next-line
-    console.log(item);
-  }
+  onItemSelect(item: any) {}
 
-  onSelectAll(items: any) {
-    // tslint:disable-next-line
-    console.log(items);
-  }
+  onSelectAll(items: any) {}
 
-  onChangeTo() {
+  onChangeTo() {}
 
-  }
-
-  setUser(user) {
+  setUser(user, roles, stores) {
     this.data = {
       ...user,
     };
 
+    this.data.roles =
+      user && user.roles
+        ? user.roles.map(r => ({
+            item_id: r.id,
+            item_text: r.name,
+          }))
+        : [];
+    this.data.stores =
+      user && user.stores
+        ? user.stores.map(r => ({
+            item_id: r.id,
+            item_text: r.name,
+          }))
+        : null;
+    this.roles = roles.map(r => ({
+      item_id: r.id,
+      item_text: r.name,
+    }));
+
+    this.stores = stores.map(r => ({
+      item_id: r.id,
+      item_text: r.name,
+    }));
     this.id = user.id;
   }
 
   onClickGeneratePassword() {
     let text = '';
-    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const possible =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     for (let i = 0; i < 5; i++) {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -136,16 +115,35 @@ export class UserModalComponent {
       alert('Todos los campos son requeridos');
       return;
     }
-    const action = this.id ? this.userService.update({
+
+    const data: any = {
       ...this.data,
-      id: this.id,
-    }) : this.userService.create({...this.data, password: this.password});
-    action.subscribe((result: any) => {
-      this.activeModal.close({
-        data: result,
-      });
-    }, (error) => {
-      alert('Error guardando ');
+      roles: [],
+      stores: [],
+    };
+    data.roles = this.data.roles.map(r => ({
+      role_id: r.item_id,
+    }));
+
+    data.stores = this.data.stores.map(r => {
+      return { store_id: r.item_id };
     });
+
+    const action = this.id
+      ? this.userService.update({
+          ...data,
+          id: this.id,
+        })
+      : this.userService.create({ ...data, password: this.password });
+    action.subscribe(
+      (result: any) => {
+        this.activeModal.close({
+          data,
+        });
+      },
+      error => {
+        alert('Error guardando ');
+      },
+    );
   }
 }
