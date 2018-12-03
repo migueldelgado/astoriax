@@ -1,0 +1,42 @@
+<form (submit)="onSubmit()">
+  <nb-card>
+    <nb-card-header>
+      Rol
+    </nb-card-header>
+    <nb-card-body>
+      <nb-card>
+        <nb-card-body>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Nombre</label>
+            <div class="input-group col-md-10 col-sm-9">
+              <input type="text" [(ngModel)]="data.name" name="name" placeholder="Nombre" class="form-control" required />
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Descripción</label>
+            <div class="input-group col-md-10 col-sm-9">
+              <input type="text" [(ngModel)]="data.description" name="description" placeholder="Descripción" class="form-control" required />
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label>Permisos</label>
+            <div class="input-group row">
+              <div class="col-sm-12 col-md-12 col-lg-4" *ngFor="let p of data.permissions; let i = index">
+                <nb-checkbox
+                  name="selectPermission{{i}}"
+                  [(ngModel)]="data.permissions[i].selected"
+                  [value]="false">
+                  {{p.description}}
+                </nb-checkbox>
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+        <nb-card-footer>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button class="btn btn-secondary" (click)="cancel($event)">Cancelar</button>
+        </nb-card-footer>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
+</form>

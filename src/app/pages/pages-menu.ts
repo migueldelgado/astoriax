@@ -1,4 +1,4 @@
-import {NbMenuItem} from '@nebular/theme';
+import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
@@ -39,10 +39,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
           {
             title: 'Inventarios Diarios',
             link: '/pages/inventories/daily',
-          }, {
+          },
+          {
             title: 'Prestamos',
             link: '/pages/inventories/loan',
-          }, {
+          },
+          {
             title: 'Compras',
             link: '/pages/inventories/purchases',
           },
@@ -115,6 +117,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Empleados',
         link: '/pages/hr/employees',
+      },
+      {
+        title: 'Roles',
+        link: '/pages/hr/roles',
       },
     ],
   },
