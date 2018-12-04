@@ -32,9 +32,10 @@ import {routes} from './auth.routes';
 import {deepExtend} from './helpers';
 import {AuthGuardService} from './services/auth-guard.service';
 import {UserService} from '../@core/data/user.service';
+import {RoleService} from '../@core/data/role.service';
 
 export function nbAuthServiceFactory(config: any, tokenService: NbTokenService,
-                                     userService: UserService, injector: Injector) {
+                                     userService: UserService, roleService: RoleService, injector: Injector) {
   const providers = config.providers || {};
 
   for (const key in providers) {
@@ -45,7 +46,7 @@ export function nbAuthServiceFactory(config: any, tokenService: NbTokenService,
     }
   }
 
-  return new NbAuthService(tokenService, userService, injector, providers);
+  return new NbAuthService(tokenService, userService, roleService, injector, providers);
 }
 
 export function nbOptionsFactory(options) {
@@ -94,7 +95,7 @@ export class NbAuthModule {
         {
           provide: NbAuthService,
           useFactory: nbAuthServiceFactory,
-          deps: [NB_AUTH_OPTIONS_TOKEN, NbTokenService, UserService, Injector],
+          deps: [NB_AUTH_OPTIONS_TOKEN, NbTokenService, UserService, RoleService, Injector],
         },
         NbTokenService,
         NbEmailPassAuthProvider,

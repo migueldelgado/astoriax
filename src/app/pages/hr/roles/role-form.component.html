@@ -21,6 +21,15 @@
           <div class="form-group row align-items-center">
             <label>Permisos</label>
             <div class="input-group row">
+              <div class="col-sm-12 col-md-12 col-lg-4" >
+                <nb-checkbox
+                  name="selectAll"
+                  [(ngModel)]="selectAll"
+                  (ngModelChange)="onChangeSelectAll($event)"
+                  [value]="false">
+                  Todos
+                </nb-checkbox>
+              </div>
               <div class="col-sm-12 col-md-12 col-lg-4" *ngFor="let p of data.permissions; let i = index">
                 <nb-checkbox
                   name="selectPermission{{i}}"

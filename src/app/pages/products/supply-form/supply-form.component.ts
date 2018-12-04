@@ -1,25 +1,28 @@
 ///<reference path="../../../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 ///<reference path="../../../../../node_modules/@types/node/index.d.ts"/>
-import {Component, OnInit} from '@angular/core';
-import {SupplyService} from '../../../@core/data/supply.service';
-import {SupplyTypeService} from '../../../@core/data/supply-type.service';
-import {SupplyReportTypeService} from '../../../@core/data/supply-report-type.service';
-import {SupplierService} from '../../../@core/data/supplier.service';
-import {SupplyClassificationService} from '../../../@core/data/supply-classification.service';
-import {UnitService} from '../../../@core/data/unit.service';
-import {StoreService} from '../../../@core/data/store.service';
-import {Observable} from 'rxjs/Observable';
-import {ActivatedRoute, Router} from '@angular/router';
-import {parseErrroMessage} from '../../../@core/utils/error';
+import { Component, OnInit } from '@angular/core';
+import { SupplyService } from '../../../@core/data/supply.service';
+import { SupplyTypeService } from '../../../@core/data/supply-type.service';
+import { SupplyReportTypeService } from '../../../@core/data/supply-report-type.service';
+import { SupplierService } from '../../../@core/data/supplier.service';
+import { SupplyClassificationService } from '../../../@core/data/supply-classification.service';
+import { UnitService } from '../../../@core/data/unit.service';
+import { StoreService } from '../../../@core/data/store.service';
+import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute, Router } from '@angular/router';
+import { parseErrroMessage } from '../../../@core/utils/error';
+import { NbAuthService } from '../../../auth/services';
 
 @Component({
   selector: 'ngx-supply-form',
   templateUrl: './supply-form.component.html',
-  styles: [`
-    nb-card {
-      transform: translate3d(0, 0, 0);
-    }
-  `],
+  styles: [
+    `
+      nb-card {
+        transform: translate3d(0, 0, 0);
+      }
+    `,
+  ],
 })
 export class SupplyFormComponent implements OnInit {
   id: number;
@@ -55,17 +58,11 @@ export class SupplyFormComponent implements OnInit {
     },
   ];
 
-  units = [
-    'Kilogramos', 'Unidades', 'Litros',
-  ];
+  units = ['Kilogramos', 'Unidades', 'Litros'];
 
-  types = [
-    'Directo', 'Indirecto',
-  ];
+  types = ['Directo', 'Indirecto'];
 
-  classifications = [
-    'Crítico', 'No Crítico',
-  ];
+  classifications = ['Crítico', 'No Crítico'];
   // {"code":200,"data":
   // {"id":11,"supplier_id":1,"name":"completenge7","classification":"Completos",
   // "type":"this is a type","unit":"KG","report_type":"OV","stock_min":"20",
@@ -85,8 +82,8 @@ export class SupplyFormComponent implements OnInit {
     unit: null,
   };
 
-
   constructor(
+    private authService: NbAuthService,
     private supplyService: SupplyService,
     private supplyTypeService: SupplyTypeService,
     private supplyReportTypeService: SupplyReportTypeService,
@@ -95,10 +92,13 @@ export class SupplyFormComponent implements OnInit {
     private unitService: UnitService,
     private route: ActivatedRoute,
     private router: Router,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
+    if (!this.hasPermission('INS')) {
+      this.router.navigate(['/pages']);
+      return;
+    }
     this.supplyTypes$ = this.supplyTypeService.getAll();
     this.suppliers$ = this.supplierService.getAll(true);
     this.units$ = this.unitService.getAll();
@@ -109,63 +109,74 @@ export class SupplyFormComponent implements OnInit {
         return;
       }
       this.id = params.id;
-      this.supplyService.findSupply(this.id)
-        .subscribe((result) => {
-          const stores = result.data.stores.map((s) => ({
-            store_id: s.id,
-            stock: s.pivot.stock,
-          }));
-          this.data = Object.assign(this.data, result.data, { stores });
-        })
-    });
+      this.supplyService.findSupply(this.id).subscribe(result => {
 
+        this.data = Object.assign(this.data, result.data);
+      });
+    });
   }
 
   onSubmit() {
     if (this.id) {
+      if (!this.hasPermission('EINS')) {
+        alert('No tienes permisos para editar insumo');
+        return;
+      }
       this.update();
     } else {
+      if (!this.hasPermission('AINS')) {
+        alert('No tienes permisos para agregar insumo');
+        return;
+      }
       this.save();
     }
   }
 
   save() {
-    this.supplyService.createSupply(this.data)
-      .subscribe((result) => {
-        this.cancel()
-      }, (error) => {
+    this.supplyService.createSupply(this.data).subscribe(
+      result => {
+        this.cancel();
+      },
+      error => {
         let errorMessage = { message: 'Error al crear insumo' };
         try {
           if (error && error.error) {
-            errorMessage = { message: parseErrroMessage(error) }
+            errorMessage = { message: parseErrroMessage(error) };
           } else {
             errorMessage = JSON.parse(error._body);
           }
         } catch (e) {}
 
         alert(errorMessage.message);
-      });
+      },
+    );
   }
 
   update() {
-    this.supplyService.updateSupply(this.id, this.data)
-      .subscribe((result) => {
-        this.cancel()
-      }, (error) => {
+    this.supplyService.updateSupply(this.id, this.data).subscribe(
+      result => {
+        this.cancel();
+      },
+      error => {
         let errorMessage = { message: 'Error al modificar insumo' };
         try {
           if (error && error.error) {
-            errorMessage = { message: parseErrroMessage(error) }
+            errorMessage = { message: parseErrroMessage(error) };
           } else {
             errorMessage = JSON.parse(error._body);
           }
         } catch (e) {}
 
         alert(errorMessage.message);
-      });
+      },
+    );
   }
 
   cancel() {
-    this.router.navigate(['/pages/store/products/supplies'])
+    this.router.navigate(['/pages/store/products/supplies']);
+  }
+
+  hasPermission(key: string): boolean {
+    return this.authService.hasPermission(key);
   }
 }

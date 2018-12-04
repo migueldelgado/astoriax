@@ -19,6 +19,7 @@ import 'rxjs/add/operator/map';
 })
 export class RoleFormComponent implements OnInit {
   id: string;
+  selectAll = false;
   data = {
     permissions: [],
     name: '',
@@ -86,6 +87,12 @@ export class RoleFormComponent implements OnInit {
     } else {
       this.save(data);
     }
+  }
+
+  onChangeSelectAll(value) {
+    this.data.permissions.forEach(p => {
+      p.selected = value;
+    });
   }
 
   save(data) {

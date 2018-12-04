@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {LocalDataSource} from 'ng2-smart-table';
-import {SupplyService} from '../../../@core/data/supply.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import { LocalDataSource } from 'ng2-smart-table';
+import { SupplyService } from '../../../@core/data/supply.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NbAuthService } from '../../../auth/services';
+import { HasPermissionInterface } from '../../../has-permission.interface';
+import { AppConfig } from '../../../app.config';
 
 function sortByNumber(direction: number, a: string, b: string) {
   const numberA = parseInt(a, 10);
@@ -15,14 +18,15 @@ function sortByNumber(direction: number, a: string, b: string) {
 @Component({
   selector: 'ngx-supplies-table',
   templateUrl: './supplies-table.component.html',
-  styles: [`
-    nb-card {
-      transform: translate3d(0, 0, 0);
-    }
-  `],
+  styles: [
+    `
+      nb-card {
+        transform: translate3d(0, 0, 0);
+      }
+    `,
+  ],
 })
-export class SuppliesTableComponent implements OnInit {
-
+export class SuppliesTableComponent implements OnInit, HasPermissionInterface {
   settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -41,6 +45,9 @@ export class SuppliesTableComponent implements OnInit {
     actions: {
       columnTitle: 'Acciones',
       position: 'right',
+      delete: true,
+      edit: true,
+      add: true,
     },
     mode: 'external',
     columns: {
@@ -69,41 +76,55 @@ export class SuppliesTableComponent implements OnInit {
     },
   };
 
-
   source: LocalDataSource = new LocalDataSource();
 
-
-  constructor(private suppliesService: SupplyService, private route: ActivatedRoute, private router: Router) {
-  }
+  constructor(
+    private suppliesService: SupplyService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: NbAuthService,
+  ) {}
 
   ngOnInit() {
-    this.suppliesService.getAll()
-      .subscribe(({data}: any) => {
-        this.source.load(data);
-      })
+    if (!this.hasPermission('INS')) {
+      this.router.navigate(['/pages']);
+      return;
+    }
+
+    this.settings.actions = {
+      ...this.settings.actions,
+      add: this.hasPermission('AINS'),
+      edit: this.hasPermission('MINS'),
+      delete: this.hasPermission('EINS'),
+    };
+
+    this.suppliesService.getAll().subscribe(({ data }: any) => {
+      this.source.load(data);
+    });
   }
 
   onDelete(event): void {
     if (!window.confirm('Desea eliminar insumo?')) {
-      return ;
+      return;
     }
 
-
-    this.suppliesService.deleteSupply(event.data.id)
-      .subscribe((result: any) => {
+    this.suppliesService.deleteSupply(event.data.id).subscribe(
+      (result: any) => {
         this.source.remove(event.data);
-      }, error => {
+      },
+      error => {
         let errorMessage = { message: 'Error al eliminar' };
         try {
           if (error && error.error) {
-            errorMessage = error.error
+            errorMessage = error.error;
           } else {
             errorMessage = JSON.parse(error._body);
           }
         } catch (e) {}
 
         alert(errorMessage.message);
-      })
+      },
+    );
   }
 
   onCreate(el): void {
@@ -111,6 +132,12 @@ export class SuppliesTableComponent implements OnInit {
   }
 
   onEdit(el): void {
-    this.router.navigate([`../supplies/edit/${el.data.id}`], { relativeTo: this.route });
+    this.router.navigate([`../supplies/edit/${el.data.id}`], {
+      relativeTo: this.route,
+    });
+  }
+
+  hasPermission(key: string): boolean {
+    return this.authService.hasPermission(key);
   }
 }

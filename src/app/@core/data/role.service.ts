@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { AppConfig } from '../../app.config';
 import { HttpClient } from '@angular/common/http';
-import { NbAuthService } from '../../auth/services';
 
 @Injectable()
 export class RoleService {
-  constructor(private http: HttpClient, private authService: NbAuthService) {}
+  constructor(private http: HttpClient) {}
 
   public getAll() {
     return this.http

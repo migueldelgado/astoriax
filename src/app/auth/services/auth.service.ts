@@ -5,31 +5,34 @@
  */
 import { Injectable, Optional, Inject, Injector } from '@angular/core';
 
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/do';
 
 import { NbAbstractAuthProvider } from '../providers/abstract-auth.provider';
 import { NbAuthSimpleToken, NbTokenService } from './token.service';
 import { NB_AUTH_PROVIDERS_TOKEN } from '../auth.options';
-import {UserService} from '../../@core/data/user.service';
+import { UserService } from '../../@core/data/user.service';
+import { RoleService } from '../../@core/data/role.service';
+import { get } from 'lodash';
 
 export class NbAuthResult {
-
   protected token: any;
   protected body: any;
   protected errors: string[] = [];
   protected messages: string[] = [];
 
   // TODO pass arguments in options object
-  constructor(protected success: boolean,
+  constructor(
+    protected success: boolean,
     protected response?: any,
     protected redirect?: any,
     errors?: any,
     messages?: any,
-    token?: NbAuthSimpleToken) {
-
+    token?: NbAuthSimpleToken,
+  ) {
     this.errors = this.errors.concat([errors]);
     if (errors instanceof Array) {
       this.errors = errors;
@@ -52,7 +55,7 @@ export class NbAuthResult {
   }
 
   replaceToken(token: NbAuthSimpleToken): any {
-    this.token = token
+    this.token = token;
   }
 
   getRedirect(): any {
@@ -81,10 +84,13 @@ export class NbAuthService {
   private user: any;
   private currentStore: any;
 
-  constructor(protected tokenService: NbTokenService,
-              protected userService: UserService,
-              protected injector: Injector,
-              @Optional() @Inject(NB_AUTH_PROVIDERS_TOKEN) protected providers = {}) {
+  constructor(
+    protected tokenService: NbTokenService,
+    protected userService: UserService,
+    protected roleService: RoleService,
+    protected injector: Injector,
+    @Optional() @Inject(NB_AUTH_PROVIDERS_TOKEN) protected providers = {},
+  ) {
     this.setCurrentUser(JSON.parse(localStorage.getItem('user_data')));
     const store = localStorage.getItem('current_store');
     this.setCurrentStore(store);
@@ -97,6 +103,10 @@ export class NbAuthService {
 
   getCurrentUser() {
     return Observable.of(this.user);
+  }
+
+  getUser() {
+    return this.user;
   }
 
   setCurrentStore(store) {
@@ -127,11 +137,14 @@ export class NbAuthService {
    */
   isAuthenticated(): Observable<any> {
     const user = this.user || {};
-    return Observable.forkJoin(this.userService.findUser(user.id), this.getToken())
+    return Observable.forkJoin(
+      this.userService.findUser(user.id),
+      this.getToken(),
+    )
       .catch(() => Observable.of(false))
-      .map((result) => {
-        return !!result
-      })
+      .map(result => {
+        return !!result;
+      });
   }
 
   /**
@@ -162,22 +175,67 @@ export class NbAuthService {
    * @param data
    * @returns {Observable<NbAuthResult>}
    */
-  authenticate(provider: string, data?: any): Observable<NbAuthResult> {
-    return this.getProvider(provider).authenticate(data)
-      .switchMap((result: NbAuthResult) => {
-        if (result.isSuccess() && result.getTokenValue()) {
-          this.setCurrentUser(result.getResponse().body.data);
-          this.setCurrentStore(1) // TODO change this
-          // this.setCurrentStore(result.getResponse().body.data.stores[0].id)
-          return this.tokenService.set(result.getTokenValue())
-            .switchMap(_ => this.tokenService.get())
-            .map(token => {
-              result.replaceToken(token);
-              return result;
-            });
-        }
+  async authenticate(provider: string, data?: any): Promise<NbAuthResult> {
+    const result = await this.getProvider(provider)
+      .authenticate(data)
+      .toPromise();
+    if (!result.isSuccess() || !result.getTokenValue()) {
+      return result;
+    }
+    const u = result.getResponse().body.data;
+    await this.setToken(result).toPromise();
+    const user = await this.userService
+      .findUser(u.id)
+      .toPromise()
+      .then(res => {
+        return res.data;
+      });
+    const roles = get(user, 'roles', []);
+    const rolesIds = roles.map(r => r.id);
+    this.setCurrentUser(user);
+    this.setCurrentStore(get(u, 'stores[0].id', null));
+    if (rolesIds.length) {
+      const obs = rolesIds.map(r =>
+        this.roleService
+          .findRole(r)
+          .toPromise()
+          .then(role => role.data),
+      );
+      const roleResults = await Promise.all(obs);
+      user.permissions = roleResults.reduce((acc, r: any) => {
+        const rolePerm = r.permissions.reduce((rAcc, rP) => {
+          return {
+            ...rAcc,
+            [rP.code]: rP,
+          };
+        }, {});
+        return {
+          ...acc,
+          ...rolePerm,
+        };
+      }, {});
+      this.setCurrentUser(user);
+    }
+    //
+    // .switchMap((result: NbAuthResult) => {
+    //   if (result.isSuccess() && result.getTokenValue()) {
 
-        return Observable.of(result);
+    //     return this.setToken(result);
+    //     // this.setCurrentStore(result.getResponse().body.data.stores[0].id)
+    //   }
+    //   return Observable.of(result);
+    // });
+
+    return result;
+  }
+
+  setToken(result: NbAuthResult): Observable<NbAuthResult> {
+    return this.tokenService
+      .set(result.getTokenValue())
+      .switchMap(_ => this.tokenService.get())
+      .map(token => {
+        result.replaceToken(token);
+        return result;
       });
   }
 
@@ -193,11 +251,16 @@ export class NbAuthService {
    * @returns {Observable<NbAuthResult>}
    */
   register(provider: string, data?: any): Observable<NbAuthResult> {
-    return this.getProvider(provider).register(data)
+    return this.getProvider(provider)
+      .register(data)
       .switchMap((result: NbAuthResult) => {
         if (result.isSuccess() && result.getTokenValue()) {
-          this.setCurrentUser(result.getResponse().body.data);
-          return this.tokenService.set(result.getTokenValue())
+          const user = result.getResponse().body.data;
+
+          this.setCurrentUser(user);
+
+          return this.tokenService
+            .set(result.getTokenValue())
             .switchMap(_ => this.tokenService.get())
             .map(token => {
               result.replaceToken(token);
@@ -220,10 +283,11 @@ export class NbAuthService {
    * @returns {Observable<NbAuthResult>}
    */
   logout(provider: string): Observable<NbAuthResult> {
-    return this.getProvider(provider).logout()
+    return this.getProvider(provider)
+      .logout()
       .do((result: NbAuthResult) => {
         if (result.isSuccess()) {
-          this.tokenService.clear().subscribe(() => { });
+          this.tokenService.clear().subscribe(() => {});
           this.clear();
         }
       });
@@ -263,5 +327,9 @@ export class NbAuthService {
     }
 
     return this.injector.get(this.providers[provider].service);
+  }
+
+  hasPermission(key: string): boolean {
+    return !!this.getUser().permissions[key];
   }
 }
