@@ -18,11 +18,9 @@ export class PagesComponent {
     this.mapItem = this.mapItem.bind(this);
     // this.menu = MENU_ITEMS
     this.menu = MENU_ITEMS.map(this.mapItem);
-    console.log(this.menu)
   }
 
   mapItem(m: NbMenuItemExtended) {
-    console.log(m, m.children);
     return {
       ...m,
       hidden: !this.hasPermission(m.permissions),

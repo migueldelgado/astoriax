@@ -24,6 +24,7 @@ const submenuToggle$ = new ReplaySubject(1);
  * Menu Item options
  * TODO: check if we need both URL and LINK
  */
+/* tslint:disable */
 export abstract class NbMenuItem {
   /**
    * Item Title
@@ -197,6 +198,7 @@ export class NbMenuInternalService {
   private resetItem(item: NbMenuItem) {
     item.selected = false;
 
+    // @ts-ignore
     item.children && item.children.forEach(child => {
       this.resetItem(child);
     });
@@ -208,6 +210,7 @@ export class NbMenuInternalService {
     }
     item.expanded = false;
 
+    // @ts-ignore
     item.children && item.children.forEach(child => {
       this.collapseItem(child);
     });
@@ -247,3 +250,5 @@ export class NbMenuInternalService {
     }
   }
 }
+
+/* tslint:enable */
