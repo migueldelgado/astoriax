@@ -1,29 +1,29 @@
-import {Component, OnInit} from '@angular/core';
-import {LocalDataSource} from 'ng2-smart-table';
-import {SupplyService} from '../../../@core/data/supply.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {DailyInventoryService} from '../../../@core/data/daily-inventory.service';
-import {INgxMyDpOptions} from 'ngx-mydatepicker';
-import {AppConfig} from '../../../app.config';
-import {DatePipe} from '@angular/common';
-import {StoreService} from '../../../@core/data/store.service';
-import {Observable} from 'rxjs/Observable';
+import { Component, OnInit } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DailyInventoryService } from '../../../@core/data/daily-inventory.service';
+import { INgxMyDpOptions } from 'ngx-mydatepicker';
+import { DatePipe } from '@angular/common';
+import { StoreService } from '../../../@core/data/store.service';
+import { Observable } from 'rxjs/Observable';
+import { NbAuthService } from '../../../auth/services';
 
 @Component({
   selector: 'ngx-supplies-table',
   templateUrl: './daily-inventory-table.component.html',
-  styles: [`
-    nb-card {
-      transform: translate3d(0, 0, 0);
-    }
+  styles: [
+    `
+      nb-card {
+        transform: translate3d(0, 0, 0);
+      }
 
-    nb-card-body {
-      min-height: 400px;
-    }
-  `],
+      nb-card-body {
+        min-height: 400px;
+      }
+    `,
+  ],
 })
 export class DailyInventoryTableComponent implements OnInit {
-
   settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -56,8 +56,8 @@ export class DailyInventoryTableComponent implements OnInit {
     },
   };
 
-  dateFrom = {jsdate: new Date(Date.now() - 604800000)};
-  dateTo = {jsdate: new Date()};
+  dateFrom = { jsdate: new Date(Date.now() - 604800000) };
+  dateTo = { jsdate: new Date() };
   options: INgxMyDpOptions = {
     dateFormat: 'dd-mm-yyyy',
   };
@@ -67,12 +67,24 @@ export class DailyInventoryTableComponent implements OnInit {
   constructor(
     private dailyInventoryService: DailyInventoryService,
     private storeService: StoreService,
+    private authService: NbAuthService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe) {
-  }
+    private datePipe: DatePipe,
+  ) {}
 
   ngOnInit() {
+    if (!this.hasPermission('INV')) {
+      this.router.navigate(['/pages']);
+      return;
+    }
+
+    this.settings.actions = {
+      ...this.settings.actions,
+      add: this.hasPermission('AINV'),
+      edit: this.hasPermission('MINV'),
+      delete: this.hasPermission('EINV'),
+    };
     this.fetch(new Date(), new Date());
   }
 
@@ -95,22 +107,24 @@ export class DailyInventoryTableComponent implements OnInit {
     const to: string = this.datePipe.transform(dateTo, 'yyyy-MM-dd');
     Observable.forkJoin(
       this.dailyInventoryService.getAll(from, to),
-      this.storeService.getAll(true))
-      .subscribe((result: Array<any>) => {
+      this.storeService.getAll(true),
+    ).subscribe(
+      (result: Array<any>) => {
         const [dInv, stores] = result;
         const inventories = dInv.data;
         inventories.forEach(i => {
-          const store = stores.find(s => s.id === i.store_id) || {}
+          const store = stores.find(s => s.id === i.store_id) || {};
           i.store = store.name;
         });
         this.source.load(inventories);
         this.firstLoad = true;
-      }, (error) => {
-        this.source.load([])
+      },
+      error => {
+        this.source.load([]);
         this.firstLoad = true;
-      })
+      },
+    );
   }
-
 
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
@@ -121,20 +135,30 @@ export class DailyInventoryTableComponent implements OnInit {
   }
 
   onDelete(event): void {
-    this.dailyInventoryService.deleteInventory(event.data.id_daily_inventory)
-      .subscribe((result: any) => {
-        this.source.remove(event.data);
-      }, error => {
-        const errorMessage = JSON.parse(error._body);
-        alert(errorMessage.message);
-      })
+    this.dailyInventoryService
+      .deleteInventory(event.data.id_daily_inventory)
+      .subscribe(
+        (result: any) => {
+          this.source.remove(event.data);
+        },
+        error => {
+          const errorMessage = JSON.parse(error._body);
+          alert(errorMessage.message);
+        },
+      );
   }
 
   onCreate(el): void {
-    this.router.navigate([`../daily/new`], {relativeTo: this.route});
+    this.router.navigate([`../daily/new`], { relativeTo: this.route });
   }
 
   onEdit(evt): void {
-    this.router.navigate([`../daily/edit/${evt.data.id}`], {relativeTo: this.route});
+    this.router.navigate([`../daily/edit/${evt.data.id}`], {
+      relativeTo: this.route,
+    });
+  }
+
+  hasPermission(key: string): boolean {
+    return this.authService.hasPermission(key);
   }
 }
