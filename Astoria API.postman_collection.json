@@ -216,13 +216,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/stores/1/supplies",
+							"raw": "{{url}}/stores/8/supplies",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"stores",
-								"1",
+								"8",
 								"supplies"
 							]
 						}
@@ -239,13 +239,34 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/supplies/11",
+							"raw": "{{url}}/supplies/12",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"supplies",
-								"11"
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Supplies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/supplies",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"supplies"
 							]
 						}
 					},
@@ -290,7 +311,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"supplier_id\": 1,\n    \"name\": \"insumo de prueba\",\n    \"classification\": \"Completos\",\n    \"type\": \"this is a type\",\n    \"unit\": \"KG\",\n    \"report_type\": \"OV\",\n    \"stock_min\": 20,\n    \"show_in_daily_inventory\": 1,\n    \"show_in_process\": 1,\n    \"wastage_rate\": \"0.1\",\n    \"price\": \"500\",\n    \"date\": \"2018-06-13\"\n}"
+							"raw": "{\n    \"supplier_id\": 1,\n    \"name\": \"Tomatoide\",\n    \"classification\": \"Completos\",\n    \"type\": \"this is a type\",\n    \"unit\": \"KG\",\n    \"report_type\": \"OV\",\n    \"stock_min\": 20,\n    \"show_in_daily_inventory\": 1,\n    \"show_in_process\": 1,\n    \"wastage_rate\": \"0.1\",\n    \"price\": \"500\",\n    \"date\": \"2018-06-13\",\n    \"supplies\": [\n    \t{ \"ingredient_id\": 2 },\n    \t{ \"ingredient_id\": 3 },\n    \t{ \"ingredient_id\": 4 }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{url}}/supplies",
@@ -312,37 +333,16 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "{{url}}/supplies/2",
+							"raw": "{{url}}/supplies/1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"supplies",
-								"2"
+								"1"
 							]
 						},
 						"description": "Delete supplies"
-					},
-					"response": []
-				},
-				{
-					"name": "Get All Supplies",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{url}}/supplies",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"supplies"
-							]
-						}
 					},
 					"response": []
 				}
@@ -597,13 +597,13 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "{{url}}/recipes/1",
+							"raw": "{{url}}/recipes/2",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"recipes",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -821,13 +821,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/stores/8",
+							"raw": "{{url}}/stores/1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"stores",
-								"8"
+								"1"
 							]
 						}
 					},
@@ -874,13 +874,13 @@
 							"raw": "{\n\t\"name\": \"Local Plaza del Trebol2\",\n\t\"address\": \"Chimbarongo chimbarongo\",\n\t\"phone\": \"12345678\",\n\t\"city\": \"Concepcion\",\n\t\"supplies\": [\n\t\t{\n\t\t\t\"supply_id\": 3,\n\t\t\t\"stock\": 10\n\t\t},\n\t\t{\n\t\t\t\"supply_id\": 4,\n\t\t\t\"stock\": 15\n\t\t}\n\t],\n\t\"recipes\": [\n\t\t{\n\t\t\t\"recipe_id\": 3\n\t\t},\n\t\t{\n\t\t\t\"recipe_id\": 4\n\t\t}\n\t],\n\t\"suppliers\": [\n\t\t{\n\t\t\t\"supplier_id\": 3\n\t\t},\n\t\t{\n\t\t\t\"supplier_id\": 4\n\t\t}\n\t]\n}"
 						},
 						"url": {
-							"raw": "{{url}}/stores/8",
+							"raw": "{{url}}/stores/1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"stores",
-								"8"
+								"1"
 							]
 						}
 					},
@@ -1421,13 +1421,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/users/11",
+							"raw": "{{url}}/users/1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"11"
+								"1"
 							]
 						}
 					},
@@ -1494,16 +1494,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"first_name\": \"Rosa\",\n    \"last_name\": \"Araya\",\n    \"rut\": \"27581050\",\n    \"email\": \"raraya@mundoastoria.cl\",\n    \"phone\": \"+1-469-243-0535\",\n    \"address\": \"495 Hamill Bridge\",\n    \"city\": \"Feestland\",\n    \"stores\": [\n        {\n            \"store_id\": 2\n        },\n        {\n            \"store_id\": 3\n        }\n    ],\n    \"roles\": [\n        {\n        \t\"role_id\": 2\n        }\n    ]\n}"
+							"raw": "{\n    \"first_name\": \"Miguel\",\n    \"last_name\": \"Delgado\",\n    \"rut\": \"15177488-9\",\n    \"email\": \"miguelangeldelgado@gmail.com\",\n    \"phone\": \"+1-469-243-0535\",\n    \"address\": \"495 Hamill Bridge\",\n    \"city\": \"Feestland\",\n    \"stores\": [\n        {\n            \"store_id\": 2\n        },\n        {\n            \"store_id\": 3\n        },\n        {\n            \"store_id\": 8\n        }\n    ],\n    \"roles\": [\n        {\n        \t\"role_id\": 1\n        }\n    ]\n}"
 						},
 						"url": {
-							"raw": "{{url}}/users/2",
+							"raw": "{{url}}/users/1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"2"
+								"1"
 							]
 						}
 					},
