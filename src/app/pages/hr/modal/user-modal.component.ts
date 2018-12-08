@@ -120,6 +120,7 @@ export class UserModalComponent {
       ...this.data,
       roles: [],
       stores: [],
+      ...(this.password ? { password: this.password } : {}),
     };
     data.roles = this.data.roles.map(r => ({
       role_id: r.item_id,
@@ -134,7 +135,7 @@ export class UserModalComponent {
           ...data,
           id: this.id,
         })
-      : this.userService.create({ ...data, password: this.password });
+      : this.userService.create({ ...data });
     action.subscribe(
       (result: any) => {
         this.activeModal.close({

@@ -83,6 +83,7 @@ export class NbAuthResult {
 export class NbAuthService {
   private user: any;
   private currentStore: any;
+  private lastCheck: Date;
 
   constructor(
     protected tokenService: NbTokenService,
@@ -94,6 +95,7 @@ export class NbAuthService {
     this.setCurrentUser(JSON.parse(localStorage.getItem('user_data')));
     const store = localStorage.getItem('current_store');
     this.setCurrentStore(store);
+    this.lastCheck = new Date(0);
   }
 
   setCurrentUser(user) {
@@ -136,13 +138,21 @@ export class NbAuthService {
    * @returns {Observable<any>}
    */
   isAuthenticated(): Observable<any> {
-    const user = this.user || {};
+    const user = this.user || null;
+    const diff = new Date().getTime() - this.lastCheck.getTime();
+    if (diff < 60000 || !user) {
+      return Observable.of(!!user);
+    }
+
+    this.lastCheck = new Date();
     return Observable.forkJoin(
       this.userService.findUser(user.id),
       this.getToken(),
     )
       .catch(() => Observable.of(false))
       .map(result => {
+        const updatedUser = result[0].data;
+        this.setRoles(updatedUser);
         return !!result;
       });
   }
@@ -190,10 +200,27 @@ export class NbAuthService {
       .then(res => {
         return res.data;
       });
+
+    this.setCurrentUser(user);
+    this.setCurrentStore(get(user, 'stores[0].id', null));
+    await this.setRoles(user);
+
+    return result;
+  }
+
+  setToken(result: NbAuthResult): Observable<NbAuthResult> {
+    return this.tokenService
+      .set(result.getTokenValue())
+      .switchMap(_ => this.tokenService.get())
+      .map(token => {
+        result.replaceToken(token);
+        return result;
+      });
+  }
+
+  async setRoles(user) {
     const roles = get(user, 'roles', []);
     const rolesIds = roles.map(r => r.id);
-    this.setCurrentUser(user);
-    this.setCurrentStore(get(u, 'stores[0].id', null));
     if (rolesIds.length) {
       const obs = rolesIds.map(r =>
         this.roleService
@@ -216,27 +243,6 @@ export class NbAuthService {
       }, {});
       this.setCurrentUser(user);
     }
-    //
-    // .switchMap((result: NbAuthResult) => {
-    //   if (result.isSuccess() && result.getTokenValue()) {
-
-    //     return this.setToken(result);
-    //     // this.setCurrentStore(result.getResponse().body.data.stores[0].id)
-    //   }
-    //   return Observable.of(result);
-    // });
-
-    return result;
-  }
-
-  setToken(result: NbAuthResult): Observable<NbAuthResult> {
-    return this.tokenService
-      .set(result.getTokenValue())
-      .switchMap(_ => this.tokenService.get())
-      .map(token => {
-        result.replaceToken(token);
-        return result;
-      });
   }
 
   /**

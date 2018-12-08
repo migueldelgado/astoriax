@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {LocalDataSource} from 'ng2-smart-table';
-import {ActivatedRoute, Router} from '@angular/router';
-import {RecipeService} from '../../../@core/data/recipe.service';
+import { LocalDataSource } from 'ng2-smart-table';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RecipeService } from '../../../@core/data/recipe.service';
+import { NbAuthService } from '../../../auth/services';
 
 function sortByNumber(direction: number, a: string, b: string) {
   const numberA = parseInt(a, 10);
@@ -15,14 +16,15 @@ function sortByNumber(direction: number, a: string, b: string) {
 @Component({
   selector: 'ngx-supplies-table',
   templateUrl: './recipes-table.component.html',
-  styles: [`
-    nb-card {
-      transform: translate3d(0, 0, 0);
-    }
-  `],
+  styles: [
+    `
+      nb-card {
+        transform: translate3d(0, 0, 0);
+      }
+    `,
+  ],
 })
 export class RecipesTableComponent implements OnInit {
-
   settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -55,31 +57,44 @@ export class RecipesTableComponent implements OnInit {
     },
   };
 
-
   source: LocalDataSource = new LocalDataSource();
 
-
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) {
-  }
+  constructor(
+    private recipeService: RecipeService,
+    private authService: NbAuthService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
-    this.recipeService.getAll()
-      .subscribe((recipes: any) => {
-        this.source.load(recipes);
-      })
+    if (!this.hasPermission('REC')) {
+      this.router.navigate(['/pages']);
+      return;
+    }
+    this.settings.actions = {
+      ...this.settings.actions,
+      add: this.hasPermission('AREC'),
+      edit: this.hasPermission('MREC'),
+      delete: this.hasPermission('EREC'),
+    };
+    this.recipeService.getAll().subscribe((recipes: any) => {
+      this.source.load(recipes);
+    });
   }
 
   onDelete(event): void {
     if (!window.confirm('Desea eliminar receta?')) {
-      return ;
+      return;
     }
-    this.recipeService.deleteRecipe(event.data.id)
-      .subscribe((result: any) => {
+    this.recipeService.deleteRecipe(event.data.id).subscribe(
+      (result: any) => {
         this.source.remove(event.data);
-      }, error => {
+      },
+      error => {
         const errorMessage = JSON.parse(error._body);
         alert(errorMessage.message);
-      })
+      },
+    );
   }
 
   onCreate(el): void {
@@ -88,5 +103,9 @@ export class RecipesTableComponent implements OnInit {
 
   onEdit(el): void {
     this.router.navigate([`./edit/${el.data.id}`], { relativeTo: this.route });
+  }
+
+  hasPermission(key: string): boolean {
+    return this.authService.hasPermission(key);
   }
 }

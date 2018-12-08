@@ -105,7 +105,7 @@ export class EmployeesComponent implements OnInit {
       activeModal.result.then(
         result => {
           if (!result) {
-            return
+            return;
           }
           this.users[i] = result.data;
         },
@@ -119,7 +119,7 @@ export class EmployeesComponent implements OnInit {
       size: 'lg',
       container: 'nb-layout',
     });
-    activeModal.componentInstance.setUser({ stores: [], roles: [] });
+    activeModal.componentInstance.setUser({}, this.roles, this.stores);
     activeModal.result.then(
       result => {
         this.users.push(result.data);
