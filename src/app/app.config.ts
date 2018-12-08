@@ -7,6 +7,7 @@ const permissions = [
   { code: 'AREC', type: 'action', label: 'Agregar Recetas' },
   { code: 'MREC', type: 'action', label: 'Modificar Recetas' },
   { code: 'EREC', type: 'action', label: 'Eliminar Recetas' },
+  // Here
   { code: 'INV', type: 'page', label: 'Inventario Diario' },
   { code: 'AINV', type: 'action', label: 'Agregar Invetario Diario' },
   { code: 'MINV', type: 'action', label: 'Modificar Inventario Diario' },

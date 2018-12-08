@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { NbMenuService, NbSidebarService } from '@nebular/theme';
+import { NbSidebarService } from '@nebular/theme';
+import { NbMenuService } from '../menu/menu.service';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
-import {NbAuthService} from '../../../auth/services';
-import {Router} from '@angular/router';
+import { NbAuthService } from '../../../auth/services';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -11,8 +12,6 @@ import {Router} from '@angular/router';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit {
-
-
   @Input() position: string = 'normal';
 
   user: any;
@@ -20,16 +19,17 @@ export class HeaderComponent implements OnInit {
 
   userMenu = [{ type: 'logout', title: 'Log out' }];
 
-  constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService,
-              private authService: NbAuthService,
-              private analyticsService: AnalyticsService,
-              private router: Router) {
-  }
+  constructor(
+    private sidebarService: NbSidebarService,
+    private menuService: NbMenuService,
+    private authService: NbAuthService,
+    private analyticsService: AnalyticsService,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.user = this.authService.getUser();
-    this.currentStore = this.authService.getCurrentStore()
+    this.currentStore = this.authService.getCurrentStore();
   }
 
   toggleSidebar(): boolean {
@@ -51,14 +51,13 @@ export class HeaderComponent implements OnInit {
   }
 
   onChangeStore() {
-    this.authService.setCurrentStore(this.currentStore)
+    this.authService.setCurrentStore(this.currentStore);
     window.location.reload();
   }
 
   onClick(event) {
-    this.authService.logout('email')
-      .subscribe(result => {
-        this.router.navigate(['/auth/login'])
-      })
+    this.authService.logout('email').subscribe(result => {
+      this.router.navigate(['/auth/login']);
+    });
   }
 }

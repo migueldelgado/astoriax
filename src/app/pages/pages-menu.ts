@@ -1,6 +1,11 @@
 import { NbMenuItem } from '@nebular/theme';
 
-export const MENU_ITEMS: NbMenuItem[] = [
+export abstract class NbMenuItemExtended extends NbMenuItem {
+  permissions?: Array<string>;
+  children?: NbMenuItemExtended[];
+}
+
+export const MENU_ITEMS: NbMenuItemExtended[] = [
   {
     title: 'Home',
     icon: 'nb-home',
@@ -20,14 +25,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Productos',
 
         link: '/pages/store/products',
+        permissions: ['INS', 'REC'],
         children: [
           {
             title: 'Insumos',
             link: '/pages/store/products/supplies',
+            permissions: ['INS'],
           },
           {
             title: 'Recetas',
             link: '/pages/store/products/recipes',
+            permissions: ['REC'],
           },
         ],
       },

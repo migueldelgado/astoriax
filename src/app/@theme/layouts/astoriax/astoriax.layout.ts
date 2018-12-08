@@ -3,7 +3,6 @@ import {
   NbMediaBreakpoint,
   NbMediaBreakpointsService,
   NbMenuItem,
-  NbMenuService,
   NbSidebarService,
   NbThemeService,
 } from '@nebular/theme';
@@ -13,6 +12,7 @@ import { StateService } from '../../../@core/data/state.service';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/withLatestFrom';
 import 'rxjs/add/operator/delay';
+import { NbMenuService } from '../../components/menu/menu.service';
 
 // TODO: move layouts into the framework
 @Component({
@@ -21,47 +21,61 @@ import 'rxjs/add/operator/delay';
   template: `
     <nb-layout [center]="layout.id === 'center-column'" windowMode>
       <nb-layout-header fixed>
-        <ngx-header [position]="sidebar.id === 'left' ? 'normal': 'inverse'"></ngx-header>
+        <ngx-header
+          [position]="sidebar.id === 'left' ? 'normal' : 'inverse'"
+        ></ngx-header>
       </nb-layout-header>
 
-      <nb-sidebar class="menu-sidebar"
-                   tag="menu-sidebar"
-                   responsive
-                   [right]="sidebar.id === 'right'">
+      <nb-sidebar
+        class="menu-sidebar"
+        tag="menu-sidebar"
+        responsive
+        [right]="sidebar.id === 'right'"
+      >
         <ng-content select="nb-menu"></ng-content>
       </nb-sidebar>
 
       <nb-layout-column class="main-content">
         <ng-content select="router-outlet"></ng-content>
         <div class="loading" *ngIf="loading">
-          <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+          <ngx-loading
+            [show]="loading"
+            [config]="{ backdropBorderRadius: '14px' }"
+          ></ngx-loading>
         </div>
       </nb-layout-column>
 
-      <nb-layout-column left class="small" *ngIf="layout.id === 'two-column' || layout.id === 'three-column'">
+      <nb-layout-column
+        left
+        class="small"
+        *ngIf="layout.id === 'two-column' || layout.id === 'three-column'"
+      >
         <nb-menu [items]="subMenu"></nb-menu>
       </nb-layout-column>
 
-      <nb-layout-column right class="small" *ngIf="layout.id === 'three-column'">
+      <nb-layout-column
+        right
+        class="small"
+        *ngIf="layout.id === 'three-column'"
+      >
         <nb-menu [items]="subMenu"></nb-menu>
       </nb-layout-column>
 
-      <nb-layout-footer fixed>
-        <ngx-footer></ngx-footer>
-      </nb-layout-footer>
+      <nb-layout-footer fixed> <ngx-footer></ngx-footer> </nb-layout-footer>
 
-      <nb-sidebar class="settings-sidebar"
-                   tag="settings-sidebar"
-                   state="collapsed"
-                   fixed
-                   [right]="sidebar.id !== 'right'">
+      <nb-sidebar
+        class="settings-sidebar"
+        tag="settings-sidebar"
+        state="collapsed"
+        fixed
+        [right]="sidebar.id !== 'right'"
+      >
         <ngx-theme-settings></ngx-theme-settings>
       </nb-sidebar>
     </nb-layout>
   `,
 })
-export class AstoriaxLayoutComponent  implements OnDestroy {
-
+export class AstoriaxLayoutComponent implements OnDestroy {
   subMenu: NbMenuItem[] = [
     {
       title: 'PAGE LEVEL MENU',
@@ -112,32 +126,42 @@ export class AstoriaxLayoutComponent  implements OnDestroy {
   protected sidebarState$: Subscription;
   protected menuClick$: Subscription;
 
-  constructor(protected stateService: StateService,
-              protected menuService: NbMenuService,
-              protected themeService: NbThemeService,
-              protected bpService: NbMediaBreakpointsService,
-              protected sidebarService: NbSidebarService) {
-    this.layoutState$ = this.stateService.onLayoutState()
-      .subscribe((layout: string) => this.layout = layout);
+  constructor(
+    protected stateService: StateService,
+    protected menuService: NbMenuService,
+    protected themeService: NbThemeService,
+    protected bpService: NbMediaBreakpointsService,
+    protected sidebarService: NbSidebarService,
+  ) {
+    this.layoutState$ = this.stateService
+      .onLayoutState()
+      .subscribe((layout: string) => (this.layout = layout));
 
-    this.sidebarState$ = this.stateService.onSidebarState()
+    this.sidebarState$ = this.stateService
+      .onSidebarState()
       .subscribe((sidebar: string) => {
-        this.sidebar = sidebar
+        this.sidebar = sidebar;
       });
-    this.loadingState$ = this.stateService.onLoadingState()
+    this.loadingState$ = this.stateService
+      .onLoadingState()
       .subscribe((nextValue: boolean) => {
         this.loading = nextValue;
-      })
+      });
     const isBp = this.bpService.getByName('is');
-    this.menuClick$ = this.menuService.onItemSelect()
+    this.menuClick$ = this.menuService
+      .onItemSelect()
       .withLatestFrom(this.themeService.onMediaQueryChange())
       .delay(20)
-      .subscribe(([item, [bpFrom, bpTo]]: [any, [NbMediaBreakpoint, NbMediaBreakpoint]]) => {
-
-        if (bpTo.width <= isBp.width) {
-          this.sidebarService.collapse('menu-sidebar');
-        }
-      });
+      .subscribe(
+        ([item, [bpFrom, bpTo]]: [
+          any,
+          [NbMediaBreakpoint, NbMediaBreakpoint]
+        ]) => {
+          if (bpTo.width <= isBp.width) {
+            this.sidebarService.collapse('menu-sidebar');
+          }
+        },
+      );
   }
 
   ngOnDestroy() {

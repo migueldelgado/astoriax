@@ -7,7 +7,6 @@ import {
   NbActionsModule,
   NbCardModule,
   NbLayoutModule,
-  NbMenuModule,
   NbRouteTabsetModule,
   NbSearchModule,
   NbSidebarModule,
@@ -16,7 +15,7 @@ import {
   NbUserModule,
   NbCheckboxModule,
 } from '@nebular/theme';
-
+import { NbMenuModule } from './components/menu/menu.module';
 import {
   FooterComponent,
   HeaderComponent,
@@ -67,19 +66,14 @@ const COMPONENTS = [
   AstoriaxLayoutComponent,
 ];
 
-const PIPES = [
-  CapitalizePipe,
-  PluralPipe,
-  RoundPipe,
-  TimingPipe,
-];
+const PIPES = [CapitalizePipe, PluralPipe, RoundPipe, TimingPipe];
 
 const NB_THEME_PROVIDERS = [
   ...NbThemeModule.forRoot(
     {
       name: 'cosmic',
     },
-    [ DEFAULT_THEME, COSMIC_THEME ],
+    [DEFAULT_THEME, COSMIC_THEME],
   ).providers,
   ...NbSidebarModule.forRoot().providers,
   ...NbMenuModule.forRoot().providers,
