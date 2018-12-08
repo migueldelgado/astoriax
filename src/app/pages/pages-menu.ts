@@ -41,10 +41,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
             link: '/pages/inventories/daily',
           },
           {
-            title: 'Prestamos',
-            link: '/pages/inventories/loan',
-          },
-          {
             title: 'Compras',
             link: '/pages/inventories/purchases',
           },

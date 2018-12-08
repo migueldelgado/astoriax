@@ -135,4 +135,14 @@ export class EmployeesComponent implements OnInit {
     });
     activeModal.componentInstance.setUser(id);
   }
+
+  onClickDelete(id) {
+    if (!confirm('Desea eliminar al usuario?')) {
+      return;
+    }
+
+    this.userService.delete(id).subscribe(() => {
+      this.users = this.users.filter(u => u.id !== id);
+    });
+  }
 }
