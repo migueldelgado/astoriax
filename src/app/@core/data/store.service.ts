@@ -27,4 +27,8 @@ export class StoreService {
   public find(id) {
     return this.http.get(`${AppConfig.API_ENDPOINT}stores/${id}`)
   }
+
+  public delete(id) {
+    return this.http.delete(`${AppConfig.API_ENDPOINT}stores/${id}`)
+  }
 }

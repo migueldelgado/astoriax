@@ -20,9 +20,6 @@
           Ciudad
         </th>
         <th>
-          Rut
-        </th>
-        <th>
           <div class="btn-group" style="display: flex; justify-content: center;">
             <button class="btn btn-outline-primary btn-icon" (click)="onClickCreate()"><i class="nb-plus-circled"></i></button>
           </div>
@@ -35,10 +32,10 @@
         <td>{{store.phone}}</td>
         <td>{{store.address}}</td>
         <td>{{store.city}}</td>
-        <td></td>
         <td>
           <div class="btn-group" style="display: flex; justify-content: center;">
             <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(store.id)"><i class="nb-edit"></i></button>
+            <button class="btn btn-outline-primary btn-icon" (click)="onClickDelete(store.id)"><i class="nb-trash"></i></button>
           </div>
         </td>
       </tr>

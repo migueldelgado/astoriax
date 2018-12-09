@@ -98,6 +98,17 @@ export class StoresComponent implements OnInit {
     this.router.navigate([`/pages/hr/stores/new`]);
   }
 
+  onClickDelete(id) {
+    if (!confirm('Desea Borrar el local?')) {
+      return;
+    }
+
+    this.storeService.delete(id)
+      .subscribe(() => {
+        this.stores = this.stores.filter(s => s.id !== id)
+      })
+  }
+
   //
   // onClickView() {
   //   const activeModal = this.modalService.open(AddInvoiceProviderComponent, { size: 'lg', container: 'nb-layout' });
