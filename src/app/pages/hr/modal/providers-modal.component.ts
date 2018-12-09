@@ -39,60 +39,13 @@ export class ProvidersModalComponent {
     city: '',
     account: '',
     bank: '',
-    stores: [],
   };
-
-  stores = [
-    {
-      item_id: 1,
-      item_text: 'Astoria CCP',
-    }, {
-      item_id: 2,
-      item_text: 'Astoria MPLA',
-    }, {
-      item_id: 3,
-      item_text: 'Astoria MPTR',
-    }, {
-      item_id: 4,
-      item_text: 'Astoria OESTE',
-    }, {
-      item_id: 5,
-      item_text: 'Astoria MPBB',
-    }, {
-      item_id: 6,
-      item_text: 'Astoria MCCP',
-    },
-  ];
-
-  dropdownSettings = {
-    singleSelection: false,
-    idField: 'item_id',
-    textField: 'item_text',
-    selectAllText: 'Seleccionar todos',
-    unSelectAllText: 'Desmarcar todos',
-    itemsShowLimit: 6,
-    allowSearchFilter: true,
-  };
-
   constructor(private activeModal: NgbActiveModal, private supplierService: SupplierService) {
   }
 
   closeModal() {
     this.id = null;
     this.activeModal.close();
-  }
-
-  onItemSelect(item: any) {
-    // tslint:disable-next-line
-    console.log(item);
-  }
-  onSelectAll (items: any) {
-    // tslint:disable-next-line
-    console.log(items);
-  }
-
-  onChangeTo() {
-
   }
 
   setSupplier(s) {
