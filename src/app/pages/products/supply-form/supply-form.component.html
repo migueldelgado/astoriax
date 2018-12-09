@@ -1,7 +1,7 @@
 <form (submit)="onSubmit()">
   <nb-card>
     <nb-card-header>
-      Nuevo Insumo
+      {{id ? 'Editar' : 'Nuevo'}} Insumo
     </nb-card-header>
     <nb-card-body>
       <nb-card>
