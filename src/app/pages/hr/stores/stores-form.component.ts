@@ -9,6 +9,7 @@ import { parseErrroMessage } from '../../../@core/utils/error';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { SupplierService } from '../../../@core/data/supplier.service';
+import { NbAuthService } from '../../../auth/services';
 
 @Component({
   selector: 'ngx-store-form',
@@ -66,23 +67,6 @@ export class StoresFormComponent implements OnInit {
   supplies: Array<any> = [];
   recipes: Array<any> = [];
   suppliers: Array<any> = [];
-  totalCost: number = 0;
-
-  //   address: "Carrear Poniente 301, Local fc222"
-  //   city: "Concepcion"
-  //   created_at: "2018-11-17 00:27:13"
-  //   deleted_at: null
-  //   id: 1
-  //   name: "Alimentos Aravena & Coppelli MPBB"
-  //   phone: "+56413213912"
-  //   recipes: Array(1)
-  //   0: {id: 17, name: "Receaaa", classification:
-  // "clasificacion", deleted_at: null, created_at: "2018-11-25 07:09:46", …}
-  //   length: 1
-  //   __proto__: Array(0)
-  //   suppliers: []
-  //   supplies: (2) [{…}, {…}]
-  // updated_at: "2018-11-17 00:27:13"
 
   data = {
     address: '',
@@ -102,9 +86,14 @@ export class StoresFormComponent implements OnInit {
     private supplierService: SupplierService,
     private route: ActivatedRoute,
     private router: Router,
+    private authService: NbAuthService,
   ) {}
 
   ngOnInit() {
+    if (!this.hasPermission('LOC')) {
+      this.router.navigate(['/pages']);
+      return;
+    }
     Observable.forkJoin(
       this.supplyService.getTotalList(),
       this.recipeService.getTotalList(),
@@ -116,6 +105,10 @@ export class StoresFormComponent implements OnInit {
       this.suppliers = result[2] || [];
       this.loadStore();
     });
+  }
+
+  hasPermission(key: string): boolean {
+    return this.authService.hasPermission(key);
   }
 
   loadStore() {
@@ -200,6 +193,10 @@ export class StoresFormComponent implements OnInit {
   }
 
   save(data) {
+    if (!this.hasPermission('ALOC')) {
+      alert('No tiene permisos para agregar local');
+      return;
+    }
     this.storeService.create(data).subscribe(
       result => {
         this.cancel();
@@ -211,6 +208,10 @@ export class StoresFormComponent implements OnInit {
   }
 
   update(data) {
+    if (!this.hasPermission('MLOC')) {
+      alert('No tiene permisos para agregar local');
+      return;
+    }
     this.storeService.update({ ...data, id: this.id }).subscribe(
       result => {
         this.cancel();

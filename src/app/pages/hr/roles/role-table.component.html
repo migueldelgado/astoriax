@@ -1,41 +1,55 @@
 <nb-card>
-  <nb-card-header>
-    Roles
-  </nb-card-header>
+  <nb-card-header> Roles </nb-card-header>
 
   <nb-card-body>
     <table>
       <thead>
-      <tr>
-        <th>
-          Nombre
-        </th>
-        <th>
-          Descripción
-        </th>
-        <th>
-          <div class="btn-group" style="display: flex; justify-content: center;">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickCreate()"><i class="nb-plus-circled"></i></button>
-          </div>
-        </th>
-      </tr>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>
+            <div
+              class="btn-group"
+              style="display: flex; justify-content: center;"
+            >
+              <button
+                *ngIf="hasPermission('AROL')"
+                class="btn btn-outline-primary btn-icon"
+                (click)="onClickCreate()"
+              >
+                <i class="nb-plus-circled"></i>
+              </button>
+            </div>
+          </th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let role of roles">
-        <td>{{role.name}}</td>
-        <td>{{role.description}}</td>
-        <td>
-          <div class="btn-group" style="display: flex; justify-content: center;">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus(role.id)"><i class="nb-edit"></i></button>
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickDelete(role.id)"><i class="nb-trash"></i></button>
-          </div>
-        </td>
-      </tr>
+        <tr *ngFor="let role of roles">
+          <td>{{ role.name }}</td>
+          <td>{{ role.description }}</td>
+          <td>
+            <div
+              class="btn-group"
+              style="display: flex; justify-content: center;"
+            >
+              <button
+                *ngIf="hasPermission('MROL')"
+                class="btn btn-outline-primary btn-icon"
+                (click)="onClickPlus(role.id)"
+              >
+                <i class="nb-edit"></i>
+              </button>
+              <button
+                *ngIf="hasPermission('EROL')"
+                class="btn btn-outline-primary btn-icon"
+                (click)="onClickDelete(role.id)"
+              >
+                <i class="nb-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
       </tbody>
-
     </table>
   </nb-card-body>
 </nb-card>
-
-
-

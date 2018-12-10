@@ -159,6 +159,57 @@
               </label>
             </div>
           </div>
+
+          <div class="form-group" *ngIf="data.show_in_process === '1'">
+            <div class="row justify-content-between">
+              <h4 class="col-md-6 col-sm-6">Insumos</h4>
+              <div class="col-md-6 col-sm-6 row justify-content-end">
+                <button class="btn btn-primary" type="button" (click)="addSupply($event)">Agregar</button>
+              </div>
+            </div>
+            <div class="row">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>Insumo</th>
+                  <th>Cantidad</th>
+                  <th>Borrar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let _ of processSupplies; let i = index">
+                  <td>
+                    <select
+                      name="supply{{i}}"
+                      class="form-control"
+                      [(ngModel)]="processSupplies[i].supply_id"
+                      (ngModelChange)="onChangeSupply($event, i)"
+                      required
+                    >
+                      <option *ngIf="!!processSupplies[i].supply" [value]="processSupplies[i].supply_id">{{processSupplies[i].supply.name}}</option>
+                      <option selected *ngIf="!processSupplies[i].supply" [value]="''">Seleccione Insumo</option>
+
+                      <ng-container *ngFor="let s of supplies; let sIndex = index">
+                        <option
+                          [value]="s.id"
+                          *ngIf="!supplyMap[s.id]"
+                        >
+                          {{s.name}}
+                        </option>
+                      </ng-container>
+                    </select>
+                  </td>
+                  <td>
+                    <input name="quantity{{i}}" (change)="recalculateCost(i)" required [(ngModel)]="processSupplies[i].quantity" type="number" placeholder="Cantidad" class="form-control"/>
+                  </td>
+                  <td>
+                    <button class="btn btn-secondary" (click)="removeSupply(i)">Borrar</button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </nb-card-body>
         <nb-card-footer>
           <button type="submit" [disabled]="!hasPermission('AINS') && !hasPermission('EINS')" class="btn btn-primary">Guardar</button>

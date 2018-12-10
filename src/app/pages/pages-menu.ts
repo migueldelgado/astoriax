@@ -43,14 +43,17 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
         title: 'Inventarios',
 
         link: '/pages/inventories',
+        permissions: ['COM', 'INV'],
         children: [
           {
             title: 'Inventarios Diarios',
             link: '/pages/inventories/daily',
+            permissions: ['INV'],
           },
           {
             title: 'Compras',
             link: '/pages/inventories/purchases',
+            permissions: ['COM'],
           },
         ],
       },
@@ -60,14 +63,17 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
     title: 'Auditorias',
     icon: 'nb-list',
     link: '/pages/audits',
+    permissions: ['AUD'],
     children: [
       {
         title: 'Auditorias',
         link: '/pages/audits/audit-list',
+        permissions: ['AUD'],
       },
       {
         title: 'Resumen',
         link: '/pages/audits/overview',
+        permissions: ['AUD'],
       },
     ],
   },
@@ -75,18 +81,22 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
     title: 'Costos/Gastos',
     icon: 'ion-calculator',
     link: '/pages/costs',
+    permissions: ['VAR', 'FIJ', 'GEN'],
     children: [
       {
         title: 'Costos Variables',
         link: '/pages/costs/variable-costs',
+        permissions: ['VAR'],
       },
       {
         title: 'Costos Fijos',
         link: '/pages/costs/fixed-costs',
+        permissions: ['FIJ'],
       },
       {
         title: 'Gastos Generales',
         link: '/pages/costs/general-expenses',
+        permissions: ['GEN'],
       },
     ],
   },
@@ -109,18 +119,22 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
     title: 'Administracion RRHH',
     icon: 'nb-person',
     link: '/pages/hr',
+    permissions: ['PRO', 'LOC', 'EMP'],
     children: [
       {
         title: 'Proveedores',
         link: '/pages/hr/providers',
+        permissions: ['PRO'],
       },
       {
         title: 'Locales',
         link: '/pages/hr/stores',
+        permissions: ['LOC'],
       },
       {
         title: 'Empleados',
         link: '/pages/hr/employees',
+        permissions: ['EMP'],
       },
       {
         title: 'Roles',
@@ -132,18 +146,22 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
     title: 'Ventas',
     icon: 'fa fa-book',
     link: '/pages/sales',
+    permissions: ['CHQ', 'VAL', 'IVD'],
     children: [
       {
         title: 'Cheque Restaurant',
         link: '/pages/sales/cheques',
+        permissions: ['CHQ'],
       },
       {
         title: 'Valores de Cheques',
         link: '/pages/sales/add-cheques',
+        permissions: ['VAL'],
       },
       {
         title: 'Ingreso Venta Diaria',
         link: '/pages/sales/daily-sales',
+        permissions: ['IVD'],
       },
     ],
   },
@@ -151,18 +169,12 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
     title: 'Reportes',
     icon: 'nb-compose',
     link: '/pages/reports',
+    permissions: ['RCR'],
     children: [
-      // {
-      //   title: 'Proyecciones',
-      //   link: '/temp12',
-      // },
-      // {
-      //   title: 'Estado de resultado',
-      //   link: '/temp13',
-      // },
       {
         title: 'Reporte Cruzado',
         link: '/pages/reports/reporte-cruzado',
+        permissions: ['RCR'],
       },
     ],
   },

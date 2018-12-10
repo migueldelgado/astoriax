@@ -28,7 +28,6 @@ export class SupplyFormComponent implements OnInit {
   id: number;
   supplyClassifications$: Observable<any>;
   supplyReportTypes$: Observable<any>;
-  stores$: Observable<any>;
   supplyTypes$: Observable<any>;
   suppliers$: Observable<any>;
   units$: Observable<any>;
@@ -42,6 +41,10 @@ export class SupplyFormComponent implements OnInit {
       description: 'Inactivo',
     },
   ];
+
+  supplies: Array<any> = [];
+  supplyMap = {};
+  processSupplies: Array<any> = [];
 
   reportTypes = [
     {
@@ -104,13 +107,15 @@ export class SupplyFormComponent implements OnInit {
     this.units$ = this.unitService.getAll();
     this.supplyReportTypes$ = this.supplyReportTypeService.getAll();
     this.supplyClassifications$ = this.supplyClassificationService.getAll();
+    this.supplyService.getTotalList().subscribe((s: any) => {
+      this.supplies = s.data;
+    });
     this.route.params.subscribe(params => {
       if (!params.id) {
         return;
       }
       this.id = params.id;
       this.supplyService.findSupply(this.id).subscribe(result => {
-
         this.data = Object.assign(this.data, result.data);
       });
     });
@@ -178,5 +183,48 @@ export class SupplyFormComponent implements OnInit {
 
   hasPermission(key: string): boolean {
     return this.authService.hasPermission(key);
+  }
+
+  addSupply(e) {
+    e.preventDefault();
+    this.processSupplies.push({
+      quantity: '1',
+      supply_id: '',
+      supply: null,
+    });
+  }
+
+  removeSupply(i) {
+    this.processSupplies = [
+      ...this.processSupplies.slice(0, i),
+      ...this.processSupplies.slice(i + 1),
+    ];
+    this.recalculateSupplyMap();
+  }
+
+  onChangeSupply(id, index) {
+    if (!id) {
+      this.processSupplies[index].supply = null;
+      this.processSupplies[index].supply_id = '';
+      this.recalculateSupplyMap();
+      return;
+    }
+    const supply = this.supplies.find(s => s.id === parseInt(id, 10));
+    // const idSupply = this.data.supplies[index].id_supply;
+    // console.log(e, this.data.supplies, idSupply);
+    // const supply = this.supplies.find((s) => s.id_supply === idSupply);
+    // this.data.supplies[index].supply = Object.assign({}, supply);
+    this.processSupplies[index].supply = supply;
+    this.processSupplies[index].supply_id = supply.id;
+    this.recalculateSupplyMap();
+  }
+
+  recalculateSupplyMap() {
+    this.supplyMap = this.processSupplies.reduce((acc, s) => {
+      return {
+        ...acc,
+        [s.supply_id]: true,
+      };
+    }, {});
   }
 }

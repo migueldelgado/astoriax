@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoleService } from '../../../@core/data/role.service';
+import { NbAuthService } from '../../../auth/services';
 
 @Component({
   selector: 'ngx-role-admin-table',
@@ -61,12 +62,21 @@ export class RoleTableComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private roleService: RoleService,
+    private authService: NbAuthService,
   ) {}
 
   ngOnInit() {
+    if (!this.hasPermission('ROL')) {
+      this.router.navigate(['/pages']);
+      return;
+    }
     this.roleService.getAll().subscribe(roles => {
       this.roles = roles;
     });
+  }
+
+  hasPermission(key: string): boolean {
+    return this.authService.hasPermission(key);
   }
 
   onClickPlus(id) {

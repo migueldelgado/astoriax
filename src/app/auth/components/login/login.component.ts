@@ -45,14 +45,14 @@ export class NbLoginComponent implements OnInit {
   async login(): Promise<void> {
     this.errors = this.messages = [];
     this.submitted = true;
-
     const result = await this.service.authenticate(this.provider, this.user);
-    //   this.submitted = false;
     if (result.isSuccess()) {
       this.messages = result.getMessages();
     } else {
       this.errors = result.getErrors();
     }
+
+    this.submitted = false;
 
     const redirect = result.getRedirect();
     if (redirect) {

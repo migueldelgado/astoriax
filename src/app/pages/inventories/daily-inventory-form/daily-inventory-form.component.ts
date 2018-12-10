@@ -105,7 +105,7 @@ export class DailyInventoryFormComponent implements OnInit {
       supplies: supplies,
     };
 
-    if (this.id && !this.hasPermission('EINV')) {
+    if (this.id && !this.hasPermission('MINV')) {
       alert('No tienes permisos para editar inventarios');
       return;
     }

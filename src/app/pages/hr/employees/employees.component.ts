@@ -9,6 +9,7 @@ import { UserService } from '../../../@core/data/user.service';
 import { RoleService } from '../../../@core/data/role.service';
 import { StoreService } from '../../../@core/data/store.service';
 import { Observable } from 'rxjs/Observable';
+import { NbAuthService } from '../../../auth/services';
 
 @Component({
   selector: 'ngx-employees-admin-table',
@@ -77,9 +78,14 @@ export class EmployeesComponent implements OnInit {
     private userService: UserService,
     private roleService: RoleService,
     private storeService: StoreService,
+    private authService: NbAuthService,
   ) {}
 
   ngOnInit() {
+    if (!this.hasPermission('EMP')) {
+      this.router.navigate(['/pages']);
+      return;
+    }
     Observable.forkJoin(
       this.userService.getAll(),
       this.roleService.getAll(),
@@ -91,9 +97,15 @@ export class EmployeesComponent implements OnInit {
     });
   }
 
-  onChangeTo() {}
+  hasPermission(key: string): boolean {
+    return this.authService.hasPermission(key);
+  }
 
   onClickEdit(id) {
+    if (!this.hasPermission('MEMP')) {
+      alert('No tienes permiso para modificar empleados');
+      return;
+    }
     const i = this.users.findIndex(user => user.id === id);
     this.userService.findUser(id).subscribe(r => {
       const user = r.data;
@@ -115,6 +127,10 @@ export class EmployeesComponent implements OnInit {
   }
 
   onClickAdd() {
+    if (!this.hasPermission('AEMP')) {
+      alert('No tienes permiso para agregar empleados');
+      return;
+    }
     const activeModal = this.modalService.open(UserModalComponent, {
       size: 'lg',
       container: 'nb-layout',
@@ -122,7 +138,9 @@ export class EmployeesComponent implements OnInit {
     activeModal.componentInstance.setUser({}, this.roles, this.stores);
     activeModal.result.then(
       result => {
-        this.users.push(result.data);
+        this.userService.getAll().subscribe(users => {
+          this.users = users;
+        });
       },
       () => {},
     );
@@ -137,6 +155,10 @@ export class EmployeesComponent implements OnInit {
   }
 
   onClickDelete(id) {
+    if (!this.hasPermission('EEMP')) {
+      alert('No tienes permisos para eliminar usuarios');
+      return;
+    }
     if (!confirm('Desea eliminar al usuario?')) {
       return;
     }

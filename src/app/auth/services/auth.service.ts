@@ -123,7 +123,10 @@ export class NbAuthService {
   clear() {
     localStorage.removeItem('user_data');
     localStorage.removeItem('current_store');
+    this.user = null;
+    this.currentStore = null;
   }
+
   /**
    * Retrieves current authenticated token stored
    * @returns {Observable<any>}

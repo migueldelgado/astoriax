@@ -1,25 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import {LocalDataSource} from 'ng2-smart-table';
-import {ActivatedRoute, Router} from '@angular/router';
-import {INgxMyDpOptions} from 'ngx-mydatepicker';
-import {AppConfig} from '../../../app.config';
-import {PurchaseService} from '../../../@core/data/purchase.service';
-import {NbAuthService} from '../../../auth/services';
+import { LocalDataSource } from 'ng2-smart-table';
+import { ActivatedRoute, Router } from '@angular/router';
+import { INgxMyDpOptions } from 'ngx-mydatepicker';
+import { AppConfig } from '../../../app.config';
+import { PurchaseService } from '../../../@core/data/purchase.service';
+import { NbAuthService } from '../../../auth/services';
 
 @Component({
   selector: 'ngx-supplies-table',
   templateUrl: './purchase-table.component.html',
-  styles: [`
-    nb-card {
-      transform: translate3d(0, 0, 0);
-    }
-    nb-card-body {
-      min-height: 400px;
-    }
-  `],
+  styles: [
+    `
+      nb-card {
+        transform: translate3d(0, 0, 0);
+      }
+      nb-card-body {
+        min-height: 400px;
+      }
+    `,
+  ],
 })
 export class PurchaseTableComponent implements OnInit {
-
   settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -27,7 +28,7 @@ export class PurchaseTableComponent implements OnInit {
       cancelButtonContent: '<i class="nb-close"></i>',
     },
     edit: {
-    editButtonContent: '<i class="nb-edit"></i>',
+      editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
     },
@@ -68,9 +69,20 @@ export class PurchaseTableComponent implements OnInit {
     private purchaseService: PurchaseService,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: NbAuthService) {}
+    private authService: NbAuthService,
+  ) {}
 
   ngOnInit() {
+    if (!this.hasPermission('COM')) {
+      this.router.navigate(['/pages']);
+      return;
+    }
+    this.settings.actions = {
+      ...this.settings.actions,
+      add: this.hasPermission('ACOM'),
+      edit: this.hasPermission('MCOM'),
+      delete: this.hasPermission('ECOM'),
+    };
     this.fetch(new Date(), new Date());
   }
 
@@ -92,16 +104,17 @@ export class PurchaseTableComponent implements OnInit {
     const from = dateFrom.toJSON();
     const to = dateTo.toJSON();
 
-    this.purchaseService.getAll({ dateFrom: from, dateTo: to })
-      .subscribe((purchases: any) => {
+    this.purchaseService.getAll({ dateFrom: from, dateTo: to }).subscribe(
+      (purchases: any) => {
         this.source.load(purchases);
         this.firstLoad = true;
-      }, () => {
-        this.source.load([])
+      },
+      () => {
+        this.source.load([]);
         this.firstLoad = true;
-      })
+      },
+    );
   }
-
 
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
@@ -112,13 +125,15 @@ export class PurchaseTableComponent implements OnInit {
   }
 
   onDelete(event): void {
-    this.purchaseService.delete(event.data.id_loan)
-      .subscribe((result: any) => {
+    this.purchaseService.delete(event.data.id_loan).subscribe(
+      (result: any) => {
         this.source.remove(event.data);
-      }, error => {
+      },
+      error => {
         const errorMessage = JSON.parse(error._body);
         alert(errorMessage.message);
-      })
+      },
+    );
   }
 
   onCreate(el): void {
@@ -126,6 +141,11 @@ export class PurchaseTableComponent implements OnInit {
   }
 
   onEdit(el): void {
-    this.router.navigate([`../purchase/edit/${el.data.id}`], { relativeTo: this.route });
+    this.router.navigate([`../purchase/edit/${el.data.id}`], {
+      relativeTo: this.route,
+    });
+  }
+  hasPermission(key: string): boolean {
+    return this.authService.hasPermission(key);
   }
 }

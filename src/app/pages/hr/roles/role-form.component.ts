@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RoleService } from '../../../@core/data/role.service';
 import { parseErrroMessage } from '../../../@core/utils/error';
 import 'rxjs/add/operator/map';
+import { NbAuthService } from '../../../auth/services';
 
 @Component({
   selector: 'ngx-role-form',
@@ -31,13 +32,22 @@ export class RoleFormComponent implements OnInit {
     private roleService: RoleService,
     private route: ActivatedRoute,
     private router: Router,
+    private authService: NbAuthService,
   ) {}
 
   ngOnInit() {
+    if (!this.hasPermission('ROL')) {
+      this.router.navigate(['/pages']);
+      return;
+    }
     this.roleService.getPermissions().subscribe((result: any) => {
       this.permissions = result;
       this.loadRole();
     });
+  }
+
+  hasPermission(key: string): boolean {
+    return this.authService.hasPermission(key);
   }
 
   loadRole() {
@@ -96,6 +106,10 @@ export class RoleFormComponent implements OnInit {
   }
 
   save(data) {
+    if (!this.hasPermission('AROL')) {
+      alert('No tiene permisos para agregar roles');
+      return;
+    }
     this.roleService.createRole(data).subscribe(
       result => {
         this.cancel();
@@ -107,6 +121,10 @@ export class RoleFormComponent implements OnInit {
   }
 
   update(data) {
+    if (!this.hasPermission('MROL')) {
+      alert('No tiene permisos para agregar roles');
+      return;
+    }
     this.roleService.updateRole(this.id, data).subscribe(
       result => {
         this.cancel();
