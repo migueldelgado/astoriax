@@ -76,8 +76,8 @@ export class SupplyFormComponent implements OnInit {
     name: '',
     stock_min: 0,
     wastage_rate: null,
-    show_in_process: 0,
-    show_in_daily_inventory: 0,
+    show_in_process: '0',
+    show_in_daily_inventory: '0',
     supplier_id: null,
     report_type: null,
     classification: null,
@@ -226,5 +226,9 @@ export class SupplyFormComponent implements OnInit {
         [s.supply_id]: true,
       };
     }, {});
+  }
+
+  isInProcess() {
+    return this.data.show_in_process === '1';
   }
 }

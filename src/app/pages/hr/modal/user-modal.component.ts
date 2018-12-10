@@ -37,6 +37,7 @@ export class UserModalComponent {
     email: '',
     roles: [],
     stores: [],
+    id: null,
   };
 
   stores = [];
