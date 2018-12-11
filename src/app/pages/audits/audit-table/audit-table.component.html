@@ -5,7 +5,6 @@
 
   <nb-card-body >
     <ng2-smart-table
-      *ngIf="!loading"
       [settings]="settings"
       [source]="source"
       (deleteConfirm)="onDeleteConfirm($event)"

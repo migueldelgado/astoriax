@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {AppConfig} from '../../app.config';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/Rx';
+import { Injectable } from '@angular/core';
+import { AppConfig } from '../../app.config';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import {NbAuthService} from '../../auth/services';
+import { NbAuthService } from '../../auth/services';
 
 const MONTHS = [
   'Enero',
@@ -21,12 +21,11 @@ const MONTHS = [
 ];
 @Injectable()
 export class AuditsService {
-
-  constructor(private http: HttpClient, private authService: NbAuthService) {
-  }
+  constructor(private http: HttpClient, private authService: NbAuthService) {}
 
   public getAll() {
-    return this.http.get(AppConfig.API_ENDPOINT + 'audits')
+    return this.http
+      .get(AppConfig.API_ENDPOINT + 'audits')
       .map((audits: Object[]) => {
         return audits.map(this.parseData);
       });
@@ -34,14 +33,16 @@ export class AuditsService {
 
   public getAuditsByCurrentStore() {
     const storeId = localStorage.getItem('current_store');
-    return this.http.get(AppConfig.API_ENDPOINT + 'stores/' + storeId + '/audits')
+    return this.http
+      .get(AppConfig.API_ENDPOINT + 'stores/' + storeId + '/audits')
       .map((audits: Object[]) => {
         return audits['data'].map(this.parseData);
       });
   }
 
   public find(id) {
-    return this.http.get<any>(`${AppConfig.API_ENDPOINT}audits/${id}` )
+    return this.http
+      .get<any>(`${AppConfig.API_ENDPOINT}audits/${id}`)
       .map(audit => {
         const sections = audit.audit_type.sections;
         sections.forEach(section => {
@@ -49,10 +50,14 @@ export class AuditsService {
             r.classification = r.pivot.classification;
             r.comment = r.pivot.comment;
             r.modified = false;
-            r.image = r.pivot.image ? `${AppConfig.IMAGE_PREFIX}/${r.pivot.image}` : null;
+            r.image = r.pivot.image
+              ? `${AppConfig.IMAGE_PREFIX}/${r.pivot.image}`
+              : null;
             r.path = r.pivot.image;
             let value = 0;
-            const classification = r.classification ? r.classification.toLowerCase() : '';
+            const classification = r.classification
+              ? r.classification.toLowerCase()
+              : '';
             if (classification === 'no aplica' || classification === 'cumple') {
               value = 1;
             }
@@ -61,11 +66,13 @@ export class AuditsService {
           section.percentageScore = score / section.revisions.length;
         });
         audit.score = sections.reduce((acc, s) => {
-          const sectionScore = s.percentageScore ? s.percentageScore * s.percentage : 0;
+          const sectionScore = s.percentageScore
+            ? s.percentageScore * s.percentage
+            : 0;
           return sectionScore + acc;
         }, 0);
         return audit;
-      })
+      });
   }
 
   private parseData(data): any {
@@ -73,57 +80,72 @@ export class AuditsService {
   }
 
   public getAuditTypes() {
-    return this.http.get(`${AppConfig.API_ENDPOINT}audit_type`)
+    return this.http
+      .get(`${AppConfig.API_ENDPOINT}audit_type`)
+      .map((r: any) => r.data || []);
   }
 
   public getSectionList() {
-    return this.http.get(`${AppConfig.API_ENDPOINT}sections`)
+    return this.http
+      .get(`${AppConfig.API_ENDPOINT}sections`)
+      .map((r: any) => r.data);
   }
 
   public getRevisionList(): Observable<Object> {
-    return this.http.get(`${AppConfig.API_ENDPOINT}revisions`)
+    return this.http
+      .get(`${AppConfig.API_ENDPOINT}revisions`)
+      .map((r: any) => r.data);
   }
 
   public getAuditData(auditType: string) {
     const auditTypeId = parseInt(auditType, 10);
-    const obs = Observable.forkJoin<any>(this.getSectionList(), this.getRevisionList());
-    return obs
-      .map(([sections, revisions]) => {
-        return sections.filter((s) => s.audit_type_id === auditTypeId)
-          .map((s) => {
-            const sectionRevisions = revisions
-              .filter((r) => {
-                return s.id === r['section_id'];
-              })
-              .map((r) => {
-                return Object.assign({}, r, {
-                  classification: 'No Aplica',
-                  comment: '',
-                  modified: true,
-                });
+    const obs = Observable.forkJoin<any>(
+      this.getSectionList(),
+      this.getRevisionList(),
+    );
+    return obs.map(([sections, revisions]) => {
+      return sections
+        .filter(s => s.audit_type_id === auditTypeId)
+        .map(s => {
+          const sectionRevisions = revisions
+            .filter(r => {
+              return s.id === r['section_id'];
+            })
+            .map(r => {
+              return Object.assign({}, r, {
+                classification: 'No Aplica',
+                comment: '',
+                modified: true,
               });
-            return Object.assign({}, s, {
-              revisions: sectionRevisions,
-              percentageScore: 1,
             });
+          return Object.assign({}, s, {
+            revisions: sectionRevisions,
+            percentageScore: 1,
           });
-      });
+        });
+    });
   }
 
   public getShifts() {
-    return this.http.get(`${AppConfig.API_ENDPOINT}shifts`)
+    return this.http
+      .get(`${AppConfig.API_ENDPOINT}shifts`)
+      .map((r: any) => r.data);
   }
 
   public getStores() {
-    return this.http.get(`${AppConfig.API_ENDPOINT}stores`)
+    return this.http
+      .get(`${AppConfig.API_ENDPOINT}stores`)
+      .map((r: any) => r.data);
   }
 
   public getUsers() {
-    return this.http.get(`${AppConfig.API_ENDPOINT}users`)
+    return this.http
+      .get(`${AppConfig.API_ENDPOINT}users`)
+      .map((r: any) => r.data);
   }
 
   public saveAudit(audit) {
-    return this.http.post(`${AppConfig.API_ENDPOINT}audits`, audit)
+    return this.http.post(`${AppConfig.API_ENDPOINT}audits`, audit);
   }
 
   public updateAudit(id, audit) {
@@ -136,7 +158,7 @@ export class AuditsService {
   }
 
   public getAuditReport(id) {
-    return this.http.get<any>(`${AppConfig.API_ENDPOINT}audit_report/${id}`)
+    return this.http.get<any>(`${AppConfig.API_ENDPOINT}audit_report/${id}`);
   }
 
   public getAuditOverView(typeId, year) {
@@ -145,9 +167,12 @@ export class AuditsService {
       alert('Debe seleccionar tienda en el menu superior');
       return;
     }
-    return this.http.get<any>(
-      `${AppConfig.API_ENDPOINT}getAuditOverview/${storeId}/${typeId}/${year}`,
-    )
+    return this.http
+      .get<any>(
+        `${
+          AppConfig.API_ENDPOINT
+        }getAuditOverview/${storeId}/${typeId}/${year}`,
+      )
       .map(result => {
         if (!result || result.length === 0) {
           return {
@@ -157,7 +182,7 @@ export class AuditsService {
             average: '0',
           };
         }
-        const data = result.map((a) => {
+        const data = result.map(a => {
           const date = new Date(a.date);
           const userTimezoneOffset = date.getTimezoneOffset() * 60000;
           const audit: any = {
@@ -175,14 +200,15 @@ export class AuditsService {
             };
 
             s.revisions++;
-            s.accumScore += rev.pivot.classification.toLowerCase() === 'no cumple' ? 0 : 1;
+            s.accumScore +=
+              rev.pivot.classification.toLowerCase() === 'no cumple' ? 0 : 1;
             s.finalScore = (s.accumScore * 100) / s.revisions;
             acc[rev.section_id] = s;
             return acc;
           }, {});
           audit.sections = sections;
           audit.score = Object.keys(sections).reduce((acc, key) => {
-            return acc + (sections[key].finalScore * sections[key].percentage);
+            return acc + sections[key].finalScore * sections[key].percentage;
           }, 0);
           return audit;
         });
@@ -197,7 +223,8 @@ export class AuditsService {
           if (audits.length === 0) {
             return;
           }
-          const total = audits.reduce((acc, a) => acc + a.score, 0) / audits.length;
+          const total =
+            audits.reduce((acc, a) => acc + a.score, 0) / audits.length;
           graphData.labels.push(month);
           graphData.scores.push(total.toFixed(2));
           graphData.valid.push(true);
@@ -241,7 +268,7 @@ export class AuditsService {
           sum += parseFloat(s);
         });
 
-        graphData.average = ((sum / count) / 100).toFixed(2);
+        graphData.average = (sum / count / 100).toFixed(2);
         return graphData;
       });
   }

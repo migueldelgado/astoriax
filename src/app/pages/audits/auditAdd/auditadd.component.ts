@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {AuditsService} from '../audits.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {INgxMyDpOptions} from 'ngx-mydatepicker';
-import {NbAuthService} from '../../../auth/services';
-import {Observable} from 'rxjs/Observable';
+import { Component, OnInit } from '@angular/core';
+import { AuditsService } from '../audits.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { INgxMyDpOptions } from 'ngx-mydatepicker';
+import { NbAuthService } from '../../../auth/services';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'ngx-audits-add',
@@ -11,11 +11,11 @@ import {Observable} from 'rxjs/Observable';
   styleUrls: ['./auditadd.scss'],
 })
 export class AuditAddComponent implements OnInit {
-  auditTypes$;
-  shiftTypes$;
-  revisionList$;
-  stores$;
-  users$;
+  auditTypes = [];
+  shiftTypes = [];
+  revisionList = [];
+  stores = [];
+  users = [];
   sections;
   auditTypeId: string = null;
   shiftId: number = null;
@@ -33,40 +33,47 @@ export class AuditAddComponent implements OnInit {
     private auditService: AuditsService,
     private authService: NbAuthService,
     private route: ActivatedRoute,
-    private router: Router) {
-  }
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     if (!this.authService.getCurrentStore()) {
       alert('Debe seleccionar tienda en el menu superior');
     }
-    this.auditTypes$ = this.auditService.getAuditTypes();
-    this.revisionList$ = this.auditService.getRevisionList();
-    this.shiftTypes$ = this.auditService.getShifts();
-    this.stores$ = this.auditService.getStores();
-    this.users$ = this.auditService.getUsers();
+    Observable.forkJoin(
+      this.auditService.getAuditTypes(),
+      this.auditService.getRevisionList(),
+      this.auditService.getShifts(),
+      this.auditService.getStores(),
+      this.auditService.getUsers(),
+    ).subscribe((results: any) => {
+      this.auditTypes = results[0];
+      this.revisionList = results[1];
+      this.shiftTypes = results[2];
+      this.stores = results[3];
+      this.users = results[4];
+    });
     this.route.params.subscribe(params => {
       if (!params.id) {
         return;
       }
       this.id = params.id;
-      this.auditService.find(this.id)
-        .subscribe((data) => {
-          const date = new Date(data.date);
-          const userTimezoneOffset = date.getTimezoneOffset() * 60000;
-          this.date = { jsdate: new Date(date.getTime() + userTimezoneOffset) };
-          this.auditTypeId = data.audit_type_id;
-          this.sections = data.audit_type.sections;
-          this.shiftId = data.shift_id;
-          this.storeId = data.store_id;
-          this.managerId = data.manager_id;
-          this.calculateScore();
-        })
+      this.auditService.find(this.id).subscribe(data => {
+        const date = new Date(data.date);
+        const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+        this.date = { jsdate: new Date(date.getTime() + userTimezoneOffset) };
+        this.auditTypeId = data.audit_type_id;
+        this.sections = data.audit_type.sections;
+        this.shiftId = data.shift_id;
+        this.storeId = data.store_id;
+        this.managerId = data.manager_id;
+        this.calculateScore();
+      });
     });
   }
 
   loadAudits() {
-    this.auditService.getAll().subscribe(p => this.result = p);
+    this.auditService.getAll().subscribe(p => (this.result = p));
   }
 
   onAuditTypeChange(evnt: any) {
@@ -74,18 +81,19 @@ export class AuditAddComponent implements OnInit {
       this.score = null;
       return;
     }
-    this.auditService.getAuditData(this.auditTypeId)
-      .subscribe(data => {
-        this.sections = data;
-        this.score = 1;
-      })
+    this.auditService.getAuditData(this.auditTypeId).subscribe(data => {
+      this.sections = data;
+      this.score = 1;
+    });
   }
 
   onScoreChange(revision, section) {
     revision.modified = true;
     const score = section.revisions.reduce((acc, r) => {
       let value = 0;
-      const classification = r.classification ? r.classification.toLowerCase() : '';
+      const classification = r.classification
+        ? r.classification.toLowerCase()
+        : '';
       if (classification === 'no aplica' || classification === 'cumple') {
         value = 1;
       }
@@ -98,9 +106,11 @@ export class AuditAddComponent implements OnInit {
 
   calculateScore() {
     this.score = this.sections.reduce((acc, s) => {
-      const sectionScore = s.percentageScore ? s.percentageScore * s.percentage : 0;
+      const sectionScore = s.percentageScore
+        ? s.percentageScore * s.percentage
+        : 0;
       return sectionScore + acc;
-    }, 0)
+    }, 0);
   }
 
   onInputChange($event, revision) {
@@ -126,14 +136,13 @@ export class AuditAddComponent implements OnInit {
   onSave() {
     if (!this.shiftId) {
       alert('Debe seleccionar turno');
-      return ;
+      return;
     }
 
     if (!this.managerId) {
       alert('Debe seleccionar Jefe de local');
-      return ;
+      return;
     }
-
 
     // {
     //   "audit_type_id": "1",
@@ -160,32 +169,34 @@ export class AuditAddComponent implements OnInit {
       store_id: this.authService.getCurrentStore(),
       shift_id: this.shiftId,
       revisions: null,
-      date: `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`,
+      date: `${year}-${month < 10 ? `0${month}` : month}-${
+        day < 10 ? `0${day}` : day
+      }`,
     };
     if (this.id) {
       data.id = this.id;
     }
 
     let uploadObservables = [Observable.of({})];
-    this.sections.forEach((s) => {
+    this.sections.forEach(s => {
       const filteredRevisions = s.revisions.filter(r => r.modified);
-      const uploads = filteredRevisions.filter((r) => !!r.file)
+      const uploads = filteredRevisions
+        .filter(r => !!r.file)
         .map(r => {
-          return this.auditService.uploadFile(r.file)
-            .map((result: any) => {
-              r.path = result.path;
-              return r;
-            });
+          return this.auditService.uploadFile(r.file).map((result: any) => {
+            r.path = result.path;
+            return r;
+          });
         });
       uploadObservables = [...uploadObservables, ...uploads];
     });
 
-
-    Observable.forkJoin(...uploadObservables)
-      .subscribe((res) => {
-        data.revisions = this.sections.reduce((acc, s) => {
-          // console.log(res, s.revisions);
-          const sectionRevisions = s.revisions.filter(r => r.modified).map((r) => ({
+    Observable.forkJoin(...uploadObservables).subscribe(res => {
+      data.revisions = this.sections.reduce((acc, s) => {
+        // console.log(res, s.revisions);
+        const sectionRevisions = s.revisions
+          .filter(r => r.modified)
+          .map(r => ({
             score: r.score,
             revision_id: r.id,
             classification: r.classification,
@@ -193,18 +204,24 @@ export class AuditAddComponent implements OnInit {
             image: r.path ? r.path : null,
           }));
 
-          // console.log(sectionRevisions);
-          return [...acc, ...sectionRevisions];
-        }, []);
+        // console.log(sectionRevisions);
+        return [...acc, ...sectionRevisions];
+      }, []);
 
-        // console.log(data.revisions);
-        const result = this.id ? this.auditService.updateAudit(this.id, data) : this.auditService.saveAudit(data);
-        result.subscribe(() => {
-          this.router.navigate(['/pages/audits/audit-list'], { relativeTo: this.route })
-        }, (error) => {
-          alert('Error al guardar auditoria')
-        })
-      });
-
+      // console.log(data.revisions);
+      const result = this.id
+        ? this.auditService.updateAudit(this.id, data)
+        : this.auditService.saveAudit(data);
+      result.subscribe(
+        () => {
+          this.router.navigate(['/pages/audits/audit-list'], {
+            relativeTo: this.route,
+          });
+        },
+        error => {
+          alert('Error al guardar auditoria');
+        },
+      );
+    });
   }
 }

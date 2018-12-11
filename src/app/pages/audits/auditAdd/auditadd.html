@@ -6,21 +6,21 @@
         <label for="typeOfAudits">Tipo de auditoria</label>
         <select id="typeOfAudits" class="form-control" [(ngModel)]="auditTypeId" (ngModelChange)="onAuditTypeChange($event)">
           <option [value]="null">Tipo</option>
-          <option *ngFor="let type of auditTypes$ | async" [value]="type.id">{{type.name}}</option>
+          <option *ngFor="let type of auditTypes" [value]="type.id">{{type.name}}</option>
         </select>
       </div>
       <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
         <label for="typeOfShifts">Turno</label>
         <select id="typeOfShifts" class="form-control" [(ngModel)]="shiftId">
           <option [value]="null">Turno</option>
-          <option *ngFor="let type of shiftTypes$ | async" [value]="type.id">{{type.name}}</option>
+          <option *ngFor="let type of shiftTypes" [value]="type.id">{{type.name}}</option>
         </select>
       </div>
       <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
         <label for="manager">Jefe de turno</label>
         <select id="manager" class="form-control" [(ngModel)]="managerId">
           <option [value]="null">Jefe de</option>
-          <option *ngFor="let u of users$ | async" [value]="u.id">{{u.first_name}} {{u.last_name}}</option>
+          <option *ngFor="let u of users" [value]="u.id">{{u.first_name}} {{u.last_name}}</option>
         </select>
       </div>
       <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">

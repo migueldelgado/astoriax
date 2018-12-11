@@ -31,16 +31,6 @@ export class AuditOverviewComponent implements OnInit {
       this.colors = config.variables;
       const chartjs: any = config.variables.chartjs;
 
-      // this.data = {
-      //   labels: ['January', 'February'],
-      //   datasets: [{
-      //     data: [65, 59],
-      //     label: 'Tienda',
-      //     backgroundColor: NbColorHelper.hexToRgbA(colors.primary, 0.3),
-      //     borderColor: colors.primary,
-      //   }],
-      // };
-
       this.options = {
         responsive: true,
         maintainAspectRatio: true,
@@ -85,9 +75,10 @@ export class AuditOverviewComponent implements OnInit {
       return;
     }
     Observable.forkJoin(this.auditsService.getAuditTypes(), this.authService.getCurrentUser())
-      .subscribe(([types, user]) => {
+      .subscribe(([types, user]: Array<any>) => {
+
         this.auditTypes = types;
-        this.auditTypeId = types[0].id;
+        this.auditTypeId = this.auditTypes[0].id;
         const store = user.stores.find(s => s.id === parseInt(this.authService.getCurrentStore(), 10));
         this.store = store ? store.name : 'Tienda';
         this.onChange(null);
