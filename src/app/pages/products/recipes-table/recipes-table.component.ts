@@ -3,6 +3,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from '../../../@core/data/recipe.service';
 import { NbAuthService } from '../../../auth/services';
+import { parseErrroMessage } from '../../../@core/utils/error';
 
 function sortByNumber(direction: number, a: string, b: string) {
   const numberA = parseInt(a, 10);
@@ -91,7 +92,15 @@ export class RecipesTableComponent implements OnInit {
         this.source.remove(event.data);
       },
       error => {
-        const errorMessage = JSON.parse(error._body);
+        let errorMessage = { message: 'Error al eliminar receta' };
+        try {
+          if (error && error.error) {
+            errorMessage = { message: parseErrroMessage(error) };
+          } else {
+            errorMessage = JSON.parse(error._body);
+          }
+        } catch (e) {}
+
         alert(errorMessage.message);
       },
     );

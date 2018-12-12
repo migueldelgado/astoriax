@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DailyInventoryService } from '../../../@core/data/daily-inventory.service';
 import { INgxMyDpOptions } from 'ngx-mydatepicker';
 import { DatePipe } from '@angular/common';
-import { StoreService } from '../../../@core/data/store.service';
 import { Observable } from 'rxjs/Observable';
 import { NbAuthService } from '../../../auth/services';
+import { OutputService } from '../../../@core/data/output.service';
+import { parseErrroMessage } from '../../../@core/utils/error';
 
 @Component({
-  selector: 'ngx-supplies-table',
-  templateUrl: './daily-inventory-table.component.html',
+  selector: 'ngx-output-table',
+  templateUrl: './output-table.component.html',
   styles: [
     `
       nb-card {
@@ -23,7 +23,7 @@ import { NbAuthService } from '../../../auth/services';
     `,
   ],
 })
-export class DailyInventoryTableComponent implements OnInit {
+export class OutputTableComponent implements OnInit {
   settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -53,6 +53,10 @@ export class DailyInventoryTableComponent implements OnInit {
         title: 'Local',
         type: 'string',
       },
+      type: {
+        title: 'Tipo',
+        type: 'string',
+      },
     },
   };
 
@@ -65,8 +69,7 @@ export class DailyInventoryTableComponent implements OnInit {
   firstLoad = false;
 
   constructor(
-    private dailyInventoryService: DailyInventoryService,
-    private storeService: StoreService,
+    private outputService: OutputService,
     private authService: NbAuthService,
     private route: ActivatedRoute,
     private router: Router,
@@ -74,18 +77,18 @@ export class DailyInventoryTableComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (!this.hasPermission('INV')) {
+    if (!this.hasPermission('SAL')) {
       this.router.navigate(['/pages']);
       return;
     }
 
     this.settings.actions = {
       ...this.settings.actions,
-      add: this.hasPermission('AINV'),
-      edit: this.hasPermission('MINV'),
-      delete: this.hasPermission('EINV'),
+      add: this.hasPermission('ASAL'),
+      edit: this.hasPermission('MSAL'),
+      delete: this.hasPermission('ESAL'),
     };
-    this.fetch(new Date(), new Date());
+    this.fetch(this.dateFrom.jsdate, this.dateTo.jsdate);
   }
 
   onChangeFrom(date) {
@@ -105,18 +108,11 @@ export class DailyInventoryTableComponent implements OnInit {
   fetch(dateFrom, dateTo) {
     const from: string = this.datePipe.transform(dateFrom, 'yyyy-MM-dd');
     const to: string = this.datePipe.transform(dateTo, 'yyyy-MM-dd');
-    Observable.forkJoin(
-      this.dailyInventoryService.getAll(from, to),
-      this.storeService.getAll(true),
-    ).subscribe(
+    Observable.forkJoin(this.outputService.getAll(from, to)).subscribe(
       (result: Array<any>) => {
-        const [dInv, stores] = result;
-        const inventories = dInv.data;
-        inventories.forEach(i => {
-          const store = stores.find(s => s.id === i.store_id) || {};
-          i.store = store.name;
-        });
-        this.source.load(inventories);
+        const [dOutputs] = result;
+        const outputs = dOutputs.data;
+        this.source.load(outputs);
         this.firstLoad = true;
       },
       error => {
@@ -126,49 +122,35 @@ export class DailyInventoryTableComponent implements OnInit {
     );
   }
 
-  onDeleteConfirm(event): void {
-    if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
-  }
-
   onDelete(event): void {
-    if (!this.hasPermission('EINV')) {
-      alert('No tiene permisos para eliminar inventario')
+    if (!window.confirm('Seguro que desea borrar salida?')) {
       return;
     }
-    if (!window.confirm('Desea borrar inventario?')) {
-      return ;
-    }
-    this.dailyInventoryService
-      .deleteInventory(event.data.id_daily_inventory)
-      .subscribe(
-        (result: any) => {
-          this.source.remove(event.data);
-        },
-        error => {
-          const errorMessage = JSON.parse(error._body);
-          alert(errorMessage.message);
-        },
-      );
+    this.outputService.delete(event.data.id).subscribe(
+      (result: any) => {
+        this.source.remove(event.data);
+      },
+      error => {
+        let errorMessage = { message: 'Error al eliminar salida' };
+        try {
+          if (error && error.error) {
+            errorMessage = { message: parseErrroMessage(error) };
+          } else {
+            errorMessage = JSON.parse(error._body);
+          }
+        } catch (e) {}
+
+        alert(errorMessage.message);
+      },
+    );
   }
 
   onCreate(el): void {
-    if (!this.hasPermission('AINV')) {
-      alert('No tiene permisos para agregar inventario')
-      return;
-    }
-    this.router.navigate([`../daily/new`], { relativeTo: this.route });
+    this.router.navigate([`../outputs/new`], { relativeTo: this.route });
   }
 
   onEdit(evt): void {
-    if (!this.hasPermission('MINV')) {
-      alert('No tiene permisos para agregar inventario')
-      return;
-    }
-    this.router.navigate([`../daily/edit/${evt.data.id}`], {
+    this.router.navigate([`../outputs/${evt.data.id}`], {
       relativeTo: this.route,
     });
   }

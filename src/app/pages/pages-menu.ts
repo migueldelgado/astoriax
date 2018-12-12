@@ -6,13 +6,7 @@ export abstract class NbMenuItemExtended extends NbMenuItem {
 }
 
 export const MENU_ITEMS: NbMenuItemExtended[] = [
-  {
-    title: 'Home',
-    icon: 'nb-home',
-    link: '/pages/dashboard',
-    home: true,
-  },
-  // {
+  { title: 'Home', icon: 'nb-home', link: '/pages/dashboard', home: true }, // {
   //   title: 'FEATURES',
   //   group: true,
   // },
@@ -23,7 +17,6 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
     children: [
       {
         title: 'Productos',
-
         link: '/pages/store/products',
         permissions: ['INS', 'REC'],
         children: [
@@ -41,7 +34,6 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
       },
       {
         title: 'Inventarios',
-
         link: '/pages/inventories',
         permissions: ['COM', 'INV'],
         children: [
@@ -54,6 +46,11 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
             title: 'Compras',
             link: '/pages/inventories/purchases',
             permissions: ['COM'],
+          },
+          {
+            title: 'Salidas',
+            link: '/pages/inventories/outputs',
+            permissions: ['SAL'],
           },
         ],
       },
@@ -104,14 +101,17 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
     title: 'Contabilidad y finanzas',
     icon: 'nb-bar-chart',
     link: '/pages/finances',
+    permissions: ['TES', 'RPR'],
     children: [
       {
         title: 'Proveedor',
         link: '/pages/finances/providers',
+        permissions: ['RPR'],
       },
       {
         title: 'Tesoreria',
         link: '/pages/finances/treasury',
+        permissions: ['TES'],
       },
     ],
   },
@@ -126,20 +126,9 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
         link: '/pages/hr/providers',
         permissions: ['PRO'],
       },
-      {
-        title: 'Locales',
-        link: '/pages/hr/stores',
-        permissions: ['LOC'],
-      },
-      {
-        title: 'Empleados',
-        link: '/pages/hr/employees',
-        permissions: ['EMP'],
-      },
-      {
-        title: 'Roles',
-        link: '/pages/hr/roles',
-      },
+      { title: 'Locales', link: '/pages/hr/stores', permissions: ['LOC'] },
+      { title: 'Empleados', link: '/pages/hr/employees', permissions: ['EMP'] },
+      { title: 'Roles', link: '/pages/hr/roles' },
     ],
   },
   {
@@ -179,3 +168,4 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
     ],
   },
 ];
+// permissions: ['COM'],
