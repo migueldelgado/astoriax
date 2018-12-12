@@ -162,7 +162,7 @@
 
           <div class="form-group" *ngIf="isInProcess()">
             <div class="row justify-content-between">
-              <h4 class="col-md-6 col-sm-6">Insumos</h4>
+              <h4 class="col-md-6 col-sm-6">Insumos para procesar este producto</h4>
               <div class="col-md-6 col-sm-6 row justify-content-end">
                 <button class="btn btn-primary" type="button" (click)="addSupply($event)">Agregar</button>
               </div>
@@ -172,7 +172,6 @@
                 <thead>
                 <tr>
                   <th>Insumo</th>
-                  <th>Cantidad</th>
                   <th>Borrar</th>
                 </tr>
                 </thead>
@@ -198,9 +197,6 @@
                         </option>
                       </ng-container>
                     </select>
-                  </td>
-                  <td>
-                    <input name="quantity{{i}}" (change)="recalculateCost(i)" required [(ngModel)]="processSupplies[i].quantity" type="number" placeholder="Cantidad" class="form-control"/>
                   </td>
                   <td>
                     <button class="btn btn-secondary" (click)="removeSupply(i)">Borrar</button>

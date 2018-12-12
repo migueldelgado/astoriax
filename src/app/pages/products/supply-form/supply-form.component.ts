@@ -7,7 +7,6 @@ import { SupplyReportTypeService } from '../../../@core/data/supply-report-type.
 import { SupplierService } from '../../../@core/data/supplier.service';
 import { SupplyClassificationService } from '../../../@core/data/supply-classification.service';
 import { UnitService } from '../../../@core/data/unit.service';
-import { StoreService } from '../../../@core/data/store.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { parseErrroMessage } from '../../../@core/utils/error';
@@ -117,28 +116,45 @@ export class SupplyFormComponent implements OnInit {
       this.id = params.id;
       this.supplyService.findSupply(this.id).subscribe(result => {
         this.data = Object.assign(this.data, result.data);
+        if (!result.data.supplies) {
+          return;
+        }
+        this.processSupplies = result.data.supplies.map(s => {
+          return {
+            supply_id: s.id,
+            supply: s,
+          };
+        });
+        this.recalculateSupplyMap();
       });
     });
   }
 
   onSubmit() {
+    const data: any = {
+      ...this.data,
+      supplies: [],
+    };
+    if (this.data.show_in_process === '1') {
+      data.supplies = Object.keys(this.supplyMap).map(id => {
+        return {
+          ingredient_id: id,
+        };
+      });
+    }
     if (this.id) {
-      if (!this.hasPermission('EINS')) {
-        alert('No tienes permisos para editar insumo');
-        return;
-      }
-      this.update();
+      this.update(data);
     } else {
-      if (!this.hasPermission('AINS')) {
-        alert('No tienes permisos para agregar insumo');
-        return;
-      }
-      this.save();
+      this.save(data);
     }
   }
 
-  save() {
-    this.supplyService.createSupply(this.data).subscribe(
+  save(data) {
+    if (!this.hasPermission('AINS')) {
+      alert('No tienes permisos para agregar insumo');
+      return;
+    }
+    this.supplyService.createSupply(data).subscribe(
       result => {
         this.cancel();
       },
@@ -157,8 +173,12 @@ export class SupplyFormComponent implements OnInit {
     );
   }
 
-  update() {
-    this.supplyService.updateSupply(this.id, this.data).subscribe(
+  update(data) {
+    if (!this.hasPermission('EINS')) {
+      alert('No tienes permisos para editar insumo');
+      return;
+    }
+    this.supplyService.updateSupply(this.id, data).subscribe(
       result => {
         this.cancel();
       },
@@ -188,7 +208,6 @@ export class SupplyFormComponent implements OnInit {
   addSupply(e) {
     e.preventDefault();
     this.processSupplies.push({
-      quantity: '1',
       supply_id: '',
       supply: null,
     });
