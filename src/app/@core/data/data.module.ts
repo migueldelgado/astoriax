@@ -19,6 +19,7 @@ import { DailyInventoryService } from './daily-inventory.service';
 import { PurchaseService } from './purchase.service';
 import { UserService } from './user.service';
 import { RoleService } from './role.service';
+import { ProcessService } from './process.service';
 
 const SERVICES = [
   UsersService,
@@ -40,6 +41,7 @@ const SERVICES = [
   UserService,
   RoleService,
   OutputService,
+  ProcessService,
 ];
 
 @NgModule({

@@ -35,7 +35,7 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
       {
         title: 'Inventarios',
         link: '/pages/inventories',
-        permissions: ['COM', 'INV'],
+        permissions: ['COM', 'INV', 'SAL', 'PSS'],
         children: [
           {
             title: 'Inventarios Diarios',
@@ -51,6 +51,11 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
             title: 'Salidas',
             link: '/pages/inventories/outputs',
             permissions: ['SAL'],
+          },
+          {
+            title: 'Procesos',
+            link: '/pages/inventories/processes',
+            permissions: ['PSS'],
           },
         ],
       },

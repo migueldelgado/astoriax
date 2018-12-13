@@ -8,6 +8,7 @@ import { PurchaseTableComponent } from './purchases/purchase-table.component';
 import { PurchaseFormComponent } from './purchases/purchase-form.component';
 import { OutputTableComponent } from './output/output-table.component';
 import { OutputFormComponent } from './output/output-form.component';
+import { ProcessTableComponent } from './process/process-table.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,14 @@ const routes: Routes = [
         path: 'outputs/:id',
         component: OutputFormComponent,
       },
+      {
+        path: 'processes',
+        component: ProcessTableComponent,
+      },
+      {
+        path: 'processes/:id',
+        component: ProcessTableComponent,
+      },
     ],
   },
 ];
@@ -63,4 +72,5 @@ export const routedComponents = [
   PurchaseFormComponent,
   OutputTableComponent,
   OutputFormComponent,
+  ProcessTableComponent,
 ];

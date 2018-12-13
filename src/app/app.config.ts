@@ -309,7 +309,88 @@ const permissions = [
     description: 'Eliminar Roles',
     level: 'action',
   },
+  {
+    code: 'PSS',
+    description: 'Procesos',
+    level: 'page',
+  },
+  {
+    code: 'APSS',
+    description: 'Agregar Procesos',
+    level: 'action',
+  },
+  {
+    code: 'MPSS',
+    description: 'Modificar Procesos',
+    level: 'action',
+  },
+  {
+    code: 'EPSS',
+    description: 'Eliminar Procesos',
+    level: 'action',
+  },
+  {
+    code: 'SAL',
+    description: 'Salidas',
+    level: 'page',
+  },
+  {
+    code: 'ASAL',
+    description: 'Agregar Salidas',
+    level: 'action',
+  },
+  {
+    code: 'MSAL',
+    description: 'Modificar Salidas',
+    level: 'action',
+  },
+  {
+    code: 'ESAL',
+    description: 'Eliminar Salidas',
+    level: 'action',
+  },
+  {
+    code: 'TES',
+    description: 'Tesorerias',
+    level: 'page',
+  },
+  {
+    code: 'ATES',
+    description: 'Agregar Tesorerias',
+    level: 'action',
+  },
+  {
+    code: 'MTES',
+    description: 'Modificar Tesorerias',
+    level: 'action',
+  },
+  {
+    code: 'ETES',
+    description: 'Eliminar Tesorerias',
+    level: 'action',
+  },
+  {
+    code: 'RPR',
+    description: 'Reporte Proveedores',
+    level: 'page',
+  },
+  {
+    code: 'ARPR',
+    description: 'Agregar Reporte Proveedores',
+    level: 'action',
+  },
+  {
+    code: 'MRPR',
+    description: 'Modificar Reporte Proveedores',
+    level: 'action',
+  },
+  {
+    code: 'ERPR',
+    description: 'Eliminar Reporte Proveedores',
+    level: 'action',
+  },
 ];
+
 
 export class AppConfig {
   public static API_ENDPOINT = 'http://api.astoria.cl/api/';
