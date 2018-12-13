@@ -9,6 +9,7 @@ import { PurchaseFormComponent } from './purchases/purchase-form.component';
 import { OutputTableComponent } from './output/output-table.component';
 import { OutputFormComponent } from './output/output-form.component';
 import { ProcessTableComponent } from './process/process-table.component';
+import { ProcessFormComponent } from './process/process-form.component';
 
 const routes: Routes = [
   {
@@ -53,7 +54,7 @@ const routes: Routes = [
       },
       {
         path: 'processes/:id',
-        component: ProcessTableComponent,
+        component: ProcessFormComponent,
       },
     ],
   },
@@ -73,4 +74,5 @@ export const routedComponents = [
   OutputTableComponent,
   OutputFormComponent,
   ProcessTableComponent,
+  ProcessFormComponent,
 ];
