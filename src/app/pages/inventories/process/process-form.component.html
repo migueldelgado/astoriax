@@ -1,6 +1,6 @@
 <form (submit)="onSubmit()">
   <nb-card>
-    <nb-card-header> Inventario Diario </nb-card-header>
+    <nb-card-header> {{id ? 'Editar' : 'Nuevo'}} proceso</nb-card-header>
     <nb-card-body>
       <div class="row align-items-baseline">
         <div class="form-group col-sm-6 row align-items-center">
