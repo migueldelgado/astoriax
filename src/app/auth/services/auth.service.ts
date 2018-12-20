@@ -339,6 +339,7 @@ export class NbAuthService {
   }
 
   hasPermission(key: string): boolean {
-    return !!this.getUser().permissions[key];
+    const user = this.getUser() || { permissions: {}};
+    return !!user.permissions[key];
   }
 }
