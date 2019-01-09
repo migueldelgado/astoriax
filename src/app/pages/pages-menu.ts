@@ -124,7 +124,7 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
     title: 'Administracion RRHH',
     icon: 'nb-person',
     link: '/pages/hr',
-    permissions: ['PRO', 'LOC', 'EMP'],
+    permissions: ['PRO', 'LOC', 'EMP', 'ROL'],
     children: [
       {
         title: 'Proveedores',
@@ -133,7 +133,7 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
       },
       { title: 'Locales', link: '/pages/hr/stores', permissions: ['LOC'] },
       { title: 'Empleados', link: '/pages/hr/employees', permissions: ['EMP'] },
-      { title: 'Roles', link: '/pages/hr/roles' },
+      { title: 'Roles', link: '/pages/hr/roles', permissions: ['ROL'] },
     ],
   },
   {
