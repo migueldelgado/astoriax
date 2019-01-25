@@ -96,7 +96,7 @@ export class ProcessFormComponent implements OnInit {
       this.storeService.getAll(true),
     ).subscribe((result: Array<any>) => {
       this.suppliesProcessable = result[0].data.filter(
-        p => p.show_in_process === '1',
+        p => p.show_in_process === '1' || p.show_in_process === 1,
       );
       this.stores = this.stores = result[1];
       this.route.params.subscribe(params => {
