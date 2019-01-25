@@ -116,6 +116,17 @@ export class SupplyFormComponent implements OnInit {
       this.id = params.id;
       this.supplyService.findSupply(this.id).subscribe(result => {
         this.data = Object.assign(this.data, result.data);
+        try {
+          this.data.show_in_daily_inventory = result.data.show_in_daily_inventory.toString();
+        } catch (e) {
+          this.data.show_in_daily_inventory = '0';
+        }
+
+        try {
+          this.data.show_in_process = result.data.show_in_process.toString();
+        } catch (e) {
+          this.data.show_in_process = '0';
+        }
         if (!result.data.supplies) {
           return;
         }
