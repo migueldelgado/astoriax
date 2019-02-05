@@ -43,7 +43,8 @@ export class AuditsService {
   public find(id) {
     return this.http
       .get<any>(`${AppConfig.API_ENDPOINT}audits/${id}`)
-      .map(audit => {
+      .map(response => {
+        const audit = response.data;
         const sections = audit.audit_type.sections;
         sections.forEach(section => {
           const score = section.revisions.reduce((acc, r) => {
