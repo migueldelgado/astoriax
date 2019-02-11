@@ -144,8 +144,8 @@ export class ProcessFormComponent implements OnInit {
     );
     const date = `${dt.getFullYear()}-${dt.getMonth() + 1}-${dt.getDate()}`;
     const data = {
-      store_id: this.storeId,
       ...this.data,
+      store_id: this.storeId,
       date,
     };
 
