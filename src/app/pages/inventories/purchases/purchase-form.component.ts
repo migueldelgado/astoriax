@@ -90,8 +90,8 @@ export class PurchaseFormComponent implements OnInit {
         this.data.supplier_id = data.supplier_id;
         const supplies = data.supplies || [];
         this.data.supplies = supplies.map(s => ({
-          quantity: s.quantity,
-          supply_id: s.supply_id,
+          quantity: s.pivot.quantity,
+          supply_id: s.pivot.supply_id,
         }));
       });
     });

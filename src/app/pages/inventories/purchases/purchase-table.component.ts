@@ -125,7 +125,7 @@ export class PurchaseTableComponent implements OnInit {
   }
 
   onDelete(event): void {
-    this.purchaseService.delete(event.data.id_loan).subscribe(
+    this.purchaseService.delete(event.data.id).subscribe(
       (result: any) => {
         this.source.remove(event.data);
       },
