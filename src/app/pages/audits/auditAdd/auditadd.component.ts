@@ -184,7 +184,7 @@ export class AuditAddComponent implements OnInit {
         .filter(r => !!r.file)
         .map(r => {
           return this.auditService.uploadFile(r.file).map((result: any) => {
-            r.path = result.path;
+            r.path = result.data.path;
             return r;
           });
         });
@@ -193,7 +193,6 @@ export class AuditAddComponent implements OnInit {
 
     Observable.forkJoin(...uploadObservables).subscribe(res => {
       data.revisions = this.sections.reduce((acc, s) => {
-        // console.log(res, s.revisions);
         const sectionRevisions = s.revisions
           .filter(r => r.modified)
           .map(r => ({
@@ -204,11 +203,9 @@ export class AuditAddComponent implements OnInit {
             image: r.path ? r.path : null,
           }));
 
-        // console.log(sectionRevisions);
         return [...acc, ...sectionRevisions];
       }, []);
 
-      // console.log(data.revisions);
       const result = this.id
         ? this.auditService.updateAudit(this.id, data)
         : this.auditService.saveAudit(data);

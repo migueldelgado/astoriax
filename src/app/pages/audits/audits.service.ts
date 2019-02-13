@@ -41,6 +41,7 @@ export class AuditsService {
   }
 
   public find(id) {
+    const imagePrefix = AppConfig.API_ENDPOINT.replace('api/', 'storage/')
     return this.http
       .get<any>(`${AppConfig.API_ENDPOINT}audits/${id}`)
       .map(response => {
@@ -52,7 +53,7 @@ export class AuditsService {
             r.comment = r.pivot.comment;
             r.modified = false;
             r.image = r.pivot.image
-              ? `${AppConfig.IMAGE_PREFIX}/${r.pivot.image}`
+              ? `${imagePrefix}${r.pivot.image}`
               : null;
             r.path = r.pivot.image;
             let value = 0;
