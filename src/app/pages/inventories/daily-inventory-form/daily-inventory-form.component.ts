@@ -63,17 +63,11 @@ export class DailyInventoryFormComponent implements OnInit {
 
   loadDailyInventory(id) {
     this.id = id;
-    this.dailyInventoryService.findInventory(id).subscribe((result: any) => {
-      // const { data } = result;
-      // const [day, month, year] = data.date.split('/');
-      this.supplies = result;
-      // this.date.jsdate = new Date(this.supplies.date);
-      // this.supplies = data.supplies.map(s => ({
-      //   id_supply: s.supply.id_supply,
-      //   name: s.supply.name,
-      //   initial_quantity: s.initial_quantity,
-      //   final_quantity: s.final_quantity,
-      // }));
+    this.dailyInventoryService.findInventory(id).subscribe((data: any) => {
+      this.supplies = data.supplies;
+      const date = new Date(data.date);
+      const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+      this.date = { jsdate: new Date(date.getTime() + userTimezoneOffset) };
     });
   }
 
@@ -85,9 +79,23 @@ export class DailyInventoryFormComponent implements OnInit {
     if (!this.storeId) {
       return;
     }
-    this.supplyService.getByStoreId(this.storeId).subscribe((result: any) => {
-      this.supplies = result.data;
+    this.fetchSupplies().subscribe(result => {
+      this.supplies = result;
     });
+  }
+
+  fetchSupplies() {
+    return this.supplyService
+      .getByStoreId(this.storeId, true)
+      .map((result: any) => {
+        return result.data.map(r => {
+          return {
+            initial_quantity: '0',
+            final_quantity: '0',
+            ...r,
+          };
+        });
+      });
   }
 
   onSubmit() {
