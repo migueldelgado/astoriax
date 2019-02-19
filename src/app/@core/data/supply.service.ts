@@ -23,8 +23,8 @@ export class SupplyService {
     return this.http.get(`${AppConfig.API_ENDPOINT}supplies`);
   }
 
-  public getByStoreId(id) {
-    return this.http.get(`${AppConfig.STORES + id}/supplies`);
+  public getByStoreId(id, inventory = false) {
+    return this.http.get(`${AppConfig.STORES + id}/supplies${inventory ? '?inventory=true' : ''}`);
   }
 
   public deleteSupply(id) {

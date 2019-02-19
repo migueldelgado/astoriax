@@ -85,7 +85,7 @@ export class DailyInventoryTableComponent implements OnInit {
       edit: this.hasPermission('MINV'),
       delete: this.hasPermission('EINV'),
     };
-    this.fetch(new Date(), new Date());
+    this.fetch(this.dateFrom.jsdate, this.dateTo.jsdate);
   }
 
   onChangeFrom(date) {
