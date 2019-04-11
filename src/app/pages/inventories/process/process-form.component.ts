@@ -68,6 +68,7 @@ export class ProcessFormComponent implements OnInit {
     store_id: '',
     supply_id: '',
     date: '',
+    wastage: '',
     final_quantity: '0',
     supplies: [],
   };
