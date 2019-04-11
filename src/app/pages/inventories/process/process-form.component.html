@@ -3,7 +3,7 @@
     <nb-card-header> {{id ? 'Editar' : 'Nuevo'}} proceso</nb-card-header>
     <nb-card-body>
       <div class="row align-items-baseline">
-        <div class="form-group col-sm-6 row align-items-center">
+        <div class="form-group col-sm-4 row align-items-center">
           <label class="col-sm-2">Insumo</label>
           <div class="col-sm-9">
             <select
@@ -22,7 +22,7 @@
             </select>
           </div>
         </div>
-        <div class="form-group col-sm-6 row align-items-center">
+        <div class="form-group col-sm-4 row align-items-center">
           <label class="col-sm-2">Cantidad</label>
           <div class="col-sm-9">
             <input
@@ -31,6 +31,19 @@
               [(ngModel)]="data.final_quantity"
               type="number"
               placeholder="Cantidad"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <div class="form-group col-sm-4 row align-items-center">
+          <label class="col-sm-2">Merma</label>
+          <div class="col-sm-9">
+            <input
+              name="wastage"
+              required
+              [(ngModel)]="data.wastage"
+              type="number"
+              placeholder="Merma"
               class="form-control"
             />
           </div>
