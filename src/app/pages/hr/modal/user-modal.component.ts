@@ -35,6 +35,7 @@ export class UserModalComponent {
     city: '',
     phone: '',
     email: '',
+    audit_created_email: '',
     roles: [],
     stores: [],
     id: null,
@@ -92,6 +93,8 @@ export class UserModalComponent {
       item_id: r.id,
       item_text: r.name,
     }));
+
+    this.data.audit_created_email = user.audit_created_email ? user.audit_created_email.toString() : '0';
 
     this.stores = stores.map(r => ({
       item_id: r.id,
