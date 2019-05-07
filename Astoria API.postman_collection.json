@@ -135,7 +135,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"audit_type_id\":2,\n\t\"auditor_id\":\"1\",\n\t\"manager_id\":2,\n\t\"store_id\":1,\n\t\"shift_id\":1,\n\t\"date\":\"1970-01-01\",\n\t\"revisions\": [\n\t\t{\n\t\t\t\"revision_id\":1,\n\t\t\t\"classification\":\"No cumple\",\n\t\t\t\"comment\":\"test comment1\",\n\t\t\t\"image\":\"imagen/test1\"\n\t\t},\n\t\t{\n\t\t\t\"revision_id\":2,\n\t\t\t\"classification\":\"No cumple\",\n\t\t\t\"comment\":\"comentario test2\",\n\t\t\t\"image\":\"test/image2\"\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"audit_type_id\":\"1\",\n\t\"auditor_id\":\"1\",\n\t\"manager_id\":\"2\",\n\t\"store_id\":1,\n\t\"shift_id\":\"1\",\n\t\"date\":\"2018-12-22\",\n\t\"revisions\":[\n\t\t{\"revision_id\":1,\"classification\":\"Cumple\",\"comment\":\"\",\"image\":\"\"},\n\t\t{\"revision_id\":2,\"classification\":\"No cumple\",\"comment\":\"\",\"image\":\"\"}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{url}}/audits",
@@ -144,6 +144,12 @@
 							],
 							"path": [
 								"audits"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": ""
+								}
 							]
 						}
 					},
@@ -216,14 +222,25 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/stores/8/supplies",
+							"raw": "{{url}}/stores/1/supplies?inventory=true",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"stores",
-								"8",
+								"1",
 								"supplies"
+							],
+							"query": [
+								{
+									"key": "process",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "inventory",
+									"value": "true"
+								}
 							]
 						}
 					},
@@ -284,16 +301,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"supplier_id\": 1,\n    \"name\": \"Allie Senger\",\n    \"classification\": \"esta es una nueva clasfication\",\n    \"type\": \"this is a type\",\n    \"unit\": \"KG\",\n    \"report_type\": \"OV\",\n    \"stock_min\": 20,\n    \"show_in_daily_inventory\": 1,\n    \"show_in_process\": 1,\n    \"wastage_rate\": \"0.1\",\n    \"price\": \"500\",\n    \"date\": \"2018-06-13\",\n    \"stores\": [\n    \t{\n    \t\t\"store_id\": 1,\n    \t\t\"stock\": 10\n    \t},\n    \t{\n    \t\t\"store_id\": 2,\n    \t\t\"stock\": 20\n    \t}\n    ]\n}"
+							"raw": "{\n    \"supplier_id\": 1,\n    \"name\": \"Allie Senger\",\n    \"classification\": \"esta es una nueva clasfication\",\n    \"type\": \"this is a type\",\n    \"unit\": \"KG\",\n    \"report_type\": \"OV\",\n    \"stock_min\": 20,\n    \"show_in_daily_inventory\": 0,\n    \"show_in_process\": 1,\n    \"wastage_rate\": \"0.1\",\n    \"price\": \"500\",\n    \"date\": \"2018-06-13\",\n    \"stores\": [\n    \t{\n    \t\t\"store_id\": 1,\n    \t\t\"stock\": 10\n    \t},\n    \t{\n    \t\t\"store_id\": 2,\n    \t\t\"stock\": 20\n    \t}\n    ]\n}"
 						},
 						"url": {
-							"raw": "{{url}}/supplies/11",
+							"raw": "{{url}}/supplies/1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"supplies",
-								"11"
+								"1"
 							]
 						}
 					},
@@ -679,13 +696,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/purchases/2",
+							"raw": "{{url}}/purchases/1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"purchases",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -821,13 +838,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/stores/1",
+							"raw": "{{url}}/stores/17",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"stores",
-								"1"
+								"17"
 							]
 						}
 					},
@@ -845,7 +862,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Local Plaza del Trebol\",\n\t\"address\": \"Chimbarongo\",\n\t\"phone\": \"12345678\",\n\t\"city\": \"Concepcion\",\n\t\"supplies\": [\n\t\t{\n\t\t\t\"supply_id\": 1,\n\t\t\t\"stock\": 10\n\t\t},\n\t\t{\n\t\t\t\"supply_id\": 2,\n\t\t\t\"stock\": 15\n\t\t}\n\t],\n\t\"recipes\": [\n\t\t{\n\t\t\t\"recipe_id\": 1\n\t\t},\n\t\t{\n\t\t\t\"recipe_id\": 2\n\t\t}\n\t],\n\t\"suppliers\": [\n\t\t{\n\t\t\t\"supplier_id\": 1\n\t\t},\n\t\t{\n\t\t\t\"supplier_id\": 2\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"name\": \"Local de concepcion\",\n\t\"address\": \"Chimbarongo\",\n\t\"phone\": \"12345678\",\n\t\"city\": \"Concepcion\",\n\t\"supplies\": [\n\t\t{\n\t\t\t\"supply_id\": 1,\n\t\t\t\"stock\": 10\n\t\t},\n\t\t{\n\t\t\t\"supply_id\": 2,\n\t\t\t\"stock\": 15\n\t\t}\n\t],\n\t\"recipes\": [\n\t\t{\n\t\t\t\"recipe_id\": 1\n\t\t},\n\t\t{\n\t\t\t\"recipe_id\": 2\n\t\t}\n\t],\n\t\"suppliers\": [\n\t\t{\n\t\t\t\"supplier_id\": 1\n\t\t},\n\t\t{\n\t\t\t\"supplier_id\": 2\n\t\t}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{url}}/stores",
@@ -1468,7 +1485,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"first_name\": \"Valentina\",\n\t\"last_name\": \"Alquiris\",\n\t\"rut\": \"1517659978\",\n\t\"email\": \"peter3@gmail.com\",\n\t\"password\": \"peterveneno\",\n\t\"phone\": \"64646464\",\n\t\"address\": \"this is a new address\",\n\t\"city\": \"concepcion\",\n\t\"stores\":[\n\t\t{\n\t\t\t\"store_id\": 1\n\t\t},\n\t\t{\n\t\t\t\"store_id\": 2\n\t\t}\n\t],\n\t\"roles\":[\n\t\t{\n\t\t\t\"role_id\": 1\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"first_name\": \"angela\",\n\t\"last_name\": \"paparazi\",\n\t\"rut\": \"151755000\",\n\t\"email\": \"apapa@astoria.cl\",\n\t\"audit_created_email\": 0,\n\t\"password\": \"1\",\n\t\"phone\": \"64646464\",\n\t\"address\": \"holanda\",\n\t\"city\": \"concepcion\",\n\t\"stores\":[\n\t\t{\n\t\t\t\"store_id\": 1\n\t\t},\n\t\t{\n\t\t\t\"store_id\": 2\n\t\t}\n\t],\n\t\"roles\":[\n\t\t{\n\t\t\t\"role_id\": 1\n\t\t}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{url}}/users",
@@ -1544,7 +1561,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"miguelangeldelgado@gmail.com\",\n\t\"password\": \"1\"\n}"
+							"raw": "{\n\t\"email\": \"miguelangeldelgado@gmail.com\",\n\t\"password\": \"123qwe\"\n}"
 						},
 						"url": {
 							"raw": "{{url}}/login",
@@ -1738,14 +1755,24 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/stores/3/outputs",
+							"raw": "{{url}}/stores/1/outputs?from=1900-01-01&to=2018-12-31",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"stores",
-								"3",
+								"1",
 								"outputs"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "1900-01-01"
+								},
+								{
+									"key": "to",
+									"value": "2018-12-31"
+								}
 							]
 						}
 					},
@@ -1761,13 +1788,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/outputs/1",
+							"raw": "{{url}}/outputs/12",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"outputs",
-								"1"
+								"12"
 							]
 						}
 					},
@@ -1785,7 +1812,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"store_id\": 2,\n\t\"date\": \"1990-09-09\",\n\t\"type\": \"Salida por la puerta\",\n\t\"supplies\": [\n\t\t{\n\t\t\t\"supply_id\": 1,\n\t\t\t\"quantity\": 10,\n\t\t\t\"reason\": \"Se devolvio porque el producto estaba malo\"\n\t\t},\n\t\t{\n\t\t\t\"supply_id\": 2,\n\t\t\t\"quantity\": 3,\n\t\t\t\"reason\": \"Insumo vencidos\"\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"store_id\": 1,\n\t\"date\": \"1990-09-09\",\n\t\"type\": \"Salida por la puerta\",\n\t\"supplies\": [\n\t\t{\n\t\t\t\"supply_id\": 1,\n\t\t\t\"quantity\": 10,\n\t\t\t\"reason\": \"Se devolvio porque el producto estaba malo\"\n\t\t},\n\t\t{\n\t\t\t\"supply_id\": 2,\n\t\t\t\"quantity\": 3,\n\t\t\t\"reason\": \"Insumo vencidos\"\n\t\t}\n\t],\n\t\"recipes\": [\n\t\t{\n\t\t\t\"recipe_id\": 1,\n\t\t\t\"quantity\": 10,\n\t\t\t\"reason\": \"Se devolvio porque el producto estaba malo\"\n\t\t},\n\t\t{\n\t\t\t\"recipe_id\": 2,\n\t\t\t\"quantity\": 3,\n\t\t\t\"reason\": \"Insumo vencidos\"\n\t\t}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{url}}/outputs",
@@ -1881,13 +1908,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/stores/2/processes",
+							"raw": "{{url}}/stores/3/processes",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"stores",
-								"2",
+								"3",
 								"processes"
 							]
 						}
@@ -1928,7 +1955,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"store_id\": 5,\n\t\"supply_id\": 2,\n\t\"final_quantity\": 7,\n\t\"date\": \"1990-09-09\",\n\t\"supplies\":[\n\t\t{\n\t\t\t\"supply_id\": 3,\n\t\t\t\"quantity\": 7\n\t\t}\t\n\t]\n}"
+							"raw": "{\n\t\"store_id\": 5,\n\t\"supply_id\": 2,\n\t\"final_quantity\": 7,\n\t\"date\": \"1990-09-09\",\n\t\"wastage\": 1.2,\n\t\"supplies\":[\n\t\t{\n\t\t\t\"supply_id\": 3,\n\t\t\t\"quantity\": 7\n\t\t}\t\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{url}}/processes",
@@ -2068,13 +2095,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/inventories/2",
+							"raw": "{{url}}/inventories/11",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"inventories",
-								"2"
+								"11"
 							]
 						},
 						"description": "Get Inventory by ID"
@@ -2312,6 +2339,206 @@
 							"path": [
 								"permissions",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Get Cross Report",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/cross-report?from=2019-02-10&to=2019-02-10&store_id=1&report_type=IV",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cross-report"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2019-02-10"
+								},
+								{
+									"key": "to",
+									"value": "2019-02-10"
+								},
+								{
+									"key": "store_id",
+									"value": "1"
+								},
+								{
+									"key": "report_type",
+									"value": "IV"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Daily Sales",
+			"item": [
+				{
+					"name": "Get Daily Sales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/dailySales",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dailySales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Daily Sale",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"store_id\": 1,\n\t\"date\": \"2019-04-24\",\n\t\"sales_cashier1\": \"123\",\n\t\"sales_cashier2\": \"123\",\n\t\"invoice1\": \"123\",\n\t\"invoice2\": \"123\",\n\t\"cash1\": \"123\",\n\t\"cash2\": \"123\",\n\t\"null_invoice1\": \"123\",\n\t\"null_invoice2\": \"123\",\n\t\"total_transbank_cred1\": \"123\",\n\t\"total_transbank_cred2\": \"123\",\n\t\"total_transbank_deb1\": \"123\",\n\t\"total_transbank_deb2\": \"123\",\n\t\"invoice_to_pay1\": \"123\",\n\t\"invoice_to_pay2\": \"123\",\n\t\"junaeb_edenred1\": \"123\",\n\t\"junaeb_edenred2\": \"123\",\n\t\"junaeb_sodexo1\": \"123\",\n\t\"junaeb_sodexo2\": \"123\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/dailySales",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dailySales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Daily Sale By ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"store_id\": 1,\n\t\"date\": \"2019-04-24\",\n\t\"sales_cashier1\": \"567567657657567657\",\n\t\"sales_cashier2\": \"123\",\n\t\"invoice1\": \"123\",\n\t\"invoice2\": \"123\",\n\t\"cash1\": \"123\",\n\t\"cash2\": \"123\",\n\t\"null_invoice1\": \"123\",\n\t\"null_invoice2\": \"123\",\n\t\"total_transbank_cred1\": \"123\",\n\t\"total_transbank_cred2\": \"123\",\n\t\"total_transbank_deb1\": \"123\",\n\t\"total_transbank_deb2\": \"123\",\n\t\"invoice_to_pay1\": \"123\",\n\t\"invoice_to_pay2\": \"123\",\n\t\"junaeb_edenred1\": \"123\",\n\t\"junaeb_edenred2\": \"123\",\n\t\"junaeb_sodexo1\": \"123\",\n\t\"junaeb_sodexo2\": \"123\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/dailySales/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dailySales",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Daily Sale by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/dailySales/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dailySales",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Sale By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/dailySales/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dailySales",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Daily Sales By Store ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stores/1/dailySales?date=2019-04",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stores",
+								"1",
+								"dailySales"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2019-04"
+								}
 							]
 						}
 					},

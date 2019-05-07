@@ -63,6 +63,23 @@
       </div>
     </div>
     <div class="form-group row align-items-center">
+      <label class="col-md-2 col-sm-3">Enviar correo cuando se crea auditoria?</label>
+      <div class="input-group col-md-10 col-sm-9">
+        <label class="custom-control custom-radio">
+          <input [(ngModel)]="data.audit_created_email" value="0" type="radio" class="custom-control-input"
+                 name="auditEmail">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">No</span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input [(ngModel)]="data.audit_created_email" value="1" type="radio" class="custom-control-input"
+                 name="auditEmail">
+          <span class="custom-control-indicator"></span>
+          <span   class="custom-control-description">Si</span>
+        </label>
+      </div>
+    </div>
+    <div class="form-group row align-items-center">
       <label class="col-md-2 col-sm-3">Perfiles</label>
       <div class="input-group ">
         <ng-multiselect-dropdown
