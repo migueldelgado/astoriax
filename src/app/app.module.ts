@@ -6,7 +6,7 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { CoreModule } from './@core/core.module';
 import { LoadingModule } from 'ngx-loading';
@@ -36,6 +36,7 @@ import {NgMultiSelectDropDownModule} from '../libs/ng-multiselect-dropdown';
   bootstrap: [AppComponent],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
+    { provide: LOCALE_ID, useValue: 'es-cl'},
     {
       provide: HTTP_INTERCEPTORS,
       useClass: NbAuthSimpleInterceptor,

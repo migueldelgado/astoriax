@@ -1,41 +1,40 @@
 <nb-card>
-  <nb-card-header>
-    Ingreso de Cheques
-  </nb-card-header>
+  <nb-card-header> Ingreso de Cheques </nb-card-header>
   <nb-card-body>
     <div class="row">
       <div class="col-md-4 col-sm-12">
         <div class="form-group">
           <label class="">Mes</label>
-          <select class="form-control" id="inputGroupSelect02">
-            <option value="Enero">Enero</option>
-            <option value="Febrero">Febrero</option>
-            <option value="Marzo">Marzo</option>
-            <option value="Abril">Abril</option>
-            <option value="Mayo" selected>Mayo</option>
-            <option value="Junio" >Junio</option>
-            <option value="Julio" selected>Julio</option>
-            <option value="Agosto">Agosto</option>
-            <option value="Septiembre">Septiembre</option>
-            <option value="Octubre">Octubre</option>
-            <option value="Noviembre">Noviembre</option>
-            <option value="Diciembre">Diciembre</option>
+          <select
+            class="form-control"
+            id="inputGroupSelect02"
+            (change)="loadDataForMonth()"
+            [(ngModel)]="month"
+          >
+            <option value="01">Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05" selected>Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07" selected>Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
           </select>
         </div>
       </div>
       <div class="col-md-4 col-sm-12">
         <div class="form-group">
           <label class="">Año</label>
-          <select class="form-control" id="inputGroupSelect03">
-            <option value="2018" selected>2018</option>
-            <option value="2017">2017</option>
-            <option value="2016">2016</option>
-            <option value="2015">2015</option>
-            <option value="2014">2014</option>
-            <option value="2013">2013</option>
-            <option value="2012">2012</option>
-            <option value="2011">2011</option>
-            <option value="2010">2010</option>
+          <select
+            class="form-control"
+            id="inputGroupSelect03"
+            [(ngModel)]="year"
+          >
+            <option *ngFor="let y of years" value="{{y}}">{{ y }}</option>
           </select>
         </div>
       </div>
@@ -48,255 +47,351 @@
     <div class="row">
       <div class="col-sm-12 col-md-8 col-lg-9">
         <table>
-          <thead>
-          <tr>
-            <th>
-
-            </th>
-            <th>
-              Turno 1 (Mañana)
-            </th>
-            <th>
-              Turno 2 (Tarde)
-            </th>
-            <th>
-              Total
-            </th>
-          </tr>
+          <thead (click)="onClickOutside()">
+            <tr>
+              <th></th>
+              <th>Turno 1 (Mañana)</th>
+              <th>Turno 2 (Tarde)</th>
+              <th>Total</th>
+            </tr>
           </thead>
-          <tbody>
-          <tr>
-            <td>Informe I.Fiscal</td>
-            <td>$0</td>
-            <td>$0</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>Efectivo</td>
-            <td>$0</td>
-            <td>$0</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>Total Transbank Crédito</td>
-            <td>$0</td>
-            <td>$0</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>Total Transbank Débito</td>
-            <td>$0</td>
-            <td>$0</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>Sodexho</td>
-            <td>$0</td>
-            <td>$0</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>Edenred</td>
-            <td>$0</td>
-            <td>$0</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>Junaeb edenred</td>
-            <td>$0</td>
-            <td>$0</td>
-            <td>$0</td>
-          </tr>
-
+          <tbody (click)="onClickOutside()">
+            <tr>
+              <td>Efectivo</td>
+              <td
+                (click)="onClickNumber($event, 'cash1')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.cash1">{{ current.cash1 | currency:'CLP':true:'1.0-0'}}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.cash1"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.cash1"
+                />
+              </td>
+              <td
+                (click)="onClickNumber($event, 'cash2')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.cash2">{{ current.cash2 | currency:'CLP':true:'1.0-0'}}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.cash2"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.cash2"
+                />
+              </td>
+              <td>
+                <span>{{ totals.cash_total }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Total Transbank Crédito</td>
+              <td
+                (click)="onClickNumber($event, 'total_transbank_cred1')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.total_transbank_cred1">{{
+                  current.total_transbank_cred1 | currency:'CLP':true:'1.0-0'
+                }}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.total_transbank_cred1"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.total_transbank_cred1"
+                />
+              </td>
+              <td
+                (click)="onClickNumber($event, 'total_transbank_cred2')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.total_transbank_cred2">{{
+                  current.total_transbank_cred2 | currency:'CLP':true:'1.0-0'
+                }}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.total_transbank_cred2"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.total_transbank_cred2"
+                />
+              </td>
+              <td>
+                <span>{{ totals.total_transbank_cred_total | currency:'CLP':true:'1.0-0' }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Total Transbank Débito</td>
+              <td
+                (click)="onClickNumber($event, 'total_transbank_deb1')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.total_transbank_deb1">{{
+                  current.total_transbank_deb1 | currency:'CLP':true:'1.0-0'
+                }}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.total_transbank_deb1"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.total_transbank_deb1"
+                />
+              </td>
+              <td
+                (click)="onClickNumber($event, 'total_transbank_deb2')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.total_transbank_deb2">{{
+                  current.total_transbank_deb2 | currency:'CLP':true:'1.0-0'
+                }}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.total_transbank_deb2"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.total_transbank_deb2"
+                />
+              </td>
+              <td>
+                <span>{{ totals.total_transbank_deb_total | currency:'CLP':true:'1.0-0' }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Junaeb Sodexho</td>
+              <td
+                (click)="onClickNumber($event, 'junaeb_sodexo1')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.junaeb_sodexo1">{{
+                  current.junaeb_sodexo1 | currency:'CLP':true:'1.0-0'
+                }}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.junaeb_sodexo1"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.junaeb_sodexo1"
+                />
+              </td>
+              <td
+                (click)="onClickNumber($event, 'junaeb_sodexo2')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.junaeb_sodexo2">{{
+                  current.junaeb_sodexo2 | currency:'CLP':true:'1.0-0'
+                }}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.junaeb_sodexo2"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.junaeb_sodexo2"
+                />
+              </td>
+              <td>
+                <span>{{ totals.junaeb_sodexo_total | currency:'CLP':true:'1.0-0' }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Junaeb Edenred</td>
+              <td
+                (click)="onClickNumber($event, 'junaeb_edenred1')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.junaeb_edenred1">{{
+                  current.junaeb_edenred1 | currency:'CLP':true:'1.0-0'
+                }}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.junaeb_edenred1"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.junaeb_edenred1"
+                />
+              </td>
+              <td
+                (click)="onClickNumber($event, 'junaeb_edenred2')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.junaeb_edenred2">{{
+                  current.junaeb_edenred2 | currency:'CLP':true:'1.0-0'
+                }}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.junaeb_edenred2"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.junaeb_edenred2"
+                />
+              </td>
+              <td>
+                <span>{{ totals.junaeb_edenred_total | currency:'CLP':true:'1.0-0' }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Boletas Nulas</td>
+              <td
+                (click)="onClickNumber($event, 'null_invoice1')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.null_invoice1">{{
+                  current.null_invoice1 | currency:'CLP':true:'1.0-0'
+                }}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.null_invoice1"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.null_invoice1"
+                />
+              </td>
+              <td
+                (click)="onClickNumber($event, 'null_invoice2')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.null_invoice2">{{
+                  current.null_invoice2
+                }}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.null_invoice2"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.null_invoice2"
+                />
+              </td>
+              <td>
+                <span>{{ totals.invoice_total | currency:'CLP':true:'1.0-0' }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Facturas</td>
+              <td
+                (click)="onClickNumber($event, 'invoice1')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.invoice1">{{ current.invoice1 | currency:'CLP':true:'1.0-0' }}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.invoice1"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.invoice1"
+                />
+              </td>
+              <td
+                (click)="onClickNumber($event, 'invoice2')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.invoice2">{{ current.invoice2 | currency:'CLP':true:'1.0-0' }}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.invoice2"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.invoice2"
+                />
+              </td>
+              <td>
+                <span>{{ totals.invoice_total | currency:'CLP':true:'1.0-0'}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Facturas por pagar</td>
+              <td
+                (click)="onClickNumber($event, 'invoice_to_pay1')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.invoice_to_pay1">{{
+                  current.invoice_to_pay1 | currency:'CLP':true:'1.0-0'
+                }}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.invoice_to_pay1"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.invoice_to_pay1"
+                />
+              </td>
+              <td
+                (click)="onClickNumber($event, 'invoice_to_pay2')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.invoice_to_pay2">{{
+                  current.invoice_to_pay2 | currency:'CLP':true:'1.0-0'
+                }}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.invoice_to_pay2"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.invoice_to_pay2"
+                />
+              </td>
+              <td>
+                <span>{{ totals.invoice_to_pay_total | currency:'CLP':true:'1.0-0' }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Diferencias por caja</td>
+              <td
+                (click)="onClickNumber($event, 'sales_cashier1')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.sales_cashier1">{{
+                  current.sales_cashier1 | currency:'CLP':true:'1.0-0'
+                }}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.sales_cashier1"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.sales_cashier1"
+                />
+              </td>
+              <td
+                (click)="onClickNumber($event, 'sales_cashier2')"
+                style="cursor: pointer"
+              >
+                <span *ngIf="!editing.sales_cashier2">{{
+                  current.sales_cashier2 | currency:'CLP':true:'1.0-0'
+                }}</span>
+                <input
+                  type="number"
+                  *ngIf="editing.sales_cashier2"
+                  (keyup)="onChange($event)"
+                  [(ngModel)]="current.sales_cashier2"
+                />
+              </td>
+              <td>
+                <span>{{ totals.sales_cashier_total | currency:'CLP':true:'1.0-0' }}</span>
+              </td>
+            </tr>
           </tbody>
-          <tfoot>
-          <tr>
-            <td>Total sin Ticket/Junaeb</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td colspan="3">Total sin Ticket/Junaeb</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td colspan="3">Total Venta Neta</td>
-            <td>0</td>
-          </tr>
+          <tfoot (click)="onClickOutside()">
+            <tr>
+              <td>Total sin Ticket/Junaeb</td>
+              <td>{{ totals.total1 | currency: 'CLP':true:'1.0-0' }}</td>
+              <td>{{ totals.total2 | currency: 'CLP':true:'1.0-0' }}</td>
+              <td>
+                {{totals.dailyTotalNoJunaeb | currency:'CLP':true:'1.0-0'}}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">Total ventas del dia</td>
+              <td>{{ totals.dailyTotal | currency: 'CLP':true:'1.0-0' }}</td>
+            </tr>
+            <tr>
+              <td colspan="3">Total Venta Neta</td>
+              <td>{{ totals.dailyTotalNet | currency: 'CLP':true:'1.0-0' }}</td>
+            </tr>
           </tfoot>
         </table>
-        <button type="button" class="btn btn-primary">
-          Guardar
-        </button>
+        <button type="button" class="btn btn-primary" (click)="onSave()">Guardar</button>
       </div>
       <div class="col-sm-12 col-md-4 col-lg-3 week-days">
         <table>
           <thead>
-          <tr>
-            <th>Día</th>
-            <th>Día Semana</th>
-            <th>Total</th>
-          </tr>
+            <tr>
+              <th>Fecha</th>
+              <th>Total</th>
+            </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>1</td>
-            <td>Domingo</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Lunes</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Martes</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Miercoles</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Jueves</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>Viernes</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>Sabado</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>Domingo</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td>Lunes</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td>Martes</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>11</td>
-            <td>Miercoles</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>12</td>
-            <td>Jueves</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td>13</td>
-            <td>Viernes</td>
-            <td>$0</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
+            <tr *ngFor="let d of dates" (click)="onClickRow(d.id, d.date)" style="cursor: pointer" [class.selected]="d.date == currentDate">
+              <td>{{d.date}}</td>
+              <td>{{ d.total | currency: 'CLP':true:'1.0-0' }}</td></tr>
+            <tr>
           </tbody>
         </table>
       </div>
     </div>
   </nb-card-body>
-
 </nb-card>
-
-
-
