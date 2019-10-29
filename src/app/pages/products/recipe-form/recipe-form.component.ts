@@ -24,6 +24,7 @@ export class RecipeFormComponent implements OnInit {
   id: string;
   supplies: Array<any> = [];
   supplyMap = {};
+  totalCost = 0;
   data = {
     supplies: [],
     name: '',
@@ -61,10 +62,12 @@ export class RecipeFormComponent implements OnInit {
         delete data.stores;
         this.data = Object.assign({}, data);
         this.data.supplies = data.supplies.map(s => {
+          console.log(s.price);
           return {
             supply: s,
             supply_id: s.id,
             quantity: s.pivot.quantity,
+            cost: s.price * s.pivot.quantity
           };
         });
         this.recalculateSupplyMap();
@@ -78,6 +81,7 @@ export class RecipeFormComponent implements OnInit {
       quantity: '1',
       supply_id: '',
       supply: null,
+      price: 0
     });
   }
 
@@ -109,17 +113,17 @@ export class RecipeFormComponent implements OnInit {
   }
 
   recalculateCost(i: number) {
-    // const supply = this.data.supplies[i];
-    // if (!supply.quantity || supply.quantity <= 0) {
-    //   supply.cost = 0;
-    //   return;
-    // }
-    // if (!supply.supply.price) {
-    //   supply.cost = 0;
-    //   return ;
-    // }
-    // supply.cost = supply.quantity * supply.supply.price;
-    // this.totalCost = this.data.supplies.reduce((acc, s) => acc + s.cost, 0);
+    const supply = this.data.supplies[i];
+    if (!supply.quantity || supply.quantity <= 0) {
+      supply.cost = 0;
+      return;
+    }
+    if (!supply.supply.price) {
+      supply.cost = 0;
+      return ;
+    }
+    supply.cost = supply.quantity * supply.supply.price;
+    this.totalCost = this.data.supplies.reduce((acc, s) => acc + s.cost, 0);
   }
 
   removeSupply(i) {

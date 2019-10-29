@@ -31,6 +31,7 @@
                 <tr>
                   <th>Insumo</th>
                   <th>Cantidad</th>
+                  <th>Costo</th>
                   <th>Borrar</th>
                 </tr>
                 </thead>
@@ -60,24 +61,26 @@
                   <td>
                     <input name="quantity{{i}}" (change)="recalculateCost(i)" required [(ngModel)]="data.supplies[i].quantity" type="number" placeholder="Cantidad" class="form-control"/>
                   </td>
-                  <!--<td>-->
-                    <!--<input name="cost{{i}}" disabled [value]="data.supplies[i].cost" type="number" placeholder="Cantidad" class="form-control"/>-->
-                  <!--</td>-->
+                  <td>
+                    <!-- <input name="cost{{i}}" disabled [value]="data.supplies[i].cost" type="number" class="form-control"/> -->
+                    {{data.supplies[i].cost}}
+                  </td>
                   <td>
                     <button class="btn btn-secondary" (click)="removeSupply(i)">Borrar</button>
                   </td>
                 </tr>
                 </tbody>
-                <!--<tfoot>-->
-                  <!--<tr>-->
-                    <!--<td>-->
-                      <!--Total-->
-                    <!--</td>-->
-                    <!--<td>-->
-                      <!--{{totalCost}}-->
-                    <!--</td>-->
-                  <!--</tr>-->
-                <!--</tfoot>-->
+                <tfoot>
+                  <tr>
+                    <td>
+                      Total
+                    </td>
+                    <td></td>
+                    <td>
+                      {{totalCost}}
+                    </td>
+                  </tr>
+                </tfoot>
               </table>
             </div>
           </div>
