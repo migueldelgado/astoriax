@@ -77,7 +77,7 @@ export class RecipeFormComponent implements OnInit {
   addSupply(e) {
     e.preventDefault();
     this.data.supplies.push({
-      quantity: '1',
+      quantity: '',
       supply_id: '',
       supply: null,
       price: 0,
