@@ -7,9 +7,21 @@ export class SupplierService {
 
   constructor(private http: HttpClient) {
   }
+
   public getAll(isNewApi = false) {
     const API = isNewApi ? AppConfig.API_ENDPOINT : `${AppConfig.API_ENDPOINT_OLD}/`;
     return this.http.get(`${API}suppliers`)
+      .map((suppliers: any) => {
+        return suppliers.data;
+      });
+  }
+
+  public getSuppliers(params) {
+    const storeId = params.storeId || '';
+    const urlParams = `store_id=${storeId}`;
+    const url = `${AppConfig.API_ENDPOINT}suppliers?${urlParams}`;
+    
+    return this.http.get(url)
       .map((suppliers: any) => {
         return suppliers.data;
       });

@@ -5,198 +5,115 @@
 
   <nb-card-body>
     <div class="form-group row">
+
+      <div class="form-group col-md-4 col-sm-12">
+        <label for="dateFrom">Desde</label>
+        <div class="input-group">
+          <input 
+            ngx-mydatepicker 
+            id="dateFrom" 
+            class="form-control" 
+            style="float:none" 
+            placeholder="Select a to date" 
+            name="dateFrom" 
+            [(ngModel)]="dateFrom" 
+            [options]="options" 
+            #from="ngx-mydatepicker" 
+            (dateChanged)="onChangeDateFrom($event)" 
+            required />
+          
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-primary btn-icon" (click)="from.toggleCalendar()">
+                <i class="fa fa-calendar"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4 col-sm-12">
+        <label for="dateTo">Hasta</label>
+        <div class="input-group">
+          <input 
+            ngx-mydatepicker 
+            id="dateTo" 
+            class="form-control" 
+            style="float:none" 
+            placeholder="Select a to date" 
+            name="dateTo" 
+            [(ngModel)]="dateTo" 
+            [options]="options" 
+            #to="ngx-mydatepicker" 
+            (dateChanged)="onChangeDateTo($event)" 
+            required />
+
+          <span class="input-group-btn">
+              <button type="button" class="btn btn-primary btn-icon" (click)="to.toggleCalendar()">
+                  <i class="fa fa-calendar"></i>
+              </button>
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form-group row">
+
       <div class="col-md-4 col-sm-12">
         <div class="form-group">
-          <label class="">Tipo de movimiento</label>
-          <select class="form-control" id="inputGroupSelect01">
-            <option value="all" selected>TODOS</option>
-            <option value="outcome">EGRESOS</option>
-            <option value="income">INGRESOS</option>
+          <label class="">Locales</label>
+          <select id="storesInput" name="storesInput" class="form-control" [(ngModel)]="storeSelected" (change)="onChangeData()">
+            <option [ngValue]="''">TODOS</option>
+            <option 
+                *ngFor="let userStore of userStores" 
+                [ngValue]="userStore.id">
+                {{ userStore.name }}
+            </option>
           </select>
         </div>
       </div>
-      <div class="form-group col-md-4 col-sm-12">
 
-        <div><label for="dateFrom">Desde</label></div>
-        <div class="input-group">
-          <input ngx-mydatepicker id="dateFrom" class="form-control" style="float:none" placeholder="Select a to date" name="dateFrom" [(ngModel)]="dateFrom" [options]="options" #from="ngx-mydatepicker" (dateChanged)="onChangeFrom($event)" required />
-          <span class="input-group-append">
-            <button type="button" class="btn btn-primary" (click)="from.clearDate()">
-              <i class="fa fa-times"></i>
-            </button>
-            <button type="button" class="btn btn-primary" (click)="from.toggleCalendar()">
-              <i class="fa fa-calendar"></i>
-            </button>
-          </span>
+      <div class="col-md-4 col-sm-12">
+        <div class="form-group">
+          <label class="">Tipo de movimiento</label>
+          <select 
+            class="form-control" 
+            id="inputGroupSelect01" 
+            [(ngModel)]="transferType" 
+            (change)="onChangeData()">
+              <option value="" selected>TODOS</option>
+              <option value="E">EGRESOS</option>
+              <option value="I">INGRESOS</option>
+          </select>
         </div>
       </div>
-      <div class="form-group col-md-4 col-sm-12">
 
-        <div><label for="dateFrom">Hasta</label></div>
-        <div class="input-group">
-          <input ngx-mydatepicker id="dateTo" class="form-control" style="float:none" placeholder="Select a to date" name="dateTo" [(ngModel)]="dateTo" [options]="options" #to="ngx-mydatepicker" (dateChanged)="onChangeTo($event)" required />
-          <span class="input-group-append">
-            <button type="button" class="btn btn-primary" (click)="to.clearDate()">
-              <i class="fa fa-times"></i>
-            </button>
-            <button type="button" class="btn btn-primary" (click)="to.toggleCalendar()">
-              <i class="fa fa-calendar"></i>
-            </button>
-          </span>
-        </div>
-      </div>
     </div>
-    <table>
-      <thead>
-      <tr>
-        <th>
-          Acciones
-        </th>
-        <th>
-          Fecha
-        </th>
-        <th>
-          Estado
-        </th>
-        <th>
-          Tipo de Movimiento
-        </th>
-        <th>
-          Forma de pago
-        </th>
-        <th>
-          Clasificación
-        </th>
-        <th>
-          Motivo
-        </th>
-        <th>
-          Cheque
-        </th>
-        <th>
-          Monto
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus()"><i class="nb-plus-circled"></i></button>
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickRemove()"><i class="nb-close-circled"></i></button>
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickToggle()"><i class="nb-shuffle"></i></button>
-          </div>
-        </td>
-        <td>2018-01-04</td>
-        <td>Inactivo</td>
-        <td>Egreso</td>
-        <td>Cargo cuenta corriente</td>
-        <td>Costo variable proveedor</td>
-        <td>Carne</td>
-        <td></td>
-        <td>-2.123.577</td>
-      </tr>
-      <tr>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus()"><i class="nb-plus-circled"></i></button>
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickRemove()"><i class="nb-close-circled"></i></button>
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickToggle()"><i class="nb-shuffle"></i></button>
-          </div>
-        </td>
-        <td>2018-01-04</td>
-        <td>Inactivo</td>
-        <td>Egreso</td>
-        <td>Cargo cuenta corriente</td>
-        <td>Costo variable proveedor</td>
-        <td>Carne</td>
-        <td></td>
-        <td>-2.123.577</td>
-      </tr>
-      <tr>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus()"><i class="nb-plus-circled"></i></button>
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickRemove()"><i class="nb-close-circled"></i></button>
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickToggle()"><i class="nb-shuffle"></i></button>
-          </div>
-        </td>
-        <td>2018-01-04</td>
-        <td>Inactivo</td>
-        <td>Egreso</td>
-        <td>Cargo cuenta corriente</td>
-        <td>Costo variable proveedor</td>
-        <td>Carne</td>
-        <td></td>
-        <td>-2.123.577</td>
-      </tr>
-      <tr>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus()"><i class="nb-plus-circled"></i></button>
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickRemove()"><i class="nb-close-circled"></i></button>
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickToggle()"><i class="nb-shuffle"></i></button>
-          </div>
-        </td>
-        <td>2018-01-04</td>
-        <td>Inactivo</td>
-        <td>Egreso</td>
-        <td>Cargo cuenta corriente</td>
-        <td>Costo variable proveedor</td>
-        <td>Carne</td>
-        <td></td>
-        <td>-2.123.577</td>
-      </tr>
-      <tr>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus()"><i class="nb-plus-circled"></i></button>
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickRemove()"><i class="nb-close-circled"></i></button>
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickToggle()"><i class="nb-shuffle"></i></button>
-          </div>
-        </td>
-        <td>2018-01-04</td>
-        <td>Inactivo</td>
-        <td>Egreso</td>
-        <td>Cargo cuenta corriente</td>
-        <td>Costo variable proveedor</td>
-        <td>Carne</td>
-        <td></td>
-        <td>-2.123.577</td>
-      </tr>
-      <tr>
-        <td>
-          <div class="btn-group">
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickPlus()"><i class="nb-plus-circled"></i></button>
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickRemove()"><i class="nb-close-circled"></i></button>
-            <button class="btn btn-outline-primary btn-icon" (click)="onClickToggle()"><i class="nb-shuffle"></i></button>
-          </div>
-        </td>
-        <td>2018-01-04</td>
-        <td>Inactivo</td>
-        <td>Egreso</td>
-        <td>Cargo cuenta corriente</td>
-        <td>Costo variable proveedor</td>
-        <td>Carne</td>
-        <td></td>
-        <td>-2.123.577</td>
-      </tr>
 
-      </tbody>
-      <tfoot class="total-table">
-      <tr>
-        <td colspan="8"><strong>Caja real</strong></td>
-        <td>2.928.514</td>
-      </tr>
-      <tr>
-        <td colspan="8"><strong>Caja proyectada</strong></td>
-        <td>2.928.514</td>
-      </tr>
-      <tr>
-        <td colspan="8"><strong>Pasivo circulante</strong></td>
-        <td>2.928.514</td>
-      </tr>
-      </tfoot>
-    </table>
+
+      <ng2-smart-table
+        [settings]="settings"
+        [source]="source"
+        (create)="onCreate($event)"
+        (delete)="onDelete($event)"
+        (edit)="onEdit($event)">
+      </ng2-smart-table>
+
+      <hr>
+
+      <table class="table table-bordered" *ngIf="source.length > 0">
+        <tr>
+          <td class=""><strong>CAJA REAL:</strong></td>
+          <td class="bg-info">{{ result.totalReal | currency:'CLP':'symbol' }}</td>
+        </tr>
+        <tr>
+          <td class=""><strong>CAJA PROYECTADA:</strong></td>
+          <td class="bg-info">{{ result.totalProjected | currency:'CLP':'symbol' }}</td>
+        </tr>
+        <tr>
+          <td class=""><strong>PASIVO CIRCULANTE:</strong></td>
+          <td class="bg-info">{{ result.totalInactiveOutcome | currency:'CLP':'symbol' }}</td>
+        </tr>
+      </table>
+
   </nb-card-body>
 </nb-card>

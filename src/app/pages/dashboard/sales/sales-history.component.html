@@ -1,0 +1,62 @@
+<nb-card size="large">
+    <div class="consumption-table">
+      <div class="table-header">
+        <div>Ventas Local</div>
+        <!-- <div class="subtitle">Local</div> -->
+      </div>
+  
+      <nb-tabset fullWidth *ngIf="salesHistory.length > 0">
+        <nb-tab *ngFor="let yearSale of salesHistory" [tabTitle]="yearSale.year" [active]="yearSale.active">
+          <div class="stats-month" *ngFor="let month of yearSale.salesByMonth">
+            <div>
+              <span class="month">{{ month.monthName }}</span>
+              <!-- <span class="delta" [ngClass]="{ 'down': month.down }">{{ month.delta }}</span> -->
+            </div>
+            <div class="results">
+              <b>${{ month.total }}</b>
+            </div>
+          </div>
+        </nb-tab>
+      </nb-tabset>
+    </div>
+  
+    <div class="chart-container" *ngIf="salesHistory.length > 0">
+      <!-- <div class="chart-header"> -->
+
+        <!-- <div class="header-stats">
+          <div class="stats-block">
+            <div class="subtitle">Total</div>
+            <div>
+              <span class="value">816</span>
+              <span class="unit">kWh</span>
+            </div>
+          </div>
+  
+          <div class="stats-block">
+            <div class="subtitle">Spent</div>
+            <div>
+              <span class="value">291</span>
+              <span class="unit">USD</span>
+            </div>
+          </div>
+        </div> -->
+  
+        <!-- <div ngbDropdown>
+          <button type="button" ngbDropdownToggle class="btn"
+                  [ngClass]="{ 'btn-outline-success': currentTheme == 'default', 'btn-primary': currentTheme != 'default'}">
+            {{ type }}
+          </button>
+          <ul class="dropdown-menu">
+            <li class="dropdown-item" *ngFor="let t of types" (click)="type = t">{{ t }}</li>
+          </ul>
+        </div> -->
+  
+      <!-- </div> -->
+
+      <div class="col-lg-10">
+          <ngx-sales-chart [sales]="salesHistory"></ngx-sales-chart>
+      </div>
+
+    </div>
+  </nb-card>
+  

@@ -10,13 +10,16 @@ import { AddInvoiceProviderComponent } from './modal/add-invoice-provider.compon
 import { AddTreasuryRegistryComponent } from './modal/add-treasury-registry.component';
 import {ConfirmationModalComponent} from './modal/confirmation-modal.component';
 import {ProviderDetailComponent} from './modal/provider-detail.component';
+import { TreasuryService } from './treasury/treasury.service';
+import { ClassificationService } from '../classification/classification.service';
+import { ToasterModule } from 'angular2-toaster';
 
 const components = [
   AccountingFinanceComponent,
   AddInvoiceProviderComponent,
   AddTreasuryRegistryComponent,
   ConfirmationModalComponent,
-  ProviderDetailComponent,
+  ProviderDetailComponent
 ];
 
 @NgModule({
@@ -25,6 +28,7 @@ const components = [
     AccountFinanceRoutingModule,
     Ng2SmartTableModule,
     NgxMyDatePickerModule.forRoot(),
+    ToasterModule
   ],
   declarations: [
     ...components,
@@ -32,6 +36,8 @@ const components = [
   ],
   providers: [
     DatePipe,
+    TreasuryService,
+    ClassificationService,
   ],
   entryComponents: [
     AddInvoiceProviderComponent,

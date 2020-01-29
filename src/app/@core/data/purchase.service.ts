@@ -25,6 +25,27 @@ export class PurchaseService {
     ).map((r: any) => r.data)
   }
 
+  public getPurchases(params) {
+
+    const storeId = params.storeId || '';
+    const supplierId = params.supplierId || '';
+    const type = params.type || '';
+    const status = params.status || [];
+    let statusQuery = '';
+
+    status.forEach(element => {
+      statusQuery += '&status[]=' + element;
+    });
+
+    const urlParams = `store_id=${storeId}&supplier_id=${supplierId}&type=${type + statusQuery}`;
+    const url = `${AppConfig.API_ENDPOINT}purchases?${urlParams}`;
+    
+    return this.http.get(url)
+      .map((purchases: any) => {
+        return purchases.data;
+      });
+  }
+
 
   public find(id) {
     return this.http.get<any>(

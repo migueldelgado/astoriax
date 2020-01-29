@@ -4,6 +4,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {AccountingFinanceComponent} from './accounting-finance.component';
 import {ProvidersComponent} from './providers/providers.component';
 import {TreasuryComponent} from './treasury/treasury.component';
+import { TreasuryFormComponent } from './treasury/treasury-form/treasury-form.component';
 
 const routes: Routes = [
   {
@@ -18,11 +19,10 @@ const routes: Routes = [
         path: 'treasury',
         component: TreasuryComponent,
       },
-      // {
-      //   path: 'fixed-costs',
-      //   component: FixedCostsComponent,
-      // },
-
+      {
+        path: 'treasury/new',
+        component: TreasuryFormComponent,
+      },
     ],
   },
 ];
@@ -37,4 +37,5 @@ export class AccountFinanceRoutingModule {
 export const routedComponents = [
   ProvidersComponent,
   TreasuryComponent,
+  TreasuryFormComponent
 ];

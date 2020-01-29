@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AngularEchartsModule } from 'ngx-echarts';
+import { ChartModule } from 'angular2-chartjs';
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { DashboardComponent } from './dashboard.component';
@@ -14,6 +15,8 @@ import { KittenComponent } from './kitten/kitten.component';
 import { SecurityCamerasComponent } from './security-cameras/security-cameras.component';
 import { ElectricityComponent } from './electricity/electricity.component';
 import { ElectricityChartComponent } from './electricity/electricity-chart/electricity-chart.component';
+import { SalesHistoryComponent } from './sales/sales-history.component';
+import { SalesChartComponent } from './sales/sales-chart/sales-chart.component';
 import { WeatherComponent } from './weather/weather.component';
 import { SolarComponent } from './solar/solar.component';
 import { PlayerComponent } from './rooms/player/player.component';
@@ -25,6 +28,7 @@ import { TrafficChartComponent } from './traffic/traffic-chart.component';
   imports: [
     ThemeModule,
     AngularEchartsModule,
+    ChartModule,
   ],
   declarations: [
     DashboardComponent,
@@ -39,11 +43,13 @@ import { TrafficChartComponent } from './traffic/traffic-chart.component';
     SecurityCamerasComponent,
     ElectricityComponent,
     ElectricityChartComponent,
+    SalesHistoryComponent,
+    SalesChartComponent,
     WeatherComponent,
     PlayerComponent,
     SolarComponent,
     TrafficComponent,
-    TrafficChartComponent,
+    TrafficChartComponent
   ],
 })
 export class DashboardModule { }

@@ -18,21 +18,16 @@ export class ElectricityChartComponent implements AfterViewInit, OnDestroy {
 
   constructor(private theme: NbThemeService) {
 
-    const points = [490, 490, 495, 500, 505, 510, 520, 530, 550, 580, 630,
-      720, 800, 840, 860, 870, 870, 860, 840, 800, 720, 200, 145, 130, 130,
-      145, 200, 570, 635, 660, 670, 670, 660, 630, 580, 460, 380, 350, 340,
-      340, 340, 340, 340, 340, 340, 340, 340];
-
-    // const points = [];
-    // let pointsCount = 100;
-    // let min = -3;
-    // let max = 3;
-    // let xStep = (max - min) / pointsCount;
-    //
-    // for(let x = -3; x <= 3; x += xStep) {
-    //   let res = x**3 - 5*x + 17;
-    //   points.push(Math.round(res * 25));
-    // }
+    const points = [];
+    let pointsCount = 100;
+    let min = -3;
+    let max = 3;
+    let xStep = (max - min) / pointsCount;
+    
+    for(let x = -3; x <= 3; x += xStep) {
+      let res = x**3 - 5*x + 17;
+      points.push(Math.round(res * 25));
+    }
 
     this.data = points.map((p, index) => ({
       label: (index % 5 === 3) ? `${Math.round(index / 5)}` : '',
