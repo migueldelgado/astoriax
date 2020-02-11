@@ -34,6 +34,7 @@ export class PurchaseFormComponent implements OnInit {
     document_number: null,
     date: new Date(),
     supplies: [],
+    total: 0,
   };
   options: INgxMyDpOptions = {
     dateFormat: 'dd/mm/yyyy',

@@ -93,14 +93,12 @@
       <ng2-smart-table
         [settings]="settings"
         [source]="source"
-        (create)="onCreate($event)"
-        (delete)="onDelete($event)"
-        (edit)="onEdit($event)">
+        (create)="onCreate($event)">
       </ng2-smart-table>
 
       <hr>
 
-      <table class="table table-bordered" *ngIf="source.length > 0">
+      <table class="table table-bordered" *ngIf="!source.empty()">
         <tr>
           <td class=""><strong>CAJA REAL:</strong></td>
           <td class="bg-info">{{ result.totalReal | currency:'CLP':'symbol' }}</td>

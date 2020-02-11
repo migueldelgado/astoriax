@@ -48,10 +48,10 @@ export class TreasuryFormComponent implements OnInit {
     selectedTransferType: any = this.transferTypes[0].code;
     selectedStatus: any = this.statusOptions[0].code;
     selectedPaymentType: any;
-    showIncomeLayout: Boolean = true;
-    showSuppliers: Boolean = false;
-    showAmount: Boolean = true;
-    showChequeNumber: Boolean = false;
+    showIncomeLayout: boolean = true;
+    showSuppliers: boolean = false;
+    showAmount: boolean = true;
+    showChequeNumber: boolean = false;
     reason: any;
     amount: any;
     config: any;
