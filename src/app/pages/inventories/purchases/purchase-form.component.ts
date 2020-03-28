@@ -11,6 +11,7 @@ import { SupplierService } from '../../../@core/data/supplier.service';
 import { PurchaseService } from '../../../@core/data/purchase.service';
 import { NbAuthService } from '../../../auth/services';
 import { parseErrroMessage } from '../../../@core/utils/error';
+import { getDateStringByDate } from '../../../@core/utils/dateUtils';
 
 @Component({
   selector: 'ngx-supply-form',
@@ -24,6 +25,7 @@ import { parseErrroMessage } from '../../../@core/utils/error';
   ],
 })
 export class PurchaseFormComponent implements OnInit {
+
   id: string;
   supplies: Array<any> = [];
   stores: Array<any> = [];
@@ -31,15 +33,23 @@ export class PurchaseFormComponent implements OnInit {
   data = {
     store_id: null,
     supplier_id: null,
+    type: 'F',
     document_number: null,
     date: new Date(),
     supplies: [],
-    total: 0,
+    amount: 0,
   };
+
   options: INgxMyDpOptions = {
     dateFormat: 'dd/mm/yyyy',
   };
+
   date = {
+    jsdate: new Date(),
+    formatted: null,
+  };
+
+  dateDocument = {
     jsdate: new Date(),
     formatted: null,
   };
@@ -118,12 +128,9 @@ export class PurchaseFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const d = this.date.jsdate;
-    const month = d.getMonth();
-    const day = d.getDate();
-    const year = d.getFullYear();
+    const date = getDateStringByDate(this.date.jsdate);
     const data = Object.assign({}, this.data, {
-      date: `${year}-${month + 1}-${day}`,
+      date,
       id: this.id,
     });
 

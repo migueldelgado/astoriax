@@ -81,7 +81,7 @@ export class SupplyFormComponent implements OnInit {
     report_type: null,
     classification: null,
     type: null,
-    unit: null,
+    unit: this.units[0],
   };
 
   constructor(

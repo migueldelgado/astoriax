@@ -21,7 +21,7 @@
           <div class="form-group row align-items-center">
             <label class="col-md-2 col-sm-3">Fecha Documento</label>
             <div class="input-group col-md-10 col-sm-9">
-              <input ngx-mydatepicker class="form-control" style="float:none" placeholder="Selecciona Fecha" name="mydate" [(ngModel)]=" date" [options]="options" #dp="ngx-mydatepicker" required />
+              <input ngx-mydatepicker class="form-control" style="float:none" placeholder="Selecciona Fecha" name="mydateDoc" [(ngModel)]="dateDocument" [options]="options" #dp="ngx-mydatepicker" required />
               <span class="input-group-append">
                 <button type="button" class="btn btn-primary" (click)="dp.clearDate()">
                   <i class="fa fa-times"></i>
@@ -30,6 +30,20 @@
                     <i class="fa fa-calendar"></i>
                 </button>
               </span>
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-2 col-sm-3">Tipo de documento</label>
+            <div class="col-md-10 col-sm-9">
+              <select
+                name="type"
+                class="form-control"
+                [(ngModel)]="data.type"
+                required
+              >
+                <option value="F">Factura</option>
+                <option value="N">Nota de credito</option>
+              </select>
             </div>
           </div>
           <div class="form-group row align-items-center">
