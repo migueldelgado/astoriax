@@ -61,7 +61,9 @@ export class RecipeFormComponent implements OnInit {
         const data = result.data;
         delete data.stores;
         this.data = Object.assign({}, data);
+        this.totalCost = 0;
         this.data.supplies = data.supplies.map(s => {
+          this.totalCost += s.price * s.pivot.quantity; 
           return {
             supply: s,
             supply_id: s.id,
@@ -103,6 +105,7 @@ export class RecipeFormComponent implements OnInit {
   }
 
   recalculateSupplyMap() {
+    console.log(this.data.supplies);
     this.supplyMap = this.data.supplies.reduce((acc, s) => {
       return {
         ...acc,
@@ -113,6 +116,7 @@ export class RecipeFormComponent implements OnInit {
 
   recalculateCost(i: number) {
     const supply = this.data.supplies[i];
+    console.log(supply);
     if (!supply.quantity || supply.quantity <= 0) {
       supply.cost = 0;
       return;

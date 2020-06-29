@@ -1,296 +1,213 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DailySalesService } from '../../../@core/data/daily-sales.service';
+import { LocalDataSource } from 'ng2-smart-table';
+import { numberWithCommas, valuePrepareFunction } from '../../../@core/utils/utils';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'ngx-daily-sales-table',
   templateUrl: './daily-sales.component.html',
-  styles: [
-    `
-      nb-card {
-        transform: translate3d(0, 0, 0);
-      }
-      nb-card-body {
-        min-height: 400px;
-      }
-      table {
-        line-height: 1.5em;
-        border-collapse: collapse;
-        border-spacing: 0;
-        display: table;
-        width: 100%;
-        max-width: 100%;
-        overflow: auto;
-        word-break: normal;
-        word-break: keep-all;
-      }
-      table tr td:first-child {
-        width: 15%;
-      }
-      table tr td {
-        position: relative;
-        padding: 0.875rem 1.25rem;
-        border: 1px solid #342e73;
-        vertical-align: middle;
-      }
-      table th {
-        position: relative;
-        padding: 0.875rem 1.25rem;
-        border: 1px solid #342e73;
-        vertical-align: middle;
-        padding: 0.875rem 1.25rem;
-        padding-right: 1.75rem;
-        font-family: Exo;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.25;
-        color: #ffffff;
-      }
-      table th:first-child {
-        width: 15%;
-      }
-      table .btn-icon {
-        padding: 0.25rem 0.5rem !important;
-      }
-      tr.selected {
-        background-color: rgba(0, 255, 170, 0.25);
-      }
-    `,
-  ],
+  styleUrls: ['./daily-sales.component.scss'],
 })
+
 export class DailySalesComponent implements OnInit {
-  editing = {
-    sales_cashier1: false,
-    sales_cashier2: false,
-    invoice1: false,
-    invoice2: false,
-    cash1: false,
-    cash2: false,
-    null_invoice1: false,
-    null_invoice2: false,
-    total_transbank_cred1: false,
-    total_transbank_cred2: false,
-    total_transbank_deb1: false,
-    total_transbank_deb2: false,
-    invoice_to_pay1: false,
-    invoice_to_pay2: false,
-    junaeb_edenred1: false,
-    junaeb_edenred2: false,
-    junaeb_sodexo1: false,
-    junaeb_sodexo2: false,
+
+  day: string;
+  month: string;
+  year: string;
+  years: string[];
+  dailySalesMonth: any;
+  totals = {
+    netTotal: 0,
+    totalNoJunaeb: 0
+  };
+ 
+  source: LocalDataSource = new LocalDataSource();
+  source2: LocalDataSource = new LocalDataSource();
+
+  settings = {
+    hideSubHeader: true,
+    noDataMessage:'No hay informacion disponible',
+    edit: {
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true,
+    },
+    actions: {
+      columnTitle: '',
+      position: 'right',
+      delete: false,
+    },
+    columns: {
+      name: { title: '', editable: false, },
+      shift1: { title: 'Manana', valuePrepareFunction },
+      shift2: { title: 'Tarde', valuePrepareFunction },
+      total: { title: 'Total', valuePrepareFunction, editable: false },
+    },
+    pager: { display: false },
   };
 
-  base: any = {
-    sales_cashier1: '0',
-    sales_cashier2: '0',
-    invoice1: '0',
-    invoice2: '0',
-    cash1: '0',
-    cash2: '0',
-    null_invoice1: '0',
-    null_invoice2: '0',
-    total_transbank_cred1: '0',
-    total_transbank_cred2: '0',
-    total_transbank_deb1: '0',
-    total_transbank_deb2: '0',
-    invoice_to_pay1: '0',
-    invoice_to_pay2: '0',
-    junaeb_edenred1: '0',
-    junaeb_edenred2: '0',
-    junaeb_sodexo1: '0',
-    junaeb_sodexo2: '0',
-  };
-  current: any = {
-    sales_cashier1: '0',
-    sales_cashier2: '0',
-    invoice1: '0',
-    invoice2: '0',
-    cash1: '0',
-    cash2: '0',
-    null_invoice1: '0',
-    null_invoice2: '0',
-    total_transbank_cred1: '0',
-    total_transbank_cred2: '0',
-    total_transbank_deb1: '0',
-    total_transbank_deb2: '0',
-    invoice_to_pay1: '0',
-    invoice_to_pay2: '0',
-    junaeb_edenred1: '0',
-    junaeb_edenred2: '0',
-    junaeb_sodexo1: '0',
-    junaeb_sodexo2: '0',
+  settings2 = {
+    hideSubHeader: true,
+    noDataMessage:'No hay informacion disponible',
+    rowClassFunction: (row) => {
+      if (row.data.day === this.day){
+        return 'selected';
+      }
+      return '';
+    },
+    actions: {
+      columnTitle: '',
+      add: false,
+      delete: false,
+      edit: false,
+    },
+    columns: {
+      day: { title: 'Dia', },
+      total: { title: 'Total', valuePrepareFunction },
+    },
+    pager: { display: false },
   };
 
-  totals: any = {
-    sales_cashier_total: 0,
-    invoice_total: 0,
-    cash_total: 0,
-    null_invoice_total: 0,
-    total_transbank_cred_total: 0,
-    total_transbank_deb_total: 0,
-    invoice_to_pay1_total: 0,
-    junaeb_edenred_total: 0,
-    junaeb_sodexo_total: 0,
-    dailyTotal: 0,
-    dailyTotalNet: 0,
-    dailyTotalNoJunaeb: 0,
-    total1: 0,
-    total2: 0,
-  };
-
-  keys: string[] = [];
-  years: String[] = [];
-  currentId: null;
-  currentDate: '';
-  year = new Date().getFullYear().toString();
-  month = '01';
-  dates: any[];
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private modalService: NgbModal,
-    private dailySalesService: DailySalesService,
-  ) {
-    const currentMonth = new Date().getMonth() + 1;
-    this.month = currentMonth.toString();
-    if (currentMonth < 10) {
-      this.month = '0' + currentMonth;
-    }
-  }
+  constructor(private dailySalesService: DailySalesService){}
 
   ngOnInit() {
-    const d = new Date();
-    const currentYear = d.getFullYear();
-    for (let i = 0; i < 20; i++) {
-      this.years.push((currentYear - i).toString());
-    }
-    this.loadDataForMonth();
+    this.setCurrentMonthAndYear();
+    let dayStr = new Date().getDate().toString();
+    dayStr = dayStr.length === 1 ? '0' + dayStr : dayStr;
+    this.loadData(this.month, this.year, dayStr);
   }
 
-  loadDataForMonth(shouldFetch = true) {
-    const daysInMonth = new Date(
-      parseInt(this.year, 10),
-      parseInt(this.month, 10),
-      0,
-    ).getDate();
+  loadData(month, year, day){
+    const params = { month, year };
 
-    this.dailySalesService
-      .getAllByMonth(`${this.year}-${this.month}`)
+    this.dailySalesService.getAll(params)
       .subscribe((result: any) => {
-        const data = result.data || {};
-        this.dates = [];
-        for (let i = 1; i <= daysInMonth; i++) {
-          const day = i > 10 ? i : `0${i}`;
-          const key = `${this.year}-${this.month}-${day}`;
-          if (data[key]) {
-            this.dates[i - 1] = { ...data[key], date: key };
-          } else {
-            this.dates[i - 1] = { id: null, total: 0, date: key };
-          }
-        }
-        const id = this.dates[0].id;
-        if (!shouldFetch) {
-          return;
-        }
-        if (id) {
-          this.loadId(id);
-        } else {
-          this.currentId = null;
-          this.currentDate = this.dates[0].date;
-          this.calculateTotals({ ...this.base });
-        }
+        this.dailySalesMonth = result.data;
+        this.updateData(day);
       });
   }
 
-  loadId(id) {
-    this.currentId = id;
-    this.dailySalesService.find(id).subscribe(d => {
-      this.keys = Object.keys(d);
-      this.currentDate = d.date;
-      this.calculateTotals(d);
-    });
+  numberWithCommas(val){
+    return numberWithCommas(val);
   }
 
-  onClickRow(id, date) {
-    if (id) {
-      if (this.currentId !== id) {
-        this.loadId(id);
-      }
-      return;
-    }
-    this.currentId = null;
-    this.currentDate = date;
-    this.calculateTotals({ ...this.base });
-  }
+  updateData(dayStr){
+    this.day = dayStr;
+    const currentDate = this.getDateStr();
+    const currentDayItems = this.dailySalesMonth[currentDate].items;
+    const currentDayTotals = [];
+    this.totals.netTotal = this.dailySalesMonth[currentDate].totalNet;
+    this.totals.totalNoJunaeb = this.dailySalesMonth[currentDate].totalNoJunaeb;
 
-  calculateTotals(d) {
-    let dailyTotal = 0;
-    let total1 = 0;
-    let total2 = 0;
-    this.keys
-      .filter(k => k.includes('1'))
-      .forEach(key => {
-        const baseKey = key.substring(0, key.length - 1);
-        const key1 = baseKey + '1';
-        const key2 = baseKey + '2';
-        const keyTotal = baseKey + '_total';
-        const n1 = Number.parseInt(d[key1]) || 0;
-        const n2 = Number.parseInt(d[key2]) || 0;
-        if (!key.includes('junaeb')) {
-          total1 += n1;
-          total2 += n2;
-        }
-        dailyTotal += n1 + n2;
-        this.current[key1] = d[key1];
-        this.current[key2] = d[key2];
-        this.totals[keyTotal] = n1 + n2;
+    for (const day in this.dailySalesMonth){
+      currentDayTotals.push({ 
+        day:  this.dailySalesMonth[day].day,
+        total: this.dailySalesMonth[day].total
       });
-
-    this.totals.dailyTotal = dailyTotal;
-    this.totals.dailyTotalNet = Math.round(dailyTotal / 1.19);
-    this.totals.dailyTotalNoJunaeb = total1 + total2;
-    this.totals.total1 = total1;
-    this.totals.total2 = total2;
-  }
-
-  onClickNumber($event, key) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    Object.keys(this.editing).forEach(k => {
-      this.editing[k] = false;
-    });
-    this.editing[key] = true;
-  }
-
-  onClickOutside() {
-    Object.keys(this.editing).forEach(k => {
-      this.editing[k] = false;
-    });
-  }
-
-  onSave() {
-    const data = {
-      ...this.current,
-      date: this.currentDate,
-      id: this.currentId || undefined,
-    };
-
-    let observable;
-    if (this.currentId) {
-      observable = this.dailySalesService.update(this.currentId, data);
-    } else {
-      observable = this.dailySalesService.create(data);
     }
-    observable.subscribe(result => {
-      const d = result.data || {};
-      this.currentId = d.id;
-      this.loadDataForMonth(false);
+
+    this.source.load(currentDayItems);
+    this.source2.load(currentDayTotals);
+  }
+
+  getCurrentDayString(){
+    let currentDate = new Date().getDate().toString();
+    if (currentDate.length === 1) currentDate = '0' + currentDate;
+    return currentDate;
+  }
+
+  rowUpdated(evt){
+    const dateStr = this.getDateStr();
+    const itemId = evt.newData.id;
+    const amountShift1 = evt.newData.shift1;
+    const amountShift2 = evt.newData.shift2;
+
+    const commonProps = {
+      dailysalesitem_id: itemId,
+      date: dateStr
+    }
+
+    const paramsShift1 = {
+      ...commonProps,
+      shift_id: 1,
+      amount: amountShift1
+    }
+    const paramsShift2 = {
+      ...commonProps,
+      shift_id: 2,
+      amount: amountShift2
+    }
+
+    Observable.forkJoin(
+      this.dailySalesService.create(paramsShift1),
+      this.dailySalesService.create(paramsShift2)
+    ).subscribe((results: any) => {
+      this.loadData(this.month, this.year, this.day);
+      evt.confirm.resolve(evt.newData);
     });
   }
 
-  onChange() {
-    this.calculateTotals(this.current);
+  calculateTotal(data){
+    let total = 0;
+    for(const item in data) {
+      if (item !== 'total') total += data[item].shift1 + data[item].shift2;
+    }
+    return total;
   }
+
+  userRowSelect(evt){
+    this.updateData(evt.data.day);
+  }
+
+  setCurrentMonthAndYear(){
+    const date = new Date();
+    const years = [];
+    const year = date.getFullYear();
+
+    for (let i = 0; i < 5; i++) {
+      years.push((year - i).toString());
+    }
+    let monthStr = (date.getMonth() + 1).toString();
+    if (monthStr.length === 1) monthStr = '0' + monthStr;
+
+    this.years = years;
+    this.year = year.toString();
+    this.month = monthStr;
+  }
+
+  getDaysSelectedMonth(){
+    const year = parseInt(this.year);
+    const month = parseInt(this.month);
+    return new Date(year, month, 0).getDate();
+  }
+
+  getDateStr(){
+    return `${this.year}-${this.month}-${this.day}`;
+  }
+
+  updateDate(){
+    const dayStr = '01';
+    this.loadData(this.month, this.year, dayStr);
+  }
+
+  getReportPDF(){
+    let params = {
+      day: this.day,
+      month: this.month,
+      year: this.year
+    }
+
+    this.dailySalesService.getDayReport(params)
+      .subscribe(
+        (result: any) => {
+          window.open(result.data.path, '_blank');
+        }, 
+        () => {
+          alert('Error al generar reporte')
+        }
+      )
+  }
+
 }

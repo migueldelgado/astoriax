@@ -109,7 +109,7 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
     permissions: ['TES', 'RPR'],
     children: [
       {
-        title: 'Proveedor',
+        title: 'Factura Proveedores',
         link: '/pages/finances/providers',
         permissions: ['RPR'],
       },
@@ -121,18 +121,14 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
     ],
   },
   {
-    title: 'Administracion RRHH',
+    title: 'Administracion',
     icon: 'nb-person',
     link: '/pages/hr',
     permissions: ['PRO', 'LOC', 'EMP', 'ROL'],
     children: [
-      {
-        title: 'Proveedores',
-        link: '/pages/hr/providers',
-        permissions: ['PRO'],
-      },
-      { title: 'Locales', link: '/pages/hr/stores', permissions: ['LOC'] },
-      { title: 'Empleados', link: '/pages/hr/employees', permissions: ['EMP'] },
+      { title: 'Ficha Proveedores', link: '/pages/hr/providers', permissions: ['PRO'] },
+      { title: 'Ficha Locales', link: '/pages/hr/stores', permissions: ['LOC'] },
+      { title: 'Ficha Colaboradores', link: '/pages/hr/employees', permissions: ['EMP'] },
       { title: 'Roles', link: '/pages/hr/roles', permissions: ['ROL'] },
     ],
   },
@@ -142,16 +138,17 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
     link: '/pages/sales',
     permissions: ['CHQ', 'VAL', 'IVD'],
     children: [
-      {
-        title: 'Cheque Restaurant',
-        link: '/pages/sales/cheques',
-        permissions: ['CHQ'],
-      },
-      {
-        title: 'Valores de Cheques',
-        link: '/pages/sales/add-cheques',
-        permissions: ['VAL'],
-      },
+      //TODO: delete those pages completely
+      // {
+      //   title: 'Cheque Restaurant',
+      //   link: '/pages/sales/cheques',
+      //   permissions: ['CHQ'],
+      // },
+      // {
+      //   title: 'Valores de Cheques',
+      //   link: '/pages/sales/add-cheques',
+      //   permissions: ['VAL'],
+      // },
       {
         title: 'Ingreso Venta Diaria',
         link: '/pages/sales/daily-sales',

@@ -74,28 +74,9 @@
           <div class="form-group row align-items-center">
               <label class="col-md-2 col-sm-3">Total</label>
               <div class="col-md-10 col-sm-9">
-                  <input name="total" required [(ngModel)]="data.total" type="text" placeholder="Total" class="form-control" />
+                  <input name="amount" required [(ngModel)]="data.amount" type="text" placeholder="Total" class="form-control" />
               </div>
           </div>
-          <!-- <div class="form-group row align-items-center">
-            <label class="col-md-2 col-sm-3">Tienda</label>
-            <div class="col-md-10 col-sm-9">
-              <select
-                name="store_select"
-                class="form-control"
-                [(ngModel)]="data.store_id"
-                required
-              >
-                <option [value]="null">Seleccione Tienda</option>
-                <option
-                  *ngFor="let s of stores"
-                  [value]="s.id"
-                >
-                  {{s.name}}
-                </option>
-              </select>
-            </div>
-          </div> -->
 
           <div class="form-group">
             <div class="row justify-content-between">

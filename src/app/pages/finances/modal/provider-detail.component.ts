@@ -1,68 +1,22 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {INgxMyDpOptions} from 'ngx-mydatepicker';
+import { valuePrepareFunction } from '../../../@core/utils/utils';
+import { SupplierService } from '../../../@core/data/supplier.service';
+import { LocalDataSource } from 'ng2-smart-table';
 
 @Component({
   selector: 'ngx-provider-detail-modal',
   templateUrl: './provider-detail.component.html',
-  styles: [`
-    table {
-      line-height: 1.5em;
-      border-collapse: collapse;
-      border-spacing: 0;
-      display: table;
-      width: 100%;
-      max-width: 100%;
-      overflow: auto;
-      word-break: normal;
-      word-break: keep-all;
-    }
-    table tr td:first-child {
-      width: 25%;
-    }
-    table tr td {
-      width: 15%;
-      position: relative;
-      padding: 0.875rem 1.25rem;
-      border: 1px solid #342e73;
-      vertical-align: middle;
-    }
-    table th {
-      position: relative;
-      width: 15%;
-      padding: 0.875rem 1.25rem;
-      border: 1px solid #342e73;
-      vertical-align: middle;
-      padding: 0.875rem 1.25rem;
-      padding-right: 1.75rem;
-      font-family: Exo;
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.25;
-      color: #ffffff;
-    }
-    table th:first-child {
-      width: 25%;
-    }
-    total-table td, tfoot td {
-      background-color: #342e73;
-      border: 1px solid #342e73;
-    }
-    total-table td:first-child, tfoot td:first-child {
-      background-color: #231f4e;
-    }
-    table .btn-icon {
-      padding: 0.25rem 0.5rem !important;
-    }
-    .pdf-container {
-      display: flex;
-      justify-content: flex-end;
-      padding: 0 0 1rem;
-    }
-  `],
+  styleUrls: ['./provider-detail.component.scss']
 })
 export class ProviderDetailComponent {
 
+  source: LocalDataSource = new LocalDataSource();
+  suppliers: any[];
+  supplierSelected: any;
+  yearSelected: any;
+  monthSelected: any;
   dateTo = { jsdate: new Date() };
   options: INgxMyDpOptions = {
     dateFormat: 'dd-mm-yyyy',
@@ -70,13 +24,87 @@ export class ProviderDetailComponent {
     yearSelector: true,
   };
 
-  constructor(private activeModal: NgbActiveModal) { }
+  settings = {
+    hideSubHeader: true,
+    noDataMessage:'No hay informacion disponible',
+    edit: {
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true,
+    },
+    actions: { delete: false, add: false, edit: false },
+    columns: {
+      document_number: { 
+        title: 'Factura', 
+        // valuePrepareFunction: (val) => {
+        //   return val === 'F' ? 'FACTURA' : 'NOTA DE CREDITO'
+        // }
+      },
+      date: { title: 'Fecha' },
+      status: { title: 'Estado' },
+      payment_record: { title: 'Registro de pago'},
+      amount: { title: 'Monto', valuePrepareFunction},
+    },
+  };
+
+  constructor(
+    private activeModal: NgbActiveModal,
+    private supplierService: SupplierService,  
+  ) { }
+
+  initialize(supplieId){
+      this.monthSelected = (new Date().getMonth() + 1);
+      this.yearSelected = new Date().getFullYear();
+      this.supplierSelected = supplieId;
+      this.loadData();
+  }
+
+  loadData(){
+    this.supplierService.getSuppliers()
+      .subscribe((result:any) => {
+        this.suppliers = result;
+        this.getInvoices();
+      });
+  }
+
+  getInvoices(){
+    const params = { 
+      supplier_id: this.supplierSelected,
+      year: this.yearSelected, 
+      month: this.monthSelected 
+    }
+
+    this.supplierService.getInvoicesBySupplier(params)
+      .subscribe((result:any) => {
+        this.source.load(result.invoices);
+      });
+  }
+
+  onUpdate() {
+    this.getInvoices();
+  }
 
   closeModal() {
     this.activeModal.close();
   }
 
-  onChangeTo() {
+  getReportPDF(){
+    let params = {
+      year: this.yearSelected,
+      month: this.monthSelected,
+      supplier_id: this.supplierSelected
+    }
 
+    this.supplierService.getInvoicesReport(params)
+      .subscribe(
+        (result: any) => {
+          window.open(result.data.path, '_blank');
+        }, 
+        () => {
+          alert('Error al generar reporte')
+        }
+      )
   }
+
 }

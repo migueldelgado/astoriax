@@ -119,7 +119,7 @@ export class OutputFormComponent implements OnInit {
   onChangeType(type){
     if (type === 'Ventas') this.showSales = true;
     if (type === 'Bajas') this.showSales = false;
-    if (type === 'Colacion') this.showSales = false;
+    if (type === 'Colacion') this.showSales = true;
   }
 
   onSubmit() {

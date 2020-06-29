@@ -98,18 +98,18 @@
 
       <hr>
 
-      <table class="table table-bordered" *ngIf="!source.empty()">
+      <table class="table table-bordered"> <!-- *ngIf="!source.empty()" -->
         <tr>
           <td class=""><strong>CAJA REAL:</strong></td>
-          <td class="bg-info">{{ result.totalReal | currency:'CLP':'symbol' }}</td>
+          <td class="bg-info">{{ result.totalReal }}</td>
         </tr>
         <tr>
           <td class=""><strong>CAJA PROYECTADA:</strong></td>
-          <td class="bg-info">{{ result.totalProjected | currency:'CLP':'symbol' }}</td>
+          <td class="bg-info">{{ result.totalProjected }}</td>
         </tr>
         <tr>
           <td class=""><strong>PASIVO CIRCULANTE:</strong></td>
-          <td class="bg-info">{{ result.totalInactiveOutcome | currency:'CLP':'symbol' }}</td>
+          <td class="bg-info">{{ result.totalInactiveOutcome }}</td>
         </tr>
       </table>
 
