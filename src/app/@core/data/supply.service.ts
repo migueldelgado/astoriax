@@ -6,8 +6,10 @@ import {NbAuthService} from '../../auth/services';
 
 @Injectable()
 export class SupplyService {
+  currentStore
 
   constructor(private http: HttpClient, private authService: NbAuthService) {
+    this.currentStore = this.authService.getCurrentStore();
   }
 
   public getAll() {
@@ -28,10 +30,11 @@ export class SupplyService {
   }
 
   public deleteSupply(id) {
-    return this.http.delete(`${AppConfig.API_ENDPOINT}supplies/${id}`)
+    return this.http.delete(`${AppConfig.API_ENDPOINT}supplies/${id}?store_id=${this.currentStore}`)
   }
 
   public createSupply(data) {
+    data.store_id = this.currentStore;
     return this.http.post(`${AppConfig.API_ENDPOINT}supplies`, data)
   }
 
