@@ -71,7 +71,7 @@ export class ProvidersModalComponent {
         data: result,
       });
     }, (error) => {
-      alert('Error guardando ');
+      alert('Problemas al ingresar proveedor');
     });
 
   }

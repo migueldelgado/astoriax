@@ -39,7 +39,7 @@ export class ProvidersComponent implements OnInit {
       month4: { title: 'Abril', valuePrepareFunction },
       month5: { title: 'Mayo', valuePrepareFunction },
       month6: { title: 'Junio', valuePrepareFunction },
-      // month7: { title: 'Julio', valuePrepareFunction },
+      month7: { title: 'Julio', valuePrepareFunction },
       // month8: { title: 'Agosto', valuePrepareFunction },
       // month9: { title: 'Septiembre', valuePrepareFunction },
       // month10: { title: 'Octubre', valuePrepareFunction },

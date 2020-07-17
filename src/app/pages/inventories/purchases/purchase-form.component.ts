@@ -73,7 +73,7 @@ export class PurchaseFormComponent implements OnInit {
     }
     Observable.forkJoin(
       this.storeService.getAll(true),
-      this.supplierService.getAll(true),
+      this.supplierService.getSuppliers(),
       this.supplyService.getAll(),
     ).subscribe((result: any) => {
       this.stores = result[0];
@@ -92,6 +92,7 @@ export class PurchaseFormComponent implements OnInit {
       this.purchaseService.find(this.id).subscribe(({ data }) => {
         this.data.store_id = data.store_id;
         this.data.document_number = data.document_number;
+        this.data.amount = data.amount;
         const d = new Date(data.date);
         const userTimezoneOffset = d.getTimezoneOffset() * 60000;
         this.date = {

@@ -21,7 +21,6 @@ export class SupplierService {
 
   public getSuppliers(params?) {
     const storeId = params ? params.storeId : this.currentStore;
-    // console.log('Store ID: ' + storeId);
     const urlParams = `store_id=${storeId}`;
     const url = `${AppConfig.API_ENDPOINT}suppliers?${urlParams}`;
     
