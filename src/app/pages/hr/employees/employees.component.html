@@ -1,59 +1,11 @@
 <nb-card>
   <nb-card-header> Listado de Empleados </nb-card-header>
-
   <nb-card-body>
-    <table>
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Rut</th>
-          <th>Telefono</th>
-          <th>Dirección</th>
-          <th>
-            <div
-              class="btn-group"
-              style="display: flex; justify-content: center;"
-            >
-              <button
-                *ngIf="hasPermission('AEMP')"
-                class="btn btn-outline-primary btn-icon"
-                (click)="onClickAdd()"
-              >
-                <i class="nb-plus-circled"></i>
-              </button>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{ user.first_name }} {{ user.last_name }}</td>
-          <td>{{ user.rut }}</td>
-          <td>{{ user.phone }}</td>
-          <td>{{ user.address }} {{ user.city }}</td>
-          <td>
-            <div
-              class="btn-group"
-              style="display: flex; justify-content: center;"
-            >
-              <button
-                *ngIf="hasPermission('MEMP')"
-                class="btn btn-outline-primary btn-icon"
-                (click)="onClickEdit(user.id)"
-              >
-                <i class="nb-edit"></i>
-              </button>
-              <button
-                *ngIf="hasPermission('EEMP')"
-                class="btn btn-outline-primary btn-icon"
-                (click)="onClickDelete(user.id)"
-              >
-                <i class="nb-trash"></i>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <ng2-smart-table
+      [settings]="settings"
+      [source]="source"
+      (create)="onClickAdd()"
+      (edit)="onClickEdit($event)">
+    </ng2-smart-table>
   </nb-card-body>
 </nb-card>

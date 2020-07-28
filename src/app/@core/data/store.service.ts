@@ -9,8 +9,7 @@ export class StoreService {
   constructor(private http: HttpClient) {
   }
   public getAll(isNewApi = false) {
-    const API = isNewApi ? AppConfig.API_ENDPOINT : `${AppConfig.API_ENDPOINT_OLD}/`;
-    return this.http.get(`${API}stores`)
+    return this.http.get(`${AppConfig.API_ENDPOINT}stores`)
       .map((stores: any) => {
         return stores.data;
       });
