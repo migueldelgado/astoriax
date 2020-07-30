@@ -58,7 +58,7 @@
 
     <div class="form-group row">
 
-      <div class="col-md-4 col-sm-12">
+      <!-- <div class="col-md-4 col-sm-12">
         <div class="form-group">
           <label class="">Locales</label>
           <select id="storesInput" name="storesInput" class="form-control" [(ngModel)]="storeSelected" (change)="onChangeData()">
@@ -70,7 +70,7 @@
             </option>
           </select>
         </div>
-      </div>
+      </div> -->
 
       <div class="col-md-4 col-sm-12">
         <div class="form-group">
@@ -93,7 +93,8 @@
       <ng2-smart-table
         [settings]="settings"
         [source]="source"
-        (create)="onCreate($event)">
+        (delete)="onDelete($event)"
+        (create)="onCreate()">
       </ng2-smart-table>
 
       <hr>

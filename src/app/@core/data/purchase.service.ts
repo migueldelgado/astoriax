@@ -6,23 +6,19 @@ import {NbAuthService} from '../../auth/services';
 
 @Injectable()
 export class PurchaseService {
+  currentStore;
+
   constructor(private http: HttpClient, private authService: NbAuthService) {
+    this.currentStore = this.authService.getCurrentStore();
   }
 
-  public getAll(config: any) {
-    const from = config.dateFrom;
-    const to = config.dateTo;
+  public getAll(params: any) {
+    const from = params.dateFrom;
+    const to = params.dateTo;
     const currentStore = this.authService.getCurrentStore();
+    const url = `${AppConfig.API_ENDPOINT}purchases?store_id=${currentStore}&from=${from}&to=${to}`;
 
-    let url = `${AppConfig.STORES + currentStore}/purchases?from=${from}&to=${to}`;
-
-    if (!currentStore) {
-      url = `${AppConfig.API_ENDPOINT}purchases?from=${from}&to=${to}`
-    }
-
-    return this.http.get(
-      url,
-    ).map((r: any) => r.data)
+    return this.http.get(url).map((r: any) => r.data);
   }
 
   public getPurchases(params) {

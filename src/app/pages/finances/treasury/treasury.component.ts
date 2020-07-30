@@ -20,11 +20,15 @@ export class TreasuryComponent implements OnInit {
 
   //correct way to setup table
   settings = {
+    mode: 'external',
     add: { addButtonContent: '<i class="nb-plus"></i>' },
     edit: { editButtonContent: '<i class="nb-edit"></i>' },
     delete: { deleteButtonContent: '<i class="nb-trash"></i>' },
-    actions: { columnTitle: '', position: 'right' },
-    mode: 'external',
+    actions: { 
+      columnTitle: '', 
+      position: 'right',
+      edit: false
+    },
     columns: {
       date: { title: 'Fecha', type: 'text' },
       store_name: { title: 'Local', type: 'text' },
@@ -50,9 +54,7 @@ export class TreasuryComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   dateFrom = { jsdate: getFirstDateOfByYear(new Date().getFullYear()) };
   dateTo = { jsdate: new Date() };
-  options: INgxMyDpOptions = {
-    dateFormat: 'dd-mm-yyyy',
-  };
+  options: INgxMyDpOptions = { dateFormat: 'dd-mm-yyyy' };
   store: any;
   userStores;
   storeSelected;
@@ -94,27 +96,18 @@ export class TreasuryComponent implements OnInit {
     this.getTreasuries(null, event.jsdate);
   }
 
-  onCreate(el): void {
+  onCreate(): void {
     this.router.navigate([`./new`], { relativeTo: this.route });
   }
 
-  // onClickPlus() {
-  //   const activeModal = this.modalService.open(AddTreasuryRegistryComponent, { size: 'lg', container: 'nb-layout' });
-  // }
-
-  onClickRemove() {
-    const activeModal = this.modalService.open(ConfirmationModalComponent, { size: 'sm', container: 'nb-layout' });
-    activeModal.componentInstance.modalHeader = 'Información';
-    activeModal.componentInstance.modalContent = `¿Desea eliminar registro?`;
+  onDelete(evt) {
+    this.treasuryService.deleteTreasuries(evt.data.id)
+      .subscribe(res => {
+        this.getTreasuries();
+      });
   }
 
-  onClickToggle() {
-    const activeModal = this.modalService.open(ConfirmationModalComponent, { size: 'sm', container: 'nb-layout' });
-    activeModal.componentInstance.modalHeader = 'Información';
-    activeModal.componentInstance.modalContent = `¿Desea Cambiar el estado?`;
-  }
-
-  getTreasuries(dateFrom, dateTo) {
+  getTreasuries(dateFrom?, dateTo?) {
     const storeId = this.storeSelected;
     const from: String = getDateStringByDate(dateFrom || this.dateFrom.jsdate);
     const to: String = getDateStringByDate(dateTo || this.dateTo.jsdate);

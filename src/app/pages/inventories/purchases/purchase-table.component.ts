@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { INgxMyDpOptions } from 'ngx-mydatepicker';
 import { AppConfig } from '../../../app.config';
 import { PurchaseService } from '../../../@core/data/purchase.service';
+import { getDateStringByDate } from '../../../@core/utils/dateUtils';
 import { NbAuthService } from '../../../auth/services';
 
 @Component({
@@ -50,10 +51,14 @@ export class PurchaseTableComponent implements OnInit {
         title: 'Fecha',
         type: 'string',
       },
-      name_provider: {
+      supplier: {
         title: 'Proveedor',
         type: 'string',
       },
+      status: {
+        title: 'Estado',
+        type: 'string',
+      }
     },
   };
 
@@ -101,8 +106,8 @@ export class PurchaseTableComponent implements OnInit {
   }
 
   fetch(dateFrom, dateTo) {
-    const from = dateFrom.toJSON();
-    const to = dateTo.toJSON();
+    const from = getDateStringByDate(dateFrom);
+    const to = getDateStringByDate(dateTo);
 
     this.purchaseService.getAll({ dateFrom: from, dateTo: to }).subscribe(
       (purchases: any) => {

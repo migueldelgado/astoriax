@@ -21,8 +21,11 @@ export class TreasuryService {
     }
 
     public saveTreasuries(params) {
-        console.log(params);
         return this.http.post(AppConfig.API_ENDPOINT + 'treasuries', params);
+    }
+
+    public deleteTreasuries(treasuryId) {
+        return this.http.delete(`${AppConfig.API_ENDPOINT}treasuries/${treasuryId}`);
     }
 
     private parseData(data: any): any {
