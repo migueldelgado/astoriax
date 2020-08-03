@@ -62,7 +62,7 @@ export class PurchaseTableComponent implements OnInit {
     },
   };
 
-  dateFrom = { jsdate: new Date(Date.now() - 604800000) };
+  dateFrom = { jsdate: new Date() };
   dateTo = { jsdate: new Date() };
   options: INgxMyDpOptions = {
     dateFormat: 'dd-mm-yyyy',
