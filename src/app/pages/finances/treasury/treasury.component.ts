@@ -5,12 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NbAuthService } from '../../../auth/services';
 import { INgxMyDpOptions } from 'ngx-mydatepicker';
 import { IMyDateModel } from 'ngx-mydatepicker';
-
-import { AddTreasuryRegistryComponent } from '../modal/add-treasury-registry.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmationModalComponent } from '../modal/confirmation-modal.component';
 import { getDateStringByDate, getFirstDateOfByYear } from '../../../@core/utils/dateUtils';
-
 
 @Component({
   selector: 'ngx-treasury-table',

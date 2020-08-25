@@ -57,6 +57,10 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
             link: '/pages/inventories/processes',
             permissions: ['PSS'],
           },
+          {
+            title: 'Notas de Credito',
+            link: '/pages/inventories/credits'
+          },
         ],
       },
     ],

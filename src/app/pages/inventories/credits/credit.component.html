@@ -1,0 +1,59 @@
+<nb-card>
+    <nb-card-header>Notas de credito</nb-card-header>
+    
+    <nb-card-body>
+      <div class="form-group row align-items-center">
+          <label for="dateFrom" class="col-md-2 col-sm-3">Desde:</label>
+          <div class="input-group col-md-4 col-sm-3">
+            <input 
+              ngx-mydatepicker 
+              id="dateFrom" 
+              class="form-control" 
+              style="float:none" 
+              placeholder="Select a to date" 
+              name="dateFrom" 
+              [(ngModel)]="dateFrom" 
+              [options]="options" 
+              #from="ngx-mydatepicker" 
+              (dateChanged)="onChangeDateFrom($event)" 
+              required />
+            
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-primary btn-icon" (click)="from.toggleCalendar()">
+                  <i class="fa fa-calendar"></i>
+              </button>
+            </span>
+          </div>
+          <label for="dateTo" class="col-md-2 col-sm-3">Hasta:</label>
+          <div class="input-group col-md-4 col-sm-3">
+            <input 
+              ngx-mydatepicker 
+              id="dateTo" 
+              class="form-control" 
+              style="float:none" 
+              placeholder="Select a to date" 
+              name="dateTo" 
+              [(ngModel)]="dateTo" 
+              [options]="options" 
+              #to="ngx-mydatepicker" 
+              (dateChanged)="onChangeDateTo($event)" 
+              required />
+  
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-primary btn-icon" (click)="to.toggleCalendar()">
+                    <i class="fa fa-calendar"></i>
+                </button>
+            </span>
+          </div>
+      </div>
+      <ng2-smart-table
+        [settings]="settings"
+        [source]="source"
+        (create)="onAdd($event)"
+        (edit)="onEdit($event)"
+        (delete)="onDelete($event)">
+      </ng2-smart-table>
+    </nb-card-body>
+  
+</nb-card>
+  

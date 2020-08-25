@@ -33,14 +33,14 @@ export class ProvidersComponent implements OnInit {
     },
     columns: {
       name: { title: '' },
-      month1: { title: 'Enero', valuePrepareFunction },
+      // month1: { title: 'Enero', valuePrepareFunction },
       month2: { title: 'Febrero', valuePrepareFunction },
       month3: { title: 'Marzo', valuePrepareFunction },
       month4: { title: 'Abril', valuePrepareFunction },
       month5: { title: 'Mayo', valuePrepareFunction },
       month6: { title: 'Junio', valuePrepareFunction },
       month7: { title: 'Julio', valuePrepareFunction },
-      // month8: { title: 'Agosto', valuePrepareFunction },
+      month8: { title: 'Agosto', valuePrepareFunction },
       // month9: { title: 'Septiembre', valuePrepareFunction },
       // month10: { title: 'Octubre', valuePrepareFunction },
       // month11: { title: 'Noviembre', valuePrepareFunction },
@@ -72,13 +72,7 @@ export class ProvidersComponent implements OnInit {
   }
 
   onClickView(evt) {
-    const activeModal = this.modalService.open(ProviderDetailComponent, {
-      size: 'lg',
-      //container: 'nb-layout',
-      windowClass: 'modal-xxl',
-    });
-    activeModal.componentInstance.initialize(evt.data.supplier_id);
-    // activeModal.componentInstance.OnInit
+    this.router.navigate([`${evt.data.supplier_id}`], { relativeTo: this.route });
   }
 
   numberWithCommas(val){

@@ -13,10 +13,22 @@ export class PurchaseService {
   }
 
   public getAll(params: any) {
-    const from = params.dateFrom;
-    const to = params.dateTo;
-    const currentStore = this.authService.getCurrentStore();
-    const url = `${AppConfig.API_ENDPOINT}purchases?store_id=${currentStore}&from=${from}&to=${to}`;
+
+    let query = `?store_id=${this.authService.getCurrentStore()}`;
+    
+    if (params.dateFrom) {
+      query += `&from=${params.dateFrom}`
+    }
+
+    if (params.dateTo) {
+      query += `&to=${params.dateTo}`
+    }
+
+    if (params.isPaid !== null && typeof params.isPaid !== 'undefined') {
+      query += `&is_paid=${params.isPaid}`
+    }
+
+    const url = `${AppConfig.API_ENDPOINT}purchases${query}`;
 
     return this.http.get(url).map((r: any) => r.data);
   }
@@ -54,6 +66,8 @@ export class PurchaseService {
   }
 
   public create(data) {
+    data.is_paid = 0;
+    console.log(data);
     return this.http.post(`${AppConfig.API_ENDPOINT}purchases`, data)
   }
 

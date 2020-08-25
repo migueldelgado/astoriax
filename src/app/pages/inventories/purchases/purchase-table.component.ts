@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { INgxMyDpOptions } from 'ngx-mydatepicker';
-import { AppConfig } from '../../../app.config';
 import { PurchaseService } from '../../../@core/data/purchase.service';
 import { getDateStringByDate } from '../../../@core/utils/dateUtils';
 import { NbAuthService } from '../../../auth/services';
@@ -22,6 +21,15 @@ import { NbAuthService } from '../../../auth/services';
   ],
 })
 export class PurchaseTableComponent implements OnInit {
+
+  dateFrom = { jsdate: new Date() };
+  dateTo = { jsdate: new Date() };
+  options: INgxMyDpOptions = {
+    dateFormat: 'dd-mm-yyyy',
+  };
+  source: LocalDataSource = new LocalDataSource();
+  firstLoad = false;
+
   settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -40,6 +48,9 @@ export class PurchaseTableComponent implements OnInit {
     actions: {
       columnTitle: 'Acciones',
       position: 'right',
+      add: false,
+      edit: false,
+      delete: false
     },
     mode: 'external',
     columns: {
@@ -55,20 +66,16 @@ export class PurchaseTableComponent implements OnInit {
         title: 'Proveedor',
         type: 'string',
       },
-      status: {
+      is_paid: {
         title: 'Estado',
         type: 'string',
+        valuePrepareFunction: function(val: boolean) {
+          if (val) return 'PAGADA';
+          else return 'PENDIENTE';
+        }
       }
     },
   };
-
-  dateFrom = { jsdate: new Date() };
-  dateTo = { jsdate: new Date() };
-  options: INgxMyDpOptions = {
-    dateFormat: 'dd-mm-yyyy',
-  };
-  source: LocalDataSource = new LocalDataSource();
-  firstLoad = false;
 
   constructor(
     private purchaseService: PurchaseService,

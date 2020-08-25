@@ -33,7 +33,6 @@ export class PurchaseFormComponent implements OnInit {
   data = {
     store_id: null,
     supplier_id: null,
-    type: 'F',
     document_number: null,
     date: new Date(),
     supplies: [],
@@ -130,9 +129,9 @@ export class PurchaseFormComponent implements OnInit {
 
   onSubmit() {
     const date = getDateStringByDate(this.date.jsdate);
-    const data = Object.assign({}, this.data, {
+    const data: any = Object.assign({}, this.data, {
       date,
-      id: this.id,
+      id: this.id
     });
 
     if (this.id) {

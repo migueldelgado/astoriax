@@ -22,6 +22,7 @@ import { PurchaseService } from './purchase.service';
 import { UserService } from './user.service';
 import { RoleService } from './role.service';
 import { ProcessService } from './process.service';
+import { CreditService } from './credit.service';
 
 const SERVICES = [
   UsersService,
@@ -46,6 +47,7 @@ const SERVICES = [
   OutputService,
   ProcessService,
   DailySalesService,
+  CreditService
 ];
 
 @NgModule({
