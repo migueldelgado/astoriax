@@ -27,7 +27,6 @@
       (ngModelChange)="onChangeStore()"
       required
     >
-      <option [value]="''">Todos</option>
       <option
         *ngFor="let s of user?.stores"
         [value]="s.id"

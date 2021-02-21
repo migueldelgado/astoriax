@@ -56,6 +56,7 @@ export class TreasuryFormComponent implements OnInit {
     amount: any;
     config: any;
     loading = true;
+    totalPurchases: any;
   
     constructor(
       private classificationService: ClassificationService,
@@ -175,14 +176,18 @@ export class TreasuryFormComponent implements OnInit {
     getPurchases() {
         const params = {
             storeId: this.selectedStore,
-            supplierId: this.selectedSupplier,
-            type: 'F', // F: Factura
-            status: ['E', 'C'] // E: Pendiente, C: Credito, P: Pagada
+            supplierId: this.selectedSupplier
         }
 
         this.purchaseService.getPurchases(params)
             .subscribe((purchases: any) => {
-                this.purchases = purchases;
+                this.purchases = purchases.filter(p => p.amount !== p.amount_paid);
+                if (this.purchases.length) {
+                    this.totalPurchases = 
+                        this.purchases.reduce((a, b) => a + (b.amount - b.amount_paid), 0)
+                    console.log(this.totalPurchases);
+                }
+                
                 this.loading = false;
             })
     }
@@ -195,27 +200,15 @@ export class TreasuryFormComponent implements OnInit {
         this.router.navigate([`../`], { relativeTo: this.route });
     }
 
-    onSubmit() {
+    async onSubmit() {
         const message = this.validation();
         if (message){
             this.showToast({ message });
             return false;
         }
 
-        const params = this.getParamsByTransferType();
-        console.log(params);
-        this.treasuryService.saveTreasuries(params)
-            .subscribe(
-                treasury => {
-                    this.redirectToTreasury();
-                },
-                error => {
-                    this.showToast({});
-                }
-            );
-    }
+        let isPurchaseFail;
 
-    getParamsByTransferType() {
         let params: any = {
             store_id: this.selectedStore,
             transfer_type: this.selectedTransferType,
@@ -232,13 +225,34 @@ export class TreasuryFormComponent implements OnInit {
                 params.cheque_number = this.checkNumber;
             }
             if (this.showSuppliersInput()) {
+
+                for(const purchase of this.getPurchasesSelected()) {
+                    if (purchase.amount_paid === 0) {
+                        const data = {
+                            amount_paid: purchase.amount
+                        };
+                        debugger
+                        const result = await this.purchaseService.update(purchase.id, data).toPromise();
+                        return false;
+                    } else return true
+                }
+
                 params.supplier_id = this.selectedSupplier;
                 params.payment_record = this.paymentRecord;
                 params.purchases = this.getPurchasesSelected();
             }
         }
+        debugger
+        if (isPurchaseFail) {
+            this.showToast({});
+            return;
+        }
 
-        return params;
+        this.treasuryService.saveTreasuries(params)
+            .subscribe(
+                treasury => this.redirectToTreasury(),
+                error => this.showToast({})
+            );
     }
 
     validation(): string {

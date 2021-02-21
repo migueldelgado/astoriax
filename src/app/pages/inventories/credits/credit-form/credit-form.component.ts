@@ -54,7 +54,7 @@ export class CreditFormComponent implements OnInit {
         const params = {
             isPaid: 0
         };
-        this.purchaseService.getAll(params)
+        this.purchaseService.getPurchases(params)
             .subscribe(purchases => {
                 this.purchases = purchases;
             });

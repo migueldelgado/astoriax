@@ -12,48 +12,30 @@ export class PurchaseService {
     this.currentStore = this.authService.getCurrentStore();
   }
 
-  public getAll(params: any) {
+  public getPurchases(params: any) {
 
     let query = `?store_id=${this.authService.getCurrentStore()}`;
+
+    if (params.supplierId) {
+      query += `&supplier_id=${params.supplierId}`;
+    }
     
     if (params.dateFrom) {
-      query += `&from=${params.dateFrom}`
+      query += `&from=${params.dateFrom}`;
     }
 
     if (params.dateTo) {
-      query += `&to=${params.dateTo}`
+      query += `&to=${params.dateTo}`;
     }
 
     if (params.isPaid !== null && typeof params.isPaid !== 'undefined') {
-      query += `&is_paid=${params.isPaid}`
+      query += `&is_paid=${params.isPaid}`;
     }
 
     const url = `${AppConfig.API_ENDPOINT}purchases${query}`;
 
     return this.http.get(url).map((r: any) => r.data);
   }
-
-  public getPurchases(params) {
-
-    const storeId = params.storeId || '';
-    const supplierId = params.supplierId || '';
-    const type = params.type || '';
-    const status = params.status || [];
-    let statusQuery = '';
-
-    status.forEach(element => {
-      statusQuery += '&status[]=' + element;
-    });
-
-    const urlParams = `store_id=${storeId}&supplier_id=${supplierId}&type=${type + statusQuery}`;
-    const url = `${AppConfig.API_ENDPOINT}purchases?${urlParams}`;
-    
-    return this.http.get(url)
-      .map((purchases: any) => {
-        return purchases.data;
-      });
-  }
-
 
   public find(id) {
     return this.http.get<any>(

@@ -20,14 +20,13 @@ export class TreasuryComponent implements OnInit {
     add: { addButtonContent: '<i class="nb-plus"></i>' },
     edit: { editButtonContent: '<i class="nb-edit"></i>' },
     delete: { deleteButtonContent: '<i class="nb-trash"></i>' },
-    actions: { 
+    actions: {
       columnTitle: '', 
       position: 'right',
       edit: false
     },
     columns: {
       date: { title: 'Fecha', type: 'text' },
-      store_name: { title: 'Local', type: 'text' },
       status: { 
         title: 'Estado', 
         type: 'text',
@@ -38,7 +37,11 @@ export class TreasuryComponent implements OnInit {
           return row.status === 0 ? 'INACTIVE' : 'ACTIVE';
         }
       },
-      transfer_type: { title: 'Tipo de movimiento', type: 'text' },
+      transfer_type: {
+        title: 'Tipo de movimiento', 
+        type: 'text',
+        valuePrepareFunction: (cell, row) => row.transfer_type === 'I' ? 'INGRESO' : 'EGRESO'
+      },
       // paymentType: { title: 'Forma de pago', type: 'text' },
       classification: { title: 'Clasificacion', type: 'text' },
       // reason: { title: 'Motivo', type: 'text' },
@@ -80,10 +83,6 @@ export class TreasuryComponent implements OnInit {
     this.getTreasuries(null, null);
   }
 
-  onChangeData() {
-    this.getTreasuries(null, null);
-  }
-
   onChangeDateFrom(event: IMyDateModel) {
     this.getTreasuries(event.jsdate, null);
   }
@@ -104,12 +103,10 @@ export class TreasuryComponent implements OnInit {
   }
 
   getTreasuries(dateFrom?, dateTo?) {
-    const storeId = this.storeSelected;
     const from: String = getDateStringByDate(dateFrom || this.dateFrom.jsdate);
     const to: String = getDateStringByDate(dateTo || this.dateTo.jsdate);
-    const type: String = this.transferType;
 
-    this.treasuryService.getTreasuries(storeId, from, to, type)
+    this.treasuryService.getTreasuries(from, to)
       .subscribe((data: any) => {
         this.source = data.treasuries;
         this.result.totalReal = data.totalReal;

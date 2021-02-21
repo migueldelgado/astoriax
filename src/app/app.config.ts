@@ -393,13 +393,9 @@ const permissions = [
 
 
 export class AppConfig {
-  public static API_ENDPOINT = 'http://homestead.test/api/';
+  public static API_ENDPOINT = 'http://localhost:8080/api/';
+  public static IMAGE_PREFIX = 'http://localhost:8080/storage';
   public static API_ENDPOINT_OLD = '/api';
-  
-  // public static   API_ENDPOINT = 'http://api-beta.astoria.cl/api/';
-  // public static API_ENDPOINT = 'http://api-dev.astoria.cl/api/';
-  public static IMAGE_PREFIX = 'http://api.astoria.cl/storage';
-
 
   public static STORES = AppConfig.API_ENDPOINT + 'stores/';
 

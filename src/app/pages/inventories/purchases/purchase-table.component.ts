@@ -116,7 +116,7 @@ export class PurchaseTableComponent implements OnInit {
     const from = getDateStringByDate(dateFrom);
     const to = getDateStringByDate(dateTo);
 
-    this.purchaseService.getAll({ dateFrom: from, dateTo: to }).subscribe(
+    this.purchaseService.getPurchases({ dateFrom: from, dateTo: to }).subscribe(
       (purchases: any) => {
         this.source.load(purchases);
         this.firstLoad = true;

@@ -5,6 +5,7 @@ import { SupplierService } from '../../../@core/data/supplier.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddInvoiceProviderComponent } from '../modal/add-invoice-provider.component';
 
 @Component({
   selector: 'ngx-provider-detail',
