@@ -2,10 +2,10 @@
   <nb-card>
     <nb-card-header> {{id ? 'Editar' : 'Nueva'}} salida</nb-card-header>
     <nb-card-body>
+
       <div class="row align-items-baseline">
-        <div class="col-sm-7 row align-items-center">
-          <div class="col-md-2 col-sm-3"><label class="">Fecha</label></div>
-          <div class="col-md-10 col-sm-9 input-group">
+          <label class="col-md-2 col-lg-2">Fecha</label>
+          <div class="col-md-10 col-lg-6 input-group">
             <input
               ngx-mydatepicker
               class="form-control"
@@ -18,64 +18,44 @@
               required
             />
             <span class="input-group-append">
-              <button
-                type="button"
-                class="btn btn-primary"
-                (click)="dp.clearDate()"
-              >
-                <i class="fa fa-times"></i>
-              </button>
-              <button
-                type="button"
-                class="btn btn-primary"
-                (click)="dp.toggleCalendar()"
-              >
-                <i class="fa fa-calendar"></i>
-              </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="dp.clearDate()"
+                >
+                  <i class="fa fa-times"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="dp.toggleCalendar()"
+                >
+                  <i class="fa fa-calendar"></i>
+                </button>
             </span>
           </div>
-        </div>
-        <div class="form-group col-sm-5 row align-items-center">
-          <label class="col-md-2 col-sm-3">Tienda</label>
-          <div class="col-md-10 col-sm-9">
-            <select
-              name="store"
-              class="form-control"
-              [(ngModel)]="storeId"
-              required
-            >
-              <option *ngIf="!storeId" [value]="''"
-                >Seleccione Tienda...</option
-              >
-              <option *ngFor="let s of stores" [value]="s.id">
-                {{ s.name }}
-              </option>
-            </select>
-          </div>
-        </div>
+
       </div>
+
       <div class="row align-items-baseline">
-        <div class="form-group col-sm-7 row align-items-center">
-          <label class="col-sm-2">Tipo de Salida</label>
-          <div class="col-sm-9">
+
+          <label class="col-md-2 col-lg-2">Tipo de Salida</label>
+          <div class="col-md-10 col-lg-6 input-group">
             <select
               name="type"
               class="form-control"
               [(ngModel)]="data.type"
+              (change)="onChangeType(data.type)"
               required
             >
-              <option *ngIf="!data.type" [value]="''">
-                Seleccione tipo de salida...
-              </option>
               <option *ngFor="let s of types" [value]="s"> {{ s }} </option>
             </select>
           </div>
-        </div>
+
       </div>
-    </nb-card-body>
-    <nb-card-body>
+
       <nb-tabset>
-        <nb-tab tabTitle="Insumos">
+        <nb-tab tabTitle="Insumos" *ngIf="!showSales" [active]="!showSales">
           <table>
             <thead>
               <tr>
@@ -111,13 +91,13 @@
             </tbody>
           </table>
         </nb-tab>
-        <nb-tab tabTitle="Recetas">
+        <nb-tab tabTitle="Recetas" [active]="showSales">
           <table>
             <thead>
               <tr>
                 <th>Receta</th>
                 <th>Cantidad</th>
-                <th>Razón</th>
+                <th *ngIf="!showSales">Razón</th>
               </tr>
             </thead>
             <tbody>
@@ -133,7 +113,7 @@
                     class="form-control"
                   />
                 </td>
-                <td>
+                <td *ngIf="!showSales">
                   <textarea
                     name="reason{{i}}"
                     required
@@ -148,6 +128,7 @@
           </table>
         </nb-tab>
       </nb-tabset>
+
     </nb-card-body>
     <nb-card-footer>
       <button type="submit" class="btn btn-primary">Guardar</button>

@@ -6,12 +6,12 @@ import { NbAuthService } from '../../auth/services';
 
 @Injectable()
 export class OutputService {
+  currentStore = this.authService.getCurrentStore();
   constructor(private http: HttpClient, private authService: NbAuthService) {}
 
   public getAll(from, to) {
-    const currentStore = this.authService.getCurrentStore();
-    let url = `${AppConfig.STORES + currentStore}/outputs`;
-    if (!currentStore) {
+    let url = `${AppConfig.STORES + this.currentStore}/outputs`;
+    if (!this.currentStore) {
       url = `${AppConfig.API_ENDPOINT}outputs`;
     }
     return this.http.get(`${url}?from=${from}&to=${to}`);
@@ -30,6 +30,7 @@ export class OutputService {
   }
 
   public create(data) {
+    data.store_id = this.currentStore;
     return this.http.post(`${AppConfig.API_ENDPOINT}outputs`, data);
   }
 

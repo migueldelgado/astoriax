@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SupplyService } from '../../../@core/data/supply.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { INgxMyDpOptions } from 'ngx-mydatepicker';
-import { DailyInventoryService } from '../../../@core/data/daily-inventory.service';
 import { NbAuthService } from '../../../auth/services';
-import { StoreService } from '../../../@core/data/store.service';
 import { OutputService } from '../../../@core/data/output.service';
 import { RecipeService } from '../../../@core/data/recipe.service';
 import { Observable } from 'rxjs/Observable';
@@ -12,84 +10,32 @@ import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'ngx-output-form',
   templateUrl: './output-form.component.html',
-  styles: [
-    `
-      nb-card {
-        transform: translate3d(0, 0, 0);
-      }
-      table {
-        line-height: 1.5em;
-        border-collapse: collapse;
-        border-spacing: 0;
-        display: table;
-        width: 100%;
-        max-width: 100%;
-        overflow: auto;
-        word-break: normal;
-        word-break: keep-all;
-      }
-
-      table tr > *:first-child {
-        width: 15% !important;
-        max-width: 120px !important;
-        min-width: 100px !important;
-        text-align: center;
-      }
-
-      table tr td {
-        position: relative;
-        padding: 0.875rem 1.25rem;
-        border: 1px solid #342e73;
-        vertical-align: middle;
-      }
-
-      table th {
-        position: relative;
-        padding: 0.875rem 1.25rem;
-        border: 1px solid #342e73;
-        vertical-align: middle;
-        padding: 0.875rem 1.25rem;
-        padding-right: 1.75rem;
-        font-family: Exo;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.25;
-        color: #ffffff;
-      }
-    `,
-  ],
+  styleUrls: ['./output-form.component.scss']
 })
 export class OutputFormComponent implements OnInit {
+
   id: number;
   storeId;
-  stores: Array<any> = [];
-  supplies: Array<any> = [];
-  recipes: Array<any> = [];
+  output = { recipes: [], supplies: [] };
+  showSales = true;
+  types = [ 'Ventas', 'Bajas', 'Colacion' ];
+
+  date = { jsdate: new Date(), };
+  data = { type: this.types[0], supplies: [], recipes: [], };
+
   options: INgxMyDpOptions = {
     dateFormat: 'dd-mm-yyyy',
-  };
-  date = {
-    jsdate: new Date(),
-  };
-  types = ['Ventas', 'Bajas', 'Colación'];
-  data = {
-    supplies: [],
-    recipes: [],
-    type: '',
   };
 
   constructor(
     private supplyService: SupplyService,
-    private dailyInventoryService: DailyInventoryService,
     private outputService: OutputService,
     private recipeService: RecipeService,
-    private storeService: StoreService,
     private authService: NbAuthService,
     private route: ActivatedRoute,
     private router: Router,
   ) {
     this.storeId = this.authService.getCurrentStore();
-    this.data.type = this.types[0];
   }
 
   ngOnInit() {
@@ -98,67 +44,103 @@ export class OutputFormComponent implements OnInit {
       return;
     }
 
+    this.route.params.subscribe(params => {
+      if (params.id) this.id = params.id;
+      this.loadData();
+    });
+  }
+
+  loadData(){
+    if (this.id > 0){
+      //EDIT
+      this.outputService.find(this.id).subscribe(({ data }: any) => {
+        const d = new Date(data.date);
+        this.date = {
+          jsdate: new Date(d.getTime() + d.getTimezoneOffset() * 60 * 1000),
+        };
+        this.output.recipes = data.recipes;
+        this.output.supplies = data.supplies;
+
+        this.data.type = data.type;
+    
+        this.onChangeType(this.data.type);
+        this.loadSupplyAndRecipes();
+      });
+    }else{
+      //NEW
+      this.loadSupplyAndRecipes();
+    }
+  }
+
+  loadSupplyAndRecipes(){
     Observable.forkJoin(
-      this.storeService.getAll(true),
       this.recipeService.getAll(),
       this.supplyService.getAll(),
-    ).subscribe((result: Array<any>) => {
-      this.stores = result[0];
-      this.recipes = result[1];
-      this.supplies = result[2].data;
-      this.route.params.subscribe(params => {
-        if (!params.id || params.id.toLowerCase() === 'new') {
-          this.preload([], []);
-          return;
-        }
-        this.loadOutput(params.id);
-      });
+    ).subscribe((result: Array<any>) => {   
+      this.processData(result[0], result[1].data);
     });
   }
 
-  loadOutput(id) {
-    this.id = id;
-    this.outputService.find(id).subscribe(({ data }: any) => {
-      const d = new Date(data.date);
-      this.storeId = data.store_id;
-      this.date = {
-        jsdate: new Date(d.getTime() + d.getTimezoneOffset() * 60 * 1000),
-      };
-      this.data = { ...this.data, ...data, supplies: [], recipes: [] };
-      this.preload(data.recipes, data.supplies);
+  processData(recipes, supplies){
+    this.data.recipes = recipes.map(recipe => {
+      const outputRecipe = this.output.recipes.find(rec => rec.id === recipe.id);
+
+      let finalRecipe: any = {
+        id: recipe.id,
+        name: recipe.name,
+        quantity: 0,
+        reason: ''
+      }
+      
+      if (outputRecipe){
+        finalRecipe.quantity = outputRecipe.pivot.quantity;
+        finalRecipe.reason = outputRecipe.pivot.reason;
+      }
+      return { ...finalRecipe };
+    });
+
+
+    this.data.supplies = supplies.map(supply => {
+      const outputSupply = this.output.supplies.find(rec => rec.id === supply.id);
+      let finalSupply: any = {
+        id: supply.id,
+        name: supply.name,
+        quantity: 0,
+        reason: ''
+      }
+      if (outputSupply){
+        finalSupply.quantity = outputSupply.pivot.quantity;
+        finalSupply.reason = outputSupply.pivot.reason;
+      }
+      return { ...finalSupply };
     });
   }
 
-  preload(recipes: Array<any>, supplies: Array<any>) {
-    this.data.recipes = this.recipes.map(r => {
-      const selected = recipes.find(rec => rec.id === r.id);
-      const d = selected ? selected.pivot : { quantity: '0', reason: '' };
-      return { ...r, ...d };
-    });
-
-    this.data.supplies = this.supplies.map(r => {
-      const selected = supplies.find(rec => rec.id === r.id);
-      const d = selected ? selected.pivot : { quantity: '0', reason: '' };
-      return { ...r, ...d };
-    });
+  onChangeType(type){
+    if (type === 'Ventas') this.showSales = true;
+    if (type === 'Bajas') this.showSales = false;
+    if (type === 'Colacion') this.showSales = true;
   }
 
   onSubmit() {
     const dt = this.date.jsdate;
     const date = `${dt.getFullYear()}-${dt.getMonth() + 1}-${dt.getDate()}`;
-    const data = {
-      store_id: this.storeId,
-      ...this.data,
+
+    const data: any = {
+      type: this.data.type,
+      amount: 0,
       date,
     };
 
-    data.supplies = this.data.supplies
-      .filter(d => parseInt(d.quantity, 10) > 0)
-      .map(s => ({
-        supply_id: s.id,
-        quantity: s.quantity,
-        reason: s.reason,
-      }));
+    if (data.type !== 'Ventas') {
+      data.supplies = this.data.supplies
+        .filter(d => parseInt(d.quantity, 10) > 0)
+        .map(s => ({
+          supply_id: s.id,
+          quantity: s.quantity,
+          reason: s.reason,
+        }));
+    }
 
     data.recipes = this.data.recipes
       .filter(d => parseInt(d.quantity, 10) > 0)
@@ -178,24 +160,24 @@ export class OutputFormComponent implements OnInit {
       return;
     }
 
-    const observable = this.id
-      ? this.outputService.update(this.id, {
-          ...data,
-        })
-      : this.outputService.create(data);
+    let observable: any;
+
+    if (this.id > 0) {
+      observable = this.outputService.update(this.id, { ...data, })
+    }else{
+      observable = this.outputService.create(data);
+    }
+
     observable.subscribe(
-      result => {
-        this.cancel();
-      },
-      () => {
-        alert('Error al guardar inventario');
-      },
+      result => { this.cancel(); },
+      () => { alert('Error al guardar inventario'); },
     );
   }
 
   cancel() {
     this.router.navigate(['/pages/inventories/outputs']);
   }
+
   hasPermission(key: string): boolean {
     return this.authService.hasPermission(key);
   }

@@ -5,6 +5,7 @@ import { ProvidersComponent } from './providers/providers.component';
 import { StoresComponent } from './stores/stores.component';
 import { StoresFormComponent } from './stores/stores-form.component';
 import { EmployeesComponent } from './employees/employees.component';
+import { EmployeeFormComponent } from './employees/employee-form/employee-form.component';
 import { RoleFormComponent } from './roles/role-form.component';
 import { RoleTableComponent } from './roles/role-table.component';
 
@@ -28,6 +29,14 @@ const routes: Routes = [
       {
         path: 'employees',
         component: EmployeesComponent,
+      },
+      {
+        path: 'employees/new',
+        component: EmployeeFormComponent,
+      },
+      {
+        path: 'employees/:id',
+        component: EmployeeFormComponent,
       },
       {
         path: 'roles',

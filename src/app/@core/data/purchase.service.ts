@@ -6,25 +6,36 @@ import {NbAuthService} from '../../auth/services';
 
 @Injectable()
 export class PurchaseService {
+  currentStore;
+
   constructor(private http: HttpClient, private authService: NbAuthService) {
+    this.currentStore = this.authService.getCurrentStore();
   }
 
-  public getAll(config: any) {
-    const from = config.dateFrom;
-    const to = config.dateTo;
-    const currentStore = this.authService.getCurrentStore();
+  public getPurchases(params: any) {
 
-    let url = `${AppConfig.STORES + currentStore}/purchases?from=${from}&to=${to}`;
+    let query = `?store_id=${this.authService.getCurrentStore()}`;
 
-    if (!currentStore) {
-      url = `${AppConfig.API_ENDPOINT}purchases?from=${from}&to=${to}`
+    if (params.supplierId) {
+      query += `&supplier_id=${params.supplierId}`;
+    }
+    
+    if (params.dateFrom) {
+      query += `&from=${params.dateFrom}`;
     }
 
-    return this.http.get(
-      url,
-    ).map((r: any) => r.data)
-  }
+    if (params.dateTo) {
+      query += `&to=${params.dateTo}`;
+    }
 
+    if (params.isPaid !== null && typeof params.isPaid !== 'undefined') {
+      query += `&is_paid=${params.isPaid}`;
+    }
+
+    const url = `${AppConfig.API_ENDPOINT}purchases${query}`;
+
+    return this.http.get(url).map((r: any) => r.data);
+  }
 
   public find(id) {
     return this.http.get<any>(
@@ -37,6 +48,8 @@ export class PurchaseService {
   }
 
   public create(data) {
+    data.is_paid = 0;
+    console.log(data);
     return this.http.post(`${AppConfig.API_ENDPOINT}purchases`, data)
   }
 

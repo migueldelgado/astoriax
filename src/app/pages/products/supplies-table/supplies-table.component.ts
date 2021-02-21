@@ -4,16 +4,6 @@ import { SupplyService } from '../../../@core/data/supply.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbAuthService } from '../../../auth/services';
 import { HasPermissionInterface } from '../../../has-permission.interface';
-import { AppConfig } from '../../../app.config';
-
-function sortByNumber(direction: number, a: string, b: string) {
-  const numberA = parseInt(a, 10);
-  const numberB = parseInt(b, 10);
-  if (direction > 0) {
-    return numberA - numberB;
-  }
-  return numberB - numberA;
-}
 
 @Component({
   selector: 'ngx-supplies-table',
@@ -26,17 +16,18 @@ function sortByNumber(direction: number, a: string, b: string) {
     `,
   ],
 })
+
 export class SuppliesTableComponent implements OnInit, HasPermissionInterface {
   settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
+      // createButtonContent: '<i class="nb-checkmark"></i>',
+      // cancelButtonContent: '<i class="nb-close"></i>',
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
+      // saveButtonContent: '<i class="nb-checkmark"></i>',
+      // cancelButtonContent: '<i class="nb-close"></i>',
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -53,24 +44,24 @@ export class SuppliesTableComponent implements OnInit, HasPermissionInterface {
     columns: {
       name: {
         title: 'Nombre',
-        type: 'string',
+        type: 'text',
       },
       classification: {
         title: 'Clasificación',
-        type: 'string',
+        type: 'text',
       },
       type: {
         title: 'Tipo',
-        type: 'string',
+        type: 'text',
       },
       price: {
         title: 'Precio',
-        type: 'integer',
+        type: 'text',
         compareFunction: sortByNumber,
       },
       stock_min: {
         title: 'Stock Minimo',
-        type: 'number',
+        type: 'text',
         compareFunction: sortByNumber,
       },
     },
@@ -140,4 +131,13 @@ export class SuppliesTableComponent implements OnInit, HasPermissionInterface {
   hasPermission(key: string): boolean {
     return this.authService.hasPermission(key);
   }
+}
+
+function sortByNumber(direction: number, a: string, b: string) {
+  const numberA = parseInt(a, 10);
+  const numberB = parseInt(b, 10);
+  if (direction > 0) {
+    return numberA - numberB;
+  }
+  return numberB - numberA;
 }

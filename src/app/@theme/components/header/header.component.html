@@ -4,7 +4,7 @@
   <div class="logo-containter">
     <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
     <div class="logo" (click)="goToHome()">
-        <img src="assets/images/astoria-logo.jpg" />
+        <img src="assets/images/astoria_logo.png" />
     </div>
   </div>
   <!-- <ngx-theme-switcher></ngx-theme-switcher> -->
@@ -27,7 +27,6 @@
       (ngModelChange)="onChangeStore()"
       required
     >
-      <option [value]="''">Todos</option>
       <option
         *ngFor="let s of user?.stores"
         [value]="s.id"

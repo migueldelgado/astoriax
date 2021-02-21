@@ -1,112 +1,98 @@
-import {Component, OnInit} from '@angular/core';
-import {LocalDataSource} from 'ng2-smart-table';
-import {ActivatedRoute, Router} from '@angular/router';
-import {INgxMyDpOptions} from 'ngx-mydatepicker';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {AddInvoiceProviderComponent} from '../modal/add-invoice-provider.component';
-import {ProviderDetailComponent} from '../modal/provider-detail.component';
+import { Component, OnInit } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProviderDetailComponent } from '../modal/provider-detail.component';
+import { numberWithCommas, valuePrepareFunction } from '../../../@core/utils/utils';
+import { SupplierService } from '../../../@core/data/supplier.service';
 
 
 @Component({
   selector: 'ngx-providers-table',
   templateUrl: './providers.component.html',
-  styles: [`
-    nb-card {
-      transform: translate3d(0, 0, 0);
-    }
-    nb-card-body {
-      min-height: 400px;
-    }
-    table {
-        line-height: 1.5em;
-      border-collapse: collapse;
-      border-spacing: 0;
-      display: table;
-      width: 100%;
-      max-width: 100%;
-      overflow: auto;
-      word-break: normal;
-      word-break: keep-all;
-    }
-    table tr td:first-child {
-      width: 25%;
-    }
-    table tr td {
-      width: 15%;
-      position: relative;
-      padding: 0.875rem 1.25rem;
-      border: 1px solid #342e73;
-      vertical-align: middle;
-    }
-    table th {
-      position: relative;
-      width: 15%;
-      padding: 0.875rem 1.25rem;
-      border: 1px solid #342e73;
-      vertical-align: middle;
-      padding: 0.875rem 1.25rem;
-      padding-right: 1.75rem;
-      font-family: Exo;
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.25;
-      color: #ffffff;
-    }
-    table th:first-child {
-      width: 25%;
-    }
-    total-table td, tfoot td {
-      background-color: #342e73;
-      border: 1px solid #342e73;
-    }
-    total-table td:first-child, tfoot td:first-child {
-      background-color: #231f4e;
-    }
-    table .btn-icon {
-      padding: 0.25rem 0.5rem !important;
-    }
-    .pdf-container {
-      display: flex;
-      justify-content: flex-end;
-      padding: 0 0 1rem;
-    }
-  `],
+  styleUrls: ['./providers.component.scss']
 })
 export class ProvidersComponent implements OnInit {
 
-  dateFrom = {jsdate: new Date()};
-  dateTo = {jsdate: new Date()};
-  options: INgxMyDpOptions = {
-    dateFormat: 'dd-mm-yyyy',
-  };
+  total: any;
+  tax: any;
   source: LocalDataSource = new LocalDataSource();
-  store: any;
+
+  settings = {
+    mode: 'external',
+    noDataMessage:'No hay informacion disponible',
+    actions: {
+      columnTitle: '',
+      add: false,
+      delete: false,
+      position: 'right'
+    },
+    edit: {
+      editButtonContent: '<i class="nb-search"></i>',
+      confirmSave: true,
+    },
+    columns: {
+      name: { title: '' },
+      // month1: { title: 'Enero', valuePrepareFunction },
+      month2: { title: 'Febrero', valuePrepareFunction },
+      month3: { title: 'Marzo', valuePrepareFunction },
+      month4: { title: 'Abril', valuePrepareFunction },
+      month5: { title: 'Mayo', valuePrepareFunction },
+      month6: { title: 'Junio', valuePrepareFunction },
+      month7: { title: 'Julio', valuePrepareFunction },
+      month8: { title: 'Agosto', valuePrepareFunction },
+      // month9: { title: 'Septiembre', valuePrepareFunction },
+      // month10: { title: 'Octubre', valuePrepareFunction },
+      // month11: { title: 'Noviembre', valuePrepareFunction },
+      // month12: { title: 'Diciembre', valuePrepareFunction },
+      
+    }
+  };
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private supplierService: SupplierService,
     private modalService: NgbModal,
   ) {
   }
 
   ngOnInit() {
-
+    const year = new Date().getFullYear();
+    this.loadData(year);
   }
 
-  onChangeTo() {
-
+  loadData(year){
+    this.supplierService.getSupplierInvoicesByYear(year)
+      .subscribe(results => {
+        this.total = results.total;
+        this.tax = Math.trunc(this.total * 0.19);
+        this.source.load(results.purchasesBySupplier);
+      });
   }
 
-  onClickPlus() {
-    const activeModal = this.modalService.open(AddInvoiceProviderComponent, {size: 'lg', container: 'nb-layout'});
+  onClickView(evt) {
+    this.router.navigate([`${evt.data.supplier_id}`], { relativeTo: this.route });
   }
 
-  onClickView() {
-    const activeModal = this.modalService.open(ProviderDetailComponent, {
-      size: 'lg',
-      container: 'nb-layout',
-      windowClass: 'modal-xxl',
-    });
+  numberWithCommas(val){
+    return numberWithCommas(val);
+  }
+
+  getReportPDF(){
+    let params = {
+      year: new Date().getFullYear()
+    }
+
+    this.supplierService.getTotalInvoicesReport(params)
+      .subscribe(
+        (result: any) => {
+          window.open(result.data.path, '_blank');
+        }, 
+        () => {
+          alert('Error al generar reporte')
+        }
+      )
   }
 
 }

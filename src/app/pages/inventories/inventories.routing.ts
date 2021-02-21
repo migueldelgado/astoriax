@@ -10,6 +10,8 @@ import { OutputTableComponent } from './output/output-table.component';
 import { OutputFormComponent } from './output/output-form.component';
 import { ProcessTableComponent } from './process/process-table.component';
 import { ProcessFormComponent } from './process/process-form.component';
+import { CreditComponent } from './credits/credit.component';
+import { CreditFormComponent } from './credits/credit-form/credit-form.component';
 
 const routes: Routes = [
   {
@@ -56,6 +58,18 @@ const routes: Routes = [
         path: 'processes/:id',
         component: ProcessFormComponent,
       },
+      {
+        path: 'credits',
+        component: CreditComponent,
+      },
+      {
+        path: 'credits/new',
+        component: CreditFormComponent,
+      },
+      {
+        path: 'credits/:id',
+        component: CreditFormComponent,
+      },
     ],
   },
 ];
@@ -75,4 +89,6 @@ export const routedComponents = [
   OutputFormComponent,
   ProcessTableComponent,
   ProcessFormComponent,
+  CreditComponent,
+  CreditFormComponent
 ];

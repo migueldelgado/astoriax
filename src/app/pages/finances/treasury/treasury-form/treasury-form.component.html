@@ -1,0 +1,168 @@
+<nb-card>
+    <nb-card-header>
+        Ingresar Tesoreria
+    </nb-card-header>
+
+    <nb-card-body>
+
+        <toaster-container [toasterconfig]="config"></toaster-container>
+
+        <form #f="ngForm" novalidate>
+            <div class="form-group row">
+                <label for="date" class="col-form-label col-sm-2">Fecha:</label>
+                <div class="input-group col-sm-6">
+                    <input 
+                        id="date"
+                        ngx-mydatepicker
+                        #dateForm="ngx-mydatepicker"
+                        class="form-control"
+                        placeholder="Select a date" 
+                        [(ngModel)]="date" 
+                        name="date" 
+                        [options]="options"
+                        required />
+
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary btn-icon" (click)="dateForm.toggleCalendar()">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="selectType" class="col-form-label col-sm-2">Tipo de movimiento:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="selectedTransferType" name="transferType" id="selectType" (change)="onChangeTransferType()">
+                        <option 
+                            *ngFor="let transferType of transferTypes" 
+                            [ngValue]="transferType.code">
+                            {{ transferType.name | uppercase }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="paymentType" class="col-form-label col-sm-2">Tipo de pago:</label>
+                <div class="col-sm-6">
+                    <select id="paymentType" name="paymentType" class="form-control" [(ngModel)]="selectedPaymentType" (change)="onChangePaymentType()">
+                        <option 
+                            *ngFor="let paymentType of paymentTypesByPayment" 
+                            [ngValue]="paymentType.id">
+                            {{ paymentType.name | uppercase }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="!showIncomeLayout && showChequeNumber">
+                <label for="checkNumber" class="col-form-label col-sm-2">Numero de cheque:</label>
+                <div class="col-sm-6">
+                    <input id="checkNumber" type="text" [(ngModel)]="checkNumber" name="checkNumber" placeholder="Numero de cheque" class="form-control" />
+                </div>
+            </div>
+            
+            <div class="form-group row" *ngIf="!showIncomeLayout">
+                <label for="classification" class="col-form-label col-sm-2">Clasificacion:</label>
+                <div class="col-sm-6">
+                    <select id="classification" [(ngModel)]="selectedClassification" name="classification" class="form-control" (change)="onChangeClassification()">
+                        <option 
+                            *ngFor="let classification of classifications" 
+                            [ngValue]="classification.id">
+                            {{ classification.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="!showIncomeLayout && showSuppliers">
+                <label for="classification" class="col-form-label col-sm-2">Proveedores:</label>
+                <div class="col-sm-6">
+                    <select id="suppliers" [(ngModel)]="selectedSupplier" name="suppliers" class="form-control" (change)="onChangeSuppliers()">
+                        <option 
+                            *ngFor="let supplier of suppliers" 
+                            [ngValue]="supplier.id">
+                            {{ supplier.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- INVOICES -->
+            <div class="form-group row" *ngIf="!showIncomeLayout && showSuppliers">
+                <div class="col-sm-6 offset-sm-2">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 10%"></th>
+                                <th style="width: 30%">Numero</th>
+                                <th style="width: 30%">Estado</th>
+                                <th style="width: 30%">Monto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let purchase of purchases">
+                                <td>
+                                    <nb-checkbox [(ngModel)]="purchase.selected" name="puchases" (checkedChange)="toggle($event)"></nb-checkbox>
+                                </td>
+                                <td>{{ purchase.document_number }}</td>
+                                <td>{{ purchase.status }}</td>
+                                <td>{{ purchase.amount - purchase.amount_paid }}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th>TOTAL:</th>
+                                <th>{{ totalPurchases }}</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="!showIncomeLayout && showSuppliers">
+                <label for="paymentRecord" class="col-form-label col-sm-2">Registro de Pago:</label>
+                <div class="col-sm-6">
+                    <input id="paymentRecord" type="number" [(ngModel)]="paymentRecord" name="paymentRecord" placeholder="Registro de Pago" class="form-control" />
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="reason" class="col-form-label col-sm-2">Motivo:</label>
+                <div class="col-sm-6">
+                    <input id="reason" type="text" [(ngModel)]="reason" name="reason" placeholder="Motivo" class="form-control" />
+                </div>
+            </div>
+            
+            <div class="form-group row" *ngIf="showAmount">
+                <label for="reason" class="col-form-label col-sm-2">Monto:</label>
+                <div class="col-sm-6">
+                    <input type="number" [(ngModel)]="amount" name="amount" placeholder="Monto" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="!showIncomeLayout">
+                <label for="status" class="col-form-label col-sm-2">Estado:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="selectedStatus" name="status" id="status">
+                        <option 
+                            *ngFor="let statusOption of statusOptions" 
+                            [ngValue]="statusOption.code">
+                            {{ statusOption.name | uppercase }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+
+    <nb-card-footer>
+        <!-- <button type="submit" [disabled]="!hasPermission('AINS') && !hasPermission('EINS')" class="btn btn-primary">Guardar</button> -->
+        <button class="btn btn-success" (click)="onSubmit()">Guardar</button>
+        <button type="reset" class="btn btn-danger" (click)="onCancel()">Cancelar</button>
+    </nb-card-footer>
+
+</nb-card>

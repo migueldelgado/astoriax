@@ -1,0 +1,35 @@
+@import '../../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/bootstrap/breakpoints';
+
+@include nb-install-component() {
+
+    nb-card {
+        transform: translate3d(0, 0, 0);
+    }
+
+    nb-card-body {
+        min-height: 400px;
+    }
+
+    .pdf-report{
+        margin-right: 10px;
+    }
+
+    .week-days{
+        overflow-y: scroll;
+        max-height: 60vh;
+    }
+
+    .save-button{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        align-content: center;
+    }
+
+    .hide-row{
+        display: none;
+    }
+
+}

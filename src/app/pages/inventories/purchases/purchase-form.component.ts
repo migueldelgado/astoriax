@@ -11,6 +11,7 @@ import { SupplierService } from '../../../@core/data/supplier.service';
 import { PurchaseService } from '../../../@core/data/purchase.service';
 import { NbAuthService } from '../../../auth/services';
 import { parseErrroMessage } from '../../../@core/utils/error';
+import { getDateStringByDate } from '../../../@core/utils/dateUtils';
 
 @Component({
   selector: 'ngx-supply-form',
@@ -24,6 +25,7 @@ import { parseErrroMessage } from '../../../@core/utils/error';
   ],
 })
 export class PurchaseFormComponent implements OnInit {
+
   id: string;
   supplies: Array<any> = [];
   stores: Array<any> = [];
@@ -34,11 +36,19 @@ export class PurchaseFormComponent implements OnInit {
     document_number: null,
     date: new Date(),
     supplies: [],
+    amount: 0,
   };
+
   options: INgxMyDpOptions = {
     dateFormat: 'dd/mm/yyyy',
   };
+
   date = {
+    jsdate: new Date(),
+    formatted: null,
+  };
+
+  dateDocument = {
     jsdate: new Date(),
     formatted: null,
   };
@@ -62,7 +72,7 @@ export class PurchaseFormComponent implements OnInit {
     }
     Observable.forkJoin(
       this.storeService.getAll(true),
-      this.supplierService.getAll(true),
+      this.supplierService.getSuppliers(),
       this.supplyService.getAll(),
     ).subscribe((result: any) => {
       this.stores = result[0];
@@ -81,6 +91,7 @@ export class PurchaseFormComponent implements OnInit {
       this.purchaseService.find(this.id).subscribe(({ data }) => {
         this.data.store_id = data.store_id;
         this.data.document_number = data.document_number;
+        this.data.amount = data.amount;
         const d = new Date(data.date);
         const userTimezoneOffset = d.getTimezoneOffset() * 60000;
         this.date = {
@@ -117,13 +128,10 @@ export class PurchaseFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const d = this.date.jsdate;
-    const month = d.getMonth();
-    const day = d.getDate();
-    const year = d.getFullYear();
-    const data = Object.assign({}, this.data, {
-      date: `${year}-${month + 1}-${day}`,
-      id: this.id,
+    const date = getDateStringByDate(this.date.jsdate);
+    const data: any = Object.assign({}, this.data, {
+      date,
+      id: this.id
     });
 
     if (this.id) {

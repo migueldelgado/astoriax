@@ -11,7 +11,7 @@
         <label>Fecha: </label>
       </div>
       <input ngx-mydatepicker id="date" class="form-control" style="float:none"
-             placeholder="Select a to date" name="dateTo" [(ngModel)]="dateTo" [options]="options"
+             placeholder="Select a date" [(ngModel)]="date" name="date" [options]="options"
              #to="ngx-mydatepicker" (dateChanged)="onChangeTo()" required />
       <span class="input-group-append">
                 <button type="button" class="btn btn-primary">
@@ -26,38 +26,51 @@
       <div class="col-sm-3" style="line-height: 2.5">
         <label>Tipo de movimiento: </label>
       </div>
-      <select class="form-control" >
-        <option selected>Ingreso</option>
-        <option>Egreso</option>
+      <select class="form-control" [(ngModel)]="selectedTransferType" name="transferType">
+        <option value="INGRESO">INGRESO</option>
+        <option value="EGRESO">EGRESO</option>
       </select>
     </div>
     <div class="input-group">
       <div class="col-sm-3" style="line-height: 2.5">
         <label>Tipo de pago: </label>
       </div>
-      <select class="form-control" >
-        <option selected>Deposito con documento</option>
-        <option >Deposito en efectivo</option>
-        <option >Pago Factura Accord</option>
-        <option >Transbank Credito</option>
+      <select [(ngModel)]="selectedPaymentTypes" name="paymentType" class="form-control">
+        <option 
+            *ngFor="let paymentType of paymentTypes" 
+            [ngValue]="paymentType.name">
+            {{ paymentType.name }}
+        </option>
+      </select>
+    </div>
+    <div class="input-group">
+      <div class="col-sm-3" style="line-height: 2.5">
+        <label>Clasificacion: </label>
+      </div>
+      <select [(ngModel)]="selectedClassification" name="classification" class="form-control">
+        <option 
+            *ngFor="let classification of classifications" 
+            [ngValue]="classification.name">
+            {{ classification.name }}
+        </option>
       </select>
     </div>
     <div class="input-group">
       <div class="col-sm-3" style="line-height: 2.5">
         <label>Motivo: </label>
       </div>
-      <input type="text" placeholder="Motivo" class="form-control"/>
+      <input type="text" [(ngModel)]="reason" name="reason" placeholder="Motivo" class="form-control"/>
     </div>
 
     <div class="input-group">
       <div class="col-sm-3" style="line-height: 2.5">
         <label>Monto: </label>
       </div>
-      <input type="number" placeholder="Factura" class="form-control"/>
+      <input type="number" [(ngModel)]="amount" name="amount" placeholder="Factura" class="form-control"/>
     </div>
   </form>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-md btn-primary" (click)="closeModal()">Guardar</button>
+  <button class="btn btn-md btn-primary" (click)="onSave()">Guardar</button>
   <button class="btn btn-md btn-secondary" (click)="closeModal()">Cancelar</button>
 </div>

@@ -4,7 +4,7 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { InventoriesRoutingModule, routedComponents } from './inventories.routing';
 import { InventoriesComponent } from './inventories.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import {NgxMyDatePickerModule} from 'ngx-mydatepicker';
+import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 import { DatePipe } from '@angular/common';
 
 const components = [

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { UsersService } from './users.service';
 import { ElectricityService } from './electricity.service';
+import { SalesService } from '../../pages/sales/sales.service';
 import { StateService } from './state.service';
 import { SmartTableService } from './smart-table.service';
 import { PlayerService } from './player.service';
@@ -21,6 +22,7 @@ import { PurchaseService } from './purchase.service';
 import { UserService } from './user.service';
 import { RoleService } from './role.service';
 import { ProcessService } from './process.service';
+import { CreditService } from './credit.service';
 
 const SERVICES = [
   UsersService,
@@ -32,6 +34,7 @@ const SERVICES = [
   DailyInventoryService,
   PurchaseService,
   RecipeService,
+  SalesService,
   StoreService,
   SupplierService,
   SupplyReportTypeService,
@@ -44,6 +47,7 @@ const SERVICES = [
   OutputService,
   ProcessService,
   DailySalesService,
+  CreditService
 ];
 
 @NgModule({

@@ -83,6 +83,7 @@ export class NbAuthResult {
 export class NbAuthService {
   private user: any;
   private currentStore: any;
+  private userStores: any;
   private lastCheck: Date;
 
   constructor(
@@ -118,6 +119,16 @@ export class NbAuthService {
 
   getCurrentStore() {
     return this.currentStore || '';
+  }
+
+  setUserStores(stores) {
+    localStorage.setItem('user_stores', JSON.stringify(stores));
+    this.userStores = stores;
+  }
+
+  getUserStores() {
+    const userStores = JSON.parse(localStorage.getItem('user_stores'));
+    return userStores || [];
   }
 
   clear() {
@@ -206,6 +217,7 @@ export class NbAuthService {
 
     this.setCurrentUser(user);
     this.setCurrentStore(get(user, 'stores[0].id', null));
+    this.setUserStores(user.stores);
     await this.setRoles(user);
 
     return result;

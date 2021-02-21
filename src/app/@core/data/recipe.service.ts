@@ -8,12 +8,18 @@ export class RecipeService {
 
   constructor(private http: HttpClient, private authService: NbAuthService) {
   }
-  public getAll() {
-    const currentStore = this.authService.getCurrentStore();
-    let url = `${AppConfig.STORES + currentStore}/recipes`;
-    if (!currentStore) {
-      url = `${AppConfig.API_ENDPOINT}recipes`
+  public getAll(filter?) {
+    let name;
+    let classification
+    const store = this.authService.getCurrentStore();
+    let url = `${AppConfig.API_ENDPOINT}recipes?store_id=${store}`;
+
+    if (!!filter){
+      name = !!filter.name ? filter.name : '';
+      classification = !!filter.classification ? filter.classification : '';
+      url = `${url}&name=${name}&classification=${classification}`;
     }
+    
     return this.http.get(url)
       .map((supplies: any) => {
         return supplies.data;

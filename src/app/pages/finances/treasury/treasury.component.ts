@@ -1,105 +1,119 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {INgxMyDpOptions} from 'ngx-mydatepicker';
-import {AddTreasuryRegistryComponent} from '../modal/add-treasury-registry.component';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ConfirmationModalComponent} from '../modal/confirmation-modal.component';
+import { LocalDataSource } from 'ng2-smart-table';
+import { TreasuryService } from './treasury.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NbAuthService } from '../../../auth/services';
+import { INgxMyDpOptions } from 'ngx-mydatepicker';
+import { IMyDateModel } from 'ngx-mydatepicker';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { getDateStringByDate, getFirstDateOfByYear } from '../../../@core/utils/dateUtils';
 
 @Component({
   selector: 'ngx-treasury-table',
-  templateUrl: './treasury.component.html',
-  styles: [`
-    nb-actions {
-      display: inline-flex;
-      margin: 0rem 0 1rem;
-      border: 1px solid #342e73;
-      border-radius: 7px
-    }
-    table {
-      line-height: 1.5em;
-      border-collapse: collapse;
-      border-spacing: 0;
-      display: table;
-      width: 100%;
-      max-width: 100%;
-      overflow: auto;
-      word-break: normal;
-      word-break: keep-all;
-    }
-    table tr td {
-      position: relative;
-      padding: 0.875rem 1.25rem;
-      border: 1px solid #342e73;
-      vertical-align: middle;
-    }
-    table th {
-      position: relative;
-      padding: 0.875rem 1.25rem;
-      border: 1px solid #342e73;
-      vertical-align: middle;
-      padding: 0.875rem 1.25rem;
-      padding-right: 1.75rem;
-      font-family: Exo;
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.25;
-      color: #ffffff;
-    }
-    .pdf-container {
-      display: flex;
-      justify-content: flex-end;
-      padding: 0 0 1rem;
-    }
-    tfoot td:first-child {
-      background-color: #231f4e;
-    }
-    table tbody tr td:first-child {
-      padding: 0.1rem;
-    }
-  `],
+  templateUrl: './treasury.component.html'
 })
 export class TreasuryComponent implements OnInit {
 
-  dateFrom = { jsdate: new Date() };
-  dateTo = { jsdate: new Date() };
-  options: INgxMyDpOptions = {
-    dateFormat: 'dd-mm-yyyy',
+  //correct way to setup table
+  settings = {
+    mode: 'external',
+    add: { addButtonContent: '<i class="nb-plus"></i>' },
+    edit: { editButtonContent: '<i class="nb-edit"></i>' },
+    delete: { deleteButtonContent: '<i class="nb-trash"></i>' },
+    actions: {
+      columnTitle: '', 
+      position: 'right',
+      edit: false
+    },
+    columns: {
+      date: { title: 'Fecha', type: 'text' },
+      status: { 
+        title: 'Estado', 
+        type: 'text',
+        valuePrepareFunction: (cell, row) => {
+          if (typeof row.status == 'undefined' || row.status == null || row.status === ''){
+            return row.status;
+          }
+          return row.status === 0 ? 'INACTIVE' : 'ACTIVE';
+        }
+      },
+      transfer_type: {
+        title: 'Tipo de movimiento', 
+        type: 'text',
+        valuePrepareFunction: (cell, row) => row.transfer_type === 'I' ? 'INGRESO' : 'EGRESO'
+      },
+      // paymentType: { title: 'Forma de pago', type: 'text' },
+      classification: { title: 'Clasificacion', type: 'text' },
+      // reason: { title: 'Motivo', type: 'text' },
+      // cheque_number: { title: 'Cheque', type: 'text' },
+      amount: { title: 'Monto', type: 'text' }
+    },
   };
+
+  source: LocalDataSource = new LocalDataSource();
+  dateFrom = { jsdate: getFirstDateOfByYear(new Date().getFullYear()) };
+  dateTo = { jsdate: new Date() };
+  options: INgxMyDpOptions = { dateFormat: 'dd-mm-yyyy' };
   store: any;
+  userStores;
+  storeSelected;
+
+  result: any = {
+    treasuries: '',
+    totalReal: 0,
+    totalProjected: 0,
+    totalInactiveOutcome: 0
+  };
+
+  transferType: any = "";
+
+  loading = true;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
+    private treasuryService: TreasuryService,
+    private authService: NbAuthService
   ) {}
 
   ngOnInit() {
-
+    this.userStores = this.authService.getUserStores();
+    this.storeSelected = this.userStores[0].id || '';
+    this.getTreasuries(null, null);
   }
 
-  onChangeFrom(date) {
-    // tslint:disable-next-line
-    console.log(date);
+  onChangeDateFrom(event: IMyDateModel) {
+    this.getTreasuries(event.jsdate, null);
   }
 
-  onChangeTo(date) {
-    // tslint:disable-next-line
-    console.log(date);
+  onChangeDateTo(event: IMyDateModel) {
+    this.getTreasuries(null, event.jsdate);
   }
 
-  onClickPlus() {
-    const activeModal = this.modalService.open(AddTreasuryRegistryComponent, { size: 'lg', container: 'nb-layout' });
+  onCreate(): void {
+    this.router.navigate([`./new`], { relativeTo: this.route });
   }
 
-  onClickRemove() {
-    const activeModal = this.modalService.open(ConfirmationModalComponent, { size: 'sm', container: 'nb-layout' });
-    activeModal.componentInstance.modalHeader = 'Información';
-    activeModal.componentInstance.modalContent = `¿Desea eliminar registro?`;
+  onDelete(evt) {
+    this.treasuryService.deleteTreasuries(evt.data.id)
+      .subscribe(res => {
+        this.getTreasuries();
+      });
   }
 
-  onClickToggle() {
-    const activeModal = this.modalService.open(ConfirmationModalComponent, { size: 'sm', container: 'nb-layout' });
-    activeModal.componentInstance.modalHeader = 'Información';
-    activeModal.componentInstance.modalContent = `¿Desea Cambiar el estado?`;
+  getTreasuries(dateFrom?, dateTo?) {
+    const from: String = getDateStringByDate(dateFrom || this.dateFrom.jsdate);
+    const to: String = getDateStringByDate(dateTo || this.dateTo.jsdate);
+
+    this.treasuryService.getTreasuries(from, to)
+      .subscribe((data: any) => {
+        this.source = data.treasuries;
+        this.result.totalReal = data.totalReal;
+        this.result.totalProjected = data.totalProjected;
+        this.result.totalInactiveOutcome = data.totalInactiveOutcome;
+        this.loading = false;
+      })
   }
+
 }

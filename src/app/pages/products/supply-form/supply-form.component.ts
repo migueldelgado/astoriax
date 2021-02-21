@@ -64,12 +64,8 @@ export class SupplyFormComponent implements OnInit {
 
   types = ['Directo', 'Indirecto'];
 
-  classifications = ['Crítico', 'No Crítico'];
-  // {"code":200,"data":
-  // {"id":11,"supplier_id":1,"name":"completenge7","classification":"Completos",
-  // "type":"this is a type","unit":"KG","report_type":"OV","stock_min":"20",
-  // "show_in_daily_inventory":"1","show_in_process":"1","wastage_rate":"0.1","price":"500",
-  // "deleted_at":null,"created_at":"2018-10-28 20:43:01","updated_at":"2018-10-28 20:43:01"}}
+  classifications = ['Critico', 'No Critico'];
+ 
   data = {
     price: 0,
     name: '',
@@ -81,7 +77,7 @@ export class SupplyFormComponent implements OnInit {
     report_type: null,
     classification: null,
     type: null,
-    unit: null,
+    unit: this.units[0],
   };
 
   constructor(
