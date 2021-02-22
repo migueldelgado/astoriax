@@ -4,7 +4,7 @@ services:
   angular:
     build:
       context: .
-      dockerfile: dockerfile.prod
+      dockerfile: Dockerfile
     container_name: angular
     restart: unless-stopped
     tty: true
