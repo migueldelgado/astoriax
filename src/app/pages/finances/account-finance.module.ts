@@ -12,13 +12,15 @@ import { TreasuryService } from './treasury/treasury.service';
 import { ClassificationService } from '../classification/classification.service';
 import { ToasterModule } from 'angular2-toaster';
 import { ProviderDetailComponent } from './providers/provider-detail.component';
+import { ProviderDetailComponentModal } from './modal/provider-detail.component';
 
 const components = [
   AccountingFinanceComponent,
   AddInvoiceProviderComponent,
   AddTreasuryRegistryComponent,
   ConfirmationModalComponent,
-  ProviderDetailComponent
+  ProviderDetailComponent,
+  ProviderDetailComponentModal
 ];
 
 @NgModule({
@@ -43,6 +45,7 @@ const components = [
     AddTreasuryRegistryComponent,
     ConfirmationModalComponent,
     ProviderDetailComponent,
+    ProviderDetailComponentModal
   ],
 })
 export class AccountFinanceModule {}

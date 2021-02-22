@@ -39,6 +39,7 @@ export class AccountFinanceRoutingModule {
 }
 
 export const routedComponents = [
+  ProviderDetailComponent,
   ProvidersComponent,
   TreasuryComponent,
   TreasuryFormComponent

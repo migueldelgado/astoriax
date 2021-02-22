@@ -10,7 +10,7 @@ import { LocalDataSource } from 'ng2-smart-table';
   templateUrl: './provider-detail.component.html',
   styleUrls: ['./provider-detail.component.scss']
 })
-export class ProviderDetailComponent {
+export class ProviderDetailComponentModal {
 
   source: LocalDataSource = new LocalDataSource();
   suppliers: any[];
@@ -36,10 +36,7 @@ export class ProviderDetailComponent {
     actions: { delete: false, add: false, edit: false },
     columns: {
       document_number: { 
-        title: 'Factura', 
-        // valuePrepareFunction: (val) => {
-        //   return val === 'F' ? 'FACTURA' : 'NOTA DE CREDITO'
-        // }
+        title: 'Factura'
       },
       date: { title: 'Fecha' },
       status: { title: 'Estado' },

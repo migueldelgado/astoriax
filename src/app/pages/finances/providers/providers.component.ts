@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProviderDetailComponent } from '../modal/provider-detail.component';
 import { numberWithCommas, valuePrepareFunction } from '../../../@core/utils/utils';
 import { SupplierService } from '../../../@core/data/supplier.service';
 
