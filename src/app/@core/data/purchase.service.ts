@@ -14,7 +14,7 @@ export class PurchaseService {
 
   public getPurchases(params: any) {
 
-    let query = `?store_id=${this.authService.getCurrentStore()}`;
+    let query = `?store_id=${this.currentStore}`;
 
     if (params.supplierId) {
       query += `&supplier_id=${params.supplierId}`;
@@ -54,6 +54,7 @@ export class PurchaseService {
   }
 
   public update(id, data) {
+    data.store_id = this.currentStore;
     return this.http.put(`${AppConfig.API_ENDPOINT}purchases/${id}`, data)
   }
 }

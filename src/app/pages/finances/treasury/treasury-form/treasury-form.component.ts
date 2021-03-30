@@ -159,11 +159,7 @@ export class TreasuryFormComponent implements OnInit {
     }
 
     getSuppliers() {
-        const params = {
-            storeId: this.selectedStore
-        }
-        
-        this.supplierService.getSuppliers(params)
+        this.supplierService.getSuppliers()
             .subscribe((suppliers: any) => {
                 this.suppliers = suppliers;
                 this.selectedSupplier = suppliers[0].id;
@@ -175,7 +171,6 @@ export class TreasuryFormComponent implements OnInit {
 
     getPurchases() {
         const params = {
-            storeId: this.selectedStore,
             supplierId: this.selectedSupplier
         }
 
@@ -210,7 +205,6 @@ export class TreasuryFormComponent implements OnInit {
         let isPurchaseFail;
 
         let params: any = {
-            store_id: this.selectedStore,
             transfer_type: this.selectedTransferType,
             paymenttype_id: this.selectedPaymentType,
             date: getDateStringByDate(this.date.jsdate),

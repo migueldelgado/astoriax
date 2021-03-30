@@ -19,9 +19,8 @@ export class SupplierService {
       });
   }
 
-  public getSuppliers(params?) {
-    const storeId = params ? params.storeId : this.currentStore;
-    const urlParams = `store_id=${storeId}`;
+  public getSuppliers() {
+    const urlParams = `store_id=${this.currentStore}`;
     const url = `${AppConfig.API_ENDPOINT}suppliers?${urlParams}`;
     
     return this.http.get(url)
