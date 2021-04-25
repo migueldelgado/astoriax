@@ -7,26 +7,36 @@
 
         <toaster-container [toasterconfig]="config"></toaster-container>
 
-        <form #f="ngForm" novalidate>
+        <form #f="ngForm" (ngSubmit)="onSubmit()">
             <div class="form-group row">
                 <label for="date" class="col-form-label col-sm-2">Fecha:</label>
                 <div class="input-group col-sm-6">
                     <input 
                         id="date"
+                        name="date"
                         ngx-mydatepicker
                         #dateForm="ngx-mydatepicker"
                         class="form-control"
-                        placeholder="Select a date" 
-                        [(ngModel)]="date" 
-                        name="date" 
+                        placeholder="Select a date"
+                        [(ngModel)]="date"
+                        #name="ngModel"
                         [options]="options"
-                        required />
+                        required
+                    />
 
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-primary btn-icon" (click)="dateForm.toggleCalendar()">
                             <i class="fa fa-calendar"></i>
                         </button>
                     </span>
+                </div>
+                <div
+                    *ngIf="name.invalid && (name.dirty || name.touched)"
+                    class="col-sm-4 alert alert-danger"
+                >
+                    <div *ngIf="name.errors.required">
+                        Porfavor ingrese una fecha
+                    </div>
                 </div>
             </div>
             
@@ -36,8 +46,8 @@
                     <select class="form-control" [(ngModel)]="selectedTransferType" name="transferType" id="selectType" (change)="onChangeTransferType()">
                         <option 
                             *ngFor="let transferType of transferTypes" 
-                            [ngValue]="transferType.code">
-                            {{ transferType.name | uppercase }}
+                            [ngValue]="transferType.CODE">
+                            {{ transferType.NAME | uppercase }}
                         </option>
                     </select>
                 </div>
@@ -46,7 +56,7 @@
             <div class="form-group row">
                 <label for="paymentType" class="col-form-label col-sm-2">Tipo de pago:</label>
                 <div class="col-sm-6">
-                    <select id="paymentType" name="paymentType" class="form-control" [(ngModel)]="selectedPaymentType" (change)="onChangePaymentType()">
+                    <select id="paymentType" name="paymentType" class="form-control" [(ngModel)]="selectedPaymentType">
                         <option 
                             *ngFor="let paymentType of paymentTypesByPayment" 
                             [ngValue]="paymentType.id">
@@ -56,17 +66,48 @@
                 </div>
             </div>
 
-            <div class="form-group row" *ngIf="!showIncomeLayout && showChequeNumber">
+            <div 
+                class="form-group row" 
+                *ngIf="
+                    selectedTransferType === TYPEOFMOVEMENT.EGRESO.CODE &&
+                    selectedPaymentType === TYPEOFPAYMENTS.GIROCHEQUE.ID
+                "
+            >
                 <label for="checkNumber" class="col-form-label col-sm-2">Numero de cheque:</label>
                 <div class="col-sm-6">
-                    <input id="checkNumber" type="text" [(ngModel)]="checkNumber" name="checkNumber" placeholder="Numero de cheque" class="form-control" />
+                    <input 
+                        id="checkNumber"
+                        type="text"
+                        [(ngModel)]="checkNumber"
+                        name="checkNumber"
+                        placeholder="Numero de cheque"
+                        #chequeNumber="ngModel"
+                        required
+                        maxlength="8"
+                        class="form-control" />
+                </div>
+                <div *ngIf="chequeNumber.invalid && (chequeNumber.dirty || chequeNumber.touched)" class="alert alert-danger">
+                    <div *ngIf="chequeNumber.errors.required">
+                        Porfavor ingrese numero de cheque
+                    </div>
+                    <div *ngIf="chequeNumber.errors.minlength">
+                        No puedes ingresar mas de 8 numeros
+                      </div>
                 </div>
             </div>
             
-            <div class="form-group row" *ngIf="!showIncomeLayout">
+            <div 
+                class="form-group row" 
+                *ngIf="selectedTransferType === TYPEOFMOVEMENT.EGRESO.CODE"
+            >
                 <label for="classification" class="col-form-label col-sm-2">Clasificacion:</label>
                 <div class="col-sm-6">
-                    <select id="classification" [(ngModel)]="selectedClassification" name="classification" class="form-control" (change)="onChangeClassification()">
+                    <select
+                        id="classification"
+                        class="form-control"
+                        [(ngModel)]="selectedClassification"
+                        name="classification"
+                    >
                         <option 
                             *ngFor="let classification of classifications" 
                             [ngValue]="classification.id">
@@ -76,7 +117,10 @@
                 </div>
             </div>
 
-            <div class="form-group row" *ngIf="!showIncomeLayout && showSuppliers">
+            <div 
+                class="form-group row" 
+                *ngIf="isSuppliersSelected()"
+            >
                 <label for="classification" class="col-form-label col-sm-2">Proveedores:</label>
                 <div class="col-sm-6">
                     <select id="suppliers" [(ngModel)]="selectedSupplier" name="suppliers" class="form-control" (change)="onChangeSuppliers()">
@@ -90,8 +134,12 @@
             </div>
 
             <!-- INVOICES -->
-            <div class="form-group row" *ngIf="!showIncomeLayout && showSuppliers">
-                <div class="col-sm-6 offset-sm-2">
+            <div 
+                class="form-group row" 
+                *ngIf="isSuppliersSelected()"
+            >
+                <div class="col-sm-6 offset-sm-2 alert alert-danger" *ngIf="!purchases.length">No hay facturas disponibles para este proveedor</div>
+                <div class="col-sm-6 offset-sm-2" *ngIf="purchases.length">
                     <table class="table">
                         <thead>
                             <tr>
@@ -104,26 +152,25 @@
                         <tbody>
                             <tr *ngFor="let purchase of purchases">
                                 <td>
-                                    <nb-checkbox [(ngModel)]="purchase.selected" name="puchases" (checkedChange)="toggle($event)"></nb-checkbox>
+                                    <nb-checkbox 
+                                        [(ngModel)]="purchase.selected" 
+                                        name="puchases" 
+                                        (change)="onSelectPurchase(purchase)">
+                                    </nb-checkbox>
                                 </td>
                                 <td>{{ purchase.document_number }}</td>
                                 <td>{{ purchase.status }}</td>
                                 <td>{{ purchase.amount - purchase.amount_paid }}</td>
                             </tr>
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th>TOTAL:</th>
-                                <th>{{ totalPurchases }}</th>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>
 
-            <div class="form-group row" *ngIf="!showIncomeLayout && showSuppliers">
+            <div 
+                class="form-group row" 
+                *ngIf="isSuppliersSelected()"
+            >
                 <label for="paymentRecord" class="col-form-label col-sm-2">Registro de Pago:</label>
                 <div class="col-sm-6">
                     <input id="paymentRecord" type="number" [(ngModel)]="paymentRecord" name="paymentRecord" placeholder="Registro de Pago" class="form-control" />
@@ -133,18 +180,48 @@
             <div class="form-group row">
                 <label for="reason" class="col-form-label col-sm-2">Motivo:</label>
                 <div class="col-sm-6">
-                    <input id="reason" type="text" [(ngModel)]="reason" name="reason" placeholder="Motivo" class="form-control" />
+                    <input 
+                        id="reason"
+                        type="text"
+                        [(ngModel)]="reason"
+                        name="reason"
+                        placeholder="Motivo"
+                        required
+                        #reasonModel="ngModel"
+                        class="form-control"
+                    />
+                </div>
+                <div *ngIf="reasonModel.invalid && (reasonModel.dirty || reasonModel.touched)" class="alert alert-danger">
+                    <div *ngIf="reasonModel.errors.required">
+                        Porfavor ingrese una razon
+                    </div>
                 </div>
             </div>
             
-            <div class="form-group row" *ngIf="showAmount">
+            <div class="form-group row">
                 <label for="reason" class="col-form-label col-sm-2">Monto:</label>
                 <div class="col-sm-6">
-                    <input type="number" [(ngModel)]="amount" name="amount" placeholder="Monto" class="form-control" />
+                    <input
+                        type="text"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                        [ngModel]="amount | numbercl"
+                        (ngModelChange)="amount=$event"
+                        name="amount"
+                        placeholder="Monto"
+                        class="form-control"
+                        required
+                        #totalAmount="ngModel"
+                        [disabled]="isSuppliersSelected()"
+                    />
+                </div>
+                <div *ngIf="totalAmount.invalid && (totalAmount.dirty || totalAmount.touched)" class="alert alert-danger">
+                    <div *ngIf="totalAmount.errors.required">
+                        Porfavor ingrese un monto
+                    </div>
                 </div>
             </div>
 
-            <div class="form-group row" *ngIf="!showIncomeLayout">
+            <div class="form-group row" *ngIf="selectedTransferType === TYPEOFMOVEMENT.EGRESO.CODE">
                 <label for="status" class="col-form-label col-sm-2">Estado:</label>
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="selectedStatus" name="status" id="status">
@@ -156,13 +233,15 @@
                     </select>
                 </div>
             </div>
+            <hr>
+            <button
+                class="btn btn-success"
+                type="submit"
+                [disabled]="!f.form.valid || checkPurchases()"
+            >
+                Guardar
+            </button>
+            <button type="reset" class="btn btn-danger" (click)="onCancel()">Cancelar</button>
         </form>
     </nb-card-body>
-
-    <nb-card-footer>
-        <!-- <button type="submit" [disabled]="!hasPermission('AINS') && !hasPermission('EINS')" class="btn btn-primary">Guardar</button> -->
-        <button class="btn btn-success" (click)="onSubmit()">Guardar</button>
-        <button type="reset" class="btn btn-danger" (click)="onCancel()">Cancelar</button>
-    </nb-card-footer>
-
 </nb-card>

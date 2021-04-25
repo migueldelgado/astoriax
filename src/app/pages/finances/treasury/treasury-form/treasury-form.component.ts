@@ -10,7 +10,12 @@ import { getDateStringByDate } from '../../../../@core/utils/dateUtils';
 import { getToasterSettings } from '../../../../@core/utils/toasterUtil';
 import { ToasterService } from 'angular2-toaster';
 
+import { TYPEOFMOVEMENT, TYPEOFMOVEMENTARRAY } from '../../../../constants/type-of-movement';
+import { TYPEOFPAYMENTS } from '../../../../constants/type-of-payment';
+import { CLASSIFICATION } from '../../../../constants/classification';
+
 import 'style-loader!angular2-toaster/toaster.css';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'ngx-treasury-form',
@@ -19,15 +24,11 @@ import 'style-loader!angular2-toaster/toaster.css';
 
 export class TreasuryFormComponent implements OnInit {
 
-    date = { jsdate: new Date() };
     options: INgxMyDpOptions = {
-      dateFormat: 'dd-mm-yyyy',
+        dateFormat: 'dd-mm-yyyy',
     };
 
-    transferTypes: Array<any> = [
-        { code: "I", name: "INGRESO" },
-        { code: "E", name: "EGRESO" }
-    ];
+    transferTypes: Array<any>;
 
     statusOptions: Array<any> = [
         { code: 1, name: "ACTIVO" },
@@ -42,21 +43,24 @@ export class TreasuryFormComponent implements OnInit {
     paymentRecord: String;
     checkNumber: String;
     userStores: Array<any>;
+
+    /* NG-MODELS */
     selectedStore: Number;
     selectedSupplier: Number;
     selectedClassification: any;
-    selectedTransferType: any = this.transferTypes[0].code;
+    selectedTransferType: any;
     selectedStatus: any = this.statusOptions[0].code;
     selectedPaymentType: any;
-    showIncomeLayout: boolean = true;
-    showSuppliers: boolean = false;
-    showAmount: boolean = true;
-    showChequeNumber: boolean = false;
+
+    date = { jsdate: new Date() };
     reason: any;
     amount: any;
     config: any;
     loading = true;
-    totalPurchases: any;
+
+    TYPEOFMOVEMENT: any;
+    TYPEOFPAYMENTS: any;
+    CLASSIFICATION: any;
   
     constructor(
       private classificationService: ClassificationService,
@@ -67,72 +71,49 @@ export class TreasuryFormComponent implements OnInit {
       private authService: NbAuthService,
       private route: ActivatedRoute,
       private router: Router
-    ) {}
+    ) {
+        this.transferTypes = TYPEOFMOVEMENTARRAY;
+        this.selectedTransferType = this.transferTypes[0].CODE;
+        this.TYPEOFMOVEMENT = TYPEOFMOVEMENT;
+        this.TYPEOFPAYMENTS = TYPEOFPAYMENTS;
+        this.CLASSIFICATION = CLASSIFICATION;
+    }
 
     ngOnInit() {
         this.getClassification();
         this.getPaymentTypes();
-        this.getUserStores();
-    }
-
-    onChangeStore() {
-        if (this.showSuppliersInput() || (this.suppliers.length > 0)) {
-            this.getSuppliers();
-        }
-    }
-
-    onChangeTransferType() {
-        this.showIncomeFields()
-        // if (!this.showIncomeFields() && this.showSuppliersInput()) {
-        //     this.onChangeStore();
-        // };
-        this.setPaymentTypes();
-        this.showChequeNumberInput();
-    }
-
-    onChangePaymentType() {
-        this.showChequeNumberInput();
-    }
-
-    onChangeClassification() {
-        if (this.showSuppliersInput()) {
-            this.getSuppliers();
-        }
-        this.showAmountInput();
+        this.getSuppliers();
     }
 
     onChangeSuppliers() {
         this.getPurchases();
     }
 
+    onChangeTransferType() {
+        this.setPaymentTypes();
+    }
+
     onCancel() {
         this.redirectToTreasury();
     }
 
-    showIncomeFields() {
-        this.showIncomeLayout = this.selectedTransferType == 'I';
-        return this.showIncomeLayout;
+    onSelectPurchase(purchase) {
+        this.amount = this.purchases.reduce((accumulator, currentValue) => {
+            if (currentValue.selected)
+                return accumulator + currentValue.amount
+            return accumulator
+        }, 0).toString()
     }
 
-    showChequeNumberInput() {
-        this.showChequeNumber = ((this.selectedPaymentType == 12) && (!this.showIncomeLayout)); // GIRO CHEQUE
-        return this.showChequeNumber;
+    isSuppliersSelected() {
+        return (
+            this.selectedTransferType === this.TYPEOFMOVEMENT.EGRESO.CODE &&
+            this.selectedClassification === this.CLASSIFICATION.COSTOVARIABLE.PROVEEDOR.ID
+        )
     }
 
-    showSuppliersInput() {
-        this.showSuppliers = ((this.selectedClassification == 8) && (!this.showIncomeLayout));
-        return this.showSuppliers;
-    }
-
-    showAmountInput() {
-        this.showAmount = !this.showSuppliersInput();
-        console.log(this.showAmount);
-        return this.showAmount;
-    }
-
-    getUserStores() {
-        this.userStores = this.authService.getUserStores();
-        this.selectedStore = this.userStores[0].id;
+    checkPurchases() {
+        return this.isSuppliersSelected() ? !this.purchases.some(p => p.selected) : false;
     }
   
     getClassification() {
@@ -154,7 +135,7 @@ export class TreasuryFormComponent implements OnInit {
     }
 
     setPaymentTypes() {
-        this.paymentTypesByPayment = this.paymentTypes.filter(value => value.type == this.selectedTransferType);
+        this.paymentTypesByPayment = this.paymentTypes.filter(value => value.type === this.selectedTransferType);
         this.selectedPaymentType = this.paymentTypesByPayment[0].id;
     }
 
@@ -163,26 +144,16 @@ export class TreasuryFormComponent implements OnInit {
             .subscribe((suppliers: any) => {
                 this.suppliers = suppliers;
                 this.selectedSupplier = suppliers[0].id;
-                this.showSuppliers = true;
-
                 this.getPurchases();
             })
     }
 
     getPurchases() {
-        const params = {
-            supplierId: this.selectedSupplier
-        }
+        const params = { supplierId: this.selectedSupplier }
 
         this.purchaseService.getPurchases(params)
             .subscribe((purchases: any) => {
-                this.purchases = purchases.filter(p => p.amount !== p.amount_paid);
-                if (this.purchases.length) {
-                    this.totalPurchases = 
-                        this.purchases.reduce((a, b) => a + (b.amount - b.amount_paid), 0)
-                    console.log(this.totalPurchases);
-                }
-                
+                this.purchases = purchases.filter(p => !p.is_paid);
                 this.loading = false;
             })
     }
@@ -196,83 +167,49 @@ export class TreasuryFormComponent implements OnInit {
     }
 
     async onSubmit() {
-        const message = this.validation();
-        if (message){
-            this.showToast({ message });
-            return false;
-        }
-
-        let isPurchaseFail;
+        const listOfServices = [];
 
         let params: any = {
+            date: getDateStringByDate(this.date.jsdate),
             transfer_type: this.selectedTransferType,
             paymenttype_id: this.selectedPaymentType,
-            date: getDateStringByDate(this.date.jsdate),
             reason: this.reason,
-            amount: this.amount
+            amount: Number(this.amount.replace(/\D+/g, ''))
         };
 
-        if (!this.showIncomeFields()) {
+        if (this.selectedTransferType === TYPEOFMOVEMENT.EGRESO.CODE) {
             params.classification_id = this.selectedClassification;
             params.status = this.selectedStatus;
-            if (this.showChequeNumberInput()) { // GIRO CHEQUE
+            if (this.selectedPaymentType === TYPEOFPAYMENTS.GIROCHEQUE.ID) {
                 params.cheque_number = this.checkNumber;
             }
-            if (this.showSuppliersInput()) {
-
+            if (this.selectedClassification === this.CLASSIFICATION.COSTOVARIABLE.PROVEEDOR.ID) {
                 for(const purchase of this.getPurchasesSelected()) {
-                    if (purchase.amount_paid === 0) {
-                        const data = {
-                            amount_paid: purchase.amount
-                        };
-                        debugger
-                        const result = await this.purchaseService.update(purchase.id, data).toPromise();
-                        return false;
-                    } else return true
+                    listOfServices.push(
+                        this.purchaseService.update(purchase.id, {
+                            amount_paid: purchase.amount,
+                            is_paid: 1
+                        })
+                    )
                 }
-
-                params.supplier_id = this.selectedSupplier;
-                params.payment_record = this.paymentRecord;
-                params.purchases = this.getPurchasesSelected();
             }
         }
-        debugger
-        if (isPurchaseFail) {
-            this.showToast({});
-            return;
-        }
+        
+        console.log(params);
 
-        this.treasuryService.saveTreasuries(params)
+        if (listOfServices.length) {
+            listOfServices.push(this.treasuryService.saveTreasuries(params))
+            Observable.forkJoin(listOfServices).subscribe(
+                results => this.redirectToTreasury(),
+                error => this.showToast(error.message)
+            )
+        } else {
+            this.treasuryService.saveTreasuries(params)
             .subscribe(
                 treasury => this.redirectToTreasury(),
-                error => this.showToast({})
+                error => this.showToast(error.message)
             );
-    }
-
-    validation(): string {
-        if (!this.reason) {
-            return 'Debes ingresar el motivo';
         }
-        if (!this.date) {
-            return 'Debes ingresar fecha';
-        }
-        if (!this.showSuppliers && !this.amount) {
-            if (!this.amount) return 'Debes ingresar el monto';
-        }
-
-        if (this.showIncomeFields()) { //INGRESOS
-            
-        } else { //EGRESOS
-            if (this.showChequeNumberInput() && !this.checkNumber) {
-                return 'Debes ingresar el numero de cheque';
-            }
-            if (this.showSuppliersInput()) {
-                const purchasesSelected = this.getPurchasesSelected();
-                if (purchasesSelected.length == 0) return 'No ha seleccionado ninguna factura para pagar';
-                
-            }
-        }
-        return null;
     }
 
     private showToast(params) {

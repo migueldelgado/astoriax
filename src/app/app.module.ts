@@ -6,7 +6,7 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {LOCALE_ID, NgModule} from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { CoreModule } from './@core/core.module';
 import { LoadingModule } from 'ngx-loading';

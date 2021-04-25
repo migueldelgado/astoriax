@@ -14,6 +14,8 @@ import { ToasterModule } from 'angular2-toaster';
 import { ProviderDetailComponent } from './providers/provider-detail.component';
 import { ProviderDetailComponentModal } from './modal/provider-detail.component';
 
+import { ChileanNumberPipe } from '../../pipes/numberPipe';
+
 const components = [
   AccountingFinanceComponent,
   AddInvoiceProviderComponent,
@@ -32,13 +34,14 @@ const components = [
     ToasterModule
   ],
   declarations: [
+    ChileanNumberPipe,
     ...components,
     ...routedComponents,
   ],
   providers: [
     DatePipe,
     TreasuryService,
-    ClassificationService,
+    ClassificationService
   ],
   entryComponents: [
     AddInvoiceProviderComponent,

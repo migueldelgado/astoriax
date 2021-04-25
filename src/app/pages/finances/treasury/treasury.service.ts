@@ -25,6 +25,7 @@ export class TreasuryService {
     }
 
     public saveTreasuries(params) {
+        params.store_id = this.currentStore;
         return this.http.post(AppConfig.API_ENDPOINT + 'treasuries', params);
     }
 

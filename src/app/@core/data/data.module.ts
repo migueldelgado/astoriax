@@ -23,6 +23,7 @@ import { UserService } from './user.service';
 import { RoleService } from './role.service';
 import { ProcessService } from './process.service';
 import { CreditService } from './credit.service';
+import { NumberHelper } from '../../helpers/number-helper';
 
 const SERVICES = [
   UsersService,
@@ -47,7 +48,8 @@ const SERVICES = [
   OutputService,
   ProcessService,
   DailySalesService,
-  CreditService
+  CreditService,
+  NumberHelper
 ];
 
 @NgModule({
