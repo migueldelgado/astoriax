@@ -36,6 +36,7 @@ export class RecipeService {
   }
 
   public createRecipe(data) {
+    data.store_id = this.authService.getCurrentStore();
     return this.http.post(`${AppConfig.API_ENDPOINT}recipes`, data)
   }
 

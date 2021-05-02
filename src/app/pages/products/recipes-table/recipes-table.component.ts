@@ -44,6 +44,9 @@ export class RecipesTableComponent implements OnInit {
     actions: {
       columnTitle: 'Acciones',
       position: 'right',
+      add: {},
+      edit: {},
+      delete: {}
     },
     mode: 'external',
     columns: {
