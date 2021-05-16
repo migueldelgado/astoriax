@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
+
 import 'rxjs/add/operator/map';
 import { AppConfig } from '../../app.config';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class UserService {
+
   constructor(private http: HttpClient) {}
-  public getAll() {
-    return this.http.get(`${AppConfig.API_ENDPOINT}users`).map((users: any) => {
-      return users.data;
+
+  public getAll(storeId?) {
+    return this.http.get(`${AppConfig.API_ENDPOINT}users?store_id=${storeId}`).map((users: any) => {
+      return users.data || [];
     });
   }
 
@@ -26,5 +29,11 @@ export class UserService {
 
   public delete(id) {
     return this.http.delete(`${AppConfig.API_ENDPOINT}users/${id}`);
+  }
+
+  public isCurrentUserAdmin() {
+    const ADMIN = 1;
+    const currentUserData = JSON.parse(localStorage.getItem('user_data'));
+    return currentUserData.roles.find(r => r.id === ADMIN);
   }
 }

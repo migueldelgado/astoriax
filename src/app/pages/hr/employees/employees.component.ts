@@ -44,10 +44,14 @@ export class EmployeesComponent implements OnInit {
       return;
     }
 
-    this.userService.getAll()
+    const currentStoreId =
+      !this.userService.isCurrentUserAdmin() ?
+        this.authService.getCurrentStore() : '';
+
+    this.userService.getAll(currentStoreId)
       .subscribe((users: any) => {
         this.users = users;
-        this.source.load(users);
+        this.source.load(this.users);
       });
   }
 

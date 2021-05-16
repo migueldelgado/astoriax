@@ -48,7 +48,7 @@ export class DailyInventoryFormComponent implements OnInit {
       return;
     }
 
-    this.storeService.getAll(true).subscribe(result => {
+    this.storeService.getAll().subscribe(result => {
       this.stores = result;
     });
 

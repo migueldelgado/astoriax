@@ -71,7 +71,7 @@ export class PurchaseFormComponent implements OnInit {
       return;
     }
     Observable.forkJoin(
-      this.storeService.getAll(true),
+      this.storeService.getAll(),
       this.supplierService.getSuppliers(),
       this.supplyService.getAll(),
     ).subscribe((result: any) => {

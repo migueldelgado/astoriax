@@ -85,7 +85,7 @@ export class StoresComponent implements OnInit {
       this.router.navigate(['/pages']);
       return;
     }
-    this.storeService.getAll(true).subscribe(stores => {
+    this.storeService.getAll().subscribe(stores => {
       this.stores = stores;
     });
   }

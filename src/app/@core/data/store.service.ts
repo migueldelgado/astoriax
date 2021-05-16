@@ -8,7 +8,7 @@ export class StoreService {
 
   constructor(private http: HttpClient) {
   }
-  public getAll(isNewApi = false) {
+  public getAll() {
     return this.http.get(`${AppConfig.API_ENDPOINT}stores`)
       .map((stores: any) => {
         return stores.data;

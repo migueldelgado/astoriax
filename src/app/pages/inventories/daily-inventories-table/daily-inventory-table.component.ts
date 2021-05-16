@@ -107,7 +107,7 @@ export class DailyInventoryTableComponent implements OnInit {
     const to: string = this.datePipe.transform(dateTo, 'yyyy-MM-dd');
     Observable.forkJoin(
       this.dailyInventoryService.getAll(from, to),
-      this.storeService.getAll(true),
+      this.storeService.getAll(),
     ).subscribe(
       (result: Array<any>) => {
         const [dInv, stores] = result;

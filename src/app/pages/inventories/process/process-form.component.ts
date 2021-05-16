@@ -94,7 +94,7 @@ export class ProcessFormComponent implements OnInit {
 
     Observable.forkJoin(
       this.supplyService.getAll(),
-      this.storeService.getAll(true),
+      this.storeService.getAll(),
     ).subscribe((result: Array<any>) => {
       this.suppliesProcessable = result[0].data.filter(
         p => p.show_in_process === '1' || p.show_in_process === 1,
