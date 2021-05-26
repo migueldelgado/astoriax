@@ -74,21 +74,21 @@
         <tbody>
           <tr>
             <td width="45%">DIFERENCIA DE CAJA</td>
-            <td class="bg-info">${{ numberWithCommas(totals.netTotal) }}</td>
-            <td class="bg-info">${{ numberWithCommas(totals.netTotal) }}</td>
-            <td class="bg-info">${{ numberWithCommas(totals.netTotal) }}</td>
+            <td class="bg-info">${{ numberWithCommas(totals.difference.shift1) }}</td>
+            <td class="bg-info">${{ numberWithCommas(totals.difference.shift2) }}</td>
+            <td class="bg-info">${{ numberWithCommas(totals.difference.total) }}</td>
           </tr>
           <tr>
             <td width="45%">TOTAL VENTA NETA</td>
-            <td class="bg-info">${{ numberWithCommas(totals.netTotal) }}</td>
-            <td class="bg-info">${{ numberWithCommas(totals.netTotal) }}</td>
-            <td class="bg-info">${{ numberWithCommas(totals.netTotal) }}</td>
+            <td class="bg-info">-</td>
+            <td class="bg-info">-</td>
+            <td class="bg-info">${{ numberWithCommas(totals.net.total) }}</td>
           </tr>
           <tr>
             <td width="45%">TOTAL EXCLUYENDO MULTICAJA</td>
-            <td class="bg-info">${{ numberWithCommas(totals.totalNoJunaeb) }}</td>
-            <td class="bg-info">${{ numberWithCommas(totals.totalNoJunaeb) }}</td>
-            <td class="bg-info">${{ numberWithCommas(totals.totalNoJunaeb) }}</td>
+            <td class="bg-info">-</td>
+            <td class="bg-info">-</td>
+            <td class="bg-info">${{ numberWithCommas(totals.noJunaeb.total) }}</td>
           </tr>
         </tbody>
       </table>

@@ -18,8 +18,21 @@ export class DailySalesComponent implements OnInit {
   years: string[];
   dailySalesMonth: any;
   totals = {
-    netTotal: 0,
-    totalNoJunaeb: 0
+    difference: {
+      shift1: 0,
+      shift2: 0,
+      total: 0,
+    },
+    net: {
+      shift1: 0,
+      shift2: 0,
+      total: 0
+    },
+    noJunaeb: {
+      shift1: 0,
+      shift2: 0,
+      total: 0
+    }
   };
  
   source: LocalDataSource = new LocalDataSource();
@@ -82,7 +95,7 @@ export class DailySalesComponent implements OnInit {
   loadData(month, year, day){
     const params = { month, year };
 
-    this.dailySalesService.getAll(params)
+    this.dailySalesService.getSales(params)
       .subscribe((result: any) => {
         this.dailySalesMonth = result.data;
         this.updateData(day);
@@ -98,8 +111,23 @@ export class DailySalesComponent implements OnInit {
     const currentDate = this.getDateStr();
     const currentDayItems = this.dailySalesMonth[currentDate].items;
     const currentDayTotals = [];
-    this.totals.netTotal = this.dailySalesMonth[currentDate].totalNet;
-    this.totals.totalNoJunaeb = this.dailySalesMonth[currentDate].totalNoJunaeb;
+    this.totals = {
+      difference: {
+        shift1: this.dailySalesMonth[currentDate].totalDifferenceShift1,
+        shift2: this.dailySalesMonth[currentDate].totalDifferenceShift2,
+        total: this.dailySalesMonth[currentDate].totalDifference,
+      },
+      net: {
+        shift1: 0,
+        shift2: 0,
+        total: this.dailySalesMonth[currentDate].totalNet
+      },
+      noJunaeb: {
+        shift1: 0,
+        shift2: 0,
+        total: this.dailySalesMonth[currentDate].totalNoJunaeb
+      }
+    };
 
     for (const day in this.dailySalesMonth){
       currentDayTotals.push({ 

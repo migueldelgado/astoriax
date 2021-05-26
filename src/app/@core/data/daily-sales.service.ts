@@ -11,22 +11,12 @@ export class DailySalesService {
   constructor(private http: HttpClient, private authService: NbAuthService) {
     this.currentStore = this.authService.getCurrentStore();
   }
-  public getAll(params) {
+  public getSales(params) {
     const store = this.currentStore;
     const month = parseInt(params.month);
     const year = parseInt(params.year);
 
     const url = `${AppConfig.API_ENDPOINT}dailySales?store_id=${store}&month=${month}&year=${year}`;
-
-    return this.http.get(url);
-  }
-
-  public getAllByMonth(month) {
-    const currentStore = this.authService.getCurrentStore();
-    let url = `${AppConfig.STORES + currentStore}/dailySales?date=${month}`;
-    if (!currentStore) {
-      url = `${AppConfig.API_ENDPOINT}dailySales?date=${month}`;
-    }
 
     return this.http.get(url);
   }
