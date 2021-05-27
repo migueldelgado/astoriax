@@ -18,6 +18,9 @@ export class DailySalesComponent implements OnInit {
   years: string[];
   dailySalesMonth: any;
   totals = {
+    day: {
+      total: 0
+    },
     difference: {
       shift1: 0,
       shift2: 0,
@@ -112,6 +115,9 @@ export class DailySalesComponent implements OnInit {
     const currentDayItems = this.dailySalesMonth[currentDate].items;
     const currentDayTotals = [];
     this.totals = {
+      day: {
+        total: this.dailySalesMonth[currentDate].total
+      },
       difference: {
         shift1: this.dailySalesMonth[currentDate].totalDifferenceShift1,
         shift2: this.dailySalesMonth[currentDate].totalDifferenceShift2,
