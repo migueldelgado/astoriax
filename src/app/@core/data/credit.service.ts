@@ -6,14 +6,15 @@ import { NbAuthService } from '../../auth/services';
 
 @Injectable()
 export class CreditService {
-  currentStore = this.authService.getCurrentStore();
+  currentStore
 
-  constructor(private http: HttpClient, private authService: NbAuthService) {}
+  constructor(private http: HttpClient, private authService: NbAuthService) {
+    this.currentStore = authService.getCurrentStore();
+  }
 
   public getAll(params) {
-    params.store_id = this.currentStore;
     const url = `${AppConfig.API_ENDPOINT}credits`;
-    return this.http.get(`${url}?from=${params.from}&to=${params.to}`);
+    return this.http.get(`${url}?from=${params.from}&to=${params.to}&store_id=${this.currentStore}`);
   }
 
   public create(data) {
