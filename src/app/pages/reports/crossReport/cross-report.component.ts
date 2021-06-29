@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { INgxMyDpOptions } from 'ngx-mydatepicker';
 import { ReportsService } from '../reports.service';
 
+import { getDateStringByDate } from '../../../@core/utils/dateUtils';
+
 @Component({
   selector: 'ngx-cross-report',
-  templateUrl: './crossReport.html',
-  styleUrls: ['./crossReport.scss'],
+  templateUrl: './cross-report.html',
+  styleUrls: ['./cross-report.scss'],
 })
 export class CrossReportComponent {
 
@@ -25,11 +27,17 @@ export class CrossReportComponent {
   constructor(private reportsService: ReportsService) {}
 
   getReport(dateFrom, dateTo, typeOfReport) {
-    const from = dateFrom.jsdate.toJSON();
-    const to = dateTo.jsdate.toJSON();
+    const from = getDateStringByDate(dateFrom.jsdate);
+    const to = getDateStringByDate(dateTo.jsdate);
     this.reportsService.getCrossReport(from, to, typeOfReport)
-      .subscribe((data: any) => {
-        window.location.href = data.data.path;
-      })
+      .subscribe(response => this.downLoadFile(response));
+  }
+
+  downLoadFile(blob: any) {
+    let url = window.URL.createObjectURL(blob);
+    let pwa = window.open(url);
+    if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+        alert( 'Please disable your Pop-up blocker and try again.');
+    }
   }
 }
