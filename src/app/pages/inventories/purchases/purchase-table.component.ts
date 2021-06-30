@@ -6,6 +6,8 @@ import { PurchaseService } from '../../../@core/data/purchase.service';
 import { getDateStringByDate } from '../../../@core/utils/dateUtils';
 import { NbAuthService } from '../../../auth/services';
 
+import { valuePrepareFunction } from '../../../@core/utils/utils';
+
 @Component({
   selector: 'ngx-supplies-table',
   templateUrl: './purchase-table.component.html',
@@ -31,20 +33,10 @@ export class PurchaseTableComponent implements OnInit {
   firstLoad = false;
 
   settings = {
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
-    },
+    mode: 'external',
+    add: { addButtonContent: '<i class="nb-plus"></i>' },
+    edit: { editButtonContent: '<i class="nb-edit"></i>' },
+    delete: { deleteButtonContent: '<i class="nb-trash"></i>' },
     actions: {
       columnTitle: 'Acciones',
       position: 'right',
@@ -52,19 +44,16 @@ export class PurchaseTableComponent implements OnInit {
       edit: false,
       delete: false
     },
-    mode: 'external',
     columns: {
-      document_number: {
-        title: 'Numero Factura',
+      document_number: { title: 'Numero Factura', type: 'string' },
+      date: { title: 'Fecha', type: 'string' },
+      supplier: { title: 'Proveedor', type: 'string' },
+      amount: {
+        title: 'Monto',
         type: 'string',
-      },
-      date: {
-        title: 'Fecha',
-        type: 'string',
-      },
-      supplier: {
-        title: 'Proveedor',
-        type: 'string',
+        valuePrepareFunction: function(amount) {
+          return valuePrepareFunction(amount);
+        }
       },
       is_paid: {
         title: 'Estado',
