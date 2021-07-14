@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { SupplyService } from '../../../@core/data/supply.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { INgxMyDpOptions } from 'ngx-mydatepicker';
-import { DailyInventoryService } from '../../../@core/data/daily-inventory.service';
-import { NbAuthService } from '../../../auth/services';
-import { StoreService } from '../../../@core/data/store.service';
-import { RecipeService } from '../../../@core/data/recipe.service';
 import { Observable } from 'rxjs/Observable';
+
+import { INgxMyDpOptions } from 'ngx-mydatepicker';
+
+import { NbAuthService } from '../../../auth/services';
+import { SupplyService } from '../../../@core/data/supply.service';
+import { StoreService } from '../../../@core/data/store.service';
 import { ProcessService } from '../../../@core/data/process.service';
+
+import { getDateStringByDate } from '../../../@core/utils/dateUtils';
 
 @Component({
   selector: 'ngx-process-form',
@@ -49,6 +51,11 @@ import { ProcessService } from '../../../@core/data/process.service';
         line-height: 1.25;
         color: #ffffff;
       }
+
+      .row {
+        align-items: center;
+        margin-bottom: 1rem;
+      }
     `,
   ],
 })
@@ -68,16 +75,14 @@ export class ProcessFormComponent implements OnInit {
     store_id: '',
     supply_id: '',
     date: '',
-    wastage: '',
+    wastage: 0,
     final_quantity: '0',
     supplies: [],
   };
 
   constructor(
     private supplyService: SupplyService,
-    private dailyInventoryService: DailyInventoryService,
     private processService: ProcessService,
-    private recipeService: RecipeService,
     private storeService: StoreService,
     private authService: NbAuthService,
     private route: ActivatedRoute,
@@ -140,10 +145,7 @@ export class ProcessFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const dt = new Date(
-      this.date.jsdate.getTime() + new Date().getTimezoneOffset() * 60 * 1000,
-    );
-    const date = `${dt.getFullYear()}-${dt.getMonth() + 1}-${dt.getDate()}`;
+    const date = getDateStringByDate(this.date.jsdate);
     const data = {
       ...this.data,
       store_id: this.storeId,

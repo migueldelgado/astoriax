@@ -1,11 +1,10 @@
-<form (submit)="onSubmit()">
   <nb-card>
     <nb-card-header> {{id ? 'Editar' : 'Nuevo'}} proceso</nb-card-header>
     <nb-card-body>
-      <div class="row align-items-baseline">
-        <div class="form-group col-sm-4 row align-items-center">
-          <label class="col-sm-2">Insumo</label>
-          <div class="col-sm-9">
+      <form (submit)="onSubmit()">
+        <div class="row">
+          <label class="col-sm-1">Insumo</label>
+          <div class="col-sm-5">
             <select
               name="type"
               class="form-control"
@@ -22,9 +21,9 @@
             </select>
           </div>
         </div>
-        <div class="form-group col-sm-4 row align-items-center">
-          <label class="col-sm-2">Cantidad</label>
-          <div class="col-sm-9">
+        <div class="row">
+          <label class="col-sm-1">Cantidad</label>
+          <div class="col-sm-5">
             <input
               name="quantity"
               required
@@ -35,9 +34,9 @@
             />
           </div>
         </div>
-        <div class="form-group col-sm-4 row align-items-center">
-          <label class="col-sm-2">Merma</label>
-          <div class="col-sm-9">
+        <div class="row">
+          <label class="col-sm-1">Merma</label>
+          <div class="col-sm-5">
             <input
               name="wastage"
               required
@@ -48,9 +47,9 @@
             />
           </div>
         </div>
-        <div class="col-sm-6 row align-items-center">
-          <div class="col-md-2 col-sm-3"><label class="">Fecha</label></div>
-          <div class="col-md-10 col-sm-9 input-group">
+        <div class="row">
+          <label class="col-sm-1">Fecha</label>
+          <div class="col-sm-5 input-group">
             <input
               ngx-mydatepicker
               class="form-control"
@@ -80,9 +79,9 @@
             </span>
           </div>
         </div>
-        <div class="form-group col-sm-6 row align-items-center">
-          <label class="col-md-2 col-sm-3">Tienda</label>
-          <div class="col-md-10 col-sm-9">
+        <div class="row">
+          <label class="col-sm-1">Tienda</label>
+          <div class="col-sm-5">
             <select
               name="store"
               class="form-control"
@@ -98,36 +97,35 @@
             </select>
           </div>
         </div>
-      </div>
+
+        <div class="row">
+          <table>
+            <thead>
+              <tr>
+                <th>Insumo</th>
+                <th>Cantidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let supply of data.supplies; let i = index">
+                <td>{{ data.supplies[i].name }}</td>
+                <td>
+                  <input
+                    name="supquantity{{i}}"
+                    required
+                    [(ngModel)]="data.supplies[i].quantity"
+                    type="number"
+                    placeholder="Cantidad"
+                    class="form-control"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr />
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+      </form>
     </nb-card-body>
-    <nb-card-body>
-      <table>
-        <thead>
-          <tr>
-            <th>Insumo</th>
-            <th>Cantidad</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let supply of data.supplies; let i = index">
-            <td>{{ data.supplies[i].name }}</td>
-            <td>
-              <input
-                name="supquantity{{i}}"
-                required
-                [(ngModel)]="data.supplies[i].quantity"
-                type="number"
-                placeholder="Cantidad"
-                class="form-control"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </nb-card-body>
-    <nb-card-footer>
-      <button type="submit" class="btn btn-primary">Guardar</button>
-      <button class="btn btn-secondary" (click)="cancel()">Cancelar</button>
-    </nb-card-footer>
   </nb-card>
-</form>
