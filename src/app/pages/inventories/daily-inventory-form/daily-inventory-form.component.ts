@@ -6,6 +6,7 @@ import { DailyInventoryService } from '../../../@core/data/daily-inventory.servi
 import { NbAuthService } from '../../../auth/services';
 import { DatePipe } from '@angular/common';
 import { StoreService } from '../../../@core/data/store.service';
+import { getDateStringByDate } from '../../../@core/utils/dateUtils';
 
 @Component({
   selector: 'ngx-inventory-form',
@@ -144,5 +145,19 @@ export class DailyInventoryFormComponent implements OnInit {
   }
   hasPermission(key: string): boolean {
     return this.authService.hasPermission(key);
+  }
+
+  getDailyInventoryReport() {
+    const date = getDateStringByDate(this.date.jsdate);
+    this.dailyInventoryService.getDailyReport(date)
+      .subscribe(response => this.downLoadFile(response));
+  }
+
+  downLoadFile(blob: any) {
+    let url = window.URL.createObjectURL(blob);
+    let pwa = window.open(url);
+    if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+        alert( 'Please disable your Pop-up blocker and try again.');
+    }
   }
 }

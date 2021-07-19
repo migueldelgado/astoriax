@@ -1,6 +1,11 @@
 <form (submit)="onSubmit()">
   <nb-card>
-    <nb-card-header> {{id ? 'Editar' : 'Nuevo'}} inventario diario</nb-card-header>
+    <nb-card-header>
+      <span>{{id ? 'Editar' : 'Nuevo'}} inventario diario</span>
+      <button class="btn btn-icon btn-outline-success pull-right" (click)="getDailyInventoryReport()" *ngIf="id">
+        <i class="fa fa-file-excel-o"></i>
+      </button>
+    </nb-card-header>
     <nb-card-body>
       <div class="row align-items-baseline">
         <div class="col-sm-7 row align-items-center">

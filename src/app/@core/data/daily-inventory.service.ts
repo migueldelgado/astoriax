@@ -12,6 +12,7 @@ export class DailyInventoryService {
   constructor(private http: HttpClient, private authService: NbAuthService) {
     this.currentStore = this.authService.getCurrentStore();
   }
+
   public getAll(from, to) {
     const currentStore = this.authService.getCurrentStore();
     let url = `${AppConfig.STORES +
@@ -53,5 +54,12 @@ export class DailyInventoryService {
 
   private parseData(data): any {
     return data;
+  }
+
+  public getDailyReport(date) {
+    return this.http.post(`${AppConfig.API_ENDPOINT}inventories/daily-report`, {
+      date,
+      store_id: this.currentStore
+    }, { responseType: 'blob'});
   }
 }
