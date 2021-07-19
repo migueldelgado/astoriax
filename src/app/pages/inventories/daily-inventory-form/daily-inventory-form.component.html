@@ -2,7 +2,7 @@
   <nb-card>
     <nb-card-header>
       <span>{{id ? 'Editar' : 'Nuevo'}} inventario diario</span>
-      <button class="btn btn-icon btn-outline-success pull-right" (click)="getDailyInventoryReport()" *ngIf="id">
+      <button class="btn btn-icon btn-outline-success pull-right" type="button" (click)="getDailyInventoryReport()" *ngIf="id">
         <i class="fa fa-file-excel-o"></i>
       </button>
     </nb-card-header>
