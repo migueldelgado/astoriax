@@ -139,15 +139,15 @@ export class DailyInventoryTableComponent implements OnInit {
       alert('No tiene permisos para eliminar inventario')
       return;
     }
+
     if (!window.confirm('Desea borrar inventario?')) {
       return ;
     }
+
     this.dailyInventoryService
-      .deleteInventory(event.data.id_daily_inventory)
+      .deleteInventory(event.data.id)
       .subscribe(
-        (result: any) => {
-          this.source.remove(event.data);
-        },
+        () => this.source.remove(event.data),
         error => {
           const errorMessage = JSON.parse(error._body);
           alert(errorMessage.message);
