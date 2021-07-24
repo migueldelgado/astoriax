@@ -10,16 +10,16 @@ import { SupplierService } from '../../../@core/data/supplier.service';
 })
 export class SuppliersFormComponent {
   supplierId;
-  supplier: {
-    id: string;
-    rut: string;
-    name: string;
-    address: string;
-    city: string;
-    email: string;
-    phone: string;
-    bank: string;
-    account: string;
+  supplier = {
+    id: '',
+    rut: '',
+    name: '',
+    address: '',
+    city: '',
+    email: '',
+    phone: '',
+    bank: '',
+    account: ''
   };
 
   constructor(
