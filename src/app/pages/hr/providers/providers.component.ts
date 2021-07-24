@@ -1,10 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {LocalDataSource} from 'ng2-smart-table';
-import {ActivatedRoute, Router} from '@angular/router';
-import {INgxMyDpOptions} from 'ngx-mydatepicker';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ProvidersModalComponent} from '../modal/providers-modal.component';
-import {SupplierService} from '../../../@core/data/supplier.service';
+import { Component, OnInit } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { SupplierService } from '../../../@core/data/supplier.service';
+import { NbAuthService } from '../../../auth/services';
 
 
 @Component({
@@ -18,108 +17,78 @@ import {SupplierService} from '../../../@core/data/supplier.service';
     nb-card-body {
       min-height: 400px;
     }
-
-    table {
-      line-height: 1.5em;
-      border-collapse: collapse;
-      border-spacing: 0;
-      display: table;
-      width: 100%;
-      max-width: 100%;
-      overflow: auto;
-      word-break: normal;
-      word-break: keep-all;
-    }
-
-    table tr td:first-child {
-      width: 25%;
-    }
-
-    table tr td {
-      width: 15%;
-      position: relative;
-      padding: 0.875rem 1.25rem;
-      border: 1px solid #342e73;
-      vertical-align: middle;
-    }
-
-    table th {
-      position: relative;
-      width: 15%;
-      padding: 0.875rem 1.25rem;
-      border: 1px solid #342e73;
-      vertical-align: middle;
-      padding: 0.875rem 1.25rem;
-      padding-right: 1.75rem;
-      font-family: Exo;
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.25;
-      color: #ffffff;
-    }
-
-    table th:first-child {
-      width: 25%;
-    }
-
-    table .btn-icon {
-      padding: 0.25rem 0.5rem !important;
-    }
   `],
 })
 export class ProvidersComponent implements OnInit {
 
-  suppliers: Array<any>;
+  settings: any;
+  suppliers: LocalDataSource = new LocalDataSource();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private modalService: NgbModal,
+    private authService: NbAuthService,
     private supplierService: SupplierService,
   ) {
   }
 
   ngOnInit() {
-    this.loadProviders();
-  }
-
-  loadProviders() {
-    this.supplierService.getAll(true)
-      .subscribe((suppliers) => {
-        this.suppliers = suppliers;
-      })
-  }
-
-  onClickEdit(supplier) {
-    const activeModal = this.modalService.open(ProvidersModalComponent, {size: 'lg', container: 'nb-layout'});
-    activeModal.componentInstance.setSupplier(supplier);
-    activeModal.result.then((result) => {
-      if (!result) {
-        return;
+    this.settings = {
+      mode: 'external',
+      add: { addButtonContent: '<i class="nb-plus"></i>' },
+      edit: { editButtonContent: '<i class="nb-edit"></i>' },
+      delete: {
+        deleteButtonContent: '<i class="nb-trash"></i>',
+        confirmDelete: true,
+      },
+      actions: {
+        columnTitle: '',
+        position: 'right',
+        add: this.authService.hasPermission('APRO'),
+        edit: this.authService.hasPermission('MPRO'),
+        delete: this.authService.hasPermission('EPRO')
+      },
+      columns: {
+        name: { title: 'Nombre', type: 'string' },
+        rut: { title: 'Rut', type: 'string' },
+        phone: { title: 'Telefono', type: 'string' },
+        email: { title: 'Email', type: 'string' }
       }
-      this.loadProviders();
-    })
+    };
+
+    this.loadSuppliers();
   }
 
-  onClickDelete(supplier) {
-    if (!window.confirm('Desea eliminar proveedor?')) {
-      return ;
-    }
-    this.supplierService.delete(supplier.id)
-      .subscribe(() => {
-        this.suppliers = this.suppliers.filter(s => s.id !== supplier.id)
+  loadSuppliers() {
+    this.supplierService.getAll()
+      .subscribe((suppliers) => {
+        this.suppliers.load(suppliers);
       })
   }
 
   onClickAdd() {
-    const activeModal = this.modalService.open(ProvidersModalComponent, {size: 'lg', container: 'nb-layout'});
-    activeModal.componentInstance.setSupplier({});
-    activeModal.result.then((result) => {
-      if (!result) {
-        return;
-      }
-      this.loadProviders();
-    })
+    this.router.navigate(
+      ['./new'],
+      { relativeTo: this.route }
+    );
   }
 
+  onClickEdit(evt) {
+    this.router.navigate([`./${evt.data.id}`], {
+      relativeTo: this.route,
+    });
+  }
+
+  onClickDelete(evt) {
+    if (!window.confirm('Seguro que desea borrar proveedor?')) {
+      return ;
+    }
+
+    this.supplierService
+      .delete(evt.data.id)
+      .subscribe(
+        () => this.loadSuppliers(),
+        () => alert('Hubo un problema al borrar proveedor')
+      );
+  }
 }

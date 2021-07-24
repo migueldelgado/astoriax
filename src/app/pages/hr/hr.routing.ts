@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { HrComponent } from './hr.component';
+
 import { ProvidersComponent } from './providers/providers.component';
+import { SuppliersFormComponent } from './providers/suppliers-form.component';
 import { StoresComponent } from './stores/stores.component';
 import { StoresFormComponent } from './stores/stores-form.component';
 import { EmployeesComponent } from './employees/employees.component';
@@ -14,38 +17,17 @@ const routes: Routes = [
     path: '',
     component: HrComponent,
     children: [
-      {
-        path: 'providers',
-        component: ProvidersComponent,
-      },
-      {
-        path: 'stores',
-        component: StoresComponent,
-      },
-      {
-        path: 'stores/:id',
-        component: StoresFormComponent,
-      },
-      {
-        path: 'employees',
-        component: EmployeesComponent,
-      },
-      {
-        path: 'employees/new',
-        component: EmployeeFormComponent,
-      },
-      {
-        path: 'employees/:id',
-        component: EmployeeFormComponent,
-      },
-      {
-        path: 'roles',
-        component: RoleTableComponent,
-      },
-      {
-        path: 'roles/:id',
-        component: RoleFormComponent,
-      },
+      { path: 'suppliers', component: ProvidersComponent },
+      { path: 'suppliers/new', component: SuppliersFormComponent },
+      { path: 'suppliers/:id', component: SuppliersFormComponent },
+      { path: 'stores', component: StoresComponent },
+      { path: 'stores/:id', component: StoresFormComponent },
+      // { path: 'stores/new', component: StoresFormComponent }, TODO: Fix this issue
+      { path: 'employees', component: EmployeesComponent },
+      { path: 'employees/new', component: EmployeeFormComponent },
+      { path: 'employees/:id', component: EmployeeFormComponent },
+      { path: 'roles', component: RoleTableComponent },
+      { path: 'roles/:id', component: RoleFormComponent },
     ],
   },
 ];
@@ -58,9 +40,11 @@ export class HrRoutingModule {}
 
 export const routedComponents = [
   ProvidersComponent,
+  SuppliersFormComponent,
   StoresComponent,
-  EmployeesComponent,
   StoresFormComponent,
+  EmployeesComponent,
+  EmployeeFormComponent,
   RoleTableComponent,
   RoleFormComponent,
 ];

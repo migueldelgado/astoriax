@@ -1,36 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
 import { Router } from '@angular/router';
-import { UserService } from '../../../@core/data/user.service';
+
+import { LocalDataSource } from 'ng2-smart-table';
+
 import { NbAuthService } from '../../../auth/services';
+import { UserService } from '../../../@core/data/user.service';
 
 @Component({
   selector: 'ngx-employees-admin-table',
   templateUrl: './employees.component.html',
-  styleUrls: [ './employees.component.scss' ],
+  styleUrls: ['./employees.component.scss'],
 })
 export class EmployeesComponent implements OnInit {
   users: Array<any> = [];
-
+  settings: any;
   source: LocalDataSource = new LocalDataSource();
-  settings = {
-    mode: 'external',
-    add: { addButtonContent: '<i class="nb-plus"></i>' },
-    edit: { editButtonContent: '<i class="nb-edit"></i>' },
-    actions: {
-      columnTitle: '',
-      position: 'right',
-      delete: false,
-      edit: true,
-      add: true,
-    },
-    columns: {
-      first_name: { title: 'Nombre', type: 'text' },
-      rut: { title: 'RUT', type: 'text' },
-      phone: { title: 'Telefono', type: 'text' },
-      address: { title: 'Direccion', type: 'text' }
-    },
-  };
 
   constructor(
     private router: Router,
@@ -44,6 +28,30 @@ export class EmployeesComponent implements OnInit {
       return;
     }
 
+    this.settings = {
+      mode: 'external',
+      add: { addButtonContent: '<i class="nb-plus"></i>' },
+      edit: { editButtonContent: '<i class="nb-edit"></i>' },
+      delete: { deleteButtonContent: '<i class="nb-trash"></i>' },
+      actions: {
+        columnTitle: '',
+        position: 'right',
+        add: this.hasPermission('AEMP'),
+        edit: this.hasPermission('MEMP'),
+        delete: this.hasPermission('EEMP')
+      },
+      columns: {
+        first_name: { title: 'Nombre', type: 'text' },
+        rut: { title: 'RUT', type: 'text' },
+        phone: { title: 'Telefono', type: 'text' },
+        address: { title: 'Direccion', type: 'text' }
+      },
+    };
+
+    this.loadUsers()
+  }
+
+  loadUsers() {
     const currentStoreId =
       !this.userService.isCurrentUserAdmin() ?
         this.authService.getCurrentStore() : '';
@@ -74,6 +82,19 @@ export class EmployeesComponent implements OnInit {
     }
 
     this.router.navigate(['/pages/hr/employees/new']);
+  }
+
+  onClickDelete(evt) {
+    if (!window.confirm('Seguro que desea borrar usuario?')) {
+      return ;
+    }
+
+    this.userService
+      .delete(evt.data.id)
+      .subscribe(
+        () => this.loadUsers(),
+        () => alert('Hubo un problema al borrar proveedor')
+      );
   }
 
 }

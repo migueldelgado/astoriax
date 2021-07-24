@@ -11,9 +11,8 @@ export class SupplierService {
     this.currentStore = this.authService.getCurrentStore();
   }
 
-  public getAll(isNewApi = false) {
-    const API = isNewApi ? AppConfig.API_ENDPOINT : `${AppConfig.API_ENDPOINT_OLD}/`;
-    return this.http.get(`${API}suppliers`)
+  public getAll() {
+    return this.http.get(`${AppConfig.API_ENDPOINT}suppliers`)
       .map((suppliers: any) => {
         return suppliers.data;
       });
@@ -49,16 +48,20 @@ export class SupplierService {
       });
   }
 
-  public update(data) {
-    return this.http.put(`${AppConfig.API_ENDPOINT}suppliers/${data.id}`, data)
+  public findSupplier(supplierId) {
+    return this.http.get<any>(`${AppConfig.API_ENDPOINT}suppliers/${supplierId}`);
+  }
+
+  public update(supplier) {
+    return this.http.put(`${AppConfig.API_ENDPOINT}suppliers/${supplier.id}`, supplier);
   }
 
   public delete(id) {
-    return this.http.delete(`${AppConfig.API_ENDPOINT}suppliers/${id}`)
+    return this.http.delete(`${AppConfig.API_ENDPOINT}suppliers/${id}`);
   }
 
-  public create(data) {
-    return this.http.post(`${AppConfig.API_ENDPOINT}suppliers`, data)
+  public create(supplier) {
+    return this.http.post(`${AppConfig.API_ENDPOINT}suppliers`, supplier);
   }
 
   public getTotalInvoicesReport(params){

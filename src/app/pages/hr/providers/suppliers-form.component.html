@@ -1,0 +1,150 @@
+<nb-card>
+  <nb-card-header>
+    {{supplierId ? 'Editar' : 'Agregar'}} Proveedor
+  </nb-card-header>
+  
+  <nb-card-body>
+    <form #f="ngForm" (ngSubmit)="onClickSave(f)">
+      <div class="form-group row align-items-center">
+        <label class="col-md-2 col-sm-3">Rut</label>
+        <div class="input-group col-md-10 col-sm-9">
+          <input
+            type="text"
+            [(ngModel)]="supplier.rut"
+            name="rut"
+            placeholder="Rut"
+            class="form-control"
+            #rutModel="ngModel"
+            required
+          />
+        </div>
+      </div>
+      <div class="alert alert-danger offset-md-2" *ngIf="rutModel.invalid && (rutModel.dirty || rutModel.touched)">
+        <div *ngIf="rutModel.errors.required">
+          Porfavor ingrese un Rut
+        </div>
+      </div>
+
+      <div class="form-group row align-items-center">
+        <label class="col-md-2 col-sm-3">Nombre</label>
+        <div class="input-group col-md-10 col-sm-9">
+          <input
+            type="text"
+            [(ngModel)]="supplier.name"
+            name="name"
+            placeholder="Nombre"
+            class="form-control"
+            #nameModel="ngModel"
+            required
+          />
+        </div>
+      </div>
+      <div class="alert alert-danger offset-md-2" *ngIf="nameModel.invalid && (nameModel.dirty || nameModel.touched)">
+        <div *ngIf="nameModel.errors.required">
+          Porfavor ingrese un nombre
+        </div>
+      </div>
+
+      <div class="form-group row align-items-center">
+        <label class="col-md-2 col-sm-3">Dirección</label>
+        <div class="input-group col-md-10 col-sm-9">
+          <input
+            type="text"
+            [(ngModel)]="supplier.address"
+            name="address"
+            placeholder="Dirección"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row align-items-center">
+        <label class="col-md-2 col-sm-3">Ciudad</label>
+        <div class="input-group col-md-10 col-sm-9">
+          <input
+            type="text"
+            [(ngModel)]="supplier.city"
+            name="city"
+            placeholder="Ciudad"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row align-items-center">
+        <label class="col-md-2 col-sm-3">Email</label>
+        <div class="input-group col-md-10 col-sm-9">
+          <input
+            type="email"
+            [(ngModel)]="supplier.email"
+            name="email"
+            placeholder="example@example.com"
+            class="form-control"
+            #emailModel="ngModel"
+            required
+          />
+        </div>
+      </div>
+      <div class="alert alert-danger offset-md-2" *ngIf="emailModel.invalid && (emailModel.dirty || emailModel.touched)">
+        <div *ngIf="emailModel.errors.required">
+          Porfavor ingrese un correo electronico
+        </div>
+      </div>
+
+      <div class="form-group row align-items-center">
+        <label class="col-md-2 col-sm-3">Teléfono</label>
+        <div class="input-group col-md-10 col-sm-9">
+          <input
+            type="text"
+            [(ngModel)]="supplier.phone"
+            name="phone"
+            placeholder="Teléfono"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row align-items-center">
+        <label class="col-md-2 col-sm-3">Banco</label>
+        <div class="input-group col-md-10 col-sm-9">
+          <input
+            type="text"
+            [(ngModel)]="supplier.bank"
+            name="bank"
+            placeholder="Banco"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row align-items-center">
+        <label class="col-md-2 col-sm-3">Cuenta</label>
+        <div class="input-group col-md-10 col-sm-9">
+          <input
+            type="text"
+            [(ngModel)]="supplier.account"
+            name="account"
+            placeholder="Cuenta"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <hr>
+
+      <button
+        class="btn btn-md btn-primary"
+        [disabled]="!f.form.valid"
+      >
+        Guardar
+      </button>
+      <button
+        type="button"
+        class="btn btn-md btn-secondary"
+        (click)="onClickCancel()"
+      >
+        Cancelar
+      </button>
+    </form>
+  </nb-card-body>
+</nb-card>

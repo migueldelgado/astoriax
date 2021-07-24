@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import 'rxjs/add/operator/map';
 import { AppConfig } from '../../app.config';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  public getAll(storeId?) {
+  public getAll(storeId) {
     return this.http.get(`${AppConfig.API_ENDPOINT}users?store_id=${storeId}`).map((users: any) => {
       return users.data || [];
     });

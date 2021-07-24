@@ -5,7 +5,9 @@
       [settings]="settings"
       [source]="source"
       (create)="onClickAdd()"
-      (edit)="onClickEdit($event)">
+      (edit)="onClickEdit($event)"
+      (delete)="onClickDelete($event)"
+    >
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>

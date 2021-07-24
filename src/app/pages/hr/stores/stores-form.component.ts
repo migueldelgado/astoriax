@@ -97,7 +97,7 @@ export class StoresFormComponent implements OnInit {
     Observable.forkJoin(
       this.supplyService.getTotalList(),
       this.recipeService.getTotalList(),
-      this.supplierService.getAll(true),
+      this.supplierService.getAll(),
       // this.recipeService.getTotalList(),
     ).subscribe((result: any) => {
       this.supplies = result[0].data;

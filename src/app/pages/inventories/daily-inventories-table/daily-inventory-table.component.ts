@@ -42,6 +42,9 @@ export class DailyInventoryTableComponent implements OnInit {
     actions: {
       columnTitle: 'Acciones',
       position: 'right',
+      add: true,
+      edit: true,
+      delete: true
     },
     mode: 'external',
     columns: {

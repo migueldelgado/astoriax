@@ -15,18 +15,18 @@ export class EmployeeFormComponent {
     id = null;
 
     data = {
-        id: null,
-        rut: '',
-        first_name: '',
-        last_name: '',
-        address: '',
-        city: '',
-        phone: '',
-        email: '',
-        audit_created_email: 0,
-        password: '',
-        roles: [],
-        stores: []
+      id: null,
+      rut: '',
+      first_name: '',
+      last_name: '',
+      address: '',
+      city: '',
+      phone: '',
+      email: '',
+      audit_created_email: 0,
+      password: '',
+      roles: [],
+      stores: []
     };
   
     password = '';
@@ -44,48 +44,50 @@ export class EmployeeFormComponent {
     };
   
     constructor(
-        private router: Router,
-        private route: ActivatedRoute,
-        private userService: UserService,
-        private roleService: RoleService,
-        private storeService: StoreService
+      private router: Router,
+      private route: ActivatedRoute,
+      private userService: UserService,
+      private roleService: RoleService,
+      private storeService: StoreService
     ) {}
 
     ngOnInit() {
-        Observable.forkJoin(
-            this.roleService.getAll(),
-            this.storeService.getAll()
-          ).subscribe((result: any) => {
-            this.roles = result[0];
-            this.stores = result[1];
+      Observable.forkJoin(
+        this.roleService.getAll(),
+        this.storeService.getAll()
+      ).subscribe((result: any) => {
+        this.roles = result[0];
+        this.stores = result[1];
 
-            this.route.params
-                .subscribe(params => {
-                    this.id = params.id;
-                    if (this.id) this.loadUser();
-                });
+        this
+          .route
+          .params
+          .subscribe(params => {
+            this.id = params.id;
+            if (this.id) this.loadUser();
           });
+      });
     }
 
     loadUser() {
-        this.isEdit = true;
-        this.userService.findUser(this.id)
-            .subscribe(user => {
-                this.data = {
-                    id: user.data.id,
-                    rut: user.data.rut,
-                    first_name: user.data.first_name,
-                    last_name: user.data.last_name,
-                    address: user.data.address,
-                    city: user.data.city,
-                    phone: user.data.phone,
-                    email: user.data.email,
-                    password: user.data.password,
-                    audit_created_email: user.data.audit_created_email,
-                    roles: user.data.roles,
-                    stores: user.data.stores
-                };
-            });
+      this.isEdit = true;
+      this.userService.findUser(this.id)
+        .subscribe(user => {
+          this.data = {
+            id: user.data.id,
+            rut: user.data.rut,
+            first_name: user.data.first_name,
+            last_name: user.data.last_name,
+            address: user.data.address,
+            city: user.data.city,
+            phone: user.data.phone,
+            email: user.data.email,
+            password: user.data.password,
+            audit_created_email: user.data.audit_created_email,
+            roles: user.data.roles,
+            stores: user.data.stores
+          };
+        });
     }
   
     onCancel() {

@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
-import {AppConfig} from '../../app.config';
-import {HttpClient} from '@angular/common/http';
-import {NbAuthService} from '../../auth/services';
+import { AppConfig } from '../../app.config';
+import { HttpClient } from '@angular/common/http';
+import { NbAuthService } from '../../auth/services';
 
 @Injectable()
 export class RecipeService {
 
-  constructor(private http: HttpClient, private authService: NbAuthService) {
-  }
+  constructor(
+    private http: HttpClient,
+    private authService: NbAuthService
+  ) {}
+  
   public getAll(filter?) {
     let name;
     let classification

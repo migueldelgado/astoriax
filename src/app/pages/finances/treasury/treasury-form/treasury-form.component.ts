@@ -194,8 +194,6 @@ export class TreasuryFormComponent implements OnInit {
                 }
             }
         }
-        
-        console.log(params);
 
         if (listOfServices.length) {
             listOfServices.push(this.treasuryService.saveTreasuries(params))

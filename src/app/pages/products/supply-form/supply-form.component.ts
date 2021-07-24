@@ -98,7 +98,7 @@ export class SupplyFormComponent implements OnInit {
       return;
     }
     this.supplyTypes$ = this.supplyTypeService.getAll();
-    this.suppliers$ = this.supplierService.getAll(true);
+    this.suppliers$ = this.supplierService.getAll();
     this.units$ = this.unitService.getAll();
     this.supplyReportTypes$ = this.supplyReportTypeService.getAll();
     this.supplyClassifications$ = this.supplyClassificationService.getAll();
