@@ -20,7 +20,6 @@ import { NbAuthService } from '../../../auth/services';
   `],
 })
 export class ProvidersComponent implements OnInit {
-
   settings: any;
   suppliers: LocalDataSource = new LocalDataSource();
 
@@ -30,23 +29,17 @@ export class ProvidersComponent implements OnInit {
     private authService: NbAuthService,
     private supplierService: SupplierService,
   ) {
-  }
-
-  ngOnInit() {
     this.settings = {
       mode: 'external',
       add: { addButtonContent: '<i class="nb-plus"></i>' },
       edit: { editButtonContent: '<i class="nb-edit"></i>' },
-      delete: {
-        deleteButtonContent: '<i class="nb-trash"></i>',
-        confirmDelete: true,
-      },
+      delete: { deleteButtonContent: '<i class="nb-trash"></i>' },
       actions: {
         columnTitle: '',
         position: 'right',
-        add: this.authService.hasPermission('APRO'),
-        edit: this.authService.hasPermission('MPRO'),
-        delete: this.authService.hasPermission('EPRO')
+        add: authService.hasPermission('APRO'),
+        edit: authService.hasPermission('MPRO'),
+        delete: authService.hasPermission('EPRO')
       },
       columns: {
         name: { title: 'Nombre', type: 'string' },
@@ -55,15 +48,22 @@ export class ProvidersComponent implements OnInit {
         email: { title: 'Email', type: 'string' }
       }
     };
+  }
+
+  ngOnInit() {
+    if (!this.authService.hasPermission('PRO')) {
+      this.router.navigate(['/pages']);
+      return;
+    }
 
     this.loadSuppliers();
   }
 
   loadSuppliers() {
-    this.supplierService.getAll()
-      .subscribe((suppliers) => {
-        this.suppliers.load(suppliers);
-      })
+    this
+      .supplierService
+      .getAll()
+      .subscribe(suppliers => this.suppliers.load(suppliers));
   }
 
   onClickAdd() {

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { INgxMyDpOptions } from 'ngx-mydatepicker';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { StoresModalComponent } from '../modal/stores-modal.component';
+
+import { LocalDataSource } from 'ng2-smart-table';
 import { StoreService } from '../../../@core/data/store.service';
 import { NbAuthService } from '../../../auth/services';
 
@@ -19,106 +17,78 @@ import { NbAuthService } from '../../../auth/services';
       nb-card-body {
         min-height: 400px;
       }
-
-      table {
-        line-height: 1.5em;
-        border-collapse: collapse;
-        border-spacing: 0;
-        display: table;
-        width: 100%;
-        max-width: 100%;
-        overflow: auto;
-        word-break: normal;
-        word-break: keep-all;
-      }
-
-      table tr td:first-child {
-        width: 25%;
-      }
-
-      table tr td {
-        width: 15%;
-        position: relative;
-        padding: 0.875rem 1.25rem;
-        border: 1px solid #342e73;
-        vertical-align: middle;
-      }
-
-      table th {
-        position: relative;
-        width: 15%;
-        padding: 0.875rem 1.25rem;
-        border: 1px solid #342e73;
-        vertical-align: middle;
-        padding: 0.875rem 1.25rem;
-        padding-right: 1.75rem;
-        font-family: Exo;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.25;
-        color: #ffffff;
-      }
-
-      table th:first-child {
-        width: 25%;
-      }
-
-      table .btn-icon {
-        padding: 0.25rem 0.5rem !important;
-      }
     `,
   ],
 })
 export class StoresComponent implements OnInit {
-  stores: Array<any>;
+  stores: LocalDataSource = new LocalDataSource();
+  settings: any;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
-    private modalService: NgbModal,
+    private route: ActivatedRoute,
     private storeService: StoreService,
     private authService: NbAuthService,
-  ) {}
+  ) {
+
+    this.settings = {
+      mode: 'external',
+      add: { addButtonContent: '<i class="nb-plus"></i>' },
+      edit: { editButtonContent: '<i class="nb-edit"></i>' },
+      delete: { deleteButtonContent: '<i class="nb-trash"></i>' },
+      actions: {
+        columnTitle: '',
+        position: 'right',
+        add: authService.hasPermission('ALOC'),
+        edit: authService.hasPermission('MLOC'),
+        delete: authService.hasPermission('ELOC')
+      },
+      columns: {
+        name: { title: 'Nombre', type: 'string' },
+        phone: { title: 'Telefono', type: 'string' },
+        address: { title: 'Dirección', type: 'string' },
+        city: { title: 'Ciudad', type: 'string' }
+      }
+    };
+  }
 
   ngOnInit() {
-    if (!this.hasPermission('LOC')) {
+    if (!this.authService.hasPermission('LOC')) {
       this.router.navigate(['/pages']);
       return;
     }
-    this.storeService.getAll().subscribe(stores => {
-      this.stores = stores;
+
+    this.loadStores();
+  }
+
+  loadStores() {
+    this
+      .storeService
+      .getAll()
+      .subscribe(stores => this.stores.load(stores));
+  }
+
+  onClickAdd() {
+    this.router.navigate(['./new'], {
+      relativeTo: this.route,
     });
   }
 
-  hasPermission(key: string): boolean {
-    return this.authService.hasPermission(key);
+  onClickEdit(evt) {
+    this.router.navigate(
+      [`./${evt.data.id}`], 
+      { relativeTo: this.route }
+    );
   }
 
-  onChangeTo() {}
-
-  onClickPlus(id) {
-    this.router.navigate([`/pages/hr/stores/${id}`]);
-  }
-
-  onClickCreate() {
-    this.router.navigate([`/pages/hr/stores/new`]);
-  }
-
-  onClickDelete(id) {
-    if (!confirm('Desea Borrar el local?')) {
+  onClickDelete(evt) {
+    if (!confirm('Seguro que desea borrar el local?')) {
       return;
     }
 
-    this.storeService.delete(id).subscribe(() => {
-      this.stores = this.stores.filter(s => s.id !== id);
-    });
+    this
+      .storeService
+      .delete(evt.data.id)
+      .subscribe(() => this.loadStores());
   }
-
-  //
-  // onClickView() {
-  //   const activeModal = this.modalService.open(AddInvoiceProviderComponent, { size: 'lg', container: 'nb-layout' });
-  //
-  //   activeModal.componentInstance.modalHeader = 'Detalle del proveedor';
-  //
-  // }
 }
