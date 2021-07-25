@@ -1,8 +1,10 @@
 ///<reference path="../../../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 import { Component, OnInit } from '@angular/core';
-import {LocalDataSource} from 'ng2-smart-table';
-import {AuditsService} from '../audits.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { LocalDataSource } from 'ng2-smart-table';
+import { AuditsService } from '../audits.service';
+import { NbAuthService } from '../../../auth/services';
 
 @Component({
   selector: 'ngx-audit-table',
@@ -18,50 +20,35 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class AuditTableComponent implements OnInit {
 
-  settings = {
-    mode: 'external',
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    edit: {
-      editButtonContent: '<i class="nb-search"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-edit"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    actions: {
-      columnTitle: 'Acciones',
-      position: 'right',
-    },
-    columns: {
-      audit_type: {
-        title: 'Tipo',
-        type: 'string',
-      },
-      store: {
-        title: 'Tienda',
-        type: 'string',
-      },
-      manager: {
-        title: 'Jefe de local',
-        type: 'string',
-      },
-      date: {
-        title: 'Fecha',
-        type: 'date',
-      },
-    },
-  };
-
-
+  settings;
   source: LocalDataSource = new LocalDataSource();
   loading = true;
 
-  constructor(private auditService: AuditsService, private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private auditService: AuditsService,
+    private route: ActivatedRoute,
+    private authService: NbAuthService,
+    private router: Router
+  ) {
+    this.settings = {
+      mode: 'external',
+      add: { addButtonContent: '<i class="nb-plus"></i>' },
+      edit: { editButtonContent: '<i class="nb-search"></i>' },
+      delete: { deleteButtonContent: '<i class="nb-edit"></i>' },
+      actions: {
+        columnTitle: '',
+        position: 'right',
+        add: authService.hasPermission('AAUD'),
+        edit: authService.hasPermission('EAUD'),
+        delete: authService.hasPermission('MAUD') //Modifies audit
+      },
+      columns: {
+        audit_type: { title: 'Tipo', type: 'string' },
+        store: { title: 'Tienda', type: 'string' },
+        manager: { title: 'Jefe de local', type: 'string' },
+        date: { title: 'Fecha', type: 'date' }
+      },
+    };
   }
 
   ngOnInit() {
