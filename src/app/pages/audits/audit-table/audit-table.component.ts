@@ -40,7 +40,7 @@ export class AuditTableComponent implements OnInit {
         position: 'right',
         add: authService.hasPermission('AAUD'),
         edit: authService.hasPermission('EAUD'),
-        delete: authService.hasPermission('MAUD') //Modifies audit
+        delete: authService.hasPermission('MAUD') //TODO: change permission to look instead of delete
       },
       columns: {
         audit_type: { title: 'Tipo', type: 'string' },

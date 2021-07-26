@@ -1,21 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { LocalDataSource } from 'ng2-smart-table';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+
+import { RecipeModalComponent } from './modal/recipe-modal.component';
+
 import { RecipeService } from '../../../@core/data/recipe.service';
 import { NbAuthService } from '../../../auth/services';
 import { parseErrroMessage } from '../../../@core/utils/error';
 
-function sortByNumber(direction: number, a: string, b: string) {
-  const numberA = parseInt(a, 10);
-  const numberB = parseInt(b, 10);
-  if (direction > 0) {
-    return numberA - numberB;
-  }
-  return numberB - numberA;
-}
-
 @Component({
-  selector: 'ngx-supplies-table',
+  selector: 'ngx-recipes-table',
   templateUrl: './recipes-table.component.html',
   styles: [
     `
@@ -26,63 +22,47 @@ function sortByNumber(direction: number, a: string, b: string) {
   ],
 })
 export class RecipesTableComponent implements OnInit {
-  settings = {
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
-    },
-    actions: {
-      columnTitle: 'Acciones',
-      position: 'right',
-      add: {},
-      edit: {},
-      delete: {}
-    },
-    mode: 'external',
-    columns: {
-      name: {
-        title: 'Nombre',
-        type: 'string',
-      },
-      classification: {
-        title: 'Clasificación',
-        type: 'string',
-      },
-    },
-  };
-
-  source: LocalDataSource = new LocalDataSource();
+  settings;
+  recipes: LocalDataSource = new LocalDataSource();
 
   constructor(
     private recipeService: RecipeService,
     private authService: NbAuthService,
     private route: ActivatedRoute,
     private router: Router,
-  ) {}
+    private modalService: NgbModal
+  ) {
+    this.settings = {
+      mode: 'external',
+      add: { addButtonContent: '<i class="nb-plus"></i>' },
+      edit: { editButtonContent: '<i class="nb-edit"></i>' },
+      delete: { deleteButtonContent: '<i class="nb-trash"></i>' },
+      actions: {
+        columnTitle: '',
+        position: 'right',
+        add: this.hasPermission('AREC'),
+        edit: this.hasPermission('MREC'),
+        delete: this.hasPermission('EREC'),
+      },
+      columns: {
+        name: { title: 'Nombre', type: 'text' },
+        classification: { title: 'Clasificación', type: 'string' }
+      },
+    };
+  }
 
   ngOnInit() {
     if (!this.hasPermission('REC')) {
       this.router.navigate(['/pages']);
       return;
     }
-    this.settings.actions = {
-      ...this.settings.actions,
-      add: this.hasPermission('AREC'),
-      edit: this.hasPermission('MREC'),
-      delete: this.hasPermission('EREC'),
-    };
+
+    this.loadRecipes();
+  }
+
+  loadRecipes() {
     this.recipeService.getAll().subscribe((recipes: any) => {
-      this.source.load(recipes);
+      this.recipes.load(recipes);
     });
   }
 
@@ -91,9 +71,7 @@ export class RecipesTableComponent implements OnInit {
       return;
     }
     this.recipeService.deleteRecipe(event.data.id).subscribe(
-      (result: any) => {
-        this.source.remove(event.data);
-      },
+      () => this.loadRecipes(),
       error => {
         let errorMessage = { message: 'Error al eliminar receta' };
         try {
@@ -119,5 +97,19 @@ export class RecipesTableComponent implements OnInit {
 
   hasPermission(key: string): boolean {
     return this.authService.hasPermission(key);
+  }
+
+  onClickRow(evt) {
+    const modalOptions: NgbModalOptions = {
+      size: 'lg',
+      container: 'nb-layout',
+    }
+
+    const activeModal = this.modalService.open(
+      RecipeModalComponent, 
+      modalOptions
+    );
+
+    activeModal.componentInstance.initialize(evt.data.id);
   }
 }

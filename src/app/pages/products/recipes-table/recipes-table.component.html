@@ -6,11 +6,11 @@
   <nb-card-body>
     <ng2-smart-table
       [settings]="settings"
-      [source]="source"
+      [source]="recipes"
       (create)="onCreate($event)"
       (delete)="onDelete($event)"
       (edit)="onEdit($event)"
-    >
-    </ng2-smart-table>
+      (userRowSelect)="onClickRow($event)"
+    ></ng2-smart-table>
   </nb-card-body>
 </nb-card>
