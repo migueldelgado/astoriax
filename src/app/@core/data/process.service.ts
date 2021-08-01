@@ -6,15 +6,25 @@ import { NbAuthService } from '../../auth/services';
 
 @Injectable()
 export class ProcessService {
-  constructor(private http: HttpClient, private authService: NbAuthService) {}
 
-  public getAll(from, to) {
-    const currentStore = this.authService.getCurrentStore();
-    let url = `${AppConfig.STORES + currentStore}/processes`;
-    if (!currentStore) {
-      url = `${AppConfig.API_ENDPOINT}processes`;
+  currentStore:number;
+
+  constructor(
+    private http: HttpClient, 
+    private authService: NbAuthService
+  ) {
+    this.currentStore = this.authService.getCurrentStore();
+  }
+
+  public getAll(params) {
+    let url = `${AppConfig.API_ENDPOINT}processes?`;
+    if (params.selectedStore) {
+      url += `store_id=${this.currentStore}&`;
     }
-    return this.http.get(`${url}?from=${from}&to=${to}`);
+    if (params.from && params.to) {
+      url += `from=${params.from}&to=${params.to}`;
+    }
+    return this.http.get(url).map((response:any) => response.data);
   }
 
   public getTotalList() {

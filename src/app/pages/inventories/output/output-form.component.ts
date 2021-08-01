@@ -75,9 +75,9 @@ export class OutputFormComponent implements OnInit {
   loadSupplyAndRecipes(){
     Observable.forkJoin(
       this.recipeService.getAll(),
-      this.supplyService.getAll(),
+      this.supplyService.getSuppliesByStore(),
     ).subscribe((result: Array<any>) => {   
-      this.processData(result[0], result[1].data);
+      this.processData(result[0], result[1]);
     });
   }
 

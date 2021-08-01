@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { LocalDataSource } from 'ng2-smart-table';
 import { INgxMyDpOptions } from 'ngx-mydatepicker';
-import { DatePipe } from '@angular/common';
+
 import { NbAuthService } from '../../../auth/services';
-import { parseErrroMessage } from '../../../@core/utils/error';
 import { ProcessService } from '../../../@core/data/process.service';
+
+import { parseErrroMessage } from '../../../@core/utils/error';
+import { getDateStringByDate } from '../../../@core/utils/dateUtils';
 
 @Component({
   selector: 'ngx-process-table',
@@ -23,42 +26,7 @@ import { ProcessService } from '../../../@core/data/process.service';
   ],
 })
 export class ProcessTableComponent implements OnInit {
-  settings = {
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
-    },
-    actions: {
-      columnTitle: 'Acciones',
-      position: 'right',
-    },
-    mode: 'external',
-    columns: {
-      id: {
-        title: 'ID',
-        type: 'string',
-      },
-      date: {
-        title: 'Fecha',
-        type: 'string',
-      },
-      store: {
-        title: 'Local',
-        type: 'string',
-      },
-    },
-  };
-
+  settings;
   dateFrom = { jsdate: new Date(Date.now() - 604800000) };
   dateTo = { jsdate: new Date() };
   firstLoad = false;
@@ -71,31 +39,48 @@ export class ProcessTableComponent implements OnInit {
     private processService: ProcessService,
     private authService: NbAuthService,
     private route: ActivatedRoute,
-    private router: Router,
-    private datePipe: DatePipe,
-  ) {}
+    private router: Router
+  ) {
+    this.settings = {
+      mode: 'external',
+      add: { addButtonContent: '<i class="nb-plus"></i>' },
+      edit: { editButtonContent: '<i class="nb-edit"></i>' },
+      delete: { deleteButtonContent: '<i class="nb-trash"></i>' },
+      actions: {
+        columnTitle: 'Acciones',
+        position: 'right',
+        add: this.hasPermission('APSS'),
+        edit: this.hasPermission('MPSS'),
+        delete: this.hasPermission('EPSS'),
+      },
+      columns: {
+        date: { title: 'Fecha', type: 'string' },
+        supply_name: { title: 'Insumo', type: 'string' },
+        final_quantity: { title: 'Cantidad', type: 'string', filter: false },
+      },
+    };
+  }
 
   ngOnInit() {
     if (!this.hasPermission('PSS')) {
       this.router.navigate(['/pages']);
       return;
     }
-
-    this.settings.actions = {
-      ...this.settings.actions,
-      add: this.hasPermission('APSS'),
-      edit: this.hasPermission('MPSS'),
-      delete: this.hasPermission('EPSS'),
-    };
-    this.fetch(this.dateFrom.jsdate, this.dateTo.jsdate);
+    this.fetch(
+      this.dateFrom.jsdate,
+      this.dateTo.jsdate
+    );
   }
 
   fetch(dateFrom, dateTo) {
-    const from: string = this.datePipe.transform(dateFrom, 'yyyy-MM-dd');
-    const to: string = this.datePipe.transform(dateTo, 'yyyy-MM-dd');
-    this.processService.getAll(from, to).subscribe(
-      (result: any) => {
-        const processes = result.data;
+    const params = {
+      selectedStore: true,
+      from: getDateStringByDate(dateFrom),
+      to: getDateStringByDate(dateTo)
+    }
+
+    this.processService.getAll(params).subscribe(
+      processes => {
         this.source.load(processes);
         this.firstLoad = true;
       },

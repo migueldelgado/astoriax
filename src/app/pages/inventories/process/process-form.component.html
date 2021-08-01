@@ -3,6 +3,38 @@
     <nb-card-body>
       <form (submit)="onSubmit()">
         <div class="row">
+          <label class="col-sm-1">Fecha</label>
+          <div class="col-sm-5 input-group">
+            <input
+              ngx-mydatepicker
+              class="form-control"
+              style="float:none"
+              placeholder="Select a date"
+              name="mydate"
+              [(ngModel)]="date"
+              [options]="options"
+              #dp="ngx-mydatepicker"
+              required
+            />
+            <span class="input-group-append">
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="dp.clearDate()"
+              >
+                <i class="fa fa-times"></i>
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="dp.toggleCalendar()"
+              >
+                <i class="fa fa-calendar"></i>
+              </button>
+            </span>
+          </div>
+        </div>
+        <div class="row">
           <label class="col-sm-1">Insumo</label>
           <div class="col-sm-5">
             <select
@@ -47,39 +79,7 @@
             />
           </div>
         </div>
-        <div class="row">
-          <label class="col-sm-1">Fecha</label>
-          <div class="col-sm-5 input-group">
-            <input
-              ngx-mydatepicker
-              class="form-control"
-              style="float:none"
-              placeholder="Select a date"
-              name="mydate"
-              [(ngModel)]="date"
-              [options]="options"
-              #dp="ngx-mydatepicker"
-              required
-            />
-            <span class="input-group-append">
-              <button
-                type="button"
-                class="btn btn-primary"
-                (click)="dp.clearDate()"
-              >
-                <i class="fa fa-times"></i>
-              </button>
-              <button
-                type="button"
-                class="btn btn-primary"
-                (click)="dp.toggleCalendar()"
-              >
-                <i class="fa fa-calendar"></i>
-              </button>
-            </span>
-          </div>
-        </div>
-        <div class="row">
+        <!-- <div class="row">
           <label class="col-sm-1">Tienda</label>
           <div class="col-sm-5">
             <select
@@ -96,7 +96,7 @@
               </option>
             </select>
           </div>
-        </div>
+        </div> -->
 
         <div class="row">
           <table>

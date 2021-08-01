@@ -8,17 +8,27 @@ import {NbAuthService} from '../../auth/services';
 export class SupplyService {
   currentStore
 
-  constructor(private http: HttpClient, private authService: NbAuthService) {
+  constructor(
+    private http: HttpClient, 
+    private authService: NbAuthService
+  ) {
     this.currentStore = this.authService.getCurrentStore();
   }
 
   public getAll() {
-    const currentStore = this.authService.getCurrentStore();
-    let url = `${AppConfig.STORES + currentStore}/supplies`;
-    if (!currentStore) {
-      url = `${AppConfig.API_ENDPOINT}supplies`
-    }
-    return this.http.get(url);
+    return this.http.get(`${AppConfig.API_ENDPOINT}supplies`);
+  }
+
+  public getSuppliesByStore() {
+    return this.http.get(
+      `${AppConfig.API_ENDPOINT}supplies?store_id=${this.currentStore}`
+    ).map((response:any) => response.data);
+  }
+
+  public getSuppliesForProcessByStore() {
+    return this.http.get(
+      `${AppConfig.API_ENDPOINT}supplies?store_id=${this.currentStore}&show_process=${1}`
+    ).map((response:any) => response.data);
   }
 
   public getTotalList() {

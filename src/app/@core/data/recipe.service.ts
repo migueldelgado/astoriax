@@ -5,17 +5,20 @@ import { NbAuthService } from '../../auth/services';
 
 @Injectable()
 export class RecipeService {
+  currentStore;
 
   constructor(
     private http: HttpClient,
     private authService: NbAuthService
-  ) {}
+  ) {
+    this.currentStore = this.authService.getCurrentStore();
+  }
   
   public getAll(filter?) {
     let name;
-    let classification
-    const store = this.authService.getCurrentStore();
-    let url = `${AppConfig.API_ENDPOINT}recipes?store_id=${store}`;
+    let classification;
+
+    let url = `${AppConfig.API_ENDPOINT}recipes?store_id=${this.currentStore}`;
 
     if (!!filter){
       name = !!filter.name ? filter.name : '';

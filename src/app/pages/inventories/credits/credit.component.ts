@@ -76,12 +76,10 @@ export class CreditComponent implements OnInit {
   }
 
   onChangeDateFrom(evt) {
-    console.log(evt);
     this.init(evt.jsdate);
   }
 
   onChangeDateTo(evt) {
-    console.log(evt);
     this.init(null, evt.jsdate);
   }
 

@@ -45,8 +45,8 @@ export class RecipeFormComponent implements OnInit {
       this.router.navigate(['/pages']);
       return;
     }
-    this.supplyService.getAll().subscribe((result: any) => {
-      this.supplies = result.data;
+    this.supplyService.getSuppliesByStore().subscribe(supplies => {
+      this.supplies = supplies;
       this.loadRecipeData();
     });
   }

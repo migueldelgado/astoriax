@@ -73,11 +73,11 @@ export class PurchaseFormComponent implements OnInit {
     Observable.forkJoin(
       this.storeService.getAll(),
       this.supplierService.getSuppliers(),
-      this.supplyService.getAll(),
+      this.supplyService.getSuppliesByStore(),
     ).subscribe((result: any) => {
       this.stores = result[0];
       this.suppliers = result[1];
-      this.supplies = result[2].data;
+      this.supplies = result[2];
       this.loadPurchaseData();
     });
   }

@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 
 import { INgxMyDpOptions } from 'ngx-mydatepicker';
 
 import { NbAuthService } from '../../../auth/services';
 import { SupplyService } from '../../../@core/data/supply.service';
-import { StoreService } from '../../../@core/data/store.service';
 import { ProcessService } from '../../../@core/data/process.service';
 
 import { getDateStringByDate } from '../../../@core/utils/dateUtils';
@@ -61,16 +59,12 @@ import { getDateStringByDate } from '../../../@core/utils/dateUtils';
 })
 export class ProcessFormComponent implements OnInit {
   id: number;
-  storeId;
-  stores: Array<any> = [];
   supplies: Array<any> = [];
   suppliesProcessable: Array<any> = [];
   options: INgxMyDpOptions = {
     dateFormat: 'dd-mm-yyyy',
   };
-  date = {
-    jsdate: new Date(),
-  };
+  date = { jsdate: new Date() };
   data = {
     store_id: '',
     supply_id: '',
@@ -83,13 +77,10 @@ export class ProcessFormComponent implements OnInit {
   constructor(
     private supplyService: SupplyService,
     private processService: ProcessService,
-    private storeService: StoreService,
     private authService: NbAuthService,
     private route: ActivatedRoute,
     private router: Router,
-  ) {
-    this.storeId = this.authService.getCurrentStore();
-  }
+  ) {}
 
   ngOnInit() {
     if (!this.hasPermission('PSS')) {
@@ -97,21 +88,16 @@ export class ProcessFormComponent implements OnInit {
       return;
     }
 
-    Observable.forkJoin(
-      this.supplyService.getAll(),
-      this.storeService.getAll(),
-    ).subscribe((result: Array<any>) => {
-      this.suppliesProcessable = result[0].data.filter(
-        p => p.show_in_process === '1' || p.show_in_process === 1,
-      );
-      this.stores = this.stores = result[1];
-      this.route.params.subscribe(params => {
-        if (!params.id || params.id.toLowerCase() === 'new') {
-          this.preload([]);
-          return;
-        }
-        this.loadProcess(params.id);
-      });
+    this.supplyService.getSuppliesForProcessByStore().subscribe(supplies => {
+      this.suppliesProcessable = supplies;
+    });
+
+    this.route.params.subscribe(params => {
+      if (!params.id || params.id.toLowerCase() === 'new') {
+        this.preload([]);
+        return;
+      }
+      this.loadProcess(params.id);
     });
   }
 
@@ -119,7 +105,6 @@ export class ProcessFormComponent implements OnInit {
     this.id = id;
     this.processService.find(id).subscribe(({ data }: any) => {
       const d = new Date(data.date);
-      this.storeId = data.store_id;
       this.date = {
         jsdate: new Date(d.getTime() + d.getTimezoneOffset() * 60 * 1000),
       };
@@ -132,6 +117,7 @@ export class ProcessFormComponent implements OnInit {
     this.data.supplies = supplies.map(r => {
       return { ...r, quantity: r.pivot.quantity || '0' };
     });
+    console.log(this.data);
   }
 
   onChangeSupply() {
@@ -148,7 +134,6 @@ export class ProcessFormComponent implements OnInit {
     const date = getDateStringByDate(this.date.jsdate);
     const data = {
       ...this.data,
-      store_id: this.storeId,
       date,
     };
 
