@@ -40,6 +40,7 @@ export class ProcessService {
   }
 
   public create(data) {
+    data.store_id = this.currentStore;
     return this.http.post(`${AppConfig.API_ENDPOINT}processes`, data);
   }
 
