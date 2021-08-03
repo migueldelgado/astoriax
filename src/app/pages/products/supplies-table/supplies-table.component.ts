@@ -16,57 +16,8 @@ import { HasPermissionInterface } from '../../../has-permission.interface';
     `,
   ],
 })
-
 export class SuppliesTableComponent implements OnInit, HasPermissionInterface {
-  settings = {
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      // createButtonContent: '<i class="nb-checkmark"></i>',
-      // cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      // saveButtonContent: '<i class="nb-checkmark"></i>',
-      // cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
-    },
-    actions: {
-      columnTitle: 'Acciones',
-      position: 'right',
-      delete: true,
-      edit: true,
-      add: true,
-    },
-    mode: 'external',
-    columns: {
-      name: {
-        title: 'Nombre',
-        type: 'text',
-      },
-      classification: {
-        title: 'Clasificación',
-        type: 'text',
-      },
-      type: {
-        title: 'Tipo',
-        type: 'text',
-      },
-      price: {
-        title: 'Precio',
-        type: 'text',
-        compareFunction: sortByNumber,
-      },
-      stock_min: {
-        title: 'Stock Minimo',
-        type: 'text',
-        compareFunction: sortByNumber,
-      },
-    },
-  };
-
+  settings;
   source: LocalDataSource = new LocalDataSource();
 
   constructor(
@@ -74,24 +25,59 @@ export class SuppliesTableComponent implements OnInit, HasPermissionInterface {
     private route: ActivatedRoute,
     private router: Router,
     private authService: NbAuthService,
-  ) {}
+  ) {
+    this.settings = {
+      mode: 'external',
+      add: { addButtonContent: '<i class="nb-plus"></i>' },
+      edit: { editButtonContent: '<i class="nb-edit"></i>' },
+      delete: { deleteButtonContent: '<i class="nb-trash"></i>' },
+      actions: {
+        columnTitle: '',
+        position: 'right',
+        add: this.hasPermission('AINS'),
+        edit: this.hasPermission('MINS'),
+        delete: this.hasPermission('EINS')
+      },
+      columns: {
+        name: {
+          title: 'Nombre',
+          type: 'text',
+        },
+        classification: {
+          title: 'Clasificación',
+          type: 'text',
+        },
+        type: {
+          title: 'Tipo',
+          type: 'text',
+        },
+        price: {
+          title: 'Precio',
+          type: 'text',
+          compareFunction: sortByNumber,
+        },
+        stock_min: {
+          title: 'Stock Minimo',
+          type: 'text',
+          compareFunction: sortByNumber,
+        },
+      },
+    };
+  }
 
   ngOnInit() {
     if (!this.hasPermission('INS')) {
       this.router.navigate(['/pages']);
       return;
     }
+    this.loadSupplies();
+  }
 
-    this.settings.actions = {
-      ...this.settings.actions,
-      add: this.hasPermission('AINS'),
-      edit: this.hasPermission('MINS'),
-      delete: this.hasPermission('EINS'),
-    };
-
-    this.suppliesService.getAll().subscribe(({ data }: any) => {
-      this.source.load(data);
-    });
+  loadSupplies() {
+    this
+      .suppliesService
+      .getSuppliesByStore()
+      .subscribe(supplies => this.source.load(supplies));
   }
 
   onDelete(event): void {
@@ -100,9 +86,7 @@ export class SuppliesTableComponent implements OnInit, HasPermissionInterface {
     }
 
     this.suppliesService.deleteSupply(event.data.id).subscribe(
-      (result: any) => {
-        this.source.remove(event.data);
-      },
+      () => this.loadSupplies(),
       error => {
         let errorMessage = { message: 'Error al eliminar' };
         try {
