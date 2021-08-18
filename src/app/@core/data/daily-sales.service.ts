@@ -11,14 +11,21 @@ export class DailySalesService {
   constructor(private http: HttpClient, private authService: NbAuthService) {
     this.currentStore = this.authService.getCurrentStore();
   }
-  public getSales(params) {
+
+  public getSalesTotals(params) {
     const store = this.currentStore;
     const month = parseInt(params.month);
     const year = parseInt(params.year);
+    return this.http.get(
+      `${AppConfig.API_ENDPOINT}dailySales/totalDaysByMonth?store_id=${store}&month=${month}&year=${year}`
+    ).map((response:any) => response.data);
+  }
 
-    const url = `${AppConfig.API_ENDPOINT}dailySales?store_id=${store}&month=${month}&year=${year}`;
-
-    return this.http.get(url);
+  public getTotalItemsByDay(date) {
+    const store = this.currentStore;
+    return this.http.get(
+      `${AppConfig.API_ENDPOINT}dailySales/saleItemsByDay?store_id=${store}&date=${date}`
+    ).map((response:any) => response.data);
   }
 
   public delete(id) {
@@ -44,12 +51,10 @@ export class DailySalesService {
       });
   }
 
-  public getDayReport(values) {
+  public getDayReport(dateSale) {
     let params = {
       store_id: this.currentStore,
-      day: parseInt(values.day),
-      month: parseInt(values.month),
-      year: parseInt(values.year)
+      date: dateSale
     }
 
     return this.http.post(`${AppConfig.API_ENDPOINT}dailySales/report`, params);

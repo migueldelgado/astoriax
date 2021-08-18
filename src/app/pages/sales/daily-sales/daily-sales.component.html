@@ -1,16 +1,11 @@
 <nb-card>
   <nb-card-header>
     <span>Ingreso Venta Diaria</span>
-
-    <!-- <button class="btn btn-icon btn-outline-success pull-right">
-      <i class="fa fa-file-excel-o"></i>
-    </button> -->
-
     <button class="btn btn-icon btn-outline-success pull-right pdf-report" (click)="getReportPDF()">
       <i class="fa fa-file-pdf-o"></i>
     </button>
-
   </nb-card-header>
+  
   <nb-card-body>
     <div class="row">
       <div class="col-md-4 col-sm-12">
@@ -54,50 +49,25 @@
     <div class="row">
       <div class="col-sm-12 col-md-8 col-lg-9">
         <ng2-smart-table
-          [settings]="settings"
-          [source]="source"
+          [settings]="settingsItemsTable"
+          [source]="items"
           (editConfirm)="rowUpdated($event)"
         ></ng2-smart-table>
       </div>
       <div #monthContainer class="col-sm-12 col-md-4 col-lg-3 week-days">
         <ng2-smart-table
-          [settings]="settings2"
-          [source]="source2"
+          [settings]="settingTotalsTable"
+          [source]="totalDays"
           (userRowSelect)="userRowSelect($event)"
         ></ng2-smart-table>
       </div>
     </div>
   </nb-card-body>
+
   <nb-card-footer>
-    <div class="col-sm-8">
-      <table class="table table-bordered">
-        <tbody>
-          <tr>
-            <td width="45%">DIFERENCIA DE CAJA</td>
-            <td class="bg-info">${{ numberWithCommas(totals.difference.shift1) }}</td>
-            <td class="bg-info">${{ numberWithCommas(totals.difference.shift2) }}</td>
-            <td class="bg-info">${{ numberWithCommas(totals.difference.total) }}</td>
-          </tr>
-          <tr>
-            <td width="45%">TOTAL VENTA NETA</td>
-            <td class="bg-info">-</td>
-            <td class="bg-info">-</td>
-            <td class="bg-info">${{ numberWithCommas(totals.net.total) }}</td>
-          </tr>
-          <tr>
-            <td width="45%">TOTAL VENTA EXCLUYENDO MULTICAJA</td>
-            <td class="bg-info">-</td>
-            <td class="bg-info">-</td>
-            <td class="bg-info">${{ numberWithCommas(totals.noJunaeb.total) }}</td>
-          </tr>
-          <tr>
-            <td width="45%">TOTAL VENTA DEL DIA</td>
-            <td class="bg-info">-</td>
-            <td class="bg-info">-</td>
-            <td class="bg-info">${{ numberWithCommas(totals.day.total) }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <ng2-smart-table
+      [settings]="settingTotalsDayTable"
+      [source]="totals"
+    ></ng2-smart-table>
   </nb-card-footer>
 </nb-card>

@@ -3,5 +3,5 @@ export function numberWithCommas(number){
 }
 
 export function valuePrepareFunction(val) {
-    return '$ ' + numberWithCommas(val);
+    return Number.isInteger(val) ? '$ ' + numberWithCommas(val) : '-';
 }
