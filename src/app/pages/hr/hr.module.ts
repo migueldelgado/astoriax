@@ -3,7 +3,6 @@ import { DatePipe} from '@angular/common';
 import { ThemeModule } from '../../@theme/theme.module';
 
 import { NgMultiSelectDropDownModule } from '../../../libs/ng-multiselect-dropdown';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 
 import { HrRoutingModule, routedComponents } from './hr.routing';
@@ -22,7 +21,6 @@ const components = [
   imports: [
     ThemeModule,
     HrRoutingModule,
-    Ng2SmartTableModule,
     NgxMyDatePickerModule.forRoot(),
     NgMultiSelectDropDownModule.forRoot(),
   ],

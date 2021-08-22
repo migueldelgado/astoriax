@@ -4,7 +4,6 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { numberWithCommas, valuePrepareFunction } from '../../../@core/utils/utils';
 import { getDateStringByDate } from '../../../@core/utils/dateUtils';
 import { Observable } from 'rxjs/Observable';
-import { AngularEchartsDirective } from 'ngx-echarts';
 
 @Component({
   selector: 'ngx-daily-sales-table',

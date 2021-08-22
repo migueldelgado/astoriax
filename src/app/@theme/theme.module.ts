@@ -16,6 +16,7 @@ import {
   NbCheckboxModule,
 } from '@nebular/theme';
 import { NbMenuModule } from './components/menu/menu.module';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 import {
   FooterComponent,
   HeaderComponent,
@@ -50,6 +51,7 @@ const NB_MODULES = [
   NbSidebarModule,
   NbCheckboxModule,
   NgbModule,
+  Ng2SmartTableModule
 ];
 
 const COMPONENTS = [
