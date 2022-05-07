@@ -37,9 +37,7 @@ jobs:
           GITHUB_SHA: ${{ github.sha }}
         run: |
           cd dist
-          pwd
           tar -czf "${GITHUB_SHA}".tar.gz *
-          ls -la
 
       - name: Store artifact for distribution
         uses: actions/upload-artifact@v2
@@ -57,42 +55,42 @@ jobs:
           JSON="${JSON//$'\r'/'%0D'}"
           echo "::set-output name=deployment-matrix::$JSON"
 
-  # prepare-release-on-servers:
-  #   name: "${{ matrix.server.name }}: Prepare release"
-  #   runs-on: ubuntu-latest
-  #   needs: create-deployment-artifacts
-  #   strategy:
-  #     matrix:
-  #       server: ${{ fromJson(needs.create-deployment-artifacts.outputs.deployment-matrix) }}
+  prepare-release-on-servers:
+    name: "${{ matrix.server.name }}: Prepare release"
+    runs-on: ubuntu-latest
+    needs: create-deployment-artifacts
+    strategy:
+      matrix:
+        server: ${{ fromJson(needs.create-deployment-artifacts.outputs.deployment-matrix) }}
 
-  #   steps:
-  #     - uses: actions/download-artifact@v2
-  #       with:
-  #         name: app-build
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: app-build
           
-  #     - name: Upload
-  #       uses: appleboy/scp-action@master
-  #       with:
-  #         host: ${{ matrix.server.ip }}
-  #         username: ${{ matrix.server.username }}
-  #         key: ${{ secrets.SSH_KEY }}
-  #         port: ${{ matrix.server.port }}
-  #         source: ${{ github.sha }}.tar.gz
-  #         target: ${{ matrix.server.path }}/artifacts
+      - name: Upload
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ matrix.server.ip }}
+          username: ${{ matrix.server.username }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ matrix.server.port }}
+          source: ${{ github.sha }}.tar.gz
+          target: ${{ matrix.server.path }}/artifacts
 
-  #     - name: Extract archive and create directories
-  #       uses: appleboy/ssh-action@master
-  #       env:
-  #         GITHUB_SHA: ${{ github.sha }}
-  #       with:
-  #         host: ${{ matrix.server.ip }}
-  #         username: ${{ matrix.server.username }}
-  #         key: ${{ secrets.SSH_KEY }}
-  #         port: ${{ matrix.server.port }}
-  #         envs: GITHUB_SHA
-  #         script: |
-  #           mkdir -p "${{ matrix.server.path }}/releases/${GITHUB_SHA}"
-  #           tar xzf ${{ matrix.server.path }}/artifacts/${GITHUB_SHA}.tar.gz -C "${{ matrix.server.path }}/releases/${GITHUB_SHA}"
+      - name: Extract archive and create directories
+        uses: appleboy/ssh-action@master
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        with:
+          host: ${{ matrix.server.ip }}
+          username: ${{ matrix.server.username }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ matrix.server.port }}
+          envs: GITHUB_SHA
+          script: |
+            mkdir -p "${{ matrix.server.path }}/releases/${GITHUB_SHA}"
+            tar xzf ${{ matrix.server.path }}/artifacts/${GITHUB_SHA}.tar.gz -C "${{ matrix.server.path }}/releases/${GITHUB_SHA}"
 
   # run-before-hooks:
   #   name: "${{ matrix.server.name }}: Before hook"
