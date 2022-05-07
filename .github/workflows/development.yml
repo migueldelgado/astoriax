@@ -29,6 +29,7 @@ jobs:
       
       - name: build project
         run: |
+          npm install
           npm run build:prod
 
       - name: Create deployment artifact
