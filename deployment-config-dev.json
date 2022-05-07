@@ -1,0 +1,11 @@
+[
+  {
+    "name": "astoria-dev",
+    "ip": "159.223.103.59",
+    "username": "root",
+    "port": "22",
+    "beforeHooks": "",
+    "afterHooks": "",
+    "path": "/var/www/astoria/front"
+  }
+]
