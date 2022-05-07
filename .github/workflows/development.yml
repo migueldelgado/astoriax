@@ -41,21 +41,21 @@ jobs:
           tar -czf "${GITHUB_SHA}".tar.gz *
           ls -la
 
-      # - name: Store artifact for distribution
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: app-build
-      #     path: ${{ github.sha }}.tar.gz
-      #     retention-days: 1
+      - name: Store artifact for distribution
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-build
+          path: dist/${{ github.sha }}.tar.gz
+          retention-days: 1
 
-      # - name: Export deployment matrix
-      #   id: export-deployment-matrix
-      #   run: |
-      #     JSON="$(cat ./deployment-config-dev.json)"
-      #     JSON="${JSON//'%'/'%25'}"
-      #     JSON="${JSON//$'\n'/'%0A'}"
-      #     JSON="${JSON//$'\r'/'%0D'}"
-      #     echo "::set-output name=deployment-matrix::$JSON"
+      - name: Export deployment matrix
+        id: export-deployment-matrix
+        run: |
+          JSON="$(cat ./deployment-config-dev.json)"
+          JSON="${JSON//'%'/'%25'}"
+          JSON="${JSON//$'\n'/'%0A'}"
+          JSON="${JSON//$'\r'/'%0D'}"
+          echo "::set-output name=deployment-matrix::$JSON"
 
   # prepare-release-on-servers:
   #   name: "${{ matrix.server.name }}: Prepare release"
