@@ -15,6 +15,7 @@ import { AddInvoiceProviderComponent } from '../modal/add-invoice-provider.compo
 export class ProviderDetailComponent {
 
     supplierId;
+    invoices;
     source: LocalDataSource = new LocalDataSource();
     suppliers: any[];
     supplierSelected: any;
@@ -80,6 +81,7 @@ export class ProviderDetailComponent {
 
         this.supplierService.getInvoicesBySupplier(params)
         .subscribe((result:any) => {
+            this.invoices = result.invoices;
             this.source.load(result.invoices);
         });
     }

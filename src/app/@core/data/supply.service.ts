@@ -3,6 +3,7 @@ import 'rxjs/add/operator/map';
 import {AppConfig} from '../../app.config';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {NbAuthService} from '../../auth/services';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class SupplyService {
@@ -19,7 +20,7 @@ export class SupplyService {
     return this.http.get(`${AppConfig.API_ENDPOINT}supplies`);
   }
 
-  public getSuppliesByStore() {
+  public getSuppliesByStore(): Observable<any> {
     return this.http.get(
       `${AppConfig.API_ENDPOINT}supplies?store_id=${this.currentStore}`
     ).map((response:any) => response.data);

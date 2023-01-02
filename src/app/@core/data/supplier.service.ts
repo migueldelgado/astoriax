@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AppConfig} from '../../app.config';
 import { NbAuthService } from '../../auth/services';
 import {HttpClient} from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class SupplierService {
@@ -11,7 +12,7 @@ export class SupplierService {
     this.currentStore = this.authService.getCurrentStore();
   }
 
-  public getAll() {
+  public getAll(): Observable<any> {
     return this.http.get(`${AppConfig.API_ENDPOINT}suppliers`)
       .map((suppliers: any) => {
         return suppliers.data;
