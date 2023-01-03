@@ -24,6 +24,7 @@ import { RoleService } from './role.service';
 import { ProcessService } from './process.service';
 import { CreditService } from './credit.service';
 import { NumberHelper } from '../../helpers/number-helper';
+import { DateHelper } from 'app/helpers/date-helper';
 
 const SERVICES = [
   UsersService,
@@ -49,7 +50,8 @@ const SERVICES = [
   ProcessService,
   DailySalesService,
   CreditService,
-  NumberHelper
+  NumberHelper,
+  DateHelper,
 ];
 
 @NgModule({

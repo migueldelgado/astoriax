@@ -1,7 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
-import { NbThemeService } from '@nebular/theme';
+import { NbColorHelper, NbThemeService } from '@nebular/theme';
 import { SalesService } from '../../sales/sales.service';
 import { getMonthNameByMonthNumber } from '../../../@core/utils/dateUtils';
+import { NbJSThemeOptions } from '@nebular/theme/services/js-themes/theme.options';
+import { DateHelper } from 'app/helpers/date-helper';
 
 @Component({
   selector: 'ngx-sales-history-component',
@@ -9,37 +11,127 @@ import { getMonthNameByMonthNumber } from '../../../@core/utils/dateUtils';
   templateUrl: './sales-history.component.html',
 })
 export class SalesHistoryComponent implements OnDestroy {
-
-  saleService: any;
   salesHistory: Array<any> = [];
-  currentTheme: string;
+  theme: NbJSThemeOptions;
   themeSubscription: any;
+  monthlyChart: { series: any[]; labels: any[] };
+  yearlyChart: { series: any[]; labels: any[] };
+  months: { value: number; label: string }[];
+  years: any[];
+  dateMonthlySale: any;
+  dateYearlySale: any;
 
-  constructor(private sService: SalesService, private themeService: NbThemeService) {
-    this.saleService = sService;
+  constructor(
+    private saleService: SalesService,
+    private themeService: NbThemeService,
+    private dateHelper: DateHelper,
+  ) {
     this.themeSubscription = this.themeService.getJsTheme().subscribe(theme => {
-      this.currentTheme = theme.name;
+      this.theme = theme;
     });
+    let currentYear = this.dateHelper.getCurrentYear();
+    this.years = Array.from(
+      [currentYear, currentYear - 1, currentYear - 2, currentYear - 3],
+      (year: number) => ({ value: year, label: year }),
+    );
+    this.months = dateHelper.getMonths();
+
+    this.dateMonthlySale = {
+      month: this.months[new Date().getMonth()].value,
+      year: this.years[0].value,
+    };
+    this.dateYearlySale = { year: this.years[0].value };
   }
 
   ngOnInit() {
-    this.saleService.getSalesHistory()
-    .subscribe((result: any) => {
-      var currentYear = new Date().getFullYear();
-      this.salesHistory = result.data;
-      this.salesHistory.forEach(saleHistory => {
-        if (saleHistory.year == currentYear) {
-          saleHistory.active = true;
-        }
-        saleHistory.salesByMonth.forEach(saleMonth => {
-          saleMonth.monthName = getMonthNameByMonthNumber(saleMonth.month);
-          saleMonth.total = Math.floor(1000 + Math.random() * 9000);
-        });
-      });
-    });
+    this.loadMonthlySales();
+    this.loadYearlySales();
+  }
+
+  onChangeMonthlyDate() {
+    this.loadMonthlySales();
+  }
+
+  onChangeYearlyDate() {
+    this.loadYearlySales();
   }
 
   ngOnDestroy() {
     this.themeSubscription.unsubscribe();
+  }
+
+  loadMonthlySales() {
+    this.monthlyChart = { series: [], labels: [] };
+    this.yearlyChart = { series: [], labels: [] };
+    let salesSeries = {
+      label: 'ventas',
+      data: [],
+      backgroundColor: NbColorHelper.hexToRgbA(
+        this.theme.variables.primary,
+        0.3,
+      ),
+      borderColor: this.theme.variables.primary,
+    };
+
+    let fiscalSeries = {
+      label: 'ventas fiscal',
+      data: [],
+      backgroundColor: NbColorHelper.hexToRgbA(
+        this.theme.variables.primary,
+        0.3,
+      ),
+      borderColor: this.theme.variables.danger,
+    };
+    this.saleService
+      .getSalesByMonth(this.dateMonthlySale.month, this.dateMonthlySale.year)
+      .subscribe((monthlySales: any) => {
+        if (!monthlySales || !monthlySales.data) return false;
+
+        monthlySales.data.forEach(monthlySale => {
+          salesSeries.data.push(monthlySale.sales);
+          fiscalSeries.data.push(monthlySale.fiscal);
+          this.monthlyChart.labels.push(monthlySale.day);
+        });
+
+        this.monthlyChart.series.push(salesSeries);
+        this.monthlyChart.series.push(fiscalSeries);
+      });
+  }
+
+  loadYearlySales() {
+    this.yearlyChart = { series: [], labels: [] };
+    let salesSeries = {
+      label: 'ventas',
+      data: [],
+      backgroundColor: NbColorHelper.hexToRgbA(
+        this.theme.variables.primary,
+        0.3,
+      ),
+      borderColor: this.theme.variables.primary,
+    };
+
+    let fiscalSeries = {
+      label: 'ventas fiscal',
+      data: [],
+      backgroundColor: NbColorHelper.hexToRgbA(
+        this.theme.variables.primary,
+        0.3,
+      ),
+      borderColor: this.theme.variables.danger,
+    };
+    this.saleService
+      .getSalesByYear(this.dateYearlySale.year)
+      .subscribe((yearlylySales: any) => {
+        if (!yearlylySales || !yearlylySales.data) return false;
+
+        yearlylySales.data.forEach(yearlySale => {
+          salesSeries.data.push(yearlySale.sales);
+          fiscalSeries.data.push(yearlySale.fiscal);
+          this.yearlyChart.labels.push(yearlySale.month);
+        });
+
+        this.yearlyChart.series.push(salesSeries);
+        this.yearlyChart.series.push(fiscalSeries);
+      });
   }
 }
