@@ -1,7 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NbColorHelper, NbThemeService } from '@nebular/theme';
 import { SalesService } from '../../sales/sales.service';
-import { getMonthNameByMonthNumber } from '../../../@core/utils/dateUtils';
 import { NbJSThemeOptions } from '@nebular/theme/services/js-themes/theme.options';
 import { DateHelper } from 'app/helpers/date-helper';
 
@@ -62,7 +61,7 @@ export class SalesHistoryComponent implements OnDestroy {
 
   loadMonthlySales() {
     this.monthlyChart = { series: [], labels: [] };
-    this.yearlyChart = { series: [], labels: [] };
+
     let salesSeries = {
       label: 'ventas',
       data: [],
@@ -100,6 +99,7 @@ export class SalesHistoryComponent implements OnDestroy {
 
   loadYearlySales() {
     this.yearlyChart = { series: [], labels: [] };
+
     let salesSeries = {
       label: 'ventas',
       data: [],
