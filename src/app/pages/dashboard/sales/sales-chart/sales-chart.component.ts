@@ -37,8 +37,6 @@ export class SalesChartComponent implements OnDestroy, OnInit {
       tooltips: {
         callbacks: {
           beforeBody: (tooltipItem, data) => {
-            console.log(tooltipItem);
-            console.log(data);
             tooltipItem.map(item => {
               item.yLabel = this.numberHelper.formatCurrency(item.yLabel);
               return item;
