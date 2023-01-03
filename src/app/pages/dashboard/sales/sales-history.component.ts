@@ -62,29 +62,10 @@ export class SalesHistoryComponent implements OnDestroy {
   }
 
   loadMonthlySales() {
+    let salesSeries = this.getInitialSeries('ventas', 'primary');
+    let fiscalSeries = this.getInitialSeries('ventas fiscal', 'danger');
     this.monthlyChart = { series: [], labels: [] };
 
-    let salesSeries = {
-      label: 'ventas',
-      data: [],
-      backgroundColor: NbColorHelper.hexToRgbA(
-        this.theme.variables.primary,
-        0.3,
-      ),
-      borderColor: this.theme.variables.primary,
-      pointRadius: 5,
-    };
-
-    let fiscalSeries = {
-      label: 'ventas fiscal',
-      data: [],
-      backgroundColor: NbColorHelper.hexToRgbA(
-        this.theme.variables.primary,
-        0.3,
-      ),
-      borderColor: this.theme.variables.danger,
-      pointRadius: 5,
-    };
     this.saleService
       .getSalesByMonth(
         this.dateMonthlySale.month.value,
@@ -105,27 +86,10 @@ export class SalesHistoryComponent implements OnDestroy {
   }
 
   loadYearlySales() {
+    let salesSeries = this.getInitialSeries('ventas', 'primary');
+    let fiscalSeries = this.getInitialSeries('ventas fiscal', 'danger');
     this.yearlyChart = { series: [], labels: [] };
 
-    let salesSeries = {
-      label: 'ventas',
-      data: [],
-      backgroundColor: NbColorHelper.hexToRgbA(
-        this.theme.variables.primary,
-        0.3,
-      ),
-      borderColor: this.theme.variables.primary,
-    };
-
-    let fiscalSeries = {
-      label: 'ventas fiscal',
-      data: [],
-      backgroundColor: NbColorHelper.hexToRgbA(
-        this.theme.variables.primary,
-        0.3,
-      ),
-      borderColor: this.theme.variables.danger,
-    };
     this.saleService
       .getSalesByYear(this.dateYearlySale.year.value)
       .subscribe((yearlylySales: any) => {
@@ -140,5 +104,18 @@ export class SalesHistoryComponent implements OnDestroy {
         this.yearlyChart.series.push(salesSeries);
         this.yearlyChart.series.push(fiscalSeries);
       });
+  }
+
+  getInitialSeries(title, color) {
+    return {
+      label: title,
+      data: [],
+      pointRadius: 5,
+      borderColor: this.theme.variables[color],
+      backgroundColor: NbColorHelper.hexToRgbA(
+        this.theme.variables[color],
+        0.3,
+      ),
+    };
   }
 }

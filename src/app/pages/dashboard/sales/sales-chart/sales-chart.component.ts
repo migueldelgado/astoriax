@@ -34,6 +34,19 @@ export class SalesChartComponent implements OnDestroy, OnInit {
     this.options = {
       responsive: true,
       maintainAspectRatio: true,
+      tooltips: {
+        callbacks: {
+          beforeBody: (tooltipItem, data) => {
+            console.log(tooltipItem);
+            console.log(data);
+            tooltipItem.map(item => {
+              item.yLabel = this.numberHelper.formatCurrency(item.yLabel);
+              return item;
+            });
+          },
+        },
+      },
+      legend: { labels: { fontColor: this.chartjs.textColor } },
       scales: {
         xAxes: [
           {
@@ -52,7 +65,6 @@ export class SalesChartComponent implements OnDestroy, OnInit {
           },
         ],
       },
-      legend: { labels: { fontColor: this.chartjs.textColor } },
     };
 
     this.data = { labels: this.labels, datasets: this.series };
