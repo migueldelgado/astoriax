@@ -36,10 +36,10 @@ export class SalesHistoryComponent implements OnDestroy {
     this.months = dateHelper.getMonths();
 
     this.dateMonthlySale = {
-      month: this.months[new Date().getMonth()].value,
-      year: this.years[0].value,
+      month: this.months[new Date().getMonth()],
+      year: this.years[0],
     };
-    this.dateYearlySale = { year: this.years[0].value };
+    this.dateYearlySale = { year: this.years[0] };
   }
 
   ngOnInit() {
@@ -47,11 +47,13 @@ export class SalesHistoryComponent implements OnDestroy {
     this.loadYearlySales();
   }
 
-  onChangeMonthlyDate() {
+  onChangeMonthlyDate(monthlyDate, type) {
+    this.dateMonthlySale[type] = monthlyDate;
     this.loadMonthlySales();
   }
 
-  onChangeYearlyDate() {
+  onChangeYearlyDate(yearlyDate) {
+    this.dateYearlySale.year = yearlyDate;
     this.loadYearlySales();
   }
 
@@ -70,6 +72,7 @@ export class SalesHistoryComponent implements OnDestroy {
         0.3,
       ),
       borderColor: this.theme.variables.primary,
+      pointRadius: 5,
     };
 
     let fiscalSeries = {
@@ -80,9 +83,13 @@ export class SalesHistoryComponent implements OnDestroy {
         0.3,
       ),
       borderColor: this.theme.variables.danger,
+      pointRadius: 5,
     };
     this.saleService
-      .getSalesByMonth(this.dateMonthlySale.month, this.dateMonthlySale.year)
+      .getSalesByMonth(
+        this.dateMonthlySale.month.value,
+        this.dateMonthlySale.year.value,
+      )
       .subscribe((monthlySales: any) => {
         if (!monthlySales || !monthlySales.data) return false;
 
@@ -120,7 +127,7 @@ export class SalesHistoryComponent implements OnDestroy {
       borderColor: this.theme.variables.danger,
     };
     this.saleService
-      .getSalesByYear(this.dateYearlySale.year)
+      .getSalesByYear(this.dateYearlySale.year.value)
       .subscribe((yearlylySales: any) => {
         if (!yearlylySales || !yearlylySales.data) return false;
 

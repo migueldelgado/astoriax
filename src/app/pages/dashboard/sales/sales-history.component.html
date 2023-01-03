@@ -1,29 +1,57 @@
 <div class="row">
   <div class="col-xxxl-6 col-xxl-6 col-lg-6 col-md-6">
     <nb-card style="padding: 1rem;">
-      <div class="col-xxxl-12 col-xxl-12 col-lg-12 col-md-12">
-        <div class="row">
-          <div class="col-xxxl-6 col-xxl-6 col-lg-6 col-md-6">
-            <select
-              class="form-control"
-              (change)="onChangeMonthlyDate()"
-              [(ngModel)]="dateMonthlySale.month"
+      <nb-card-header>
+        <span>Ventas por mes</span>
+        <div class="date-container">
+          <div class="ghost-dropdown" ngbDropdown>
+            <button
+              type="button"
+              class="btn btn-sm"
+              ngbDropdownToggle
+              [ngClass]="{
+                'btn-success': currentTheme == 'default',
+                'btn-primary': currentTheme != 'default'
+              }"
             >
-              <option *ngFor="let month of months" [value]="month.value">{{
-                month.label
-              }}</option>
-            </select>
+              {{ dateMonthlySale.month.label }}
+            </button>
+            <ul class="dropdown-menu">
+              <li
+                class="dropdown-item"
+                *ngFor="let month of months"
+                (click)="onChangeMonthlyDate(month, 'month')"
+              >
+                {{ month.label }}
+              </li>
+            </ul>
           </div>
-          <div class="col-xxxl-6 col-xxl-6 col-lg-6 col-md-6">
-            <select
-              class="form-control"
-              (change)="onChangeMonthlyDate()"
-              [(ngModel)]="dateMonthlySale.year"
+          <div class="ghost-dropdown" ngbDropdown>
+            <button
+              type="button"
+              class="btn btn-sm"
+              ngbDropdownToggle
+              [ngClass]="{
+                'btn-success': currentTheme == 'default',
+                'btn-primary': currentTheme != 'default'
+              }"
             >
-              <option *ngFor="let year of years">{{ year.label }}</option>
-            </select>
+              {{ dateMonthlySale.year.label }}
+            </button>
+            <ul class="dropdown-menu">
+              <li
+                class="dropdown-item"
+                *ngFor="let year of years"
+                (click)="onChangeMonthlyDate(year, 'year')"
+              >
+                {{ year.label }}
+              </li>
+            </ul>
           </div>
         </div>
+      </nb-card-header>
+
+      <nb-card-body class="p-0">
         <ngx-chart
           [series]="monthlyChart.series"
           [labels]="monthlyChart.labels"
@@ -36,24 +64,40 @@
         >
           No hay informacion de ventas
         </div>
-      </div>
+      </nb-card-body>
     </nb-card>
   </div>
 
   <div class="col-xxxl-6 col-xxl-6 col-lg-6 col-md-6">
     <nb-card style="padding: 1rem;">
-      <div class="col-xxxl-12 col-xxl-12 col-lg-12 col-md-12">
-        <div class="row">
-          <div class="col-xxxl-6 col-xxl-6 col-lg-6 col-md-6">
-            <select
-              class="form-control"
-              (change)="onChangeYearlyDate()"
-              [(ngModel)]="dateYearlySale.year"
+      <nb-card-header>
+        <span>Ventas por ano</span>
+
+        <div class="ghost-dropdown" ngbDropdown>
+          <button
+            type="button"
+            class="btn btn-sm"
+            ngbDropdownToggle
+            [ngClass]="{
+              'btn-success': currentTheme == 'default',
+              'btn-primary': currentTheme != 'default'
+            }"
+          >
+            {{ dateYearlySale.year.label }}
+          </button>
+          <ul class="dropdown-menu">
+            <li
+              class="dropdown-item"
+              *ngFor="let year of years"
+              (click)="onChangeYearlyDate(year)"
             >
-              <option *ngFor="let year of years">{{ year.label }}</option>
-            </select>
-          </div>
+              {{ year.label }}
+            </li>
+          </ul>
         </div>
+      </nb-card-header>
+
+      <nb-card-body class="p-0">
         <ngx-chart
           [series]="yearlyChart.series"
           [labels]="yearlyChart.labels"
@@ -66,7 +110,7 @@
         >
           No hay informacion de ventas
         </div>
-      </div>
+      </nb-card-body>
     </nb-card>
   </div>
 </div>

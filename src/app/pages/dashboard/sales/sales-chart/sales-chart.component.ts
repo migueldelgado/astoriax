@@ -37,13 +37,13 @@ export class SalesChartComponent implements OnDestroy, OnInit {
       scales: {
         xAxes: [
           {
-            gridLines: { display: true, color: this.chartjs.axisLineColor },
+            gridLines: { display: false, color: this.chartjs.axisLineColor },
             ticks: { fontColor: this.chartjs.textColor },
           },
         ],
         yAxes: [
           {
-            gridLines: { display: true, color: this.chartjs.axisLineColor },
+            gridLines: { display: false, color: this.chartjs.axisLineColor },
             ticks: {
               fontColor: this.chartjs.textColor,
               callback: (value, index, values) =>
@@ -53,7 +53,6 @@ export class SalesChartComponent implements OnDestroy, OnInit {
         ],
       },
       legend: { labels: { fontColor: this.chartjs.textColor } },
-      title: { display: true, text: this.title, fontColor: 'white' },
     };
 
     this.data = { labels: this.labels, datasets: this.series };
