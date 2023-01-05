@@ -1,35 +1,51 @@
 <form (submit)="onSubmit()">
   <nb-card>
-    <nb-card-header> {{id ? 'Editar' : 'Nueva'}} compra</nb-card-header>
+    <nb-card-header> {{ id ? 'Editar' : 'Nueva' }} compra</nb-card-header>
     <nb-card-body>
       <nb-card>
         <nb-card-body>
           <div class="form-group row align-items-center">
-              <label class="col-md-2 col-sm-3">Fecha Documento</label>
-              <div class="input-group col-md-10 col-sm-9">
-                <input 
-                  ngx-mydatepicker 
-                  class="form-control" 
-                  style="float:none" 
-                  placeholder="Selecciona Fecha" 
-                  name="mydate" 
-                  [(ngModel)]="date" 
-                  [options]="options" 
-                  #dp="ngx-mydatepicker" />
-                <span class="input-group-append">
-                  <button type="button" class="btn btn-primary" (click)="dp.clearDate()">
-                    <i class="fa fa-times"></i>
-                  </button>
-                  <button type="button" class="btn btn-primary" (click)="dp.toggleCalendar()">
-                      <i class="fa fa-calendar"></i>
-                  </button>
-                </span>
-              </div>
+            <label class="col-md-2 col-sm-3">Fecha Documento</label>
+            <div class="input-group col-md-10 col-sm-9">
+              <input
+                ngx-mydatepicker
+                class="form-control"
+                style="float:none"
+                placeholder="Selecciona Fecha"
+                name="mydate"
+                [(ngModel)]="date"
+                [options]="options"
+                #dp="ngx-mydatepicker"
+              />
+              <span class="input-group-append">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="dp.clearDate()"
+                >
+                  <i class="fa fa-times"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="dp.toggleCalendar()"
+                >
+                  <i class="fa fa-calendar"></i>
+                </button>
+              </span>
+            </div>
           </div>
           <div class="form-group row align-items-center">
             <label class="col-md-2 col-sm-3">Numero de Factura</label>
             <div class="col-md-10 col-sm-9">
-              <input name="invoice" required [(ngModel)]="data.document_number" type="text" placeholder="Numero Factura" class="form-control" />
+              <input
+                name="invoice"
+                required
+                [(ngModel)]="data.document_number"
+                type="text"
+                placeholder="Numero Factura"
+                class="form-control"
+              />
             </div>
           </div>
           <div class="form-group row align-items-center">
@@ -39,62 +55,96 @@
                 name="supplier"
                 class="form-control"
                 [(ngModel)]="data.supplier_id"
-                required>
+                required
+              >
                 <option [value]="null">Seleccione Proveedor</option>
                 <option *ngFor="let s of suppliers" [value]="s.id">
-                  {{s.name}}
+                  {{ s.name }}
                 </option>
               </select>
             </div>
           </div>
           <div class="form-group row align-items-center">
-              <label class="col-md-2 col-sm-3">Total</label>
-              <div class="col-md-10 col-sm-9">
-                  <input name="amount" required [(ngModel)]="data.amount" type="text" placeholder="Total" class="form-control" />
-              </div>
+            <label class="col-md-2 col-sm-3">Total</label>
+            <div class="col-md-10 col-sm-9">
+              <input
+                name="amount"
+                required
+                [(ngModel)]="data.amount"
+                type="text"
+                placeholder="Total"
+                class="form-control"
+              />
+            </div>
           </div>
 
           <div class="form-group">
             <div class="row justify-content-between">
               <h4 class="col-md-6 col-sm-6">Insumos</h4>
               <div class="col-md-6 col-sm-6 row justify-content-end">
-                <button class="btn btn-primary" type="button" (click)="addSupply($event)">Agregar</button>
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  (click)="addSupply($event)"
+                >
+                  Agregar
+                </button>
               </div>
             </div>
             <div class="row">
               <table class="table">
                 <thead>
-                <tr>
-                  <th>Insumo</th>
-                  <th>Cantidad</th>
-                  <th>Borrar</th>
-                </tr>
+                  <tr>
+                    <th>Insumo</th>
+                    <th>Cantidad</th>
+                    <th>Precio unitario</th>
+                    <th>Borrar</th>
+                  </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let _ of data.supplies; let i = index">
-                  <td>
-                    <select
-                      name="supply{{i}}"
-                      class="form-control"
-                      [(ngModel)]="data.supplies[i].supply_id"
-                      required
-                    >
-                      <option [value]="null">Seleccione Insumo</option>
-                      <option
-                        *ngFor="let s of supplies"
-                        [value]="s.id"
+                  <tr *ngFor="let _ of data.supplies; let i = index">
+                    <td>
+                      <select
+                        name="supply{{i}}"
+                        class="form-control"
+                        [(ngModel)]="data.supplies[i].supply_id"
+                        required
                       >
-                        {{s.name}}
-                      </option>
-                    </select>
-                  </td>
-                  <td>
-                    <input name="quantity{{i}}" required [(ngModel)]="data.supplies[i].quantity" type="number" placeholder="Cantidad" class="form-control"/>
-                  </td>
-                  <td>
-                    <button class="btn btn-secondary" (click)="removeSupply(i)">Borrar</button>
-                  </td>
-                </tr>
+                        <option [value]="null">Seleccione Insumo</option>
+                        <option *ngFor="let s of supplies" [value]="s.id">
+                          {{ s.name }}
+                        </option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        name="quantity{{i}}"
+                        required
+                        [(ngModel)]="data.supplies[i].quantity"
+                        type="number"
+                        placeholder="Cantidad"
+                        class="form-control"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        name="unitPrice{{i}}"
+                        required
+                        [(ngModel)]="data.supplies[i].unit_price"
+                        type="number"
+                        placeholder="Cantidad"
+                        class="form-control"
+                      />
+                    </td>
+                    <td>
+                      <button
+                        class="btn btn-secondary"
+                        (click)="removeSupply(i)"
+                      >
+                        Borrar
+                      </button>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>

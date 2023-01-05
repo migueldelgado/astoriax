@@ -25,7 +25,6 @@ import { getDateStringByDate } from '../../../@core/utils/dateUtils';
   ],
 })
 export class PurchaseFormComponent implements OnInit {
-
   id: string;
   supplies: Array<any> = [];
   stores: Array<any> = [];
@@ -102,6 +101,7 @@ export class PurchaseFormComponent implements OnInit {
         const supplies = data.supplies || [];
         this.data.supplies = supplies.map(s => ({
           quantity: s.pivot.quantity,
+          unit_price: s.pivot.unit_price,
           supply_id: s.pivot.supply_id,
         }));
       });
@@ -131,7 +131,7 @@ export class PurchaseFormComponent implements OnInit {
     const date = getDateStringByDate(this.date.jsdate);
     const data: any = Object.assign({}, this.data, {
       date,
-      id: this.id
+      id: this.id,
     });
 
     if (this.id) {
