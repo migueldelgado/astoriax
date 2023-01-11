@@ -33,7 +33,7 @@ export class EchartsPieComponent implements OnInit, OnDestroy {
         ],
         tooltip: { trigger: 'item', formatter: '{a} <br/>{b} : {c} ({d}%)' },
         legend: {
-          // orient: 'vertical',
+          orient: 'vertical',
           left: 'left',
           data: this.labels,
           textStyle: { color: echarts.textColor, fontSize: 10 },
@@ -52,13 +52,16 @@ export class EchartsPieComponent implements OnInit, OnDestroy {
                 shadowColor: echarts.itemHoverShadowColor,
               },
             },
-            label: { normal: { textStyle: { color: echarts.textColor } } },
-            labelLine: {
-              normal: { lineStyle: { color: echarts.axisLineColor } },
+            label: {
+              normal: { show: false, textStyle: { color: echarts.textColor } },
             },
           },
         ],
       };
+      // labelLine: {
+      //   show: false,
+      //   normal: { lineStyle: { color: echarts.axisLineColor } },
+      // },
     });
   }
 
