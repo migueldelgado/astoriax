@@ -22,14 +22,11 @@ import { SolarComponent } from './solar/solar.component';
 import { PlayerComponent } from './rooms/player/player.component';
 import { TrafficComponent } from './traffic/traffic.component';
 import { TrafficChartComponent } from './traffic/traffic-chart.component';
-
+import { EchartsPieComponent } from '../charts/echarts/echarts-pie.component';
+import { MostSoldRecipesComponent } from './most-sold-recipes/most-sold-recipes';
 
 @NgModule({
-  imports: [
-    ThemeModule,
-    AngularEchartsModule,
-    ChartModule,
-  ],
+  imports: [ThemeModule, AngularEchartsModule, ChartModule],
   declarations: [
     DashboardComponent,
     StatusCardComponent,
@@ -49,7 +46,9 @@ import { TrafficChartComponent } from './traffic/traffic-chart.component';
     PlayerComponent,
     SolarComponent,
     TrafficComponent,
-    TrafficChartComponent
+    TrafficChartComponent,
+    EchartsPieComponent,
+    MostSoldRecipesComponent,
   ],
 })
-export class DashboardModule { }
+export class DashboardModule {}
