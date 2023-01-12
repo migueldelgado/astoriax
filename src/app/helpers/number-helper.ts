@@ -31,4 +31,8 @@ export class NumberHelper {
       currency: 'CLP',
     }).format(num);
   }
+
+  formatNumberWithThousands(num) {
+    return new Intl.NumberFormat().format(num);
+  }
 }

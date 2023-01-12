@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
+import { NumberHelper } from 'app/helpers/number-helper';
 
 @Component({
   selector: 'ngx-echarts-pie',
@@ -15,7 +16,10 @@ export class EchartsPieComponent implements OnInit, OnDestroy {
   @Input() data: { value: number; name: string }[];
   @Input() labels: string[];
 
-  constructor(private theme: NbThemeService) {}
+  constructor(
+    private theme: NbThemeService,
+    private numberHelper: NumberHelper,
+  ) {}
 
   ngOnInit() {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
@@ -31,7 +35,7 @@ export class EchartsPieComponent implements OnInit, OnDestroy {
           colors.successLight,
           colors.primaryLight,
         ],
-        tooltip: { trigger: 'item', formatter: '{a} <br/>{b} : {c} ({d}%)' },
+        tooltip: { trigger: 'item', formatter: '{b} : {c} ({d}%)' },
         legend: {
           orient: 'vertical',
           left: 'left',
@@ -43,6 +47,7 @@ export class EchartsPieComponent implements OnInit, OnDestroy {
             name: this.title,
             type: 'pie',
             radius: '80%',
+            selectedMode: 'multiple',
             center: ['50%', '50%'],
             data: this.data,
             itemStyle: {
@@ -53,15 +58,25 @@ export class EchartsPieComponent implements OnInit, OnDestroy {
               },
             },
             label: {
-              normal: { show: false, textStyle: { color: echarts.textColor } },
+              normal: {
+                textStyle: { color: echarts.textColor },
+                formatter: label => {
+                  return `${this.numberHelper.formatNumberWithThousands(
+                    label.value,
+                  )} (${label.percent}%)`;
+                },
+                position: 'inside',
+              },
+            },
+            labelLine: {
+              normal: {
+                show: false,
+                lineStyle: { color: echarts.axisLineColor },
+              },
             },
           },
         ],
       };
-      // labelLine: {
-      //   show: false,
-      //   normal: { lineStyle: { color: echarts.axisLineColor } },
-      // },
     });
   }
 
