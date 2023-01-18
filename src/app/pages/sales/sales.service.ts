@@ -19,22 +19,22 @@ export class SalesService {
     return this.http.get(url);
   }
 
-  public getSalesByMonth(month: string, year: string) {
+  public getMonthlyHistorySales(month: string, year: string) {
     let params = new HttpParams()
       .append('store_id', this.currentStore.toString())
       .append('month', month)
       .append('year', year);
 
-    const url = `${AppConfig.API_ENDPOINT}sales/monthlySales`;
+    const url = `${AppConfig.API_ENDPOINT}sales/monthlyHistorySales`;
     return this.http.get(url, { params });
   }
 
-  public getSalesByYear(year: string) {
+  public getYearlyHistorySales(year: string) {
     let params = new HttpParams()
       .append('store_id', this.currentStore.toString())
       .append('year', year);
 
-    const url = `${AppConfig.API_ENDPOINT}sales/yearlySales`;
+    const url = `${AppConfig.API_ENDPOINT}sales/yearlyHistorySales`;
     return this.http.get(url, { params });
   }
 }

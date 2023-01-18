@@ -28,4 +28,10 @@ export class DateHelper {
   getCurrentYear(): number {
     return new Date().getFullYear();
   }
+
+  getMonthNameByNumber(monthNumber: string | number) {
+    monthNumber = Number(monthNumber);
+    const monthObject = this.months.find(month => month.value === monthNumber);
+    return monthObject.label || undefined;
+  }
 }

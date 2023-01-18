@@ -43,72 +43,90 @@ export class SalesHistoryComponent implements OnDestroy {
   }
 
   ngOnInit() {
-    this.loadMonthlySales();
-    this.loadYearlySales();
+    this.loadMonthlyHistorySales();
+    this.loadYearlyHistorySales();
   }
 
   onChangeMonthlyDate(monthlyDate, type) {
     this.dateMonthlySale[type] = monthlyDate;
-    this.loadMonthlySales();
+    this.loadMonthlyHistorySales();
   }
 
   onChangeYearlyDate(yearlyDate) {
     this.dateYearlySale.year = yearlyDate;
-    this.loadYearlySales();
+    this.loadYearlyHistorySales();
   }
 
   ngOnDestroy() {
     this.themeSubscription.unsubscribe();
   }
 
-  loadMonthlySales() {
-    let salesSeries = this.getInitialSeries('ventas', 'primary');
-    let fiscalSeries = this.getInitialSeries('ventas fiscal', 'danger');
+  loadMonthlyHistorySales() {
+    let currentYear = this.getInitialSeries('primary');
+    let previousYear = this.getInitialSeries('danger');
+    let secondPrevious = this.getInitialSeries('warning');
     this.monthlyChart = { series: [], labels: [] };
 
     this.saleService
-      .getSalesByMonth(
+      .getMonthlyHistorySales(
         this.dateMonthlySale.month.value,
         this.dateMonthlySale.year.value,
       )
-      .subscribe((monthlySales: any) => {
-        if (!monthlySales || !monthlySales.data) return false;
+      .subscribe((monthlyHistorySales: any) => {
+        if (!monthlyHistorySales.data || !monthlyHistorySales.data.sales)
+          return false;
 
-        monthlySales.data.forEach(monthlySale => {
-          salesSeries.data.push(monthlySale.sales);
-          fiscalSeries.data.push(monthlySale.fiscal);
-          this.monthlyChart.labels.push(monthlySale.day);
-        });
+        const historySales = monthlyHistorySales.data.sales;
+        const years = monthlyHistorySales.data.years;
+        currentYear.label = years[0];
+        previousYear.label = years[1];
+        secondPrevious.label = years[2];
 
-        this.monthlyChart.series.push(salesSeries);
-        this.monthlyChart.series.push(fiscalSeries);
+        for (let sale of historySales) {
+          this.monthlyChart.labels.push(sale.day_number);
+          currentYear.data.push(sale[years[0]]);
+          previousYear.data.push(sale[years[1]]);
+          secondPrevious.data.push(sale[years[2]]);
+        }
+
+        this.monthlyChart.series = [currentYear, previousYear, secondPrevious];
       });
   }
 
-  loadYearlySales() {
-    let salesSeries = this.getInitialSeries('ventas', 'primary');
-    let fiscalSeries = this.getInitialSeries('ventas fiscal', 'danger');
+  loadYearlyHistorySales() {
+    let currentYear = this.getInitialSeries('primary');
+    let previousYear = this.getInitialSeries('danger');
+    let secondPrevious = this.getInitialSeries('warning');
     this.yearlyChart = { series: [], labels: [] };
 
     this.saleService
-      .getSalesByYear(this.dateYearlySale.year.value)
-      .subscribe((yearlylySales: any) => {
-        if (!yearlylySales || !yearlylySales.data) return false;
+      .getYearlyHistorySales(this.dateYearlySale.year.value)
+      .subscribe((yearlyHistorySales: any) => {
+        if (!yearlyHistorySales.data || !yearlyHistorySales.data.sales)
+          return false;
 
-        yearlylySales.data.forEach(yearlySale => {
-          salesSeries.data.push(yearlySale.sales);
-          fiscalSeries.data.push(yearlySale.fiscal);
-          this.yearlyChart.labels.push(yearlySale.month);
-        });
+        const historySales = yearlyHistorySales.data.sales;
+        const years = yearlyHistorySales.data.years;
+        currentYear.label = years[0];
+        previousYear.label = years[1];
+        secondPrevious.label = years[2];
 
-        this.yearlyChart.series.push(salesSeries);
-        this.yearlyChart.series.push(fiscalSeries);
+        for (let sale of historySales) {
+          this.yearlyChart.labels.push(
+            this.dateHelper.getMonthNameByNumber(sale.month_number),
+          );
+          currentYear.data.push(sale[years[0]]);
+          previousYear.data.push(sale[years[1]]);
+          secondPrevious.data.push(sale[years[2]]);
+        }
+
+        this.yearlyChart.series = [currentYear, previousYear, secondPrevious];
       });
   }
 
-  getInitialSeries(title, color) {
+  getInitialSeries(color) {
     return {
-      label: title,
+      label: '',
       data: [],
       pointRadius: 5,
       borderColor: this.theme.variables[color],
