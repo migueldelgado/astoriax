@@ -1,95 +1,117 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { numberWithCommas, valuePrepareFunction } from '../../../@core/utils/utils';
+import {
+  numberWithCommas,
+  valuePrepareFunction,
+} from '../../../@core/utils/utils';
 import { SupplierService } from '../../../@core/data/supplier.service';
-
+import { DateHelper } from 'app/helpers/date-helper';
 
 @Component({
   selector: 'ngx-providers-table',
   templateUrl: './providers.component.html',
-  styleUrls: ['./providers.component.scss']
+  styleUrls: ['./providers.component.scss'],
 })
 export class ProvidersComponent implements OnInit {
-
   total: any;
   tax: any;
+  showTable;
   source: LocalDataSource = new LocalDataSource();
+  sourceTotals: LocalDataSource = new LocalDataSource();
 
   settings = {
     mode: 'external',
-    noDataMessage:'No hay informacion disponible',
+    noDataMessage: 'No hay informacion disponible',
     actions: {
       columnTitle: '',
       add: false,
       delete: false,
-      position: 'right'
+      position: 'right',
     },
     edit: {
       editButtonContent: '<i class="nb-search"></i>',
       confirmSave: true,
     },
-    columns: {
-      name: { title: '' },
-      // month1: { title: 'Enero', valuePrepareFunction },
-      month2: { title: 'Febrero', valuePrepareFunction },
-      month3: { title: 'Marzo', valuePrepareFunction },
-      month4: { title: 'Abril', valuePrepareFunction },
-      month5: { title: 'Mayo', valuePrepareFunction },
-      month6: { title: 'Junio', valuePrepareFunction },
-      month7: { title: 'Julio', valuePrepareFunction },
-      month8: { title: 'Agosto', valuePrepareFunction },
-      // month9: { title: 'Septiembre', valuePrepareFunction },
-      // month10: { title: 'Octubre', valuePrepareFunction },
-      // month11: { title: 'Noviembre', valuePrepareFunction },
-      // month12: { title: 'Diciembre', valuePrepareFunction },
-      
-    }
+    columns: {},
+  };
+
+  settingsTotals = {
+    noDataMessage: 'No hay informacion disponible',
+    hideSubHeader: true,
+    pager: false,
+    actions: false,
+    columns: {},
   };
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private supplierService: SupplierService
-  ) {
-  }
+    private supplierService: SupplierService,
+    private dateHelper: DateHelper,
+  ) {}
 
   ngOnInit() {
-    const year = new Date().getFullYear();
-    this.loadData(year);
+    this.loadData(this.dateHelper.getDateApiFormatFromDate(new Date()));
   }
 
-  loadData(year){
-    this.supplierService.getSupplierInvoicesByYear(year)
-      .subscribe(results => {
-        this.total = results.total;
+  loadData(date, monthToShow?) {
+    this.supplierService
+      .getSupplierInvoicesLastMonths(date, monthToShow)
+      .subscribe(response => {
+        this.settingColumnNames(response.columns);
+        this.source.load(response.purchases);
+        this.sourceTotals.load(response.totalMonth);
+        this.total = response.totalPeriod;
         this.tax = Math.trunc(this.total * 0.19);
-        this.source.load(results.purchasesBySupplier);
+        this.showTable = true;
       });
   }
 
-  onClickView(evt) {
-    this.router.navigate([`${evt.data.supplier_id}`], { relativeTo: this.route });
+  settingColumnNames(columns: { name: string; year: string }[]) {
+    for (let column of columns) {
+      if (column.name === 'id') {
+        this.settings.columns[column.name] = { title: 'Codigo', width: '5%' };
+      } else if (column.name === 'name') {
+        this.settings.columns[column.name] = { title: 'Proveedor' };
+        this.settingsTotals.columns[column.name] = { title: '' };
+      } else {
+        this.settings.columns[column.name] = {
+          title: `${this.dateHelper.getMonthNameByEnglishAbr(column.name)} ${
+            column.year
+          }`,
+          valuePrepareFunction,
+        };
+        this.settingsTotals.columns[column.name] = {
+          title: `${this.dateHelper.getMonthNameByEnglishAbr(column.name)} ${
+            column.year
+          }`,
+          valuePrepareFunction,
+        };
+      }
+    }
   }
 
-  numberWithCommas(val){
+  onClickView(evt) {
+    this.router.navigate([`${evt.data.id}`], {
+      relativeTo: this.route,
+    });
+  }
+
+  numberWithCommas(val) {
     return numberWithCommas(val);
   }
 
-  getReportPDF(){
-    let params = {
-      year: new Date().getFullYear()
-    }
+  getReportPDF() {
+    const date = this.dateHelper.getDateApiFormatFromDate(new Date());
 
-    this.supplierService.getTotalInvoicesReport(params)
-      .subscribe(
-        (result: any) => {
-          window.open(result.data.path, '_blank');
-        }, 
-        () => {
-          alert('Error al generar reporte')
-        }
-      )
+    this.supplierService.getTotalInvoicesReport(date).subscribe(
+      (result: any) => {
+        window.open(result.data.path, '_blank');
+      },
+      () => {
+        alert('Error al generar reporte');
+      },
+    );
   }
-
 }

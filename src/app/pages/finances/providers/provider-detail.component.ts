@@ -6,119 +6,130 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddInvoiceProviderComponent } from '../modal/add-invoice-provider.component';
+import { DateHelper } from 'app/helpers/date-helper';
 
 @Component({
   selector: 'ngx-provider-detail',
   templateUrl: './provider-detail.component.html',
-  styleUrls: ['./provider-detail.component.scss']
+  styleUrls: ['./provider-detail.component.scss'],
 })
 export class ProviderDetailComponent {
+  supplierId;
+  invoices;
+  source: LocalDataSource = new LocalDataSource();
+  suppliers: any[];
+  supplierSelected: any;
+  yearSelected: any;
+  monthSelected: any;
+  years: { value: number; label: string }[];
+  dateTo = { jsdate: new Date() };
+  options: INgxMyDpOptions = {
+    dateFormat: 'dd-mm-yyyy',
+    monthSelector: true,
+    yearSelector: true,
+  };
 
-    supplierId;
-    invoices;
-    source: LocalDataSource = new LocalDataSource();
-    suppliers: any[];
-    supplierSelected: any;
-    yearSelected: any;
-    monthSelected: any;
-    dateTo = { jsdate: new Date() };
-    options: INgxMyDpOptions = {
-        dateFormat: 'dd-mm-yyyy',
-        monthSelector: true,
-        yearSelector: true,
-    };
+  isPaidSelected;
 
-    settings = {
-        hideSubHeader: true,
-        noDataMessage:'No hay informacion disponible',
-        edit: {
-        editButtonContent: '<i class="nb-edit"></i>',
-        saveButtonContent: '<i class="nb-checkmark"></i>',
-        cancelButtonContent: '<i class="nb-close"></i>',
-        confirmSave: true,
+  settings = {
+    hideSubHeader: true,
+    noDataMessage: 'No hay informacion disponible',
+    actions: false,
+    columns: {
+      id: { title: 'Codigo' },
+      document_number: { title: 'No Factura' },
+      date: { title: 'Fecha' },
+      purchase_amount: { title: 'Monto', valuePrepareFunction },
+      credit_amount: { title: 'Credito', valuePrepareFunction },
+      balance: { title: 'Saldo', valuePrepareFunction },
+      is_paid: {
+        title: 'Estado',
+        valuePrepareFunction: status => (status === 0 ? 'PENDIENTE' : 'PAGADO'),
+      },
+    },
+  };
+
+  constructor(
+    private supplierService: SupplierService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private modalService: NgbModal,
+    private dateHelper: DateHelper,
+  ) {}
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      if (params.id) {
+        this.supplierId = params.id;
+        this.loadData(params.id);
+      }
+    });
+  }
+
+  loadData(supplyId) {
+    this.monthSelected = this.dateHelper.getCurrentMonth();
+    this.yearSelected = new Date().getFullYear();
+    this.supplierSelected = supplyId;
+    this.isPaidSelected = '';
+
+    this.years = [
+      { value: this.yearSelected, label: this.yearSelected },
+      { value: this.yearSelected - 1, label: this.yearSelected - 1 },
+      { value: this.yearSelected - 2, label: this.yearSelected - 2 },
+    ];
+
+    this.supplierService.getSuppliers().subscribe((result: any) => {
+      this.suppliers = result;
+      this.loadPurchases();
+    });
+  }
+
+  loadPurchases() {
+    this.supplierService
+      .getInvoicesBySupplier(
+        this.supplierSelected,
+        this.yearSelected,
+        this.monthSelected,
+        this.isPaidSelected,
+      )
+      .subscribe((purchases: any) => {
+        this.invoices = purchases;
+        this.source.load(purchases);
+      });
+  }
+
+  onUpdate() {
+    this.loadPurchases();
+  }
+
+  cancel() {
+    this.router.navigate(['..'], { relativeTo: this.route });
+  }
+
+  onClickRow(evt) {
+    alert(evt.data.id);
+    const activeModal = this.modalService.open(AddInvoiceProviderComponent, {
+      size: 'lg',
+      container: 'nb-layout',
+    });
+    activeModal.componentInstance.modalHeader = 'Detalle del proveedor';
+  }
+
+  getReportPDF() {
+    this.supplierService
+      .getInvoicesReport(
+        this.supplierSelected,
+        this.yearSelected,
+        this.monthSelected,
+        this.isPaidSelected,
+      )
+      .subscribe(
+        (result: any) => {
+          window.open(result.data.path, '_blank');
         },
-        actions: { delete: false, add: false, edit: false },
-        columns: {
-        document_number: { title: 'Factura' },
-        date: { title: 'Fecha' },
-        status: { title: 'Estado' },
-        payment_record: { title: 'Registro de pago'},
-        amount: { title: 'Monto', valuePrepareFunction},
+        () => {
+          alert('Error al generar reporte');
         },
-    };
-
-    constructor(
-        private supplierService: SupplierService,
-        private route: ActivatedRoute,
-        private router: Router,
-        private modalService: NgbModal,
-    ){}
-
-    ngOnInit(){
-        this.route.params.subscribe(params => {
-            this.supplierId = params.id;
-            this.loadData(params.id);
-        });
-    }
-
-    loadData(supplyId){
-        this.monthSelected = (new Date().getMonth() + 1);
-        this.yearSelected = new Date().getFullYear();
-        this.supplierService.getSuppliers()
-        .subscribe((result:any) => {
-            this.suppliers = result;
-            this.supplierSelected = supplyId;
-            this.getInvoices();
-        });
-    }
-
-    getInvoices(){
-        const params = { 
-            supplier_id: this.supplierSelected,
-            year: this.yearSelected, 
-            month: this.monthSelected 
-        }
-
-        this.supplierService.getInvoicesBySupplier(params)
-        .subscribe((result:any) => {
-            this.invoices = result.invoices;
-            this.source.load(result.invoices);
-        });
-    }
-
-    onUpdate() {
-        this.getInvoices();
-    }
-
-    cancel() {
-        this.router.navigate(['..'], { relativeTo: this.route });
-    }
-
-    onClickRow(evt) {
-        alert(evt.data.id);
-        const activeModal = this.modalService.open(
-            AddInvoiceProviderComponent, 
-            { size: 'sm', container: 'nb-layout' }
-        );
-        activeModal.componentInstance.modalHeader = 'Detalle del proveedor';
-    }
-
-    getReportPDF(){
-        let params = {
-        year: this.yearSelected,
-        month: this.monthSelected,
-        supplier_id: this.supplierSelected
-        }
-
-        this.supplierService.getInvoicesReport(params)
-        .subscribe(
-            (result: any) => {
-            window.open(result.data.path, '_blank');
-            }, 
-            () => {
-            alert('Error al generar reporte')
-            }
-        )
-    }
-
+      );
+  }
 }

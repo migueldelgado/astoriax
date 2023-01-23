@@ -55,3 +55,16 @@ table {
   .report{
     height: 50px;
   }
+
+  nb-card-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .pdf-report {
+    cursor: pointer;
+  }
+
+  .pdf-report:hover {
+    color: red;
+  }

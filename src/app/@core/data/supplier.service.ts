@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {AppConfig} from '../../app.config';
+import { AppConfig } from '../../app.config';
 import { NbAuthService } from '../../auth/services';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -13,7 +13,8 @@ export class SupplierService {
   }
 
   public getAll(): Observable<any> {
-    return this.http.get(`${AppConfig.API_ENDPOINT}suppliers`)
+    return this.http
+      .get(`${AppConfig.API_ENDPOINT}suppliers`)
       .map((suppliers: any) => {
         return suppliers.data;
       });
@@ -22,39 +23,53 @@ export class SupplierService {
   public getSuppliers() {
     const urlParams = `store_id=${this.currentStore}`;
     const url = `${AppConfig.API_ENDPOINT}suppliers?${urlParams}`;
-    
-    return this.http.get(url)
-      .map((suppliers: any) => {
-        return suppliers.data;
-      });
+
+    return this.http.get(url).map((suppliers: any) => {
+      return suppliers.data;
+    });
   }
 
-  public getSupplierInvoicesByYear(year) {
-    const urlParams = `store_id=${this.currentStore}&year=${year}`;
-    const url = `${AppConfig.API_ENDPOINT}suppliers/getAllInvoicesByYear?${urlParams}`;
-    
-    return this.http.get(url)
-      .map((invoicesTotals: any) => {
-        return invoicesTotals.data;
-      });
+  public getSupplierInvoicesLastMonths(date, monthToShow = 6) {
+    const url = `${
+      AppConfig.API_ENDPOINT
+    }suppliers/supplierPurchasesLastMonths`;
+    const params = new HttpParams()
+      .append('store_id', this.currentStore.toString())
+      .append('date', date)
+      .append('monthsToshow', monthToShow.toString());
+
+    return this.http.get(url, { params }).map((invoicesTotals: any) => {
+      return invoicesTotals.data;
+    });
   }
 
-  public getInvoicesBySupplier(params) {
-    const urlParams = `store_id=${this.currentStore}&year=${params.year}&month=${params.month}&supplier_id=${params.supplier_id}`;
-    const url = `${AppConfig.API_ENDPOINT}suppliers/${params.supplier_id}/invoices?${urlParams}`;
-    
-    return this.http.get(url)
-      .map((result: any) => {
-        return result.data;
-      });
+  public getInvoicesBySupplier(supplierId, year?, month?, isPaid?) {
+    const url = `${AppConfig.API_ENDPOINT}suppliers/purchasesBySupplier`;
+    let params = new HttpParams().append(
+      'store_id',
+      this.currentStore.toString(),
+    );
+    if (supplierId) params = params.append('supplier_id', supplierId);
+    if (year) params = params.append('year', year);
+    if (month) params = params.append('month', month);
+    if (isPaid === '0' || isPaid === '1')
+      params = params.append('is_paid', isPaid);
+    return this.http.get(url, { params }).map((result: any) => {
+      return result.data;
+    });
   }
 
   public findSupplier(supplierId) {
-    return this.http.get<any>(`${AppConfig.API_ENDPOINT}suppliers/${supplierId}`);
+    return this.http.get<any>(
+      `${AppConfig.API_ENDPOINT}suppliers/${supplierId}`,
+    );
   }
 
   public update(supplier) {
-    return this.http.put(`${AppConfig.API_ENDPOINT}suppliers/${supplier.id}`, supplier);
+    return this.http.put(
+      `${AppConfig.API_ENDPOINT}suppliers/${supplier.id}`,
+      supplier,
+    );
   }
 
   public delete(id) {
@@ -65,16 +80,30 @@ export class SupplierService {
     return this.http.post(`${AppConfig.API_ENDPOINT}suppliers`, supplier);
   }
 
-  public getTotalInvoicesReport(params){
-    params.store_id = this.currentStore;
-    const urlParams = `?store_id=${this.currentStore}&year=${params.year}`;
-    return this.http.get(`${AppConfig.API_ENDPOINT}suppliers/invoicesByYear${urlParams}`);
+  public getTotalInvoicesReport(date) {
+    const url = `${
+      AppConfig.API_ENDPOINT
+    }suppliers/supplierPurchasesLastMonthsReport`;
+
+    const params = new HttpParams()
+      .append('store_id', this.currentStore.toString())
+      .append('date', date);
+
+    return this.http.get(url, { params });
   }
 
-  public getInvoicesReport(params){
-    params.store_id = this.currentStore;
-    const urlParams = `?store_id=${this.currentStore}&year=${params.year}&month=${params.month}&supplier_id=${params.supplier_id}`;
-    return this.http.get(`${AppConfig.API_ENDPOINT}suppliers/1/invoicesReport${urlParams}`);
-  }
+  public getInvoicesReport(supplierId, year?, month?, isPaid?) {
+    const url = `${AppConfig.API_ENDPOINT}suppliers/purchasesBySupplierReport`;
+    let params = new HttpParams().append(
+      'store_id',
+      this.currentStore.toString(),
+    );
+    if (supplierId) params = params.append('supplier_id', supplierId);
+    if (year) params = params.append('year', year);
+    if (month) params = params.append('month', month);
+    if (isPaid === '0' || isPaid === '1')
+      params = params.append('is_paid', isPaid);
 
+    return this.http.get(url, { params });
+  }
 }

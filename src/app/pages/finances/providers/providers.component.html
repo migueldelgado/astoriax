@@ -1,33 +1,35 @@
 <nb-card>
   <nb-card-header>
     Reporte de Proveedores
-
-    <button class="btn btn-icon btn-outline-success pull-right pdf-report" (click)="getReportPDF()">
-      <i class="fa fa-file-pdf-o"></i>
-    </button>
+    <div>
+      <i (click)="getReportPDF()" class="fa fa-file-pdf-o fa-2x pdf-report"></i>
+    </div>
   </nb-card-header>
 
-  <nb-card-body>
+  <nb-card-body *ngIf="this.source.count()">
     <ng2-smart-table
       [settings]="settings"
       [source]="source"
-      (edit)="onClickView($event)">
-    </ng2-smart-table>
+      (edit)="onClickView($event)"
+    ></ng2-smart-table>
   </nb-card-body>
-  
-  <nb-card-footer>
-    <table class="table table-bordered">
-      <tr>
-        <td class=""><strong>TOTAL:</strong></td>
-        <td class="bg-info">${{ total }}</td>
-      </tr>
-      <tr>
-        <td class=""><strong>IVA:</strong></td>
-        <td class="bg-info">${{ tax }}</td>
-      </tr>
-    </table>
+
+  <nb-card-footer *ngIf="this.sourceTotals.count()">
+    <ng2-smart-table
+      [settings]="settingsTotals"
+      [source]="sourceTotals"
+    ></ng2-smart-table>
+    <!--
+      <table class="table table-bordered">
+        <tr>
+          <td class=""><strong>TOTAL:</strong></td>
+          <td class="bg-info">${{ total }}</td>
+        </tr>
+        <tr>
+          <td class=""><strong>IVA:</strong></td>
+          <td class="bg-info">${{ tax }}</td>
+        </tr>
+      </table>
+    -->
   </nb-card-footer>
 </nb-card>
-
-
-

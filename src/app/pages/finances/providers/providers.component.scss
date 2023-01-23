@@ -52,8 +52,16 @@ nb-card {
   table .btn-icon {
     padding: 0.25rem 0.5rem !important;
   }
-  .pdf-container {
+
+  nb-card-header {
     display: flex;
-    justify-content: flex-end;
-    padding: 0 0 1rem;
+    justify-content: space-between;
+  }
+
+  .pdf-report {
+    cursor: pointer;
+  }
+
+  .pdf-report:hover {
+    color: red;
   }

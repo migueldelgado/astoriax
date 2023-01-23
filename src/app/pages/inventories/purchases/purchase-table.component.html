@@ -1,31 +1,52 @@
 <nb-card>
-  <nb-card-header>
-    Compras
-    <i class="far fa-file-pdf"></i>
-  </nb-card-header>
+  <nb-card-header> Compras <i class="far fa-file-pdf"></i> </nb-card-header>
 
   <nb-card-body>
     <div class="form-group row align-items-center inventories-table">
       <label class="col-md-2 col-sm-3">Desde: </label>
       <div class="input-group col-md-4 col-sm-3">
-        <input ngx-mydatepicker class="form-control" style="float:none" placeholder="Select a from date" name="dateFrom" [(ngModel)]="dateFrom" [options]="options" #from="ngx-mydatepicker" (dateChanged)="onChangeFrom($event)" required />
-        <span class="input-group-append">
-          <button type="button" class="btn btn-primary" (click)="from.clearDate()">
-            <i class="fa fa-times"></i>
-          </button>
-          <button type="button" class="btn btn-primary" (click)="from.toggleCalendar()">
+        <input
+          ngx-mydatepicker
+          class="form-control"
+          style="float:none"
+          placeholder="Select a from date"
+          name="dateFrom"
+          [(ngModel)]="dateFrom"
+          [options]="options"
+          #from="ngx-mydatepicker"
+          (dateChanged)="onChangeFrom($event)"
+          required
+        />
+        <span class="input-group-btn">
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="from.toggleCalendar()"
+          >
             <i class="fa fa-calendar"></i>
           </button>
         </span>
       </div>
       <label class="col-md-2 col-sm-3">Hasta: </label>
       <div class="input-group col-md-4 col-sm-3">
-        <input ngx-mydatepicker class="form-control" style="float:none" placeholder="Select a to date" name="dateTo" [(ngModel)]="dateTo" [options]="options" #to="ngx-mydatepicker" (dateChanged)="onChangeTo($event)" required />
-        <span class="input-group-append">
-          <button type="button" class="btn btn-primary" (click)="to.clearDate()">
-            <i class="fa fa-times"></i>
-          </button>
-          <button type="button" class="btn btn-primary" (click)="to.toggleCalendar()">
+        <input
+          ngx-mydatepicker
+          class="form-control"
+          style="float:none"
+          placeholder="Select a to date"
+          name="dateTo"
+          [(ngModel)]="dateTo"
+          [options]="options"
+          #to="ngx-mydatepicker"
+          (dateChanged)="onChangeTo($event)"
+          required
+        />
+        <span class="input-group-btn">
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="to.toggleCalendar()"
+          >
             <i class="fa fa-calendar"></i>
           </button>
         </span>
