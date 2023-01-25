@@ -1,76 +1,94 @@
 <form (submit)="onSubmit(f)" #f="ngForm">
-    <nb-card>
-        <nb-card-header> {{id ? 'Editar' : 'Nueva'}} Nota de Credito</nb-card-header>
-        
-        <nb-card-body>
-            <div class="form-group row align-items-center">
-                <label class="col-md-2 col-sm-3">Fecha</label>
-                <div class="col-md-10 col-sm-9 input-group">
-                    <input
-                        ngx-mydatepicker
-                        class="form-control"
-                        style="float:none"
-                        placeholder="Select a date"
-                        name="mydate"
-                        [(ngModel)]="date"
-                        [options]="options"
-                        #dp="ngx-mydatepicker"
-                        required />
-                    <span class="input-group-append">
-                        <button type="button" class="btn btn-primary" (click)="dp.clearDate()">
-                            <i class="fa fa-times"></i>
-                        </button>
-                        <button type="button" class="btn btn-primary" (click)="dp.toggleCalendar()">
-                            <i class="fa fa-calendar"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
+  <nb-card>
+    <nb-card-header>
+      {{ id ? 'Editar' : 'Nueva' }} Nota de Credito
+    </nb-card-header>
 
-            <div class="form-group row align-items-center">
-                <label class="col-sm-2">Numero de documento</label>
-                <div class="col-md-10 col-sm-9">
-                    <input
-                        name="creditNumber"
-                        [(ngModel)]="data.document_number"
-                        type="number"
-                        placeholder="Numero de documento"
-                        class="form-control"
-                        required />
-                </div>
-            </div>
+    <nb-card-body>
+      <div class="form-group row align-items-center">
+        <label class="col-md-2 col-sm-3">Fecha</label>
+        <div class="col-md-5 col-sm-9 input-group">
+          <input
+            ngx-mydatepicker
+            class="form-control"
+            style="float:none"
+            placeholder="Select a date"
+            name="mydate"
+            [(ngModel)]="date"
+            [options]="options"
+            #dp="ngx-mydatepicker"
+            required
+          />
+          <span class="input-group-btn">
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="dp.toggleCalendar()"
+            >
+              <i class="fa fa-calendar"></i>
+            </button>
+          </span>
+        </div>
+      </div>
 
-            <div class="form-group row align-items-center">
-                <label class="col-md-2 col-sm-3">Factura</label>
-                <div class="col-md-10 col-sm-9">
-                    <select name="purchase" class="form-control" [(ngModel)]="data.purchase_id">
-                        <option [value]="''">Seleccione Factura...</option>
-                        <option *ngFor="let purchase of purchases" [value]="purchase.id">
-                        {{ purchase.document_number + ' - ' + purchase.supplier + ' - $' + purchase.amount}}
-                        </option>
-                    </select>
-                </div>
-            </div>
+      <div class="form-group row align-items-center">
+        <label class="col-sm-2">Numero Nota de Credito</label>
+        <div class="col-md-5 col-sm-9">
+          <input
+            name="creditNumber"
+            [(ngModel)]="data.document_number"
+            type="number"
+            placeholder="Numero Nota de Credito"
+            class="form-control"
+            required
+          />
+        </div>
+      </div>
 
-            <div class="form-group row align-items-center">
-                <label class="col-sm-2">Monto</label>
-                <div class="col-md-10 col-sm-9">
-                    <input
-                        name="amount"
-                        [(ngModel)]="data.amount"
-                        type="number"
-                        placeholder="Monto"
-                        class="form-control"
-                        required />
-                </div>
-            </div>
-        </nb-card-body>
+      <div class="form-group row align-items-center">
+        <label class="col-md-2 col-sm-3">Numero Factura</label>
+        <div class="col-md-5 col-sm-9 input-group">
+          <input
+            name="purchase"
+            [(ngModel)]="data.purchase_number"
+            type="text"
+            placeholder="Numero Factura"
+            class="form-control"
+            disabled
+            required
+          />
+          <span class="input-group-btn">
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="onClickSearchPurchase()"
+            >
+              <i class="fa fa-search"></i>
+            </button>
+          </span>
+        </div>
+      </div>
 
-        <nb-card-footer>
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
-        </nb-card-footer>
+      <div class="form-group row align-items-center">
+        <label class="col-sm-2">Monto</label>
+        <div class="col-md-5 col-sm-9">
+          <input
+            name="amount"
+            [(ngModel)]="data.amount"
+            type="number"
+            placeholder="Monto"
+            class="form-control"
+            required
+          />
+        </div>
+      </div>
+    </nb-card-body>
 
-    </nb-card>
+    <nb-card-footer>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">
+        Cancelar
+      </button>
+    </nb-card-footer>
+  </nb-card>
 </form>
-  

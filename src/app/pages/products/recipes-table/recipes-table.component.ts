@@ -30,7 +30,7 @@ export class RecipesTableComponent implements OnInit {
     private authService: NbAuthService,
     private route: ActivatedRoute,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
   ) {
     this.settings = {
       mode: 'external',
@@ -45,8 +45,9 @@ export class RecipesTableComponent implements OnInit {
         delete: this.hasPermission('EREC'),
       },
       columns: {
+        id: { title: 'Codigo' },
         name: { title: 'Nombre', type: 'text' },
-        classification: { title: 'Clasificación', type: 'string' }
+        classification: { title: 'Clasificación', type: 'string' },
       },
     };
   }
@@ -103,11 +104,11 @@ export class RecipesTableComponent implements OnInit {
     const modalOptions: NgbModalOptions = {
       size: 'lg',
       container: 'nb-layout',
-    }
+    };
 
     const activeModal = this.modalService.open(
-      RecipeModalComponent, 
-      modalOptions
+      RecipeModalComponent,
+      modalOptions,
     );
 
     activeModal.componentInstance.initialize(evt.data.id);

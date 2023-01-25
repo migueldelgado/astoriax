@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Router, ActivatedRoute } from '@angular/router';
-import { numberWithCommas, valuePrepareFunction } from '../../../@core/utils/utils';
+import {
+  numberWithCommas,
+  valuePrepareFunction,
+} from '../../../@core/utils/utils';
 import { CreditService } from 'app/@core/data/credit.service';
 import { INgxMyDpOptions } from 'ngx-mydatepicker';
 import { getDateStringByDate } from 'app/@core/utils/dateUtils';
@@ -9,25 +12,24 @@ import { getDateStringByDate } from 'app/@core/utils/dateUtils';
 @Component({
   selector: 'ngx-credits',
   templateUrl: './credit.component.html',
-  styleUrls: ['./credit.component.scss']
+  styleUrls: ['./credit.component.scss'],
 })
 export class CreditComponent implements OnInit {
-
   source: LocalDataSource = new LocalDataSource();
 
   settings = {
     mode: 'external',
-    noDataMessage:'No hay informacion disponible',
+    noDataMessage: 'No hay informacion disponible',
     add: { addButtonContent: '<i class="nb-plus"></i>' },
     edit: { editButtonContent: '<i class="nb-edit"></i>' },
     delete: { deleteButtonContent: '<i class="nb-trash"></i>' },
     actions: { columnTitle: '', position: 'right' },
     columns: {
-      date: { title: 'Fecha' },
       document_number: { title: 'Numero Nota de Credito' },
+      date: { title: 'Fecha' },
       purchase_number: { title: 'Numero de Factura' },
       amount: { title: 'Monto', valuePrepareFunction },
-    }
+    },
   };
 
   dateFrom = { jsdate: new Date() };
@@ -49,12 +51,12 @@ export class CreditComponent implements OnInit {
     const dateTo = to || this.dateTo.jsdate;
     const params = {
       from: getDateStringByDate(dateFrom),
-      to: getDateStringByDate(dateTo)
+      to: getDateStringByDate(dateTo),
     };
 
     this.creditServices.getAll(params).subscribe((credits: any) => {
       this.source.load(credits.data);
-    })
+    });
   }
 
   onAdd(evt) {
@@ -62,7 +64,10 @@ export class CreditComponent implements OnInit {
   }
 
   onEdit(evt) {
-    this.router.navigate([`${evt.data.id}`], { relativeTo: this.route });
+    this.router.navigate([`${evt.data.id}`], {
+      relativeTo: this.route,
+      queryParams: evt.data,
+    });
   }
 
   onDelete(evt) {
@@ -71,7 +76,7 @@ export class CreditComponent implements OnInit {
     });
   }
 
-  numberWithCommas(val){
+  numberWithCommas(val) {
     return numberWithCommas(val);
   }
 
@@ -92,11 +97,10 @@ export class CreditComponent implements OnInit {
   //     .subscribe(
   //       (result: any) => {
   //         window.open(result.data.path, '_blank');
-  //       }, 
+  //       },
   //       () => {
   //         alert('Error al generar reporte')
   //       }
   //     )
   // }
-
 }

@@ -36,26 +36,14 @@ export class SuppliesTableComponent implements OnInit, HasPermissionInterface {
         position: 'right',
         add: this.hasPermission('AINS'),
         edit: this.hasPermission('MINS'),
-        delete: this.hasPermission('EINS')
+        delete: this.hasPermission('EINS'),
       },
       columns: {
-        name: {
-          title: 'Nombre',
-          type: 'text',
-        },
-        classification: {
-          title: 'Clasificación',
-          type: 'text',
-        },
-        type: {
-          title: 'Tipo',
-          type: 'text',
-        },
-        price: {
-          title: 'Precio',
-          type: 'text',
-          compareFunction: sortByNumber,
-        },
+        id: { title: 'Codigo' },
+        name: { title: 'Nombre', type: 'text' },
+        classification: { title: 'Clasificación', type: 'text' },
+        type: { title: 'Tipo', type: 'text' },
+        price: { title: 'Precio', type: 'text', compareFunction: sortByNumber },
         stock_min: {
           title: 'Stock Minimo',
           type: 'text',
@@ -74,8 +62,7 @@ export class SuppliesTableComponent implements OnInit, HasPermissionInterface {
   }
 
   loadSupplies() {
-    this
-      .suppliesService
+    this.suppliesService
       .getSuppliesByStore()
       .subscribe(supplies => this.source.load(supplies));
   }

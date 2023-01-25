@@ -4,8 +4,7 @@ import { valuePrepareFunction } from '../../../@core/utils/utils';
 import { SupplierService } from '../../../@core/data/supplier.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AddInvoiceProviderComponent } from '../modal/add-invoice-provider.component';
+import { CreditRenderComponent } from './credit-render.component';
 import { DateHelper } from 'app/helpers/date-helper';
 
 @Component({
@@ -40,7 +39,11 @@ export class ProviderDetailComponent {
       document_number: { title: 'No Factura' },
       date: { title: 'Fecha' },
       purchase_amount: { title: 'Monto', valuePrepareFunction },
-      credit_amount: { title: 'Credito', valuePrepareFunction },
+      total_credit: {
+        type: 'custom',
+        title: 'Notas de Credito',
+        renderComponent: CreditRenderComponent,
+      },
       balance: { title: 'Saldo', valuePrepareFunction },
       is_paid: {
         title: 'Estado',
@@ -53,7 +56,6 @@ export class ProviderDetailComponent {
     private supplierService: SupplierService,
     private route: ActivatedRoute,
     private router: Router,
-    private modalService: NgbModal,
     private dateHelper: DateHelper,
   ) {}
 
@@ -104,15 +106,6 @@ export class ProviderDetailComponent {
 
   cancel() {
     this.router.navigate(['..'], { relativeTo: this.route });
-  }
-
-  onClickRow(evt) {
-    alert(evt.data.id);
-    const activeModal = this.modalService.open(AddInvoiceProviderComponent, {
-      size: 'lg',
-      container: 'nb-layout',
-    });
-    activeModal.componentInstance.modalHeader = 'Detalle del proveedor';
   }
 
   getReportPDF() {

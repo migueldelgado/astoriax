@@ -20,8 +20,16 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
         link: '/pages/store/products',
         permissions: ['INS', 'REC'],
         children: [
-          { title: 'Insumos', link: '/pages/store/products/supplies', permissions: ['INS'] },
-          { title: 'Recetas', link: '/pages/store/products/recipes', permissions: ['REC'] },
+          {
+            title: 'Insumos',
+            link: '/pages/store/products/supplies',
+            permissions: ['INS'],
+          },
+          {
+            title: 'Recetas',
+            link: '/pages/store/products/recipes',
+            permissions: ['REC'],
+          },
         ],
       },
       {
@@ -29,10 +37,26 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
         link: '/pages/inventories',
         permissions: ['COM', 'INV', 'SAL', 'PSS'],
         children: [
-          { title: 'Inventarios Diarios', link: '/pages/inventories/daily', permissions: ['INV'] },
-          { title: 'Compras', link: '/pages/inventories/purchases', permissions: ['COM'] },
-          { title: 'Salidas', link: '/pages/inventories/outputs', permissions: ['SAL'] },
-          { title: 'Procesos', link: '/pages/inventories/processes', permissions: ['PSS'] },
+          {
+            title: 'Inventarios Diarios',
+            link: '/pages/inventories/daily',
+            permissions: ['INV'],
+          },
+          {
+            title: 'Facturas de Compra',
+            link: '/pages/inventories/purchases',
+            permissions: ['COM'],
+          },
+          {
+            title: 'Salidas',
+            link: '/pages/inventories/outputs',
+            permissions: ['SAL'],
+          },
+          {
+            title: 'Procesos',
+            link: '/pages/inventories/processes',
+            permissions: ['PSS'],
+          },
           { title: 'Notas de Credito', link: '/pages/inventories/credits' },
         ],
       },
@@ -44,8 +68,16 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
     link: '/pages/audits',
     permissions: ['AUD'],
     children: [
-      { title: 'Auditorias', link: '/pages/audits/audit-list', permissions: ['AUD'] },
-      { title: 'Resumen', link: '/pages/audits/overview', permissions: ['AUD'] },
+      {
+        title: 'Auditorias',
+        link: '/pages/audits/audit-list',
+        permissions: ['AUD'],
+      },
+      {
+        title: 'Resumen',
+        link: '/pages/audits/overview',
+        permissions: ['AUD'],
+      },
     ],
   },
   // {
@@ -65,8 +97,16 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
     link: '/pages/finances',
     permissions: ['TES', 'RPR'],
     children: [
-      { title: 'Factura Proveedores', link: '/pages/finances/providers', permissions: ['RPR'] },
-      { title: 'Tesoreria', link: '/pages/finances/treasury', permissions: ['TES'] }
+      {
+        title: 'Factura Proveedores',
+        link: '/pages/finances/providers',
+        permissions: ['RPR'],
+      },
+      {
+        title: 'Tesoreria',
+        link: '/pages/finances/treasury',
+        permissions: ['TES'],
+      },
     ],
   },
   {
@@ -75,9 +115,21 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
     link: '/pages/hr',
     permissions: ['PRO', 'LOC', 'EMP', 'ROL'],
     children: [
-      { title: 'Ficha Proveedores', link: '/pages/hr/suppliers', permissions: ['PRO'] },
-      { title: 'Ficha Locales', link: '/pages/hr/stores', permissions: ['LOC'] },
-      { title: 'Ficha Colaboradores', link: '/pages/hr/employees', permissions: ['EMP'] },
+      {
+        title: 'Ficha Proveedores',
+        link: '/pages/hr/suppliers',
+        permissions: ['PRO'],
+      },
+      {
+        title: 'Ficha Locales',
+        link: '/pages/hr/stores',
+        permissions: ['LOC'],
+      },
+      {
+        title: 'Ficha Colaboradores',
+        link: '/pages/hr/employees',
+        permissions: ['EMP'],
+      },
       { title: 'Roles', link: '/pages/hr/roles', permissions: ['ROL'] },
     ],
   },
@@ -98,7 +150,11 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
       //   link: '/pages/sales/add-cheques',
       //   permissions: ['VAL'],
       // },
-      { title: 'Ingreso Venta Diaria', link: '/pages/sales/daily-sales', permissions: ['IVD'] },
+      {
+        title: 'Ingreso Venta Diaria',
+        link: '/pages/sales/daily-sales',
+        permissions: ['IVD'],
+      },
     ],
   },
   {
@@ -107,7 +163,11 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
     link: '/pages/reports',
     permissions: ['RCR'],
     children: [
-      { title: 'Reporte Cruzado', link: '/pages/reports/reporte-cruzado', permissions: ['RCR'] },
+      {
+        title: 'Reporte Cruzado',
+        link: '/pages/reports/reporte-cruzado',
+        permissions: ['RCR'],
+      },
     ],
   },
 ];
