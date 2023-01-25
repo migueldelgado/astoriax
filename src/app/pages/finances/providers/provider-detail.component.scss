@@ -61,10 +61,16 @@ table {
     justify-content: space-between;
   }
 
-  .pdf-report {
+  .pdf-report, .excel-report {
     cursor: pointer;
+    margin-right: .5rem;
   }
 
   .pdf-report:hover {
     color: red;
+  }
+
+  .excel-report:hover {
+    color: green;
+    
   }

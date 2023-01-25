@@ -106,4 +106,19 @@ export class SupplierService {
 
     return this.http.get(url, { params });
   }
+
+  public getInvoicesReportExcel(supplierId, year?, month?, isPaid?) {
+    const url = `${
+      AppConfig.API_ENDPOINT
+    }suppliers/purchasesBySupplierExcelReport`;
+
+    let params: any = {};
+    params.store_id = this.currentStore;
+    if (supplierId) params.supplier_id = supplierId;
+    if (year) params.year = year;
+    if (month) params.month = month;
+    if (isPaid === '0' || isPaid === '1') params.is_paid = isPaid;
+
+    return this.http.post(url, params, { responseType: 'blob' });
+  }
 }
