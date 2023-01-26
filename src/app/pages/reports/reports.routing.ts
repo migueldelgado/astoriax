@@ -1,19 +1,12 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-import {ReportsComponent} from './reports.component';
-import {CrossReportComponent} from './crossReport/cross-report.component';
+import { ReportsComponent } from './reports.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'reportes',
     component: ReportsComponent,
-    children: [
-      {
-        path: 'reporte-cruzado',
-        component: CrossReportComponent,
-      },
-    ],
   },
 ];
 
@@ -21,5 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ReportsRoutingModule {
-}
+export class ReportsRoutingModule {}

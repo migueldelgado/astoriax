@@ -160,15 +160,8 @@ export const MENU_ITEMS: NbMenuItemExtended[] = [
   {
     title: 'Reportes',
     icon: 'nb-compose',
-    link: '/pages/reports',
+    link: '/pages/reports/reportes',
     permissions: ['RCR'],
-    children: [
-      {
-        title: 'Reporte Cruzado',
-        link: '/pages/reports/reporte-cruzado',
-        permissions: ['RCR'],
-      },
-    ],
   },
 ];
 // permissions: ['COM'],
