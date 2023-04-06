@@ -8,11 +8,13 @@ import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 import { CrossReportComponent } from './crossReport/cross-report.component';
 import { ReportsService } from './reports.service';
 import { SuppliesBoughtReportComponent } from './supplies-bought-report/supplies-bought-report.component';
+import { SalesBreakdownReportComponent } from './sales-breakdown-report/sales-breakdown-report.component';
 
 const components = [
   ReportsComponent,
   CrossReportComponent,
   SuppliesBoughtReportComponent,
+  SalesBreakdownReportComponent
 ];
 
 @NgModule({

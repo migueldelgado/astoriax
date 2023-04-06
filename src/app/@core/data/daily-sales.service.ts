@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { AppConfig } from '../../app.config';
 import { NbAuthService } from '../../auth/services';
@@ -58,6 +58,15 @@ export class DailySalesService {
     }
 
     return this.http.post(`${AppConfig.API_ENDPOINT}dailySales/report`, params);
+  }
+
+  public getSalesBreakdownReport(from, to) {
+    const url = `${AppConfig.API_ENDPOINT}reports/dailySalesBreakdown`;
+    const params = new HttpParams()
+      .append('date_from', from)
+      .append('date_to', to);
+
+    return this.http.get(url, { params, responseType: 'blob' });
   }
 
 }
