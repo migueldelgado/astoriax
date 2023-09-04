@@ -21,6 +21,10 @@ export class DateHelper {
     return this.months;
   }
 
+  getCurrentDay(): number {
+    return new Date().getDate();
+  }
+
   getCurrentMonth(): number {
     return new Date().getMonth() + 1;
   }

@@ -1,24 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { DailySalesService } from '../../../@core/data/daily-sales.service';
 import { LocalDataSource } from 'ng2-smart-table';
-import { numberWithCommas, valuePrepareFunction } from '../../../@core/utils/utils';
+import {
+  numberWithCommas,
+  valuePrepareFunction,
+} from '../../../@core/utils/utils';
 import { getDateStringByDate } from '../../../@core/utils/dateUtils';
 import { Observable } from 'rxjs/Observable';
+import { DateHelper } from 'app/helpers/date-helper';
 
 @Component({
   selector: 'ngx-daily-sales-table',
   templateUrl: './daily-sales.component.html',
   styleUrls: ['./daily-sales.component.scss'],
 })
-
 export class DailySalesComponent implements OnInit {
-
   day: string;
   month: string;
   year: string;
   years: string[];
   dailySalesMonth: any;
- 
+
   settingsItemsTable;
   settingTotalsTable;
   settingTotalsDayTable;
@@ -26,43 +28,41 @@ export class DailySalesComponent implements OnInit {
   totals: LocalDataSource = new LocalDataSource();
   totalDays: LocalDataSource = new LocalDataSource();
 
-  constructor(private dailySalesService: DailySalesService) {
-
+  constructor(
+    private dailySalesService: DailySalesService,
+    private dateHelper: DateHelper,
+  ) {
     const commonSettings = {
-      noDataMessage:'No hay informacion disponible',
+      noDataMessage: 'No hay informacion disponible',
       hideSubHeader: true,
       pager: false,
-    }
+    };
 
     this.settingsItemsTable = {
       ...commonSettings,
+      actions: false,
       edit: {
         editButtonContent: '<i class="nb-edit"></i>',
         saveButtonContent: '<i class="nb-checkmark"></i>',
         cancelButtonContent: '<i class="nb-close"></i>',
-        confirmSave: true
-      },
-      actions: {
-        columnTitle: '',
-        position: 'right',
-        delete: false,
+        confirmSave: true,
       },
       columns: {
-        name: { title: '', editable: false, },
+        name: { title: '', editable: false },
         shift1: { title: 'Manana', valuePrepareFunction },
         shift2: { title: 'Tarde', valuePrepareFunction },
         total: { title: 'Total', valuePrepareFunction, editable: false },
-      }
-    }
+      },
+    };
 
     this.settingTotalsTable = {
       ...commonSettings,
       actions: false,
       attr: {
-        class: 'estoesdiferente'
+        class: 'estoesdiferente',
       },
-      rowClassFunction: (row) => {
-        if (row.data.day === this.day){
+      rowClassFunction: row => {
+        if (row.data.day === this.day) {
           return 'selected';
         }
         return '';
@@ -70,80 +70,92 @@ export class DailySalesComponent implements OnInit {
       columns: {
         day: { title: 'Dia' },
         total: { title: 'Total', valuePrepareFunction },
-      }
-    }
+      },
+    };
 
     this.settingTotalsDayTable = {
       ...commonSettings,
       // hideHeader: true,
       attr: {
-        class: 'table-totals'
+        class: 'table-totals',
       },
       actions: false,
       columns: {
-        title: { title: '', },
+        title: { title: '' },
         shift1: { title: 'Manana', valuePrepareFunction },
         shift2: { title: 'Tarde', valuePrepareFunction },
-        total: { title: 'Total', valuePrepareFunction }
-      }
-    }
+        total: { title: 'Total', valuePrepareFunction },
+      },
+    };
   }
 
   ngOnInit() {
     this.setCurrentMonthAndYear();
-    const todayDateStr = getDateStringByDate(new Date);
+    const todayDateStr = getDateStringByDate(new Date());
+    this.toggleEditSales(true);
 
     this.loadItemsTotalsByDate(todayDateStr);
     this.loadTotalsMonth(this.month, this.year);
   }
 
+  toggleEditSales(isEditEnable) {
+    if (!isEditEnable) {
+      this.settingsItemsTable.actions = false;
+    } else {
+      this.settingsItemsTable.actions = {
+        columnTitle: '',
+        position: 'right',
+        delete: false,
+      };
+    }
+    this.settingsItemsTable = Object.assign({}, this.settingsItemsTable);
+  }
+
   loadItemsTotalsByDate(date) {
-    this.dailySalesService.getTotalItemsByDay(date)
-      .subscribe((data: any) => {
-        this.items.load(data.items);
-        this.totals.load(data.totals);
-      });
+    this.dailySalesService.getTotalItemsByDay(date).subscribe((data: any) => {
+      this.items.load(data.items);
+      this.totals.load(data.totals);
+    });
   }
 
   loadTotalsMonth(month, year) {
-    this.dailySalesService.getSalesTotals({month, year})
-      .subscribe(totals => {
-        this.totalDays.load(totals);
-      });
+    this.dailySalesService.getSalesTotals({ month, year }).subscribe(totals => {
+      this.totalDays.load(totals);
+    });
   }
 
-  numberWithCommas(val){
+  numberWithCommas(val) {
     return numberWithCommas(val);
   }
 
-  getCurrentDayString(){
+  getCurrentDayString() {
     let currentDate = new Date().getDate().toString();
     if (currentDate.length === 1) currentDate = '0' + currentDate;
     return currentDate;
   }
 
-  rowUpdated(evt){
+  rowUpdated(evt) {
     const dateStr = this.getDateStr();
 
     const commonProps = {
       dailysalesitem_id: evt.newData.id,
-      date: dateStr
-    }
+      date: dateStr,
+    };
 
     const paramsShift1 = {
       ...commonProps,
       shift_id: 1,
-      amount: evt.newData.shift1
-    }
+      amount: evt.newData.shift1,
+    };
     const paramsShift2 = {
       ...commonProps,
       shift_id: 2,
-      amount: evt.newData.shift2
-    }
+      amount: evt.newData.shift2,
+    };
 
     Observable.forkJoin(
       this.dailySalesService.create(paramsShift1),
-      this.dailySalesService.create(paramsShift2)
+      this.dailySalesService.create(paramsShift2),
     ).subscribe(() => {
       evt.confirm.resolve(evt.newData);
       this.loadItemsTotalsByDate(dateStr);
@@ -151,12 +163,12 @@ export class DailySalesComponent implements OnInit {
     });
   }
 
-  userRowSelect(evt){
+  userRowSelect(evt) {
     this.day = evt.data.day;
     this.loadItemsTotalsByDate(this.getDateStr());
   }
 
-  setCurrentMonthAndYear(){
+  setCurrentMonthAndYear() {
     const date = new Date();
     const years = [];
     const year = date.getFullYear();
@@ -173,28 +185,41 @@ export class DailySalesComponent implements OnInit {
     this.day = date.getDate().toString();
   }
 
-  getDateStr(): string{
+  getDateStr(): string {
     return `${this.year}-${this.month}-${this.day}`;
   }
 
-  updateDate(){
+  updateDate() {
+    if (
+      this.dateHelper.getCurrentMonth() === Number(this.month) &&
+      this.dateHelper.getCurrentYear() === Number(this.year)
+    ) {
+      this.toggleEditSales(true);
+    } else if (
+      this.dateHelper.getCurrentMonth() - 1 === Number(this.month) &&
+      this.dateHelper.getCurrentYear() === Number(this.year) &&
+      this.dateHelper.getCurrentDay() <= 4
+    ) {
+      this.toggleEditSales(true);
+    } else {
+      this.toggleEditSales(false);
+    }
+
     this.day = '01';
     this.loadItemsTotalsByDate(this.getDateStr());
     this.loadTotalsMonth(this.month, this.year);
   }
 
-  getReportPDF(){
+  getReportPDF() {
     const dateSale = this.getDateStr();
 
-    this.dailySalesService.getDayReport(dateSale)
-      .subscribe(
-        (result: any) => {
-          window.open(result.data.path, '_blank');
-        }, 
-        () => {
-          alert('Error al generar reporte')
-        }
-      )
+    this.dailySalesService.getDayReport(dateSale).subscribe(
+      (result: any) => {
+        window.open(result.data.path, '_blank');
+      },
+      () => {
+        alert('Error al generar reporte');
+      },
+    );
   }
-
 }
