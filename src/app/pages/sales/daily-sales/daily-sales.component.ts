@@ -190,14 +190,17 @@ export class DailySalesComponent implements OnInit {
   }
 
   updateDate() {
+    let isLastMonth = Number(this.month) === 12;
+    let yearToCompare = isLastMonth ? this.dateHelper.getCurrentYear() - 1 : this.dateHelper.getCurrentYear();
+
     if (
       this.dateHelper.getCurrentMonth() === Number(this.month) &&
       this.dateHelper.getCurrentYear() === Number(this.year)
     ) {
       this.toggleEditSales(true);
     } else if (
-      this.dateHelper.getCurrentMonth() - 1 === Number(this.month) &&
-      this.dateHelper.getCurrentYear() === Number(this.year) &&
+      this.dateHelper.getMonthNumberFromDate(this.dateHelper.subtractMonthsToDate(new Date(), 1)) === Number(this.month) &&
+      yearToCompare === Number(this.year) &&
       this.dateHelper.getCurrentDay() <= 4
     ) {
       this.toggleEditSales(true);
